@@ -1,0 +1,14 @@
+[build]
+  command = "npm run build"
+  publish = "web-build"
+  functions = "functions"
+
+[dev]
+  command = "npm run web"
+  port = 19006
+  publish = "web-build"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
