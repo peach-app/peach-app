@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import gql from "graphql-tag";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "@apollo/react-hooks";
@@ -7,7 +7,11 @@ import { useQuery } from "@apollo/react-hooks";
 import styled from "styled-components/native";
 
 const client = new ApolloClient({
-  uri: "/.netlify/functions/graphql"
+  uri: Platform.select({
+    web: "/.netlify/functions/graphql",
+    ios: "http://localhost:8888/.netlify/functions/graphql",
+    android: "http://localhost:8888/.netlify/functions/graphql"
+  })
 });
 
 const Title = styled.Text`
