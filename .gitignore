@@ -9,6 +9,5 @@ npm-debug.*
 *.orig.*
 web-build/
 web-report/
-.netlify/
 # Local Netlify folder
 .netlify
