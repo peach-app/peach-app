@@ -1,5 +1,5 @@
 import React from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import gql from "graphql-tag";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "@apollo/react-hooks";
@@ -26,12 +26,12 @@ const Test = () => {
   `);
 
   if (loading) {
-    return <Text>Loading</Text>;
+    return null;
   }
 
   return (
     <Title accessibilityRole="heading" aria-level="3">
-      {data.hello}
+      {data && data.hello}
     </Title>
   );
 };

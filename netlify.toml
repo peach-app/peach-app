@@ -1,12 +1,10 @@
 [build]
-  command = "npm run build"
-  publish = "web-build"
   functions = "functions"
 
 [dev]
-  command = "npm run web"
+  command = "expo start --clear --web"
   port = 19006
-  publish = "web-build"
+  publish = "/"
 
 [[redirects]]
   from = "/*"
