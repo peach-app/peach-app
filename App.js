@@ -1,5 +1,5 @@
 import React from "react";
-import { Platform, StyleSheet, View } from "react-native";
+import { Platform, SafeAreaView } from "react-native";
 import gql from "graphql-tag";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "@apollo/react-hooks";
@@ -30,27 +30,18 @@ const Test = () => {
   }
 
   return (
-    <Title accessibilityRole="heading" aria-level="3">
-      {data && data.hello}
-    </Title>
+    <SafeAreaView>
+      <Title accessibilityRole="heading" aria-level="3">
+        {data.hello}
+      </Title>
+    </SafeAreaView>
   );
 };
 
 export default function App() {
   return (
     <ApolloProvider client={client}>
-      <View style={styles.container}>
-        <Test />
-      </View>
+      <Test />
     </ApolloProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
-  }
-});
