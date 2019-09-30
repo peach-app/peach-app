@@ -1,9 +1,10 @@
 import React from "react";
-import { Platform, SafeAreaView, Button, Text } from "react-native";
+import { Platform, SafeAreaView, Text } from "react-native";
 import gql from "graphql-tag";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "@apollo/react-hooks";
 import { useQuery } from "@apollo/react-hooks";
+import get from "lodash/fp/get";
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 
@@ -15,13 +16,18 @@ const client = new ApolloClient({
     web: "/.netlify/functions/graphql",
     ios: "http://localhost:8888/.netlify/functions/graphql",
     android: "http://localhost:8888/.netlify/functions/graphql"
-  })
+  }),
+  headers: {
+    authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjI0NDk0NzQyNzQ5MjEwMjY1OCIsImlhdCI6MTU2OTg1ODkyMH0.G1rttPwhJrf-ZVn_Rby4wsmFY8PGRVWnLB5e-37tcSM`
+  }
 });
 
 const Home = ({ navigation }) => {
   const { data, loading } = useQuery(gql`
     {
-      hello
+      user {
+        email
+      }
     }
   `);
 
@@ -33,11 +39,9 @@ const Home = ({ navigation }) => {
     <SafeAreaView>
       <Container>
         <Card>
-          <Text>{data.hello}</Text>
+          <Text>{get("user.email", data)}</Text>
         </Card>
       </Container>
-
-      <Button title="Profile" onPress={() => navigation.navigate("Profile")} />
     </SafeAreaView>
   );
 };
