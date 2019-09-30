@@ -11,3 +11,5 @@ web-build/
 web-report/
 # Local Netlify folder
 .netlify
+.migrate
+.DS_Store

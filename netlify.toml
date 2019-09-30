@@ -3,7 +3,7 @@
   publish = "web-build"
 
 [dev]
-  command = "expo start --clear --web"
+  command = "expo start --web --clear"
   port = 19006
   publish = "/"
 
