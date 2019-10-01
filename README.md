@@ -18,6 +18,8 @@
 
 `netlify dev`
 
+`open http://192.168.1.108:8888/ in browser`
+
 ## Deploy
 
 `expo build:web`

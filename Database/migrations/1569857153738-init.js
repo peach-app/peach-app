@@ -3,14 +3,14 @@ const q = require("faunadb").query;
 const client = require("../db");
 
 module.exports.up = async function(next) {
-  // create users class
-  await client.query(q.CreateClass({ name: "users" }));
+  // create users collection
+  await client.query(q.CreateCollection({ name: "users" }));
 
   // create all_users index
   await client.query(
     q.CreateIndex({
       name: "all_users",
-      source: q.Class("users")
+      source: q.Collection("users")
     })
   );
 
@@ -18,7 +18,7 @@ module.exports.up = async function(next) {
   await client.query(
     q.CreateIndex({
       name: "users_by_email",
-      source: q.Class("users"),
+      source: q.Collection("users"),
       terms: [{ field: ["data", "email"] }],
       unique: true
     })
@@ -34,8 +34,8 @@ module.exports.down = async function(next) {
   // delete users_by_email index
   await client.query(q.Delete(q.Index("users_by_email")));
 
-  // delete users class
-  await client.query(q.Delete(q.Class("users")));
+  // delete users collection
+  await client.query(q.Delete(q.Collection("users")));
 
   next();
 };

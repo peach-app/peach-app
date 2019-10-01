@@ -10,7 +10,7 @@ module.exports = async (root, args, context) => {
 
   try {
     const user = await context.fauna.query(
-      q.Create(q.Class("users"), {
+      q.Create(q.Collection("users"), {
         data: {
           email: email.toLowerCase(),
           password

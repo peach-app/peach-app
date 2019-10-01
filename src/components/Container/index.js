@@ -1,7 +1,7 @@
-import styled from "styled-components/native";
+import styled from 'styled-components';
 
 const Container = styled.View`
-  padding-horizontal: 16px;
+  padding: 0 ${props => props.theme.spacing}px;
 `;
 
 export default Container;
