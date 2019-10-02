@@ -1,31 +1,34 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { StatusBar, Text } from 'react-native';
 import { ApolloProvider } from '@apollo/react-hooks';
-import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
 import { ThemeProvider } from 'styled-components';
 
+import AuthContext, { Provider as AuthProvider } from './contexts/Auth';
 import client from './apollo-client';
 import theme from './theme';
 
-import Landing from './screens/Landing';
-import Login from './screens/Login';
+import UnAuthedNavigator from './routers/UnAuthedRouter';
+import AuthedNavigator from './routers/AuthedNavigator';
 
-const AppNavigator = createStackNavigator(
-  {
-    Landing,
-    Login,
-  },
-  {
-    headerMode: 'none',
+const App = () => {
+  const { auth } = useContext(AuthContext);
+
+  if (auth) {
+    return <AuthedNavigator />;
   }
-);
 
-const App = createAppContainer(AppNavigator);
+  return <UnAuthedNavigator />;
+};
 
 export default () => (
-  <ApolloProvider client={client}>
-    <ThemeProvider theme={theme}>
-      <App />
-    </ThemeProvider>
-  </ApolloProvider>
+  <AuthProvider>
+    <ApolloProvider client={client}>
+      <ThemeProvider theme={theme}>
+        <>
+          <StatusBar barStyle="dark-content" />
+          <App />
+        </>
+      </ThemeProvider>
+    </ApolloProvider>
+  </AuthProvider>
 );

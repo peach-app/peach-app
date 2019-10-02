@@ -4,6 +4,8 @@ const theme = {
   brand: '#FF7F76',
   black: '#000',
   white: '#fff',
+  grey: '#ddd',
+  error: '#f00',
   radius: 6,
   spacingSmall: 8,
   spacing: 16,
