@@ -1,6 +1,1 @@
-module.exports = [
-  require("./Query"),
-  require("./Mutation"),
-  require("./Auth"),
-  require("./User")
-];
+module.exports = [require('./Query'), require('./User')];

@@ -1,16 +1,16 @@
 const {
   ApolloServer,
   AuthenticationError,
-  gql
-} = require("apollo-server-lambda");
-const faunadb = require("faunadb");
-const jwt = require("jsonwebtoken");
+  gql,
+} = require('apollo-server-lambda');
+const faunadb = require('faunadb');
+const jwt = require('jsonwebtoken');
 
-const resolvers = require("./resolvers");
-const typeDefs = require("./types");
+const resolvers = require('./resolvers');
+const typeDefs = require('./types');
 
 const client = new faunadb.Client({
-  secret: process.env.FAUNADB_SECRET
+  secret: process.env.FAUNADB_SECRET,
 });
 
 const server = new ApolloServer({
@@ -20,29 +20,29 @@ const server = new ApolloServer({
     const bearerToken = req.event.headers.authorization;
 
     if (bearerToken) {
-      const [, token] = bearerToken.split("Bearer ");
+      const [, token] = bearerToken.split('Bearer ');
 
       try {
         const user = jwt.verify(token, process.env.JWT_SECRET);
 
         return {
           fauna: client,
-          user
+          user,
         };
       } catch (err) {
-        throw new AuthenticationError("Invalid auth token.");
+        throw new AuthenticationError('Invalid auth token.');
       }
     }
 
     return {
-      fauna: client
+      fauna: client,
     };
-  }
+  },
 });
 
 exports.handler = server.createHandler({
   cors: {
-    origin: "*",
-    credentials: true
-  }
+    origin: '*',
+    credentials: true,
+  },
 });
