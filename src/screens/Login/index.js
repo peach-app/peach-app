@@ -31,7 +31,6 @@ const Login = () => {
       setAuth(get('login.secret', data));
     },
   });
-  console.log(error);
 
   return (
     <Formik
