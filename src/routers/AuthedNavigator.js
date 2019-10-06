@@ -1,15 +1,12 @@
 import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 
+import Campaigns from '../screens/Campaigns';
 import Account from '../screens/Account';
 
-const AuthedNavigator = createStackNavigator(
-  {
-    Account,
-  },
-  {
-    headerMode: 'none',
-  }
-);
+const AuthedNavigator = createBottomTabNavigator({
+  Campaigns,
+  Account,
+});
 
 export default createAppContainer(AuthedNavigator);

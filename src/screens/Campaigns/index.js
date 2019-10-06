@@ -1,0 +1,18 @@
+import React from 'react';
+import { SafeAreaView } from 'react-native';
+
+import Container from '../../components/Container';
+import Title from '../../components/Title';
+import Intro from '../../components/Intro';
+
+const Campaigns = () => (
+  <SafeAreaView style={{ flex: 1 }}>
+    <Container>
+      <Intro>
+        <Title>Campaigns</Title>
+      </Intro>
+    </Container>
+  </SafeAreaView>
+);
+
+export default Campaigns;
