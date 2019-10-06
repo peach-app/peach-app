@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { SafeAreaView } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { useMutation } from '@apollo/react-hooks';
+import get from 'lodash/fp/get';
 
 import { Header } from './styles';
-import { useLogin } from '../../hooks/useAuth';
 import Container from '../../components/Container';
 import { Grid, GridItem } from '../../components/Grid';
 import Intro from '../../components/Intro';
@@ -13,6 +14,8 @@ import Button from '../../components/Button';
 import Actions from '../../components/Actions';
 import TextInput from '../../components/TextInput';
 import Text from '../../components/Text';
+import AuthContext from '../../contexts/Auth';
+import LOGIN from './graphql/login';
 
 const LoginSchema = Yup.object().shape({
   email: Yup.string()
@@ -22,7 +25,13 @@ const LoginSchema = Yup.object().shape({
 });
 
 const Login = () => {
-  const [login, { loading, error }] = useLogin();
+  const { setAuth } = useContext(AuthContext);
+  const [login, { loading, error }] = useMutation(LOGIN, {
+    onCompleted: data => {
+      setAuth(get('login.secret', data));
+    },
+  });
+  console.log(error);
 
   return (
     <Formik
@@ -34,7 +43,12 @@ const Login = () => {
       }}
       validationSchema={LoginSchema}
       onSubmit={({ email, password }) => {
-        login(email, password);
+        login({
+          variables: {
+            email,
+            password,
+          },
+        });
       }}
     >
       {({ handleSubmit }) => (

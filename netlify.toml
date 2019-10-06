@@ -1,11 +1,5 @@
 [build]
-  functions = "functions"
   publish = "web-build"
-
-[dev]
-  command = "expo start --clear --web"
-  port = 19006
-  publish = "/"
 
 [[redirects]]
   from = "/*"
