@@ -14,6 +14,7 @@ import Button from '../../components/Button';
 import Actions from '../../components/Actions';
 import TextInput from '../../components/TextInput';
 import Text from '../../components/Text';
+import BackButton from '../../components/BackButton';
 import AuthContext from '../../contexts/Auth';
 import LOGIN from './graphql/login';
 
@@ -55,6 +56,7 @@ const Login = () => {
           <Container>
             <Header>
               <Intro>
+                <BackButton />
                 <Title isCenter>Login</Title>
               </Intro>
             </Header>

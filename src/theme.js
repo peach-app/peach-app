@@ -5,6 +5,7 @@ const theme = {
   black: '#000',
   white: '#fff',
   grey: '#ddd',
+  greyLight: '#eee',
   error: '#f00',
   radius: 6,
   spacingSmall: 8,

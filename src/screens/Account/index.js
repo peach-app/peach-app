@@ -11,12 +11,12 @@ import AuthContext from '../../contexts/Auth';
 
 const Account = () => {
   const { setAuth } = useContext(AuthContext);
-  const { data } = useQuery(GET_USER);
+  const { data, loading } = useQuery(GET_USER);
 
   return (
     <SafeAreaView>
       <Container>
-        <ProfileHeader {...get('user', data)} />
+        <ProfileHeader isLoading={loading} {...get('user', data)} />
         <NavLink title="Account" />
         <NavLink title="Payout History" />
         <NavLink title="Logout" onPress={() => setAuth(null)} />

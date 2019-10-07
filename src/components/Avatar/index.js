@@ -2,9 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Main, Image } from './styles';
+import { SkeletonCircle } from '../../components/Skeletons';
 
-const Avatar = ({ size, source }) => (
-  <Main size={size}>{source && <Image source={source} />}</Main>
+const Avatar = ({ size, source, isLoading }) => (
+  <SkeletonCircle isLoading={isLoading} size={size}>
+    <Main size={size}>{source && <Image source={source} />}</Main>
+  </SkeletonCircle>
 );
 
 Avatar.defaultProps = {
@@ -12,6 +15,7 @@ Avatar.defaultProps = {
 };
 
 Avatar.propTypes = {
+  isLoading: PropTypes.bool,
   size: PropTypes.number,
   source: PropTypes.oneOfType([
     PropTypes.string,

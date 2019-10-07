@@ -7,7 +7,7 @@ import { Main, Title } from './styles';
 const NavLink = ({ title, ...props }) => (
   <Main {...props}>
     <Title>{title}</Title>
-    <Ionicons name="ios-arrow-forward" size={18} />
+    <Ionicons name="ios-arrow-forward" size={20} />
   </Main>
 );
 

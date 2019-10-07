@@ -7,7 +7,6 @@ export const Main = styled.View`
 
 export const Content = styled(Animatable.View).attrs({
   animation: 'slideInUp',
-  useNativeDriver: true,
   duration: 300,
 })`
   background: ${props => props.theme.brand};
