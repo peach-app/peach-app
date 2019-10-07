@@ -33,8 +33,10 @@ const ProfileHeader = ({ name, avatar, isLoading }) => (
 
 ProfileHeader.propTypes = {
   isLoading: PropTypes.bool,
-  name: PropTypes.string.isRequired,
-  avatar: PropTypes.string.isRequired,
+  name: PropTypes.string,
+  avatar: PropTypes.shape({
+    url: PropTypes.string,
+  }),
 };
 
 export const ProfileHeaderFragment = gql`

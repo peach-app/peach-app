@@ -11,7 +11,7 @@ const Input = styled.TextInput`
     props.hasError ? props.theme.error : props.theme.grey};
   border-radius: ${props => props.theme.radius}px;
   padding: 0 ${props => props.theme.spacing}px;
-  min-height: 40px;
+  min-height: 38px;
   font-family: Futura;
 `;
 

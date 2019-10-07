@@ -10,7 +10,7 @@ export const Main = styled.View`
 
 export const Item = styled.TouchableOpacity`
   flex-grow: 1;
-  min-height: 40px;
+  min-height: 38px;
   justify-content: center;
   border-radius: 200px;
   ${props => props.active && `background: ${props.theme.black};`}
