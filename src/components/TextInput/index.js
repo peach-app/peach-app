@@ -7,12 +7,13 @@ import Text from '../../components/Text';
 
 const Input = styled.TextInput`
   border-width: 1px;
+  color: ${props => props.theme.foreground};
   border-color: ${props =>
     props.hasError ? props.theme.error : props.theme.grey};
   border-radius: ${props => props.theme.radius}px;
   padding: 0 ${props => props.theme.spacing}px;
   min-height: 38px;
-  font-family: Futura;
+  font-family: futura-book;
 `;
 
 const Label = styled(Text)`

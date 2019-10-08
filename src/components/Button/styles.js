@@ -25,7 +25,7 @@ export const Title = styled(Text)`
   font-size: 14px;
   color: ${props => props.theme.white};
   text-align: center;
-  font-weight: bold;
+  font-family: futura-bold;
   ${props => props.isLoading && `opacity: 0;`}
 `;
 

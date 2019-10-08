@@ -12,6 +12,6 @@ export const Center = styled.View`
 
 export const Name = styled(Text)`
   font-size: 22px;
-  font-weight: bold;
+  font-family: futura-bold;
   text-align: center;
 `;

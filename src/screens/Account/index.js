@@ -9,11 +9,9 @@ import NavLink from '../../components/NavLink';
 import ProfileHeader from '../../components/ProfileHeader';
 import GET_USER from './graphql/get-user';
 import AuthContext from '../../contexts/Auth';
-import ThemeContext from '../../contexts/Theme';
 
 const Account = ({ navigation }) => {
   const { setAuth } = useContext(AuthContext);
-  const { darkMode, setDarkMode } = useContext(ThemeContext);
   const { data, loading } = useQuery(GET_USER);
 
   return (
@@ -26,10 +24,6 @@ const Account = ({ navigation }) => {
           title="Payout History"
           iconProps={{ name: 'ios-arrow-forward' }}
           onPress={() => navigation.navigate('Payouts')}
-        />
-        <NavLink
-          title="Toggle Dark Mode"
-          onPress={() => setDarkMode(!darkMode)}
         />
         <NavLink title="Logout" onPress={() => setAuth(null)} />
       </Container>
