@@ -4,16 +4,18 @@ import { SafeAreaView, StatusBar } from 'react-native';
 import Container from '../../components/Container';
 import Title from '../../components/Title';
 import Intro from '../../components/Intro';
+import BackButton from '../../components/BackButton';
 
-const Inbox = () => (
+const Payouts = () => (
   <SafeAreaView style={{ flex: 1 }}>
     <Container>
       <StatusBar barStyle="dark-content" />
       <Intro>
-        <Title>Messages</Title>
+        <BackButton />
+        <Title>Payouts</Title>
       </Intro>
     </Container>
   </SafeAreaView>
 );
 
-export default Inbox;
+export default Payouts;

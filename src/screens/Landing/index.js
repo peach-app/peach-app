@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, ImageBackground } from 'react-native';
+import { SafeAreaView, StatusBar, ImageBackground } from 'react-native';
 
 import { Main, Content, Actions } from './styles';
 import Button from '../../components/Button';
@@ -10,6 +10,7 @@ import splash from '../../assets/splash.png';
 const Landing = ({ navigation }) => (
   <ImageBackground resizeMode="contain" source={splash} style={{ flex: 1 }}>
     <Main>
+      <StatusBar barStyle="dark-content" />
       <Content>
         <SafeAreaView>
           <Container>

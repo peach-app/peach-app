@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, StatusBar } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from '@apollo/react-hooks';
@@ -54,6 +54,7 @@ const Login = () => {
       {({ handleSubmit }) => (
         <SafeAreaView>
           <Container>
+            <StatusBar barStyle="dark-content" />
             <Header>
               <Intro>
                 <BackButton />

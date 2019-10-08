@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { StatusBar } from 'react-native';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { ThemeProvider } from 'styled-components';
 
@@ -21,14 +20,11 @@ const App = () => {
 };
 
 export default () => (
-  <>
-    <StatusBar barStyle="dark-content" />
-    <AuthProvider>
-      <ApolloProvider client={client}>
-        <ThemeProvider theme={theme}>
-          <App />
-        </ThemeProvider>
-      </ApolloProvider>
-    </AuthProvider>
-  </>
+  <AuthProvider>
+    <ApolloProvider client={client}>
+      <ThemeProvider theme={theme}>
+        <App />
+      </ThemeProvider>
+    </ApolloProvider>
+  </AuthProvider>
 );

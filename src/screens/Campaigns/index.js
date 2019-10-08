@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, View } from 'react-native';
+import { SafeAreaView, StatusBar } from 'react-native';
 
 import Container from '../../components/Container';
 import Title from '../../components/Title';
@@ -13,6 +13,7 @@ const Campaigns = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Container>
+        <StatusBar barStyle="dark-content" />
         <Grid>
           <GridItem>
             <Intro>

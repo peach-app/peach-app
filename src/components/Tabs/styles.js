@@ -8,7 +8,7 @@ export const Main = styled.View`
   border-radius: 200px;
 `;
 
-export const Item = styled.TouchableOpacity`
+export const Item = styled.View`
   flex-grow: 1;
   min-height: 38px;
   justify-content: center;

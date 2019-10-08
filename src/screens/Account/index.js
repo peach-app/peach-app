@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView, StatusBar } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 
@@ -9,16 +9,20 @@ import ProfileHeader from '../../components/ProfileHeader';
 import GET_USER from './graphql/get-user';
 import AuthContext from '../../contexts/Auth';
 
-const Account = () => {
+const Account = ({ navigation }) => {
   const { setAuth } = useContext(AuthContext);
   const { data, loading } = useQuery(GET_USER);
 
   return (
     <SafeAreaView>
       <Container>
+        <StatusBar barStyle="dark-content" />
         <ProfileHeader isLoading={loading} {...get('user', data)} />
         <NavLink title="Account" />
-        <NavLink title="Payout History" />
+        <NavLink
+          title="Payout History"
+          onPress={() => navigation.navigate('Payouts')}
+        />
         <NavLink title="Logout" onPress={() => setAuth(null)} />
       </Container>
     </SafeAreaView>
