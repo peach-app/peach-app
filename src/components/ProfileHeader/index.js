@@ -24,7 +24,7 @@ const ProfileHeader = ({ name, avatar, isLoading }) => (
       </GridItem>
       <GridItem>
         <Name>
-          <SkeletonText isLoading={isLoading}>{name}</SkeletonText>
+          <SkeletonText isLoading={isLoading}>{name || ''}</SkeletonText>
         </Name>
       </GridItem>
     </Grid>

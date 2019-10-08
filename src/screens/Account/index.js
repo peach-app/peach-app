@@ -12,7 +12,7 @@ import AuthContext from '../../contexts/Auth';
 
 const Account = ({ navigation }) => {
   const { setAuth } = useContext(AuthContext);
-  const { data, loading } = useQuery(GET_USER);
+  const { data, loading, error } = useQuery(GET_USER);
 
   return (
     <SafeAreaView>
