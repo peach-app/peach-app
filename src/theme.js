@@ -4,6 +4,7 @@ const theme = {
   brand: '#FF7F76',
   black: '#000',
   white: '#fff',
+  greyDark: '#aaa',
   grey: '#ddd',
   greyLight: '#eee',
   error: '#f00',

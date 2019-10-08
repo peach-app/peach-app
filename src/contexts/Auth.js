@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AsyncStorage } from 'react-native';
+import { AppLoading } from 'expo';
 
 const AuthContext = React.createContext();
 
@@ -20,15 +21,21 @@ const setStoredAuth = async auth => {
 };
 
 export const Provider = ({ children }) => {
+  const [loading, setLoading] = useState(true);
   const [auth, setAuth] = useState(null);
-
-  useEffect(() => {
-    getStoredAuth(setAuth);
-  }, []);
 
   useEffect(() => {
     setStoredAuth(auth);
   }, [auth]);
+
+  if (loading) {
+    return (
+      <AppLoading
+        startAsync={async () => getStoredAuth(setAuth)}
+        onFinish={() => setLoading(false)}
+      />
+    );
+  }
 
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>
