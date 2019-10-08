@@ -1,6 +1,6 @@
 const theme = {
   background: '#FEFEFE',
-  foreground: '#fff',
+  foreground: '#000',
   brand: '#FF7F76',
   black: '#000',
   white: '#fff',
@@ -13,6 +13,14 @@ const theme = {
   spacing: 16,
   spacingLarge: 32,
   spacingXLarge: 48,
+};
+
+export const darkModeOverrides = {
+  background: '#000',
+  foreground: '#fff',
+  greyDark: '#555',
+  grey: '#333',
+  greyLight: '#222',
 };
 
 export default theme;

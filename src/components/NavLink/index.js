@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Ionicons } from '@expo/vector-icons';
 
-import { Main, Title } from './styles';
+import { Main, Title, Icon } from './styles';
 
-const NavLink = ({ title, ...props }) => (
+const NavLink = ({ title, iconProps, ...props }) => (
   <Main {...props}>
     <Title>{title}</Title>
-    <Ionicons name="ios-arrow-forward" size={20} />
+    {iconProps && <Icon {...iconProps} size={20} />}
   </Main>
 );
 
 NavLink.propTypes = {
   title: PropTypes.string.isRequired,
+  iconProps: PropTypes.object,
 };
 
 export default NavLink;

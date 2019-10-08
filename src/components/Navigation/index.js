@@ -31,7 +31,7 @@ const Navigation = ({ navigation, onTabPress, theme }) => {
                   <Ionicons
                     size={30}
                     name={iconNames[route.key]}
-                    color={isFocused ? theme.black : theme.greyDark}
+                    color={isFocused ? theme.foreground : theme.greyDark}
                   />
                 </Item>
               </TouchableWithoutFeedback>

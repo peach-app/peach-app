@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
-import { SafeAreaView, StatusBar } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 
 import { Header } from './styles';
+import SafeAreaView from '../../components/SafeAreaView';
+import StatusBar from '../../components/StatusBar';
 import Container from '../../components/Container';
 import { Grid, GridItem } from '../../components/Grid';
 import Intro from '../../components/Intro';
@@ -54,7 +55,7 @@ const Login = () => {
       {({ handleSubmit }) => (
         <SafeAreaView>
           <Container>
-            <StatusBar barStyle="dark-content" />
+            <StatusBar />
             <Header>
               <Intro>
                 <BackButton />

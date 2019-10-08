@@ -6,8 +6,9 @@ export const Main = styled(Animatable.View).attrs({
   duration: 300,
   delay: 300,
 })`
-  background: ${props => props.theme.white};
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  background: ${props => props.theme.background};
+  border-top-width: 1px;
+  border-color: ${props => props.theme.greyLight};
 `;
 
 export const List = styled.View`

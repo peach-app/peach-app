@@ -1,27 +1,35 @@
 import React, { useContext } from 'react';
-import { SafeAreaView, StatusBar } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 
+import SafeAreaView from '../../components/SafeAreaView';
+import StatusBar from '../../components/StatusBar';
 import Container from '../../components/Container';
 import NavLink from '../../components/NavLink';
 import ProfileHeader from '../../components/ProfileHeader';
 import GET_USER from './graphql/get-user';
 import AuthContext from '../../contexts/Auth';
+import ThemeContext from '../../contexts/Theme';
 
 const Account = ({ navigation }) => {
   const { setAuth } = useContext(AuthContext);
+  const { darkMode, setDarkMode } = useContext(ThemeContext);
   const { data, loading } = useQuery(GET_USER);
 
   return (
     <SafeAreaView>
       <Container>
-        <StatusBar barStyle="dark-content" />
+        <StatusBar />
         <ProfileHeader isLoading={loading} {...get('user', data)} />
-        <NavLink title="Account" />
+        <NavLink title="Account" iconProps={{ name: 'ios-arrow-forward' }} />
         <NavLink
           title="Payout History"
+          iconProps={{ name: 'ios-arrow-forward' }}
           onPress={() => navigation.navigate('Payouts')}
+        />
+        <NavLink
+          title="Toggle Dark Mode"
+          onPress={() => setDarkMode(!darkMode)}
         />
         <NavLink title="Logout" onPress={() => setAuth(null)} />
       </Container>

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Ionicons } from '@expo/vector-icons';
 
 import Text from '../../components/Text';
 
@@ -14,3 +15,7 @@ export const Main = styled.TouchableOpacity`
 export const Title = styled(Text)`
   font-size: 16px;
 `;
+
+export const Icon = styled(Ionicons).attrs(props => ({
+  color: props.theme.foreground,
+}))``;

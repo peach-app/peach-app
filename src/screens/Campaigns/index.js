@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StatusBar } from 'react-native';
 
+import SafeAreaView from '../../components/SafeAreaView';
+import StatusBar from '../../components/StatusBar';
 import Container from '../../components/Container';
 import Title from '../../components/Title';
 import Intro from '../../components/Intro';
@@ -11,9 +12,9 @@ const Campaigns = () => {
   const [activeTab, setTab] = useState(0);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView>
       <Container>
-        <StatusBar barStyle="dark-content" />
+        <StatusBar />
         <Grid>
           <GridItem>
             <Intro>
