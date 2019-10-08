@@ -6,7 +6,7 @@ import { Main, Title, Icon } from './styles';
 const NavLink = ({ title, iconProps, ...props }) => (
   <Main {...props}>
     <Title>{title}</Title>
-    {iconProps && <Icon {...iconProps} size={20} />}
+    {iconProps && <Icon {...iconProps} />}
   </Main>
 );
 

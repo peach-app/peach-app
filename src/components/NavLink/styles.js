@@ -18,4 +18,5 @@ export const Title = styled(Text)`
 
 export const Icon = styled(Ionicons).attrs(props => ({
   color: props.theme.foreground,
+  size: 30,
 }))``;

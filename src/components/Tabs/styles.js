@@ -18,6 +18,6 @@ export const Item = styled.View`
 
 export const Title = styled(Text)`
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
   ${props => props.active && `color: ${props.theme.background};`}
 `;
