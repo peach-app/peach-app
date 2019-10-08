@@ -10,7 +10,7 @@ const client = new ApolloClient({
       headers: {
         authorization: token
           ? `Bearer ${token}`
-          : 'Bearer fnADaMjf0uACAMDRHuW3EkwWccroI-DqBfDX4wGr',
+          : 'Bearer fnADaM16XTACAIJOni96OZSU_nNMPP_qKX37lAHQ',
       },
     });
   },
