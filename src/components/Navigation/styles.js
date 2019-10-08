@@ -13,5 +13,10 @@ export const Main = styled(Animatable.View).attrs({
 export const List = styled.View`
   flex-direction: row;
   justify-content: space-around;
-  padding: ${props => props.theme.spacing}px;
+  padding-horizontal: ${props => props.theme.spacingSmall}px;
+`;
+
+export const Item = styled.View`
+  padding-horizontal: ${props => props.theme.spacingSmall}px;
+  padding-vertical: ${props => props.theme.spacing}px;
 `;

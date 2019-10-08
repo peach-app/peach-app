@@ -21,14 +21,14 @@ const App = () => {
 };
 
 export default () => (
-  <AuthProvider>
-    <ApolloProvider client={client}>
-      <ThemeProvider theme={theme}>
-        <>
-          <StatusBar barStyle="dark-content" />
+  <>
+    <StatusBar barStyle="dark-content" />
+    <AuthProvider>
+      <ApolloProvider client={client}>
+        <ThemeProvider theme={theme}>
           <App />
-        </>
-      </ThemeProvider>
-    </ApolloProvider>
-  </AuthProvider>
+        </ThemeProvider>
+      </ApolloProvider>
+    </AuthProvider>
+  </>
 );

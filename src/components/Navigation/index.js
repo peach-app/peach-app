@@ -3,7 +3,7 @@ import { SafeAreaView, TouchableWithoutFeedback } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { withTheme } from 'styled-components';
 
-import { Main, List } from './styles';
+import { Main, List, Item } from './styles';
 
 const iconNames = {
   Campaigns: 'ios-list',
@@ -27,11 +27,13 @@ const Navigation = ({ navigation, onTabPress, theme }) => {
                 key={route.key}
                 onPress={() => onTabPress({ route })}
               >
-                <Ionicons
-                  size={30}
-                  name={iconNames[route.key]}
-                  color={isFocused ? theme.black : theme.greyDark}
-                />
+                <Item>
+                  <Ionicons
+                    size={30}
+                    name={iconNames[route.key]}
+                    color={isFocused ? theme.black : theme.greyDark}
+                  />
+                </Item>
               </TouchableWithoutFeedback>
             );
           })}
