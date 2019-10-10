@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import * as Animatable from 'react-native-animatable';
 
 const LoadingHOC = Component => ({ children, isLoading, ...props }) => {
@@ -30,7 +30,7 @@ export const SkeletonCircle = LoadingHOC(styled(Animatable.View).attrs(
   fadingAnimation
 )`
   width: ${props => props.size}px;
-  aspect-ratio: 1;
+  height: ${props => props.size}px;
   background: ${props => props.theme.grey};
   border-radius: 400px;
 `);

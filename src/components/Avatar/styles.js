@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 
 export const Main = styled.View`
   width: ${props => props.size}px;
-  aspect-ratio: 1;
+  height: ${props => props.size}px;
   border-radius: 400px;
   background: ${props => props.theme.grey};
   overflow: hidden;

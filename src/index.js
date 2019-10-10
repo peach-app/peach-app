@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { AppLoading } from 'expo';
 import { ApolloProvider } from '@apollo/react-hooks';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import { AppearanceProvider } from 'react-native-appearance';
 import * as Font from 'expo-font';
 

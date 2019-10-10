@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ThemeProvider as Provider } from 'styled-components';
+import { ThemeProvider as Provider } from 'styled-components/native';
 import { Appearance, useColorScheme } from 'react-native-appearance';
 
 import theme, { darkModeOverrides } from './theme';

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import * as Animatable from 'react-native-animatable';
 
 export const Main = styled(Animatable.View).attrs({
@@ -14,7 +14,7 @@ export const Main = styled(Animatable.View).attrs({
 export const List = styled.View`
   flex-direction: row;
   justify-content: space-around;
-  padding-horizontal: ${props => props.theme.spacingSmall}px;
+  margin-horizontal: -${props => props.theme.spacingSmall}px;
 `;
 
 export const Item = styled.View`
