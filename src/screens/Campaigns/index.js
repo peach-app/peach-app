@@ -2,23 +2,26 @@ import React, { useState } from 'react';
 import { ScrollView, RefreshControl } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import getOr from 'lodash/fp/getOr';
+import get from 'lodash/fp/get';
+import { Ionicons } from '@expo/vector-icons';
 
 import { NETWORK_STATUS } from '../../consts';
 import SafeAreaView from '../../components/SafeAreaView';
 import StatusBar from '../../components/StatusBar';
 import Container from '../../components/Container';
-import Text from '../../components/Text';
 import Title from '../../components/Title';
 import Intro from '../../components/Intro';
 import Tabs from '../../components/Tabs';
-import { Grid, GridItem } from '../../components/Grid';
 import Card from '../../components/Card';
 import Loading from '../../components/Loading';
-import GET_CAMPAIGNS from './graphql/get-campaigns';
+import Text from '../../components/Text';
+import Avatar from '../../components/Avatar';
+import { Grid, GridItem } from '../../components/Grid';
+import GET_BOOKINGS from './graphql/get-bookings';
 
 const Campaigns = () => {
   const [activeTab, setTab] = useState(0);
-  const { data, loading, networkStatus, refetch } = useQuery(GET_CAMPAIGNS, {
+  const { data, loading, networkStatus, refetch } = useQuery(GET_BOOKINGS, {
     notifyOnNetworkStatusChange: true,
   });
 
@@ -56,11 +59,27 @@ const Campaigns = () => {
               </GridItem>
             )}
 
-            {getOr([], 'user.campaigns.data', data).map(campaign => (
-              <GridItem key={campaign._id}>
+            {getOr([], 'user.bookings.data', data).map(booking => (
+              <GridItem key={booking._id}>
                 <Card>
-                  <Text>{campaign.name}</Text>
-                  <Text numberOfLines={1}>{campaign.description}</Text>
+                  <Grid noWrap align="center">
+                    <GridItem width={60}>
+                      <Avatar
+                        source={{ uri: get('user.avatar.url', booking) }}
+                      />
+                    </GridItem>
+                    <GridItem flex={1}>
+                      <Text>{get('user.name', booking)}</Text>
+                      <Text>£{booking.cost}</Text>
+                    </GridItem>
+                    <GridItem width={30}>
+                      <Ionicons
+                        name="ios-arrow-forward"
+                        size={30}
+                        color="white"
+                      />
+                    </GridItem>
+                  </Grid>
                 </Card>
               </GridItem>
             ))}
