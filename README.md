@@ -45,6 +45,8 @@ Influencer + Brand Collaboration
 
 `netlify deploy`
 
+`expo publish`
+
 ## URLS
 
 #### Marketing Site
