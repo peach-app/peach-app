@@ -1,27 +1,56 @@
 # Peach
 
-## Migrations
+Influencer + Brand Collaboration
 
-`cd Database`
+## Fauna Database Setup
 
-`export FAUNADB_SECRET=YourFaunaSecretKey`
+1. Create a free fauna account:
+   https://dashboard.fauna.com/accounts/register
 
-`npx migrate`
+2. Create a new Database
 
-## Dev
+3. Open the database, go to the "Security" tab, and create a new admin key
 
-`export FAUNADB_SECRET=YourFaunaSecretKey`
+![Security Tab](/docs/assets/security.png)
 
-`export JWT_SECRET=YourJWTSecretKey`
+4. Take note of the key provided
 
-`npm i`
+![New Key](/docs/assets/key.png)
 
-`netlify dev`
+5. Go to the "GraphQL" tab, and upload the schema from ./fauna/schema.gql
 
-`open http://192.168.1.108:8888/ in browser`
+![GraphQL Schema](/docs/assets/graphql.png)
 
-## Deploy
+6. In terminal run: `cd fauna`
+
+7. Then: `export FAUNADB_SECRET=YourFaunaSecretKey`
+
+8. Then: `npx migrate`
+
+9. Head back to the "Security" tab in fauna
+
+10. Create a new key, with the role set to "auth"
+
+11. Replace the "authorization" token within ./src/apollo-client.js with the new token
+
+![Auth Token](/docs/assets/auth-token.png)
+
+## Run Development
+
+`npm start`
+
+## Production Deploy
 
 `expo build:web`
 
 `netlify deploy`
+
+## URLS
+
+#### Marketing Site
+
+https://peachapp.io/
+
+#### App Site
+
+https://dashboard.peachapp.io/
