@@ -33,8 +33,7 @@
   },
   "devDependencies": {
     "babel-preset-expo": "^7.0.0",
-    "faunadb": "^2.8.1",
-    "migrate": "^1.6.2"
+    "faunadb": "^2.8.1"
   },
   "private": true
 }

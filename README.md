@@ -25,7 +25,7 @@ Influencer + Brand Collaboration
 
 7. Then: `export FAUNADB_SECRET=YourFaunaSecretKey`
 
-8. Then: `npx migrate`
+8. Then: `node index`
 
 9. Head back to the "Security" tab in fauna
 
