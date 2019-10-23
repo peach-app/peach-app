@@ -1,9 +1,9 @@
-'use strict';
-const { client, q } = require('../db');
+const { client, q } = require('../helpers/db');
+const { makeRole } = require('../helpers/updateOrCreate');
 
-module.exports.up = async () => {
+module.exports = async () => {
   await client.query(
-    q.CreateRole({
+    makeRole({
       name: 'user',
       membership: [
         {
@@ -82,8 +82,6 @@ module.exports.up = async () => {
       ],
     })
   );
-};
 
-module.exports.down = async () => {
-  await client.query(q.Delete(q.Role('user')));
+  console.log('"user" role created');
 };

@@ -1,9 +1,9 @@
-'use strict';
-const { client, q } = require('../db');
+const { client, q } = require('../helpers/db');
+const { makeFunction } = require('../helpers/updateOrCreate');
 
-module.exports.up = async () => {
+module.exports = async () => {
   await client.query(
-    q.CreateFunction({
+    makeFunction({
       name: 'user_login',
       body: q.Query(
         q.Lambda(
@@ -25,8 +25,6 @@ module.exports.up = async () => {
       ),
     })
   );
-};
 
-module.exports.down = async () => {
-  await client.query(q.Delete(q.Function('user_login')));
+  console.log('"user_login" function created');
 };
