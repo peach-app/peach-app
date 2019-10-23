@@ -5,6 +5,8 @@ type Query {
 
 type Mutation {
   login(email: String!, password: String!): Auth @resolver(name: "user_login")
+  createUser(email: String!, password: String!): User
+    @resolver(name: "create_user")
 }
 
 type Auth @embedded {
