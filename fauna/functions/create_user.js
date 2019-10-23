@@ -9,7 +9,7 @@ module.exports = async () => {
             body: q.Query(
                 q.Lambda(
                   ["email", "password"],
-                  q.Create(q.Collection("User"), { data: { email: q.Var("email"), password: q.Var("password") }}))),
+                  q.Create(q.Collection("User"), { data: { email: q.Var("email"), credentials: { password: q.Var("password") } }}))),
         })
     );
     console.log('"create_user" function created');
