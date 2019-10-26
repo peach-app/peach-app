@@ -8,7 +8,7 @@ import Avatar from '../../components/Avatar';
 import { Grid, GridItem } from '../../components/Grid';
 import { SkeletonText } from '../../components/Skeletons';
 
-const ProfileHeader = ({ name, avatar, isLoading }) => (
+const ProfileHeader = ({ name, email, avatar, isLoading }) => (
   <Main>
     <Grid>
       <GridItem>
@@ -24,7 +24,9 @@ const ProfileHeader = ({ name, avatar, isLoading }) => (
       </GridItem>
       <GridItem>
         <Name>
-          <SkeletonText isLoading={isLoading}>{name || ''}</SkeletonText>
+          <SkeletonText isLoading={isLoading}>
+            {name || email || ''}
+          </SkeletonText>
         </Name>
       </GridItem>
     </Grid>
@@ -34,6 +36,7 @@ const ProfileHeader = ({ name, avatar, isLoading }) => (
 ProfileHeader.propTypes = {
   isLoading: PropTypes.bool,
   name: PropTypes.string,
+  email: PropTypes.string,
   avatar: PropTypes.shape({
     url: PropTypes.string,
   }),
@@ -42,6 +45,7 @@ ProfileHeader.propTypes = {
 export const ProfileHeaderFragment = gql`
   fragment ProfileHeaderFragment on User {
     name
+    email
     avatar {
       url
     }

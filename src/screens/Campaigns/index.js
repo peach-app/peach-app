@@ -5,7 +5,7 @@ import getOr from 'lodash/fp/getOr';
 import get from 'lodash/fp/get';
 import { Ionicons } from '@expo/vector-icons';
 
-import { NETWORK_STATUS } from '../../consts';
+import { NETWORK_STATUS, USER_TYPE } from '../../consts';
 import SafeAreaView from '../../components/SafeAreaView';
 import StatusBar from '../../components/StatusBar';
 import Container from '../../components/Container';
@@ -24,6 +24,7 @@ const Campaigns = () => {
   const { data, loading, networkStatus, refetch } = useQuery(GET_BOOKINGS, {
     notifyOnNetworkStatusChange: true,
   });
+  const fetching = loading && networkStatus === NETWORK_STATUS.FETCHING;
 
   return (
     <SafeAreaView>
@@ -45,15 +46,21 @@ const Campaigns = () => {
               </Intro>
             </GridItem>
 
-            <GridItem>
-              <Tabs
-                activeTabIndex={activeTab}
-                onTabPress={index => setTab(index)}
-                tabs={['Open', 'Applied', 'Requested']}
-              />
-            </GridItem>
+            {!fetching && (
+              <GridItem>
+                <Tabs
+                  activeTabIndex={activeTab}
+                  onTabPress={index => setTab(index)}
+                  tabs={
+                    get('user.type', data) === USER_TYPE.INFLUENCER
+                      ? ['Open', 'Applied', 'Requests']
+                      : ['Open', 'Applications']
+                  }
+                />
+              </GridItem>
+            )}
 
-            {loading && networkStatus === NETWORK_STATUS.FETCHING && (
+            {fetching && (
               <GridItem>
                 <Loading />
               </GridItem>

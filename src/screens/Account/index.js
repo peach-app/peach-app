@@ -12,7 +12,7 @@ import AuthContext from '../../contexts/Auth';
 
 const Account = ({ navigation }) => {
   const { setAuth } = useContext(AuthContext);
-  const { data, loading, error } = useQuery(GET_USER);
+  const { client, data, loading } = useQuery(GET_USER);
 
   return (
     <SafeAreaView>
@@ -25,7 +25,13 @@ const Account = ({ navigation }) => {
           iconProps={{ name: 'ios-arrow-forward' }}
           onPress={() => navigation.navigate('Payouts')}
         />
-        <NavLink title="Logout" onPress={() => setAuth(null)} />
+        <NavLink
+          title="Logout"
+          onPress={() => {
+            client.resetStore();
+            setAuth(null);
+          }}
+        />
       </Container>
     </SafeAreaView>
   );
