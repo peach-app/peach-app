@@ -73,6 +73,7 @@ const Campaigns = () => {
                     <GridItem width={60}>
                       <Avatar
                         source={{ uri: get('user.avatar.url', booking) }}
+                        fallback={get('user.name', booking)}
                       />
                     </GridItem>
                     <GridItem flex={1}>
