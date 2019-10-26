@@ -9,6 +9,17 @@ import Inbox from '../screens/Inbox';
 import Discover from '../screens/Discover';
 import Account from '../screens/Account';
 import Payouts from '../screens/Payouts';
+import Create from '../screens/Create';
+
+const CampaignStack = createStackNavigator(
+  {
+    Campaigns,
+    Create,
+  },
+  {
+    headerMode: 'none',
+  }
+);
 
 const AccountStack = createStackNavigator(
   {
@@ -22,7 +33,7 @@ const AccountStack = createStackNavigator(
 
 const AuthedNavigator = createBottomTabNavigator(
   {
-    Campaigns,
+    Campaigns: CampaignStack,
     Discover,
     Inbox,
     Account: AccountStack,

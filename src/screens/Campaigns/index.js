@@ -16,10 +16,11 @@ import Card from '../../components/Card';
 import Loading from '../../components/Loading';
 import Text from '../../components/Text';
 import Avatar from '../../components/Avatar';
+import Button from '../../components/Button';
 import { Grid, GridItem } from '../../components/Grid';
 import GET_BOOKINGS from './graphql/get-bookings';
 
-const Campaigns = () => {
+const Campaigns = ({ navigation }) => {
   const [activeTab, setTab] = useState(0);
   const { data, loading, networkStatus, refetch } = useQuery(GET_BOOKINGS, {
     notifyOnNetworkStatusChange: true,
@@ -63,6 +64,15 @@ const Campaigns = () => {
             {fetching && (
               <GridItem>
                 <Loading />
+              </GridItem>
+            )}
+
+            {get('user.type', data) === USER_TYPE.BRAND && (
+              <GridItem>
+                <Button
+                  onPress={() => navigation.navigate('Create')}
+                  title="Create a Campaign"
+                />
               </GridItem>
             )}
 
