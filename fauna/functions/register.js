@@ -4,13 +4,14 @@ const { makeFunction } = require('../helpers/updateOrCreate');
 module.exports = async () => {
   await client.query(
     makeFunction({
-      name: 'create_user',
+      name: 'register',
       body: q.Query(
         q.Lambda(
-          ['email', 'password'],
+          ['email', 'password', 'type'],
           q.Create(q.Collection('User'), {
             data: {
               email: q.Var('email'),
+              type: q.Var('type'),
             },
             credentials: { password: q.Var('password') },
           })
@@ -18,5 +19,5 @@ module.exports = async () => {
       ),
     })
   );
-  console.log('"create_user" function created');
+  console.log('"register" function created');
 };
