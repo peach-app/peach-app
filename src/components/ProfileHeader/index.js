@@ -11,7 +11,7 @@ import { SkeletonText } from '../../components/Skeletons';
 const ProfileHeader = ({ name, email, avatar, isLoading }) => (
   <Main>
     <Grid>
-      <GridItem>
+      <GridItem size={12}>
         <Center>
           <Avatar
             isLoading={isLoading}
@@ -23,7 +23,7 @@ const ProfileHeader = ({ name, email, avatar, isLoading }) => (
           />
         </Center>
       </GridItem>
-      <GridItem>
+      <GridItem size={12}>
         <Name>
           <SkeletonText isLoading={isLoading}>
             {name || email || ''}

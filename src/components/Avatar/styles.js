@@ -17,4 +17,5 @@ export const Image = styled.Image`
 export const Initial = styled(Title)`
   color: ${props => props.theme.white};
   margin: auto;
+  font-size: ${props => props.size / 3}px;
 `;

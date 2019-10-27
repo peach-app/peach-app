@@ -1,14 +1,14 @@
 import gql from 'graphql-tag';
 
+import { CampaignCardFragment } from '../../../components/CampaignCard';
+
 export default gql`
+  ${CampaignCardFragment}
   {
-    user {
-      campaigns {
-        data {
-          _id
-          name
-          description
-        }
+    campaigns {
+      data {
+        _id
+        ...CampaignCardFragment
       }
     }
   }

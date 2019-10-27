@@ -11,14 +11,16 @@ const Avatar = ({ size, source, fallback, isLoading }) => (
       {get('uri', source) ? (
         <Image source={source} />
       ) : (
-        <Initial>{(fallback || '').slice(0, 1).toUpperCase()}</Initial>
+        <Initial size={size}>
+          {(fallback || '').slice(0, 1).toUpperCase()}
+        </Initial>
       )}
     </Main>
   </SkeletonCircle>
 );
 
 Avatar.defaultProps = {
-  size: 60,
+  size: 40,
   fallback: '',
 };
 

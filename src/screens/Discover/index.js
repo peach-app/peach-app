@@ -9,10 +9,9 @@ import StatusBar from '../../components/StatusBar';
 import Container from '../../components/Container';
 import Title from '../../components/Title';
 import Intro from '../../components/Intro';
-import Card from '../../components/Card';
 import Loading from '../../components/Loading';
-import Text from '../../components/Text';
 import { Grid, GridItem } from '../../components/Grid';
+import CampaignCard from '../../components/CampaignCard';
 import GET_CAMPAIGNS from './graphql/get-campaigns';
 
 const Discover = () => {
@@ -34,24 +33,21 @@ const Discover = () => {
         <Container>
           <StatusBar />
           <Grid>
-            <GridItem>
+            <GridItem size={12}>
               <Intro>
                 <Title>Discover</Title>
               </Intro>
             </GridItem>
 
             {loading && networkStatus === NETWORK_STATUS.FETCHING && (
-              <GridItem>
+              <GridItem size={12}>
                 <Loading />
               </GridItem>
             )}
 
-            {getOr([], 'user.campaigns.data', data).map(campaign => (
-              <GridItem key={campaign._id}>
-                <Card>
-                  <Text>{campaign.name}</Text>
-                  <Text numberOfLines={1}>{campaign.description}</Text>
-                </Card>
+            {getOr([], 'campaigns.data', data).map(campaign => (
+              <GridItem size={12} key={campaign._id}>
+                <CampaignCard {...campaign} />
               </GridItem>
             ))}
           </Grid>

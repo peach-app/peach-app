@@ -3,7 +3,6 @@ import { ScrollView, RefreshControl } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import getOr from 'lodash/fp/getOr';
 import get from 'lodash/fp/get';
-import { Ionicons } from '@expo/vector-icons';
 
 import { NETWORK_STATUS, USER_TYPE } from '../../consts';
 import SafeAreaView from '../../components/SafeAreaView';
@@ -12,20 +11,21 @@ import Container from '../../components/Container';
 import Title from '../../components/Title';
 import Intro from '../../components/Intro';
 import Tabs from '../../components/Tabs';
-import Card from '../../components/Card';
 import Loading from '../../components/Loading';
-import Text from '../../components/Text';
-import Avatar from '../../components/Avatar';
 import Button from '../../components/Button';
 import { Grid, GridItem } from '../../components/Grid';
-import GET_BOOKINGS from './graphql/get-bookings';
+import CampaignCard from '../../components/CampaignCard';
+import GET_USER from './graphql/get-user';
 
-const Campaigns = ({ navigation }) => {
+const Campaigns = () => {
   const [activeTab, setTab] = useState(0);
-  const { data, loading, networkStatus, refetch } = useQuery(GET_BOOKINGS, {
+  const { data, loading, networkStatus, refetch } = useQuery(GET_USER, {
     notifyOnNetworkStatusChange: true,
   });
   const fetching = loading && networkStatus === NETWORK_STATUS.FETCHING;
+  const userType = get('user.type', data);
+  const isBrand = userType === USER_TYPE.BRAND;
+  const isInfluencer = userType === USER_TYPE.INFLUENCER;
 
   return (
     <SafeAreaView>
@@ -41,66 +41,47 @@ const Campaigns = ({ navigation }) => {
         <Container>
           <StatusBar />
           <Grid>
-            <GridItem>
+            <GridItem size={12}>
               <Intro>
-                <Title>Campaigns</Title>
+                <Grid align="flex-end">
+                  <GridItem flex={1}>
+                    <Title>Campaigns</Title>
+                  </GridItem>
+                  {isBrand && (
+                    <GridItem>
+                      <Button title="Create" />
+                    </GridItem>
+                  )}
+                </Grid>
               </Intro>
             </GridItem>
 
             {!fetching && (
-              <GridItem>
+              <GridItem size={12}>
                 <Tabs
                   activeTabIndex={activeTab}
                   onTabPress={index => setTab(index)}
                   tabs={
-                    get('user.type', data) === USER_TYPE.INFLUENCER
-                      ? ['Open', 'Applied', 'Requests']
-                      : ['Open', 'Applications']
+                    isInfluencer
+                      ? ['Open', 'Requests', 'Applied']
+                      : ['All', 'Applications']
                   }
                 />
               </GridItem>
             )}
 
             {fetching && (
-              <GridItem>
+              <GridItem size={12}>
                 <Loading />
               </GridItem>
             )}
 
-            {get('user.type', data) === USER_TYPE.BRAND && (
-              <GridItem>
-                <Button
-                  onPress={() => navigation.navigate('Create')}
-                  title="Create a Campaign"
-                />
-              </GridItem>
-            )}
-
-            {getOr([], 'user.bookings.data', data).map(booking => (
-              <GridItem key={booking._id}>
-                <Card>
-                  <Grid noWrap align="center">
-                    <GridItem width={60}>
-                      <Avatar
-                        source={{ uri: get('user.avatar.url', booking) }}
-                        fallback={get('user.name', booking)}
-                      />
-                    </GridItem>
-                    <GridItem flex={1}>
-                      <Text>{get('user.name', booking)}</Text>
-                      <Text>£{booking.cost}</Text>
-                    </GridItem>
-                    <GridItem width={30}>
-                      <Ionicons
-                        name="ios-arrow-forward"
-                        size={30}
-                        color="white"
-                      />
-                    </GridItem>
-                  </Grid>
-                </Card>
-              </GridItem>
-            ))}
+            {isBrand &&
+              getOr([], 'user.campaigns.data', data).map(campaign => (
+                <GridItem size={12} key={campaign._id}>
+                  <CampaignCard {...campaign} />
+                </GridItem>
+              ))}
           </Grid>
         </Container>
       </ScrollView>
