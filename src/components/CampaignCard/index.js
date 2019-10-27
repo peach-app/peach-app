@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
-import { Ionicons } from '@expo/vector-icons';
 import get from 'lodash/fp/get';
 
+import { Icon } from './styles';
 import { Grid, GridItem } from '../../components/Grid';
 import Avatar from '../../components/Avatar';
 import Text from '../../components/Text';
@@ -22,7 +22,7 @@ const CampaignCard = ({ user, name, description }) => (
       <Text numberOfLines={1}>{description}</Text>
     </GridItem>
     <GridItem width={30}>
-      <Ionicons name="ios-arrow-forward" size={30} color="white" />
+      <Icon name="ios-arrow-forward" />
     </GridItem>
   </Grid>
 );
