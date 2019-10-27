@@ -25,7 +25,8 @@ module.exports = async () => {
         {
           resource: q.Collection('Campaign'),
           actions: {
-            read: q.Query(
+            read: true,
+            write: q.Query(
               q.Lambda(
                 'ref',
                 q.Equals(
@@ -34,6 +35,24 @@ module.exports = async () => {
                 )
               )
             ),
+            create: false,
+            delete: q.Query(
+              q.Lambda(
+                'ref',
+                q.Equals(
+                  q.Identity(),
+                  q.Select(['data', 'user'], q.Get(q.Var('ref')))
+                )
+              )
+            ),
+            history_read: false,
+            history_write: false,
+          },
+        },
+        {
+          resource: q.Collection('User'),
+          actions: {
+            read: true,
             write: false,
             create: false,
             delete: false,

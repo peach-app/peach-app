@@ -1,6 +1,6 @@
 type Query {
   user: User @resolver(name: "current_user") @relation
-  campaigns: [Campaign]
+  allCampaigns: [Campaign]
 }
 
 type Mutation {
