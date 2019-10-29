@@ -10,19 +10,16 @@ module.exports = async () => {
           ['email', 'password'],
           q.Let(
             {
-              user: q.Login(
-                q.Match(q.Index('unique_User_email'), q.Var('email')),
-                {
-                  password: q.Var('password'),
-                }
-              ),
+              user: q.Login(q.Match(q.Index('unique_User_email'), q.Var('email')), {
+                password: q.Var('password')
+              })
             },
             {
-              secret: q.Select(['secret'], q.Var('user')),
+              secret: q.Select(['secret'], q.Var('user'))
             }
           )
         )
-      ),
+      )
     })
   );
 
