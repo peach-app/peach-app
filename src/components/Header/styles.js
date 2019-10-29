@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import Title from '../../components/Title';
 
 export const Main = styled.View`

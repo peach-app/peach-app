@@ -1,6 +1,5 @@
 import React from 'react';
-import { RefreshControl } from 'react-native';
-import { ScrollView } from 'react-navigation';
+import { ScrollView, RefreshControl } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 import getOr from 'lodash/fp/getOr';
