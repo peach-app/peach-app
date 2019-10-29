@@ -11,13 +11,13 @@ import Container from '../../components/Container';
 import Title from '../../components/Title';
 import Intro from '../../components/Intro';
 import Tabs from '../../components/Tabs';
+import IconButton from '../../components/IconButton';
 import Loading from '../../components/Loading';
-import Button from '../../components/Button';
 import { Grid, GridItem } from '../../components/Grid';
 import CampaignCard from '../../components/CampaignCard';
 import GET_USER from './graphql/get-user';
 
-const Campaigns = () => {
+const Campaigns = ({ navigation }) => {
   const [activeTab, setTab] = useState(0);
   const { data, loading, networkStatus, refetch } = useQuery(GET_USER, {
     notifyOnNetworkStatusChange: true,
@@ -49,7 +49,11 @@ const Campaigns = () => {
                   </GridItem>
                   {isBrand && (
                     <GridItem>
-                      <Button title="Create" />
+                      <IconButton
+                        size={30}
+                        name="ios-add"
+                        onPress={() => navigation.navigate('CreateCampaign')}
+                      />
                     </GridItem>
                   )}
                 </Grid>

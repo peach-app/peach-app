@@ -1,11 +1,6 @@
 import styled from 'styled-components/native';
-import * as Animatable from 'react-native-animatable';
 
-export const Main = styled(Animatable.View).attrs({
-  animation: 'slideInUp',
-  duration: 300,
-  delay: 300,
-})`
+export const Main = styled.View`
   background: ${props => props.theme.background};
   border-top-width: 1px;
   border-color: ${props => props.theme.greyLight};

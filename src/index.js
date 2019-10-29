@@ -39,7 +39,6 @@ const App = () => {
 
 const Main = styled.View`
   flex: 1;
-  background: ${props => props.theme.background};
 `;
 
 export default () => (
