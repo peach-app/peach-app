@@ -6,6 +6,7 @@ const AuthContext = React.createContext();
 
 const getStoredAuth = async setAuth => {
   const token = await AsyncStorage.getItem('token');
+
   if (token) {
     setAuth(token);
   }

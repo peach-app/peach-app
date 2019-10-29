@@ -17,10 +17,14 @@ const Landing = ({ navigation }) => (
           <Container>
             <Actions>
               <Grid>
-                <GridItem>
-                  <Button isDark title="Login" onPress={() => navigation.navigate('Login')} />
+                <GridItem size={12}>
+                  <Button
+                    isDark
+                    title="Login"
+                    onPress={() => navigation.navigate('Login')}
+                  />
                 </GridItem>
-                <GridItem>
+                <GridItem size={12}>
                   <Button
                     isDark
                     title="Create an account"

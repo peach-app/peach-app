@@ -3,27 +3,29 @@ import { ScrollView, RefreshControl } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import getOr from 'lodash/fp/getOr';
 import get from 'lodash/fp/get';
-import { Ionicons } from '@expo/vector-icons';
 
-import { NETWORK_STATUS } from '../../consts';
+import { NETWORK_STATUS, USER_TYPE } from '../../consts';
 import SafeAreaView from '../../components/SafeAreaView';
 import StatusBar from '../../components/StatusBar';
 import Container from '../../components/Container';
 import Title from '../../components/Title';
 import Intro from '../../components/Intro';
 import Tabs from '../../components/Tabs';
-import Card from '../../components/Card';
+import IconButton from '../../components/IconButton';
 import Loading from '../../components/Loading';
-import Text from '../../components/Text';
-import Avatar from '../../components/Avatar';
 import { Grid, GridItem } from '../../components/Grid';
-import GET_BOOKINGS from './graphql/get-bookings';
+import CampaignCard from '../../components/CampaignCard';
+import GET_USER from './graphql/get-user';
 
-const Campaigns = () => {
+const Campaigns = ({ navigation }) => {
   const [activeTab, setTab] = useState(0);
-  const { data, loading, networkStatus, refetch } = useQuery(GET_BOOKINGS, {
+  const { data, loading, networkStatus, refetch } = useQuery(GET_USER, {
     notifyOnNetworkStatusChange: true,
   });
+  const fetching = loading && networkStatus === NETWORK_STATUS.FETCHING;
+  const userType = get('user.type', data);
+  const isBrand = userType === USER_TYPE.BRAND;
+  const isInfluencer = userType === USER_TYPE.INFLUENCER;
 
   return (
     <SafeAreaView>
@@ -39,50 +41,51 @@ const Campaigns = () => {
         <Container>
           <StatusBar />
           <Grid>
-            <GridItem>
+            <GridItem size={12}>
               <Intro>
-                <Title>Campaigns</Title>
+                <Grid align="flex-end">
+                  <GridItem flex={1}>
+                    <Title>Campaigns</Title>
+                  </GridItem>
+                  {isBrand && (
+                    <GridItem>
+                      <IconButton
+                        size={30}
+                        name="ios-add"
+                        onPress={() => navigation.navigate('CreateCampaign')}
+                      />
+                    </GridItem>
+                  )}
+                </Grid>
               </Intro>
             </GridItem>
 
-            <GridItem>
-              <Tabs
-                activeTabIndex={activeTab}
-                onTabPress={index => setTab(index)}
-                tabs={['Open', 'Applied', 'Requested']}
-              />
-            </GridItem>
+            {!fetching && (
+              <GridItem size={12}>
+                <Tabs
+                  activeTabIndex={activeTab}
+                  onTabPress={index => setTab(index)}
+                  tabs={
+                    isInfluencer
+                      ? ['Open', 'Requests', 'Applied']
+                      : ['All', 'Applications']
+                  }
+                />
+              </GridItem>
+            )}
 
-            {loading && networkStatus === NETWORK_STATUS.FETCHING && (
-              <GridItem>
+            {fetching && (
+              <GridItem size={12}>
                 <Loading />
               </GridItem>
             )}
 
-            {getOr([], 'user.bookings.data', data).map(booking => (
-              <GridItem key={booking._id}>
-                <Card>
-                  <Grid noWrap align="center">
-                    <GridItem width={60}>
-                      <Avatar
-                        source={{ uri: get('user.avatar.url', booking) }}
-                      />
-                    </GridItem>
-                    <GridItem flex={1}>
-                      <Text>{get('user.name', booking)}</Text>
-                      <Text>£{booking.cost}</Text>
-                    </GridItem>
-                    <GridItem width={30}>
-                      <Ionicons
-                        name="ios-arrow-forward"
-                        size={30}
-                        color="white"
-                      />
-                    </GridItem>
-                  </Grid>
-                </Card>
-              </GridItem>
-            ))}
+            {isBrand &&
+              getOr([], 'user.campaigns.data', data).map(campaign => (
+                <GridItem size={12} key={campaign._id}>
+                  <CampaignCard {...campaign} />
+                </GridItem>
+              ))}
           </Grid>
         </Container>
       </ScrollView>

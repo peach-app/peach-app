@@ -23,7 +23,7 @@ export const GridItem = styled.View`
       return `width: ${100 * (props.size / 12)}%;`;
     }
 
-    return `width: 100%;`;
+    return null;
   }}
   margin: ${props => `${props.theme.spacing}px ${props.theme.spacing}px 0 0`};
 `;

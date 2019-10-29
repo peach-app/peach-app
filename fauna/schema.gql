@@ -1,12 +1,12 @@
 type Query {
   user: User @resolver(name: "current_user") @relation
-  campaigns: [Campaign] @relation
+  allCampaigns: [Campaign]
 }
 
 type Mutation {
   login(email: String!, password: String!): Auth @resolver(name: "user_login")
-  createUser(email: String!, password: String!): User
-    @resolver(name: "create_user")
+  register(email: String!, password: String!, type: UserType!): User
+    @resolver(name: "register")
 }
 
 type Auth @embedded {
@@ -17,14 +17,17 @@ type Media @embedded {
   url: String!
 }
 
+enum UserType {
+  BRAND
+  INFLUENCER
+}
+
 type User {
   name: String
   avatar: Media
   email: String! @unique
 
-  # Determine if can create(true) or
-  # apply(false) to campaigns
-  isBrand: Boolean!
+  type: UserType!
 
   # User created Campaigns
   campaigns: [Campaign] @relation

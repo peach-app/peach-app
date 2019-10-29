@@ -64,12 +64,12 @@ const Login = () => {
             </Header>
             <Grid>
               {error && (
-                <GridItem>
+                <GridItem size={12}>
                   <Text>Incorrect Email or Password</Text>
                 </GridItem>
               )}
 
-              <GridItem>
+              <GridItem size={12}>
                 <TextInput
                   keyboardType="email-address"
                   autoCapitalize="none"
@@ -78,11 +78,11 @@ const Login = () => {
                 />
               </GridItem>
 
-              <GridItem>
+              <GridItem size={12}>
                 <TextInput label="Password" name="password" secureTextEntry />
               </GridItem>
 
-              <GridItem>
+              <GridItem size={12}>
                 <Actions>
                   <Button
                     isLoading={loading}
