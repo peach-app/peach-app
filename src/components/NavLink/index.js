@@ -5,7 +5,7 @@ import { Main, Title, Icon } from './styles';
 
 const NavLink = ({ title, iconProps, ...props }) => (
   <Main {...props}>
-    <Title>{title}</Title>
+    <Title numberOfLines={1}>{title}</Title>
     {iconProps && <Icon {...iconProps} />}
   </Main>
 );

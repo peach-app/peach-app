@@ -16,6 +16,7 @@ import Text from '../../components/Text';
 import Avatar from '../../components/Avatar';
 import { SkeletonText } from '../../components/Skeletons';
 import { Grid, GridItem } from '../../components/Grid';
+import Actions from '../../components/Actions';
 
 import GET_USER from './graphql/get-user';
 import GET_CAMPAIGN from './graphql/get-campaign';
@@ -34,11 +35,14 @@ const Campaign = ({ navigation }) => {
   );
 
   const fetching = loading && networkStatus === NETWORK_STATUS.FETCHING;
+  const brandName =
+    get('findCampaignByID.user.name', campaign) ||
+    get('findCampaignByID.user.email', campaign);
 
   return (
     <SafeAreaView>
       <StatusBar />
-      <Header title="Campaign" />
+      <Header title={brandName} />
       <ScrollView
         style={{ flex: 1 }}
         refreshControl={
@@ -54,11 +58,8 @@ const Campaign = ({ navigation }) => {
               <Intro>
                 <Avatar
                   isLoading={fetching}
-                  size={50}
-                  fallback={
-                    get('findCampaignByID.user.name', campaign) ||
-                    get('findCampaignByID.user.email', campaign)
-                  }
+                  size={60}
+                  fallback={brandName}
                   source={{
                     uri: get('findCampaignByID.user.avatar.url', campaign),
                   }}

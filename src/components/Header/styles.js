@@ -1,9 +1,11 @@
 import styled from 'styled-components/native';
-import Title from '../../components/Title';
+import Text from '../../components/Text';
 
 export const Main = styled.View`
   border-bottom-width: 1px;
-  padding: ${props => props.theme.spacing}px;
+  padding-horizontal: 55px;
+  height: 55px;
+  justify-content: center;
   border-color: ${props => props.theme.grey};
 `;
 
@@ -16,7 +18,7 @@ export const Action = styled.View`
   justify-content: center;
 `;
 
-export const MainTitle = styled(Title)`
+export const MainTitle = styled(Text)`
   text-align: center;
-  font-size: 18px;
+  font-size: 16px;
 `;

@@ -15,6 +15,7 @@ import IconButton from '../../components/IconButton';
 import Loading from '../../components/Loading';
 import { Grid, GridItem } from '../../components/Grid';
 import CampaignCard from '../../components/CampaignCard';
+import Text from '../../components/Text';
 import GET_USER from './graphql/get-user';
 
 const Campaigns = ({ navigation }) => {
@@ -84,6 +85,14 @@ const Campaigns = ({ navigation }) => {
               getOr([], 'user.campaigns.data', data).map(campaign => (
                 <GridItem size={12} key={campaign._id}>
                   <CampaignCard {...campaign} />
+                </GridItem>
+              ))}
+
+            {isInfluencer &&
+              getOr([], 'user.bookings.data', data).map(booking => (
+                <GridItem key={booking._id}>
+                  <Text>{get('campaign.name', booking)}</Text>
+                  <Text>{get('cost', booking)}</Text>
                 </GridItem>
               ))}
           </Grid>

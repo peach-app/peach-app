@@ -15,9 +15,9 @@ const CampaignCard = ({ navigation, _id, user, name, description }) => (
     onPress={() => navigation.navigate('Campaign', { id: _id })}
   >
     <Grid noWrap align="center">
-      <GridItem width={50}>
+      <GridItem width={40}>
         <Avatar
-          size={50}
+          size={40}
           source={{ uri: get('avatar.url', user) }}
           fallback={get('name', user) || get('email', user)}
         />
@@ -26,7 +26,7 @@ const CampaignCard = ({ navigation, _id, user, name, description }) => (
         <Text>{name}</Text>
         <Text numberOfLines={1}>{description}</Text>
       </GridItem>
-      <GridItem width={30}>
+      <GridItem>
         <Icon name="ios-arrow-forward" />
       </GridItem>
     </Grid>

@@ -17,12 +17,8 @@ export default gql`
         data {
           _id
           cost
-          user {
+          campaign {
             name
-            email
-            avatar {
-              url
-            }
           }
         }
       }

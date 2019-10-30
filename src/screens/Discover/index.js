@@ -45,7 +45,7 @@ const Discover = () => {
               </GridItem>
             )}
 
-            {getOr([], 'campaigns.data', data).map(campaign => (
+            {getOr([], 'discover.data', data).map(campaign => (
               <GridItem size={12} key={campaign._id}>
                 <CampaignCard {...campaign} />
               </GridItem>
