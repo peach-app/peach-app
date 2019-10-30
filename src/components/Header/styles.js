@@ -6,7 +6,7 @@ export const Main = styled.View`
   padding-horizontal: 55px;
   height: 55px;
   justify-content: center;
-  border-color: ${props => props.theme.grey};
+  border-color: ${props => props.theme.greyLight};
 `;
 
 export const Action = styled.View`
