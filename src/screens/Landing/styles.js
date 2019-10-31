@@ -6,7 +6,7 @@ export const Main = styled.View`
 `;
 
 export const Content = styled(Animatable.View).attrs({
-  animation: 'slideInUp',
+  animation: 'fadeInUp',
   duration: 300,
   delay: 300,
 })`

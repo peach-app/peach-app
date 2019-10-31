@@ -9,7 +9,7 @@ export const ActivityIndicator = styled.ActivityIndicator.attrs(props => ({
 export const Main = styled.TouchableOpacity`
   padding: 0 ${props => props.theme.spacing}px;
   justify-content: center;
-  border-radius: 200px;
+  border-radius: ${props => props.theme.radius}px;
   min-height: 38px;
   background: ${props =>
     props.isDark ? props.theme.black : props.theme.brand};
