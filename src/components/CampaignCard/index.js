@@ -5,26 +5,26 @@ import { withNavigation } from 'react-navigation';
 import gql from 'graphql-tag';
 import get from 'lodash/fp/get';
 
-import { Icon } from './styles';
+import { Icon, MainTitle, Description, User } from './styles';
 import { Grid, GridItem } from '../../components/Grid';
 import Avatar from '../../components/Avatar';
-import Text from '../../components/Text';
 
 const CampaignCard = ({ navigation, _id, user, name, description }) => (
   <TouchableOpacity
     onPress={() => navigation.navigate('Campaign', { id: _id })}
   >
     <Grid noWrap align="center">
-      <GridItem width={40}>
+      <GridItem>
         <Avatar
-          size={40}
+          size={50}
           source={{ uri: get('avatar.url', user) }}
           fallback={get('name', user) || get('email', user)}
         />
       </GridItem>
       <GridItem flex={1}>
-        <Text>{name}</Text>
-        <Text numberOfLines={1}>{description}</Text>
+        <MainTitle numberOfLines={2}>{name}</MainTitle>
+        <Description numberOfLines={1}>{description}</Description>
+        <User>{get('name', user) || get('email', user)}</User>
       </GridItem>
       <GridItem>
         <Icon name="ios-arrow-forward" />
@@ -35,7 +35,7 @@ const CampaignCard = ({ navigation, _id, user, name, description }) => (
 
 CampaignCard.propTypes = {
   navigation: PropTypes.shape({
-    navigation: PropTypes.func.isRequired,
+    navigate: PropTypes.func.isRequired,
   }),
   _id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,

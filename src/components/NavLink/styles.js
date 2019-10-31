@@ -4,10 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Text from '../../components/Text';
 
 export const Main = styled.TouchableOpacity`
-  border-top-width: 1px;
-  border-color: ${props => props.theme.greyLight};
-  height: 45px;
-  justify-content: space-between;
+  padding-vertical: ${props => props.theme.spacingSmall}px;
   flex-direction: row;
   align-items: center;
 `;
@@ -18,5 +15,7 @@ export const Title = styled(Text)`
 
 export const Icon = styled(Ionicons).attrs(props => ({
   color: props.theme.foreground,
-  size: 20,
-}))``;
+  size: 22,
+}))`
+  margin-left: auto;
+`;

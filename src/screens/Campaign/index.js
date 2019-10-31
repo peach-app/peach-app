@@ -58,7 +58,7 @@ const Campaign = ({ navigation }) => {
               <Intro>
                 <Avatar
                   isLoading={fetching}
-                  size={60}
+                  size={50}
                   fallback={brandName}
                   source={{
                     uri: get('findCampaignByID.user.avatar.url', campaign),
