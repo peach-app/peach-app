@@ -7,6 +7,8 @@ export const Main = styled.TouchableOpacity`
   padding-vertical: ${props => props.theme.spacingSmall}px;
   flex-direction: row;
   align-items: center;
+  border-color: ${props => props.theme.greyLight};
+  border-top-width: 1px;
 `;
 
 export const Title = styled(Text)`
