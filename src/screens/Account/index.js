@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { ScrollView } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 
@@ -16,23 +17,25 @@ const Account = ({ navigation }) => {
 
   return (
     <SafeAreaView>
-      <Container>
-        <StatusBar />
-        <ProfileHeader isLoading={loading} {...get('user', data)} />
-        <NavLink title="Account" iconProps={{ name: 'ios-arrow-forward' }} />
-        <NavLink
-          title="Payout History"
-          iconProps={{ name: 'ios-arrow-forward' }}
-          onPress={() => navigation.navigate('Payouts')}
-        />
-        <NavLink
-          title="Logout"
-          onPress={() => {
-            client.resetStore();
-            setAuth(null);
-          }}
-        />
-      </Container>
+      <ScrollView>
+        <Container>
+          <StatusBar />
+          <ProfileHeader isLoading={loading} {...get('user', data)} />
+          <NavLink title="Account" iconProps={{ name: 'ios-arrow-forward' }} />
+          <NavLink
+            title="Payout History"
+            iconProps={{ name: 'ios-arrow-forward' }}
+            onPress={() => navigation.navigate('Payouts')}
+          />
+          <NavLink
+            title="Logout"
+            onPress={() => {
+              client.resetStore();
+              setAuth(null);
+            }}
+          />
+        </Container>
+      </ScrollView>
     </SafeAreaView>
   );
 };

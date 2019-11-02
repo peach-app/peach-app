@@ -10,7 +10,7 @@ export const Main = styled.View`
 
 export const Item = styled.View`
   flex-grow: 1;
-  min-height: 38px;
+  min-height: 40px;
   justify-content: center;
   border-radius: 200px;
   ${props => props.active && `background: ${props.theme.foreground};`}

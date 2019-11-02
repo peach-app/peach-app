@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 import getOr from 'lodash/fp/getOr';
 
-import { Foot } from './styles';
+import { Foot, Description } from './styles';
 import { NETWORK_STATUS, USER_TYPE } from '../../consts';
 import Header from '../../components/Header';
 import Intro from '../../components/Intro';
@@ -13,7 +13,6 @@ import StatusBar from '../../components/StatusBar';
 import Button from '../../components/Button';
 import Container from '../../components/Container';
 import Title from '../../components/Title';
-import Text from '../../components/Text';
 import Avatar from '../../components/Avatar';
 import { SkeletonText } from '../../components/Skeletons';
 import { Grid, GridItem } from '../../components/Grid';
@@ -74,14 +73,14 @@ const Campaign = ({ navigation }) => {
               </Title>
             </GridItem>
             <GridItem size={12}>
-              <Text>
+              <Description>
                 <SkeletonText
                   loadingText="Campaign description loading..."
                   isLoading={fetching}
                 >
                   {getOr('', 'findCampaignByID.description', campaign)}
                 </SkeletonText>
-              </Text>
+              </Description>
             </GridItem>
           </Grid>
         </Container>
