@@ -88,7 +88,7 @@ const Campaign = ({ navigation }) => {
 
       {get('user.type', user) === USER_TYPE.INFLUENCER && (
         <Foot>
-          <Button title="Apply" />
+          <Button title="Apply" fixedWidth />
         </Foot>
       )}
     </SafeAreaView>
