@@ -21,7 +21,11 @@ const Account = ({ navigation }) => {
         <Container>
           <StatusBar />
           <ProfileHeader isLoading={loading} {...get('user', data)} />
-          <NavLink title="Account" iconProps={{ name: 'ios-arrow-forward' }} />
+          <NavLink
+            title="Account"
+            iconProps={{ name: 'ios-arrow-forward' }}
+            onPress={() => navigation.navigate('AccountEdit')}
+          />
           <NavLink
             title="Payout History"
             iconProps={{ name: 'ios-arrow-forward' }}

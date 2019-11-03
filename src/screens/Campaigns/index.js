@@ -91,8 +91,7 @@ const Campaigns = ({ navigation }) => {
             {isInfluencer &&
               getOr([], 'user.bookings.data', data).map(booking => (
                 <GridItem size={12} key={booking._id}>
-                  <Text>{get('campaign.name', booking)}</Text>
-                  <Text>{get('cost', booking)}</Text>
+                  <CampaignCard {...getOr({}, 'campaign', booking)} />
                 </GridItem>
               ))}
           </Grid>

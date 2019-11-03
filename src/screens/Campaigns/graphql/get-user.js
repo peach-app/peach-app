@@ -16,9 +16,8 @@ export default gql`
       bookings {
         data {
           _id
-          cost
           campaign {
-            name
+            ...CampaignCardFragment
           }
         }
       }
