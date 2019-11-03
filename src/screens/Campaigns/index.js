@@ -13,14 +13,16 @@ import Tabs from '../../components/Tabs';
 import IconButton from '../../components/IconButton';
 import { Grid, GridItem } from '../../components/Grid';
 import CampaignCard from '../../components/CampaignCard';
+import GET_USER from './graphql/get-user';
 import GET_CAMPAIGNS from './graphql/get-campaigns';
 
 const Campaigns = ({ navigation }) => {
   const [activeTab, setTab] = useState(0);
+  const { data: user } = useQuery(GET_USER);
   const { data, loading, networkStatus, refetch } = useQuery(GET_CAMPAIGNS, {
     notifyOnNetworkStatusChange: true,
   });
-  const userType = get('user.type', data);
+  const userType = get('user.type', user);
   const isBrand = userType === USER_TYPE.BRAND;
   const isInfluencer = userType === USER_TYPE.INFLUENCER;
 
