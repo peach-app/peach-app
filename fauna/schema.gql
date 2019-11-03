@@ -2,6 +2,9 @@ type Query {
   user: User @resolver(name: "current_user")
   # Discover campaigns listing
   discover: [Campaign] @index(name: "campaigns")
+  # Campaigns listing
+  campaigns: [Campaign]
+    @resolver(name: "campaigns_by_user_type", paginated: true)
 }
 
 type Mutation {
