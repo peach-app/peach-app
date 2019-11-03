@@ -9,7 +9,6 @@ import StatusBar from '../../components/StatusBar';
 import { FlatList, FlatListItem } from '../../components/FlatList';
 import Title from '../../components/Title';
 import Intro from '../../components/Intro';
-import Loading from '../../components/Loading';
 import CampaignCard from '../../components/CampaignCard';
 import GET_CAMPAIGNS from './graphql/get-campaigns';
 
@@ -37,9 +36,13 @@ const Discover = () => {
             </FlatListItem>
 
             {loading && networkStatus === NETWORK_STATUS.FETCHING && (
-              <FlatListItem>
-                <Loading />
-              </FlatListItem>
+              <>
+                {Array.from(Array(3)).map((_, key) => (
+                  <FlatListItem key={key}>
+                    <CampaignCard isLoading />
+                  </FlatListItem>
+                ))}
+              </>
             )}
           </>
         }
