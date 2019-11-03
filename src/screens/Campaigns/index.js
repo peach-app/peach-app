@@ -69,7 +69,7 @@ const Campaigns = ({ navigation }) => {
                   tabs={
                     isInfluencer
                       ? ['Open', 'Requests', 'Applied']
-                      : ['All', 'Applications']
+                      : ['Open', 'Completed']
                   }
                 />
               </GridItem>
