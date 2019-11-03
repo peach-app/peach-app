@@ -41,11 +41,7 @@ Influencer + Brand Collaboration
 
 ## Production Deploy
 
-`expo build:web`
-
-`netlify deploy`
-
-`expo publish`
+`npm run deploy:prod`
 
 ## URLS
 

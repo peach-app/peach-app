@@ -2,10 +2,10 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
-    "eject": "expo eject"
+    "deploy:build:web": "expo build:web",
+    "deploy:web": "netlify deploy --prod",
+    "deploy:app": "expo publish",
+    "deploy:prod": "run-s deploy:**"
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.1",
@@ -33,7 +33,8 @@
   },
   "devDependencies": {
     "babel-preset-expo": "^7.0.0",
-    "faunadb": "^2.8.1"
+    "faunadb": "^2.8.1",
+    "npm-run-all": "^4.1.5"
   },
   "private": true
 }
