@@ -7,10 +7,12 @@ import Title from '../../components/Title';
 export const Icon = styled(Ionicons).attrs(props => ({
   color: props.theme.foreground,
   size: 22,
-}))``;
+}))`
+  margin-right: ${props => props.theme.spacingSmall}px;
+`;
 
 export const MainTitle = styled(Text)`
-  font-size: 16px;
+  margin-bottom: ${props => props.theme.spacingXSmall}px;
 `;
 
 export const User = styled(Title)`
