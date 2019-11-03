@@ -20,7 +20,10 @@ module.exports = async () => {
               q.Paginate(
                 q.Match(q.Index('booking_user_by_user'), q.Identity())
               ),
-              q.Lambda('cmp', q.Get(q.Var('cmp')))
+              q.Lambda(
+                'cmp',
+                q.Get(q.Select(['data', 'campaign'], q.Get(q.Var('cmp'))))
+              )
             ),
 
             // Else
