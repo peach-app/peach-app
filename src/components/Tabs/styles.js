@@ -1,23 +1,22 @@
 import styled from 'styled-components/native';
 
-import Text from '../../components/Text';
+import Title from '../../components/Title';
 
 export const Main = styled.View`
   flex-direction: row;
-  background: ${props => props.theme.greyLight};
-  border-radius: 200px;
+  justify-content: flex-start;
+  margin-bottom: ${props => props.theme.spacingSmall}px;
 `;
 
 export const Item = styled.View`
-  flex-grow: 1;
-  min-height: 40px;
-  justify-content: center;
-  border-radius: 200px;
-  ${props => props.active && `background: ${props.theme.foreground};`}
+  border-bottom-width: 4px;
+  padding-vertical: ${props => props.theme.spacingSmall}px;
+  margin-right: ${props => props.theme.spacingMedium}px;
+  border-color: ${props => (props.active ? props.theme.brand : 'transparent')};
 `;
 
-export const Title = styled(Text)`
+export const TabTitle = styled(Title)`
   text-align: center;
   font-size: 16px;
-  ${props => props.active && `color: ${props.theme.background};`}
+  ${props => !props.active && `color: ${props.theme.greyDark};`}
 `;

@@ -11,6 +11,7 @@ const theme = {
   radius: 6,
   spacingSmall: 8,
   spacing: 16,
+  spacingMedium: 24,
   spacingLarge: 32,
   spacingXLarge: 48,
 };
