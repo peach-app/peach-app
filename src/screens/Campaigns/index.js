@@ -62,7 +62,7 @@ const Campaigns = ({ navigation }) => {
                 onTabPress={index => setTab(index)}
                 tabs={
                   isInfluencer
-                    ? ['Open', 'Requests', 'Applied']
+                    ? ['Open', 'Applied', 'Requested']
                     : ['Open', 'Completed']
                 }
               />
