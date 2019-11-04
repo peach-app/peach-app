@@ -28,7 +28,7 @@ const Landing = ({ navigation }) => (
                   <Button
                     isDark
                     title="Create an account"
-                    onPress={() => navigation.navigate('SignUp')}
+                    onPress={() => navigation.navigate('Register')}
                   />
                 </GridItem>
               </Grid>
