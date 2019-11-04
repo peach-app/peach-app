@@ -3,34 +3,21 @@ import PropTypes from 'prop-types';
 import gql from 'graphql-tag';
 import get from 'lodash/fp/get';
 
-import { Main, Center, Name } from './styles';
+import { Main, Center } from './styles';
 import Avatar from '../../components/Avatar';
-import { Grid, GridItem } from '../../components/Grid';
-import { SkeletonText } from '../../components/Skeletons';
 
 const ProfileHeader = ({ name, email, avatar, isLoading }) => (
   <Main>
-    <Grid>
-      <GridItem size={12}>
-        <Center>
-          <Avatar
-            isLoading={isLoading}
-            size={100}
-            fallback={name || email}
-            source={{
-              uri: get('url', avatar),
-            }}
-          />
-        </Center>
-      </GridItem>
-      <GridItem size={12}>
-        <Name>
-          <SkeletonText isLoading={isLoading}>
-            {name || email || ''}
-          </SkeletonText>
-        </Name>
-      </GridItem>
-    </Grid>
+    <Center>
+      <Avatar
+        isLoading={isLoading}
+        size={90}
+        fallback={name || email}
+        source={{
+          uri: get('url', avatar),
+        }}
+      />
+    </Center>
   </Main>
 );
 

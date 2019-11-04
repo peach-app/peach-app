@@ -1,14 +1,12 @@
 import React from 'react';
 
 import SafeAreaView from '../../components/SafeAreaView';
-import StatusBar from '../../components/StatusBar';
 import Header from '../../components/Header';
 
-const Payouts = () => (
+const AccountEdit = () => (
   <SafeAreaView>
-    <StatusBar />
-    <Header title="Payout History" />
+    <Header title="Account" />
   </SafeAreaView>
 );
 
-export default Payouts;
+export default AccountEdit;

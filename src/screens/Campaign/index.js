@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 import getOr from 'lodash/fp/getOr';
 
+import { Foot, Description } from './styles';
 import { NETWORK_STATUS, USER_TYPE } from '../../consts';
 import Header from '../../components/Header';
 import Intro from '../../components/Intro';
@@ -12,7 +13,6 @@ import StatusBar from '../../components/StatusBar';
 import Button from '../../components/Button';
 import Container from '../../components/Container';
 import Title from '../../components/Title';
-import Text from '../../components/Text';
 import Avatar from '../../components/Avatar';
 import { SkeletonText } from '../../components/Skeletons';
 import { Grid, GridItem } from '../../components/Grid';
@@ -34,11 +34,14 @@ const Campaign = ({ navigation }) => {
   );
 
   const fetching = loading && networkStatus === NETWORK_STATUS.FETCHING;
+  const brandName =
+    get('findCampaignByID.user.name', campaign) ||
+    get('findCampaignByID.user.email', campaign);
 
   return (
     <SafeAreaView>
       <StatusBar />
-      <Header title="Campaign" />
+      <Header title={brandName} />
       <ScrollView
         style={{ flex: 1 }}
         refreshControl={
@@ -55,10 +58,7 @@ const Campaign = ({ navigation }) => {
                 <Avatar
                   isLoading={fetching}
                   size={50}
-                  fallback={
-                    get('findCampaignByID.user.name', campaign) ||
-                    get('findCampaignByID.user.email', campaign)
-                  }
+                  fallback={brandName}
                   source={{
                     uri: get('findCampaignByID.user.avatar.url', campaign),
                   }}
@@ -67,26 +67,30 @@ const Campaign = ({ navigation }) => {
             </GridItem>
             <GridItem size={12}>
               <Title>
-                <SkeletonText isLoading={fetching}>
+                <SkeletonText loadingText="Campaign Title" isLoading={fetching}>
                   {getOr('', 'findCampaignByID.name', campaign)}
                 </SkeletonText>
               </Title>
             </GridItem>
             <GridItem size={12}>
-              <Text>
-                <SkeletonText isLoading={fetching}>
+              <Description>
+                <SkeletonText
+                  loadingText="Campaign description loading..."
+                  isLoading={fetching}
+                >
                   {getOr('', 'findCampaignByID.description', campaign)}
                 </SkeletonText>
-              </Text>
+              </Description>
             </GridItem>
-            {get('user.type', user) === USER_TYPE.INFLUENCER && (
-              <GridItem size={6}>
-                <Button title="Apply" />
-              </GridItem>
-            )}
           </Grid>
         </Container>
       </ScrollView>
+
+      {get('user.type', user) === USER_TYPE.INFLUENCER && (
+        <Foot>
+          <Button title="Apply" fixedWidth />
+        </Foot>
+      )}
     </SafeAreaView>
   );
 };

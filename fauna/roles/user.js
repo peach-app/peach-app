@@ -98,6 +98,12 @@ module.exports = async () => {
             call: true,
           },
         },
+        {
+          resource: q.Function('campaigns_by_user_type'),
+          actions: {
+            call: true,
+          },
+        },
       ],
     })
   );

@@ -10,20 +10,30 @@ export const Main = styled.TouchableOpacity`
   padding: 0 ${props => props.theme.spacing}px;
   justify-content: center;
   border-radius: 200px;
-  min-height: 38px;
-  background: ${props =>
-    props.isDark ? props.theme.black : props.theme.brand};
+  min-height: 40px;
+  ${props =>
+    props.isGhost &&
+    `
+      border-width: 2px;
+      border-color: ${props.theme.foreground};
+    `}
+  ${props =>
+    !props.isGhost &&
+    `
+      background-color: ${props.isDark ? props.theme.black : props.theme.brand};
+    `};
   ${props =>
     props.fixedWidth &&
     `
-      width: 200px; 
+      width: 200px;
       max-width: 100%;
     `}
 `;
 
 export const Title = styled(Text)`
   font-size: 14px;
-  color: ${props => props.theme.white};
+  color: ${props =>
+    props.isGhost ? props.theme.foreground : props.theme.white};
   text-align: center;
   font-family: futura-bold;
   ${props => props.isLoading && `opacity: 0;`}

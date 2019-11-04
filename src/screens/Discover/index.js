@@ -1,16 +1,14 @@
 import React from 'react';
-import { ScrollView, RefreshControl } from 'react-native';
+import { RefreshControl } from 'react-native';
 import getOr from 'lodash/fp/getOr';
 import { useQuery } from '@apollo/react-hooks';
 
 import { NETWORK_STATUS } from '../../consts';
 import SafeAreaView from '../../components/SafeAreaView';
 import StatusBar from '../../components/StatusBar';
-import Container from '../../components/Container';
+import { FlatList, FlatListItem } from '../../components/FlatList';
 import Title from '../../components/Title';
 import Intro from '../../components/Intro';
-import Loading from '../../components/Loading';
-import { Grid, GridItem } from '../../components/Grid';
 import CampaignCard from '../../components/CampaignCard';
 import GET_CAMPAIGNS from './graphql/get-campaigns';
 
@@ -21,38 +19,41 @@ const Discover = () => {
 
   return (
     <SafeAreaView>
-      <ScrollView
-        styled={{ flex: 1 }}
+      <StatusBar />
+      <FlatList
         refreshControl={
           <RefreshControl
             refreshing={loading && networkStatus === NETWORK_STATUS.REFETCHING}
             onRefresh={refetch}
           />
         }
-      >
-        <Container>
-          <StatusBar />
-          <Grid>
-            <GridItem size={12}>
+        ListHeaderComponent={
+          <>
+            <FlatListItem>
               <Intro>
                 <Title>Discover</Title>
               </Intro>
-            </GridItem>
+            </FlatListItem>
 
             {loading && networkStatus === NETWORK_STATUS.FETCHING && (
-              <GridItem size={12}>
-                <Loading />
-              </GridItem>
+              <>
+                {Array.from(Array(3)).map((_, key) => (
+                  <FlatListItem key={key}>
+                    <CampaignCard isLoading />
+                  </FlatListItem>
+                ))}
+              </>
             )}
-
-            {getOr([], 'campaigns.data', data).map(campaign => (
-              <GridItem size={12} key={campaign._id}>
-                <CampaignCard {...campaign} />
-              </GridItem>
-            ))}
-          </Grid>
-        </Container>
-      </ScrollView>
+          </>
+        }
+        keyExtractor={item => item._id}
+        data={getOr([], 'discover.data', data)}
+        renderItem={({ item }) => (
+          <FlatListItem>
+            <CampaignCard {...item} />
+          </FlatListItem>
+        )}
+      />
     </SafeAreaView>
   );
 };

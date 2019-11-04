@@ -9,8 +9,10 @@ const theme = {
   greyLight: '#eee',
   error: '#f00',
   radius: 6,
+  spacingXSmall: 4,
   spacingSmall: 8,
   spacing: 16,
+  spacingMedium: 24,
   spacingLarge: 32,
   spacingXLarge: 48,
 };

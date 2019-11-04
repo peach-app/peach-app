@@ -9,7 +9,7 @@ const Header = ({ title }) => (
     <Action>
       <BackButton />
     </Action>
-    {title && <MainTitle>{title}</MainTitle>}
+    {title && <MainTitle numberOfLines={1}>{title}</MainTitle>}
   </Main>
 );
 

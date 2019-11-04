@@ -1,47 +1,43 @@
 import React, { useState } from 'react';
-import { ScrollView, RefreshControl } from 'react-native';
+import { RefreshControl } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import getOr from 'lodash/fp/getOr';
 import get from 'lodash/fp/get';
 
 import { NETWORK_STATUS, USER_TYPE } from '../../consts';
 import SafeAreaView from '../../components/SafeAreaView';
-import StatusBar from '../../components/StatusBar';
-import Container from '../../components/Container';
+import { FlatList, FlatListItem } from '../../components/FlatList';
 import Title from '../../components/Title';
 import Intro from '../../components/Intro';
 import Tabs from '../../components/Tabs';
 import IconButton from '../../components/IconButton';
-import Loading from '../../components/Loading';
 import { Grid, GridItem } from '../../components/Grid';
 import CampaignCard from '../../components/CampaignCard';
 import GET_USER from './graphql/get-user';
+import GET_CAMPAIGNS from './graphql/get-campaigns';
 
 const Campaigns = ({ navigation }) => {
   const [activeTab, setTab] = useState(0);
-  const { data, loading, networkStatus, refetch } = useQuery(GET_USER, {
+  const { data: user } = useQuery(GET_USER);
+  const { data, loading, networkStatus, refetch } = useQuery(GET_CAMPAIGNS, {
     notifyOnNetworkStatusChange: true,
   });
-  const fetching = loading && networkStatus === NETWORK_STATUS.FETCHING;
-  const userType = get('user.type', data);
+  const userType = get('user.type', user);
   const isBrand = userType === USER_TYPE.BRAND;
   const isInfluencer = userType === USER_TYPE.INFLUENCER;
 
   return (
     <SafeAreaView>
-      <ScrollView
-        style={{ flex: 1 }}
+      <FlatList
         refreshControl={
           <RefreshControl
             refreshing={loading && networkStatus === NETWORK_STATUS.REFETCHING}
             onRefresh={refetch}
           />
         }
-      >
-        <Container>
-          <StatusBar />
-          <Grid>
-            <GridItem size={12}>
+        ListHeaderComponent={
+          <>
+            <FlatListItem>
               <Intro>
                 <Grid align="flex-end">
                   <GridItem flex={1}>
@@ -58,37 +54,39 @@ const Campaigns = ({ navigation }) => {
                   )}
                 </Grid>
               </Intro>
-            </GridItem>
+            </FlatListItem>
 
-            {!fetching && (
-              <GridItem size={12}>
-                <Tabs
-                  activeTabIndex={activeTab}
-                  onTabPress={index => setTab(index)}
-                  tabs={
-                    isInfluencer
-                      ? ['Open', 'Requests', 'Applied']
-                      : ['All', 'Applications']
-                  }
-                />
-              </GridItem>
+            <FlatListItem>
+              <Tabs
+                activeTabIndex={activeTab}
+                onTabPress={index => setTab(index)}
+                tabs={
+                  isInfluencer
+                    ? ['Open', 'Applied', 'Requested']
+                    : ['Open', 'Completed']
+                }
+              />
+            </FlatListItem>
+
+            {loading && networkStatus === NETWORK_STATUS.FETCHING && (
+              <>
+                {Array.from(Array(3)).map((_, key) => (
+                  <FlatListItem key={key}>
+                    <CampaignCard isLoading />
+                  </FlatListItem>
+                ))}
+              </>
             )}
-
-            {fetching && (
-              <GridItem size={12}>
-                <Loading />
-              </GridItem>
-            )}
-
-            {isBrand &&
-              getOr([], 'user.campaigns.data', data).map(campaign => (
-                <GridItem size={12} key={campaign._id}>
-                  <CampaignCard {...campaign} />
-                </GridItem>
-              ))}
-          </Grid>
-        </Container>
-      </ScrollView>
+          </>
+        }
+        keyExtractor={item => item._id}
+        data={getOr([], 'campaigns.data', data)}
+        renderItem={({ item }) => (
+          <FlatListItem>
+            <CampaignCard {...item} />
+          </FlatListItem>
+        )}
+      />
     </SafeAreaView>
   );
 };

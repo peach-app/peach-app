@@ -8,6 +8,7 @@ import Campaigns from '../screens/Campaigns';
 import Inbox from '../screens/Inbox';
 import Discover from '../screens/Discover';
 import Account from '../screens/Account';
+import AccountEdit from '../screens/AccountEdit';
 import Payouts from '../screens/Payouts';
 import CreateCampaign from '../screens/CreateCampaign';
 
@@ -24,6 +25,7 @@ const CampaignStack = createStackNavigator(
 const AccountStack = createStackNavigator(
   {
     Account,
+    AccountEdit,
     Payouts,
   },
   {
@@ -33,8 +35,8 @@ const AccountStack = createStackNavigator(
 
 const TabNavigator = createBottomTabNavigator(
   {
-    Campaigns: CampaignStack,
     Discover,
+    Campaigns: CampaignStack,
     Inbox,
     Account: AccountStack,
   },

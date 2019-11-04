@@ -6,13 +6,11 @@ export const Main = styled.View`
 `;
 
 export const Content = styled(Animatable.View).attrs({
-  animation: 'slideInUp',
+  animation: 'fadeInUp',
   duration: 300,
   delay: 300,
 })`
   background: ${props => props.theme.brand};
-  border-top-left-radius: ${props => props.theme.radius}px;
-  border-top-right-radius: ${props => props.theme.radius}px;
   margin-top: auto;
 `;
 

@@ -5,44 +5,74 @@ import { withNavigation } from 'react-navigation';
 import gql from 'graphql-tag';
 import get from 'lodash/fp/get';
 
-import { Icon } from './styles';
+import { Icon, MainTitle, Description, User } from './styles';
 import { Grid, GridItem } from '../../components/Grid';
 import Avatar from '../../components/Avatar';
-import Text from '../../components/Text';
+import { SkeletonText } from '../../components/Skeletons';
 
-const CampaignCard = ({ navigation, _id, user, name, description }) => (
+const CampaignCard = ({
+  isLoading,
+  navigation,
+  _id,
+  user,
+  name,
+  description,
+}) => (
   <TouchableOpacity
-    onPress={() => navigation.navigate('Campaign', { id: _id })}
+    onPress={() => !isLoading && navigation.navigate('Campaign', { id: _id })}
   >
     <Grid noWrap align="center">
-      <GridItem width={50}>
+      <GridItem>
         <Avatar
+          isLoading={isLoading}
           size={50}
           source={{ uri: get('avatar.url', user) }}
           fallback={get('name', user) || get('email', user)}
         />
       </GridItem>
       <GridItem flex={1}>
-        <Text>{name}</Text>
-        <Text numberOfLines={1}>{description}</Text>
+        <MainTitle numberOfLines={2}>
+          <SkeletonText
+            isLoading={isLoading}
+            loadingText="Campaign title loading"
+          >
+            {name}
+          </SkeletonText>
+        </MainTitle>
+        <Description numberOfLines={1}>
+          <SkeletonText
+            isLoading={isLoading}
+            loadingText="Campaign description loading"
+          >
+            {description}
+          </SkeletonText>
+        </Description>
+        <User>
+          <SkeletonText isLoading={isLoading} loadingText="Campaign user">
+            {get('name', user) || get('email', user)}
+          </SkeletonText>
+        </User>
       </GridItem>
-      <GridItem width={30}>
-        <Icon name="ios-arrow-forward" />
-      </GridItem>
+      {!isLoading && (
+        <GridItem>
+          <Icon name="ios-arrow-forward" />
+        </GridItem>
+      )}
     </Grid>
   </TouchableOpacity>
 );
 
 CampaignCard.propTypes = {
+  isLoading: PropTypes.bool,
   navigation: PropTypes.shape({
-    navigation: PropTypes.func.isRequired,
+    navigate: PropTypes.func.isRequired,
   }),
-  _id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  _id: PropTypes.string,
+  name: PropTypes.string,
+  description: PropTypes.string,
   user: PropTypes.shape({
     name: PropTypes.string,
-    email: PropTypes.string.isRequired,
+    email: PropTypes.string,
     avatar: PropTypes.shape({
       url: PropTypes.string,
     }),
