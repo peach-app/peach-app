@@ -5,8 +5,7 @@ type Query {
 
 type Mutation {
   login(email: String!, password: String!): Auth @resolver(name: "user_login")
-  register(email: String!, password: String!, type: UserType!): User
-    @resolver(name: "register")
+  register(email: String!, password: String!, type: UserType!): Auth @resolver(name: "register")
 }
 
 type Auth @embedded {
