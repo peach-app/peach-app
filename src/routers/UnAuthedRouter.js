@@ -3,13 +3,13 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 import Landing from '../screens/Landing';
 import Login from '../screens/Login';
-import SignUp from '../screens/SignUp';
+import Register from '../screens/Register';
 
 const UnAuthedNavigator = createStackNavigator(
   {
     Landing,
     Login,
-    SignUp,
+    Register,
   },
   {
     headerMode: 'none',
