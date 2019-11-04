@@ -5,22 +5,17 @@ module.exports = async () => {
   await client.query(
     makeFunction({
       name: 'register',
-      body: q.Do(
-        q.Query(
-          q.Lambda(
-            ['email', 'password', 'type'],
+      body: q.Query(
+        q.Lambda(
+          ['email', 'password', 'type'],
+          q.Do(
             q.Create(q.Collection('User'), {
               data: {
                 email: q.Var('email'),
                 type: q.Var('type'),
               },
               credentials: { password: q.Var('password') },
-            })
-          )
-        ),
-        q.Query(
-          q.Lambda(
-            ['email', 'password', 'type'],
+            }),
             q.Let(
               {
                 user: q.Login(
@@ -39,6 +34,5 @@ module.exports = async () => {
       ),
     })
   );
-
   console.log('"register" function created');
 };
