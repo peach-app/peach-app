@@ -1,5 +1,6 @@
 const { client, q } = require('../helpers/db');
 const { makeFunction } = require('../helpers/updateOrCreate');
+const { USER_TYPE } = require('../consts');
 
 module.exports = async () => {
   await client.query(
@@ -12,7 +13,7 @@ module.exports = async () => {
             // If identity type === "INFLUENCER"
             q.Equals(
               q.Select(['data', 'type'], q.Get(q.Identity())),
-              'INFLUENCER'
+              USER_TYPE.INFLUENCER
             ),
 
             // Then
