@@ -11,9 +11,10 @@ import TextInput from '../../../components/TextInput/Input';
 import { Grid, GridItem } from '../../../components/Grid';
 import Button from '../../../components/Button';
 import Actions from '../../../components/Actions';
+import Text from '../../../components/Text';
 import { USER_TYPE_TABS, FORM_INPUTS, validationSchema } from '../consts';
 
-const SignUpForm = ({ onFormSubmit, isLoading }) => {
+const RegisterForm = ({ onFormSubmit, isLoading, error }) => {
   const [activeTab, setTab] = useState(0);
 
   const { register, handleSubmit, errors, setValue } = useForm({
@@ -45,6 +46,11 @@ const SignUpForm = ({ onFormSubmit, isLoading }) => {
             />
           </GridItem>
         ))}
+        {error && (
+          <GridItem size={12}>
+            <Text>Incorrect Email or Password</Text>
+          </GridItem>
+        )}
         <GridItem size="12">
           <Actions>
             <Button
@@ -62,4 +68,4 @@ const SignUpForm = ({ onFormSubmit, isLoading }) => {
   );
 };
 
-export default SignUpForm;
+export default RegisterForm;
