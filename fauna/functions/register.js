@@ -16,19 +16,7 @@ module.exports = async () => {
               },
               credentials: { password: q.Var('password') },
             }),
-            q.Let(
-              {
-                user: q.Login(
-                  q.Match(q.Index('unique_User_email'), q.Var('email')),
-                  {
-                    password: q.Var('password'),
-                  }
-                ),
-              },
-              {
-                secret: q.Select(['secret'], q.Var('user')),
-              }
-            )
+            q.Call(q.Function('user_login'), q.Var('email'), q.Var('password'))
           )
         )
       ),
