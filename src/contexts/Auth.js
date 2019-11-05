@@ -1,45 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { AsyncStorage } from 'react-native';
 import { AppLoading } from 'expo';
 
 const AuthContext = React.createContext();
 
-const getStoredAuth = async setAuth => {
+const getStoredToken = async setIsLoggedIn => {
   const token = await AsyncStorage.getItem('token');
-
-  if (token) {
-    setAuth(token);
-  }
-};
-
-const setStoredAuth = async auth => {
-  if (auth) {
-    await AsyncStorage.setItem('token', auth);
-    return;
-  }
-
-  await AsyncStorage.removeItem('token');
+  setIsLoggedIn(!!token);
 };
 
 export const Provider = ({ children }) => {
   const [loading, setLoading] = useState(true);
-  const [auth, setAuth] = useState(null);
-
-  useEffect(() => {
-    setStoredAuth(auth);
-  }, [auth]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   if (loading) {
     return (
       <AppLoading
-        startAsync={async () => getStoredAuth(setAuth)}
+        startAsync={async () => getStoredToken(setIsLoggedIn)}
         onFinish={() => setLoading(false)}
       />
     );
   }
 
+  const setToken = async token => {
+    if (token) {
+      await AsyncStorage.setItem('token', token);
+    } else {
+      await AsyncStorage.removeItem('token');
+    }
+    setIsLoggedIn(!!token);
+  };
+
   return (
-    <AuthContext.Provider value={{ auth, setAuth }}>
+    <AuthContext.Provider value={{ isLoggedIn, setToken }}>
       {children}
     </AuthContext.Provider>
   );

@@ -27,10 +27,10 @@ const LoginSchema = Yup.object().shape({
 });
 
 const Login = () => {
-  const { setAuth } = useContext(AuthContext);
+  const { setToken } = useContext(AuthContext);
   const [login, { loading, error }] = useMutation(LOGIN, {
     onCompleted: data => {
-      setAuth(get('login.secret', data));
+      setToken(get('login.secret', data));
     },
   });
 

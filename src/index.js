@@ -14,7 +14,7 @@ import AuthedNavigator from './routers/AuthedNavigator';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
-  const { auth } = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
 
   if (loading) {
     return (
@@ -30,7 +30,7 @@ const App = () => {
     );
   }
 
-  if (auth) {
+  if (isLoggedIn) {
     return <AuthedNavigator />;
   }
 
