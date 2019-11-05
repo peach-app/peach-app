@@ -31,6 +31,12 @@ module.exports = async () => {
             call: true,
           },
         },
+        {
+          resource: q.Function('register'),
+          actions: {
+            call: true,
+          },
+        },
       ],
       membership: [],
     })
