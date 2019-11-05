@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import get from 'lodash/get';
+import get from 'lodash/fp/get';
 import { useMutation } from '@apollo/react-hooks';
 import AuthContext from '../../contexts/Auth';
 import SafeAreaView from '../../components/SafeAreaView';
@@ -10,10 +10,10 @@ import RegisterForm from './RegisterForm';
 // const handleSubmit = data => console.log('data', data);
 
 const Register = () => {
-  const { setAuth } = useContext(AuthContext);
+  const { setToken } = useContext(AuthContext);
   const [register, { loading, error }] = useMutation(REGISTER_MUTATION, {
-    onCompleted: ({ register: reg }) => {
-      setAuth(get('secret', reg));
+    onCompleted: data => {
+      setToken(get('register.secret', data));
     },
   });
 
