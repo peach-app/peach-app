@@ -11,7 +11,7 @@ module.exports = async () => {
           actions: {
             read: true,
             write: false,
-            create: false,
+            create: true,
             delete: false,
             history_read: false,
             history_write: false,
