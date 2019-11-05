@@ -7,8 +7,6 @@ import StatusBar from '../../components/StatusBar';
 import REGISTER_MUTATION from './graphql/register';
 import RegisterForm from './RegisterForm';
 
-// const handleSubmit = data => console.log('data', data);
-
 const Register = () => {
   const { setToken } = useContext(AuthContext);
   const [register, { loading, error }] = useMutation(REGISTER_MUTATION, {
