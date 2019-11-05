@@ -12,7 +12,7 @@ import GET_USER from './graphql/get-user';
 import AuthContext from '../../contexts/Auth';
 
 const Account = ({ navigation }) => {
-  const { setAuth } = useContext(AuthContext);
+  const { setToken } = useContext(AuthContext);
   const { client, data, loading } = useQuery(GET_USER);
 
   return (
@@ -33,9 +33,9 @@ const Account = ({ navigation }) => {
           />
           <NavLink
             title="Logout"
-            onPress={() => {
+            onPress={async () => {
+              await setToken(null);
               client.resetStore();
-              setAuth(null);
             }}
           />
         </Container>
