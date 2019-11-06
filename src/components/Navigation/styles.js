@@ -30,8 +30,9 @@ export const Logo = styled.Image.attrs({
   source: LogoAsset,
 })`
   resize-mode: contain;
-  margin-right: auto;
   width: 30px;
+  margin-right: auto;
+  margin-left: ${props => props.theme.spacingSmall}px;
 `;
 
 export const Item = styled.View`
