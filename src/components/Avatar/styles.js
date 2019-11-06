@@ -19,3 +19,12 @@ export const Initial = styled(Title)`
   margin: auto;
   font-size: ${props => props.size / 3}px;
 `;
+
+export const List = styled.View`
+  flex-direction: row;
+  padding-right: ${props => props.theme.spacingSmall}px;
+`;
+
+export const Item = styled.View`
+  margin-right: -${props => props.theme.spacingSmall}px;
+`;

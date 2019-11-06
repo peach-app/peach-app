@@ -82,6 +82,39 @@ module.exports = async () => {
           },
         },
         {
+          resource: q.Collection('Thread'),
+          actions: {
+            read: true,
+            write: false,
+            create: false,
+            delete: false,
+            history_read: false,
+            history_write: false,
+          },
+        },
+        {
+          resource: q.Collection('Message'),
+          actions: {
+            read: true,
+            write: false,
+            create: false,
+            delete: false,
+            history_read: false,
+            history_write: false,
+          },
+        },
+        {
+          resource: q.Collection('thread_users'),
+          actions: {
+            read: true,
+            write: false,
+            create: false,
+            delete: false,
+            history_read: false,
+            history_write: false,
+          },
+        },
+        {
           resource: q.Index('campaigns'),
           actions: {
             unrestricted_read: false,
@@ -107,6 +140,46 @@ module.exports = async () => {
         },
         {
           resource: q.Index('campaign_user_by_user'),
+          actions: {
+            unrestricted_read: false,
+            read: true,
+            history_read: false,
+          },
+        },
+        {
+          resource: q.Index('thread_users_by_thread'),
+          actions: {
+            unrestricted_read: false,
+            read: true,
+            history_read: false,
+          },
+        },
+        {
+          resource: q.Index('all_thread_users'),
+          actions: {
+            unrestricted_read: false,
+            read: true,
+            history_read: false,
+          },
+        },
+        {
+          resource: q.Index('thread_users_by_thread_and_user'),
+          actions: {
+            unrestricted_read: false,
+            read: true,
+            history_read: false,
+          },
+        },
+        {
+          resource: q.Index('message_thread_by_thread'),
+          actions: {
+            unrestricted_read: false,
+            read: true,
+            history_read: false,
+          },
+        },
+        {
+          resource: q.Index('thread_users_by_user'),
           actions: {
             unrestricted_read: false,
             read: true,

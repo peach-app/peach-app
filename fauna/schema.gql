@@ -39,6 +39,8 @@ type User {
   # User applications/requests to
   # join Campaigns
   bookings: [Booking] @relation
+
+  threads: [Thread] @relation
 }
 
 type Campaign {
@@ -72,4 +74,15 @@ type Booking {
   user: User!
   cost: Float!
   state: BookingState!
+}
+
+type Thread {
+  users: [User] @relation
+  messages: [Message] @relation
+}
+
+type Message {
+  thread: Thread!
+  user: User!
+  text: String!
 }
