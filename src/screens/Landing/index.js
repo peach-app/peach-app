@@ -1,15 +1,14 @@
 import React from 'react';
-import { SafeAreaView, ImageBackground } from 'react-native';
+import { SafeAreaView } from 'react-native';
 
-import { Main, Content, Actions } from './styles';
+import { ImageBackground, Main, Content, Actions } from './styles';
 import StatusBar from '../../components/StatusBar';
 import Button from '../../components/Button';
 import Container from '../../components/Container';
 import { Grid, GridItem } from '../../components/Grid';
-import splash from '../../assets/splash.png';
 
 const Landing = ({ navigation }) => (
-  <ImageBackground resizeMode="contain" source={splash} style={{ flex: 1 }}>
+  <ImageBackground>
     <Main>
       <StatusBar />
       <Content>
