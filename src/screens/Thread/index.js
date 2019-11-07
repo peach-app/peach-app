@@ -5,10 +5,10 @@ import useForm from 'react-hook-form';
 import getOr from 'lodash/fp/getOr';
 import get from 'lodash/fp/get';
 
-import { Composer, TextInput } from './styles';
+import { Composer, TextInput, Send, Icon } from './styles';
 import SafeAreaView from '../../components/SafeAreaView';
-import IconButton from '../../components/IconButton';
 import Header from '../../components/Header';
+import Loading from '../../components/Loading';
 import { FlatList } from '../../components/FlatList';
 import MessageBubble from '../../components/MessageBubble';
 import GET_USER from './graphql/get-user';
@@ -26,7 +26,7 @@ const Thread = ({ navigation }) => {
   });
 
   const { register, handleSubmit, setValue, reset } = useForm();
-  const [createMessage, _] = useMutation(CREATE_MESSAGE, {
+  const [createMessage, { loading }] = useMutation(CREATE_MESSAGE, {
     onCompleted: () => {
       reset();
       refetch();
@@ -60,10 +60,12 @@ const Thread = ({ navigation }) => {
         <Composer>
           <TextInput
             ref={register({ name: 'text' })}
+            placeholder="Type a message..."
             multiline
             onChangeText={text => setValue('text', text)}
           />
-          <IconButton name="ios-send" size={30} onPress={onSubmit} />
+
+          <Send onPress={onSubmit}>{loading ? <Loading /> : <Icon />}</Send>
         </Composer>
       </KeyboardAvoidingView>
     </SafeAreaView>

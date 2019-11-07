@@ -7,7 +7,7 @@ export default gql`
 
   query($id: ID!) {
     findThreadByID(id: $id) {
-      messages(_size: 100) {
+      messages(_size: 30) {
         data {
           _id
           user {
