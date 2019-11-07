@@ -7,8 +7,7 @@ import get from 'lodash/fp/get';
 import getOr from 'lodash/fp/getOr';
 import head from 'lodash/fp/head';
 
-import { Icon } from './styles';
-import Text from '../../components/Text';
+import { Icon, Text } from './styles';
 import { Grid, GridItem } from '../../components/Grid';
 import Avatar, { AvatarList } from '../../components/Avatar';
 import { SkeletonText } from '../../components/Skeletons';
@@ -41,7 +40,11 @@ const ThreadCard = ({ isLoading, navigation, _id, users, messages }) => (
             isLoading={isLoading}
             loadingText="Loading message text..."
           >
-            {get('text', head(getOr([], 'data', messages)))}
+            {getOr(
+              'Send the first message...',
+              'text',
+              head(getOr([], 'data', messages))
+            )}
           </SkeletonText>
         </Text>
       </GridItem>

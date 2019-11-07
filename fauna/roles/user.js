@@ -187,6 +187,14 @@ module.exports = async () => {
           },
         },
         {
+          resource: q.Index('messages_by_date_asc'),
+          actions: {
+            unrestricted_read: false,
+            read: true,
+            history_read: false,
+          },
+        },
+        {
           resource: q.Function('current_user'),
           actions: {
             call: true,

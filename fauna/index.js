@@ -7,6 +7,9 @@
     await require('./functions/campaigns_by_user_type')();
     await require('./functions/create_message')();
 
+    // Indexes
+    await require('./indexes/messages_by_date_asc')();
+
     // Roles
     await require('./roles/auth')();
     await require('./roles/user')();

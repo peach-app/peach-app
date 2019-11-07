@@ -11,4 +11,5 @@ const creator = (TypeFunc, CreateFunc) => ({ name, ...rest }) => {
 module.exports = {
   makeFunction: creator(q.Function, q.CreateFunction),
   makeRole: creator(q.Role, q.CreateRole),
+  makeIndex: creator(q.Index, q.CreateIndex),
 };
