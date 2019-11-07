@@ -22,9 +22,9 @@ export const Initial = styled(Title)`
 
 export const List = styled.View`
   flex-direction: row;
-  padding-right: ${props => props.theme.spacingSmall}px;
+  padding-right: ${props => props.theme.spacing}px;
 `;
 
 export const Item = styled.View`
-  margin-right: -${props => props.theme.spacingSmall}px;
+  margin-right: -${props => props.theme.spacing}px;
 `;
