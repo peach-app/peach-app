@@ -13,6 +13,7 @@ module.exports = async () => {
               user: q.Identity(),
               text: q.Var('text'),
               thread: q.Ref(q.Collection('Thread'), q.Var('thread')),
+              date: q.Time('now'),
             },
           })
         )

@@ -84,6 +84,7 @@ type Thread {
 }
 
 type Message {
+  date: Date!
   thread: Thread!
   user: User!
   text: String!

@@ -15,6 +15,7 @@ import GET_THREADS from './graphql/get-threads';
 const Inbox = () => {
   const { data, loading, networkStatus, refetch } = useQuery(GET_THREADS, {
     notifyOnNetworkStatusChange: true,
+    pollInterval: 10000,
   });
 
   return (
