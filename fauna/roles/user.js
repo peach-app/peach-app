@@ -97,7 +97,7 @@ module.exports = async () => {
           actions: {
             read: true,
             write: false,
-            create: false,
+            create: true,
             delete: false,
             history_read: false,
             history_write: false,
@@ -194,6 +194,12 @@ module.exports = async () => {
         },
         {
           resource: q.Function('campaigns_by_user_type'),
+          actions: {
+            call: true,
+          },
+        },
+        {
+          resource: q.Function('create_message'),
           actions: {
             call: true,
           },
