@@ -48,7 +48,7 @@ const Thread = ({ navigation }) => {
         <FlatList
           inverted
           keyExtractor={item => item._id}
-          data={getOr([], 'findThreadByID.messages.data', data)}
+          data={getOr([], 'threadMessages.data', data)}
           renderItem={({ item }) => (
             <MessageBubble
               isSelf={get('user._id', user) === get('user._id', item)}

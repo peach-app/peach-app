@@ -17,9 +17,14 @@ console.log({ FAUNADB_SECRET });
     await require('./functions/register')();
     await require('./functions/campaigns_by_user_type')();
     await require('./functions/create_message')();
+    await require('./functions/threads')();
+    await require('./functions/messages')();
 
     // Indexes
-    await require('./indexes/messages_by_date_asc')();
+    await require('./indexes/message_thread_by_thread_by_date')();
+    await require('./indexes/booking_user_by_user')();
+    await require('./indexes/campaign_user_by_user')();
+    await require('./indexes/thread_users_by_user')();
 
     // Roles
     await require('./roles/auth')();

@@ -5,6 +5,10 @@ type Query {
   # Campaigns listing
   campaigns: [Campaign]
     @resolver(name: "campaigns_by_user_type", paginated: true)
+
+  threads: [Thread] @resolver(name: "threads", paginated: true)
+  threadMessages(threadId: ID!): [Message]
+    @resolver(name: "messages", paginated: true)
 }
 
 type Mutation {

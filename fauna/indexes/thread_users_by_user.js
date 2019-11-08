@@ -4,22 +4,20 @@ const { makeIndex } = require('../helpers/updateOrCreate');
 module.exports = async () => {
   await client.query(
     makeIndex({
-      name: 'messages_by_date_asc',
-      source: q.Collection('Message'),
+      name: 'thread_users_by_user',
+      source: q.Collection('thread_users'),
       terms: [
         {
-          field: ['data', 'thread'],
+          field: ['data', 'userID'],
         },
       ],
       values: [
         {
-          field: ['data', 'date'],
-          reverse: true,
+          field: ['data', 'threadID'],
         },
-        { field: ['ref'] },
       ],
     })
   );
 
-  console.log('"messages_by_date_asc" index created');
+  console.log('"thread_users_by_user" index created');
 };

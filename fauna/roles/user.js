@@ -179,7 +179,7 @@ module.exports = async () => {
           },
         },
         {
-          resource: q.Index('thread_users_by_user'),
+          resource: q.Index('message_thread_by_thread_by_date'),
           actions: {
             unrestricted_read: false,
             read: true,
@@ -187,7 +187,7 @@ module.exports = async () => {
           },
         },
         {
-          resource: q.Index('messages_by_date_asc'),
+          resource: q.Index('thread_users_by_user'),
           actions: {
             unrestricted_read: false,
             read: true,
@@ -208,6 +208,18 @@ module.exports = async () => {
         },
         {
           resource: q.Function('create_message'),
+          actions: {
+            call: true,
+          },
+        },
+        {
+          resource: q.Function('threads'),
+          actions: {
+            call: true,
+          },
+        },
+        {
+          resource: q.Function('messages'),
           actions: {
             call: true,
           },

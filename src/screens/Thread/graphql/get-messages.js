@@ -6,15 +6,13 @@ export default gql`
   ${MessageBubbleFragment}
 
   query($id: ID!) {
-    findThreadByID(id: $id) {
-      messages(_size: 30) {
-        data {
+    threadMessages(threadId: $id) {
+      data {
+        _id
+        user {
           _id
-          user {
-            _id
-          }
-          ...MessageBubbleFragment
         }
+        ...MessageBubbleFragment
       }
     }
   }
