@@ -1,3 +1,14 @@
+const { FAUNADB_SECRET } = process.env;
+
+if (!FAUNADB_SECRET) {
+  console.error(
+    `No FAUNADB_SECRET found... \nrun: export FAUNADB_SECRET=SecretKeyHere`
+  );
+  return;
+}
+
+console.log({ FAUNADB_SECRET });
+
 (async () => {
   try {
     // Functions
