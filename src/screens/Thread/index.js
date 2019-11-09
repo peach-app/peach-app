@@ -5,7 +5,7 @@ import useForm from 'react-hook-form';
 import getOr from 'lodash/fp/getOr';
 import get from 'lodash/fp/get';
 
-import { Composer, TextInput, Send, Icon } from './styles';
+import { Composer, Wrapper, TextInput, Send, Icon } from './styles';
 import SafeAreaView from '../../components/SafeAreaView';
 import Header from '../../components/Header';
 import Loading from '../../components/Loading';
@@ -58,14 +58,16 @@ const Thread = ({ navigation }) => {
         />
 
         <Composer>
-          <TextInput
-            ref={register({ name: 'text' })}
-            placeholder="Type a message..."
-            multiline
-            onChangeText={text => setValue('text', text)}
-          />
+          <Wrapper>
+            <TextInput
+              ref={register({ name: 'text' })}
+              placeholder="Type a message..."
+              multiline
+              onChangeText={text => setValue('text', text)}
+            />
 
-          <Send onPress={onSubmit}>{loading ? <Loading /> : <Icon />}</Send>
+            <Send onPress={onSubmit}>{loading ? <Loading /> : <Icon />}</Send>
+          </Wrapper>
         </Composer>
       </KeyboardAvoidingView>
     </SafeAreaView>
