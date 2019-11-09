@@ -7,7 +7,9 @@ import { Main, Bubble, Text } from './styles';
 const MessageBubble = ({ isSelf, text }) => (
   <Main isSelf={isSelf}>
     <Bubble isSelf={isSelf}>
-      <Text isSelf={isSelf}>{text}</Text>
+      <Text isSelf={isSelf} selectable>
+        {text}
+      </Text>
     </Bubble>
   </Main>
 );
