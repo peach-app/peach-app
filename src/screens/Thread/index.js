@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { KeyboardAvoidingView } from 'react-native';
-import useForm from 'react-hook-form';
 import getOr from 'lodash/fp/getOr';
 import get from 'lodash/fp/get';
 
@@ -16,6 +15,7 @@ import GET_MESSAGES from './graphql/get-messages';
 import CREATE_MESSAGE from './graphql/create-message';
 
 const Thread = ({ navigation }) => {
+  const [text, setText] = useState('');
   const id = navigation.getParam('id');
   const { data: user } = useQuery(GET_USER);
   const { data, refetch } = useQuery(GET_MESSAGES, {
@@ -25,21 +25,23 @@ const Thread = ({ navigation }) => {
     pollInterval: 3000,
   });
 
-  const { register, handleSubmit, setValue, reset } = useForm();
   const [createMessage, { loading }] = useMutation(CREATE_MESSAGE, {
     onCompleted: () => {
-      reset();
+      setText('');
       refetch();
     },
   });
-  const onSubmit = handleSubmit(values =>
+
+  const onSubmit = () => {
+    if (!text) return;
+
     createMessage({
       variables: {
-        text: values.text,
+        text,
         threadId: id,
       },
-    })
-  );
+    });
+  };
 
   return (
     <SafeAreaView>
@@ -60,10 +62,11 @@ const Thread = ({ navigation }) => {
         <Composer>
           <Wrapper>
             <TextInput
-              ref={register({ name: 'text' })}
-              placeholder="Type a message..."
               multiline
-              onChangeText={text => setValue('text', text)}
+              autoFocus
+              placeholder="Type a message..."
+              value={text}
+              onChangeText={setText}
             />
 
             <Send onPress={onSubmit}>{loading ? <Loading /> : <Icon />}</Send>
