@@ -15,7 +15,9 @@ export const Wrapper = styled(Container)`
   align-items: center;
 `;
 
-export const TextInput = styled.TextInput`
+export const TextInput = styled.TextInput.attrs(props => ({
+  placeholderTextColor: props.theme.greyDark,
+}))`
   flex: 1;
   max-height: 200px;
   margin-right: ${props => props.theme.spacing}px;

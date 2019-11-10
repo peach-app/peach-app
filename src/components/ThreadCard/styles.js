@@ -10,6 +10,8 @@ export const Icon = styled(Ionicons).attrs(props => ({
   margin-right: ${props => props.theme.spacingSmall}px;
 `;
 
+export const Users = styled(BaseText)``;
+
 export const Text = styled(BaseText)`
   color: ${props => props.theme.greyDark};
 `;

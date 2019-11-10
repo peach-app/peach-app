@@ -7,7 +7,7 @@ import get from 'lodash/fp/get';
 import getOr from 'lodash/fp/getOr';
 import head from 'lodash/fp/head';
 
-import { Icon, Text } from './styles';
+import { Icon, Users, Text } from './styles';
 import { Grid, GridItem } from '../../components/Grid';
 import Avatar, { AvatarList } from '../../components/Avatar';
 import { SkeletonText } from '../../components/Skeletons';
@@ -35,6 +35,11 @@ const ThreadCard = ({ isLoading, navigation, _id, users, messages }) => (
         </AvatarList>
       </GridItem>
       <GridItem flex={1}>
+        <Users numberOfLines={1}>
+          {getOr([], 'data', users)
+            .map(user => user.name || user.email)
+            .join(', ')}
+        </Users>
         <Text numberOfLines={2}>
           <SkeletonText
             isLoading={isLoading}

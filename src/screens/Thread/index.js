@@ -46,7 +46,7 @@ const Thread = ({ navigation }) => {
   return (
     <SafeAreaView>
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
-        <Header title="Thread" />
+        <Header />
         <FlatList
           inverted
           keyExtractor={item => item._id}
