@@ -5,7 +5,6 @@ import { withNavigation } from 'react-navigation';
 import gql from 'graphql-tag';
 import get from 'lodash/fp/get';
 import getOr from 'lodash/fp/getOr';
-import head from 'lodash/fp/head';
 
 import { Icon, Users, Text } from './styles';
 import { Grid, GridItem } from '../../components/Grid';
@@ -14,7 +13,7 @@ import { SkeletonText } from '../../components/Skeletons';
 
 const fakeAvatars = [{ _id: 0 }, { _id: 1 }];
 
-const ThreadCard = ({ isLoading, navigation, _id, users, messages }) => (
+const ThreadCard = ({ isLoading, navigation, _id, users, latestMessage }) => (
   <TouchableOpacity
     onPress={() => !isLoading && navigation.navigate('Thread', { id: _id })}
   >
@@ -45,11 +44,7 @@ const ThreadCard = ({ isLoading, navigation, _id, users, messages }) => (
             isLoading={isLoading}
             loadingText="Loading message text..."
           >
-            {getOr(
-              'Send the first message...',
-              'text',
-              head(getOr([], 'data', messages))
-            )}
+            {getOr('Send the first message...', 'text', latestMessage)}
           </SkeletonText>
         </Text>
       </GridItem>
@@ -73,10 +68,8 @@ ThreadCard.propTypes = {
 export const ThreadCardFragment = gql`
   fragment ThreadCardFragment on Thread {
     _id
-    messages {
-      data {
-        text
-      }
+    latestMessage {
+      text
     }
     users {
       data {

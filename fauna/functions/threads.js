@@ -10,7 +10,17 @@ module.exports = async () => {
           ['size', 'afterCursor', 'beforeCursor'],
           q.Map(
             q.Paginate(q.Match(q.Index('thread_users_by_user'), q.Identity())),
-            q.Lambda('ref', q.Get(q.Var('ref')))
+            q.Lambda(
+              'ref',
+              q.Merge(q.Get(q.Var('ref')), {
+                data: {
+                  latestMessage: q.Match(
+                    q.Index('message_thread_by_thread_by_date'),
+                    q.Var('ref')
+                  ),
+                },
+              })
+            )
           )
         )
       ),

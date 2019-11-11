@@ -85,11 +85,12 @@ type Booking {
 type Thread {
   users: [User] @relation
   messages: [Message] @relation
+  latestMessage: Message @embedded
 }
 
 type Message {
   date: Date!
-  thread: Thread!
+  thread: Thread! @relation
   user: User!
   text: String!
 }
