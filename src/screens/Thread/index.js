@@ -13,11 +13,17 @@ import MessageBubble from '../../components/MessageBubble';
 import GET_USER from './graphql/get-user';
 import GET_MESSAGES from './graphql/get-messages';
 import CREATE_MESSAGE from './graphql/create-message';
+import GET_THREAD from './graphql/get-thread';
 
 const Thread = ({ navigation }) => {
   const [text, setText] = useState('');
   const id = navigation.getParam('id');
   const { data: user } = useQuery(GET_USER);
+  const { data: thread } = useQuery(GET_THREAD, {
+    variables: {
+      id,
+    },
+  });
   const { data, refetch } = useQuery(GET_MESSAGES, {
     variables: {
       id,
@@ -46,7 +52,11 @@ const Thread = ({ navigation }) => {
   return (
     <SafeAreaView>
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
-        <Header />
+        <Header
+          title={getOr([], 'findThreadByID.users.data', thread)
+            .map(user => user.name || user.email)
+            .join(', ')}
+        />
         <FlatList
           inverted
           keyExtractor={item => item._id}
