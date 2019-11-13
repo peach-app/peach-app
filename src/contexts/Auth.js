@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { AsyncStorage } from 'react-native';
 import { AppLoading } from 'expo';
 
@@ -37,5 +37,7 @@ export const Provider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
+
+export const useAuth = () => useContext(AuthContext);
 
 export default AuthContext;

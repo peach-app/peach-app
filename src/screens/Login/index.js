@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from '@apollo/react-hooks';
@@ -16,7 +16,7 @@ import Actions from '../../components/Actions';
 import TextInput from '../../components/TextInput';
 import Text from '../../components/Text';
 import BackButton from '../../components/BackButton';
-import AuthContext from '../../contexts/Auth';
+import { useAuth } from '../../contexts/Auth';
 import LOGIN from './graphql/login';
 
 const LoginSchema = Yup.object().shape({
@@ -27,7 +27,7 @@ const LoginSchema = Yup.object().shape({
 });
 
 const Login = () => {
-  const { setToken } = useContext(AuthContext);
+  const { setToken } = useAuth();
   const [login, { loading, error }] = useMutation(LOGIN, {
     onCompleted: data => {
       setToken(get('login.secret', data));

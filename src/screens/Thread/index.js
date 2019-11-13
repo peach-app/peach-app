@@ -10,7 +10,8 @@ import Header from '../../components/Header';
 import Loading from '../../components/Loading';
 import { FlatList } from '../../components/FlatList';
 import MessageBubble from '../../components/MessageBubble';
-import GET_USER from './graphql/get-user';
+import { useUser } from '../../contexts/User';
+
 import GET_MESSAGES from './graphql/get-messages';
 import CREATE_MESSAGE from './graphql/create-message';
 import GET_THREAD from './graphql/get-thread';
@@ -18,7 +19,7 @@ import GET_THREAD from './graphql/get-thread';
 const Thread = ({ navigation }) => {
   const [text, setText] = useState('');
   const id = navigation.getParam('id');
-  const { data: user } = useQuery(GET_USER);
+  const { user } = useUser();
   const { data: thread } = useQuery(GET_THREAD, {
     variables: {
       id,
