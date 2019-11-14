@@ -1,11 +1,12 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { AppLoading } from 'expo';
 import { ApolloProvider } from '@apollo/react-hooks';
 import styled from 'styled-components/native';
 import { AppearanceProvider } from 'react-native-appearance';
 import * as Font from 'expo-font';
 
-import AuthContext, { Provider as AuthProvider } from './contexts/Auth';
+import { Provider as AuthProvider, useAuth } from './contexts/Auth';
+import { Provider as UserProvider } from './contexts/User';
 import ThemeProvider from './theme-provider';
 import client from './apollo-client';
 
@@ -14,7 +15,7 @@ import AuthedNavigator from './routers/AuthedNavigator';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
-  const { isLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn } = useAuth();
 
   if (loading) {
     return (
@@ -31,7 +32,11 @@ const App = () => {
   }
 
   if (isLoggedIn) {
-    return <AuthedNavigator />;
+    return (
+      <UserProvider>
+        <AuthedNavigator />
+      </UserProvider>
+    );
   }
 
   return <UnAuthedNavigator />;

@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Children } from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/fp/get';
 
-import { Main, Image, Initial } from './styles';
+import { Main, Image, Initial, List, Item } from './styles';
 import { SkeletonCircle } from '../../components/Skeletons';
 
 const Avatar = ({ size, source, fallback, isLoading }) => (
@@ -17,6 +17,14 @@ const Avatar = ({ size, source, fallback, isLoading }) => (
       )}
     </Main>
   </SkeletonCircle>
+);
+
+export const AvatarList = ({ children }) => (
+  <List>
+    {Children.map(children, child => (
+      <Item>{child}</Item>
+    ))}
+  </List>
 );
 
 Avatar.defaultProps = {

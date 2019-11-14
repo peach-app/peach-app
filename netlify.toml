@@ -1,6 +1,7 @@
 [build]
   command = "expo build:web"
   publish = "web-build"
+  functions = "functions"
 
 [[redirects]]
   from = "/*"

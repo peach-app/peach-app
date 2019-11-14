@@ -1,5 +1,6 @@
 const { client, q } = require('../helpers/db');
 const { makeRole } = require('../helpers/updateOrCreate');
+const { USER_TYPE } = require('../consts');
 
 module.exports = async () => {
   await client.query(
@@ -25,7 +26,27 @@ module.exports = async () => {
         {
           resource: q.Collection('Campaign'),
           actions: {
-            read: true,
+            read: q.Query(
+              q.Lambda(
+                'ref',
+                q.If(
+                  // If user is brand
+                  q.Equals(
+                    q.Select(['data', 'type'], q.Get(q.Identity())),
+                    USER_TYPE.BRAND
+                  ),
+
+                  // Return own campaigns
+                  q.Equals(
+                    q.Select(['data', 'user'], q.Get(q.Var('ref'))),
+                    q.Identity()
+                  ),
+
+                  // Return all
+                  true
+                )
+              )
+            ),
             write: q.Query(
               q.Lambda(
                 'ref',
@@ -51,6 +72,39 @@ module.exports = async () => {
         },
         {
           resource: q.Collection('User'),
+          actions: {
+            read: true,
+            write: false,
+            create: false,
+            delete: false,
+            history_read: false,
+            history_write: false,
+          },
+        },
+        {
+          resource: q.Collection('Thread'),
+          actions: {
+            read: true,
+            write: false,
+            create: false,
+            delete: false,
+            history_read: false,
+            history_write: false,
+          },
+        },
+        {
+          resource: q.Collection('Message'),
+          actions: {
+            read: true,
+            write: false,
+            create: true,
+            delete: false,
+            history_read: false,
+            history_write: false,
+          },
+        },
+        {
+          resource: q.Collection('thread_users'),
           actions: {
             read: true,
             write: false,
@@ -93,6 +147,54 @@ module.exports = async () => {
           },
         },
         {
+          resource: q.Index('thread_users_by_thread'),
+          actions: {
+            unrestricted_read: false,
+            read: true,
+            history_read: false,
+          },
+        },
+        {
+          resource: q.Index('all_thread_users'),
+          actions: {
+            unrestricted_read: false,
+            read: true,
+            history_read: false,
+          },
+        },
+        {
+          resource: q.Index('thread_users_by_thread_and_user'),
+          actions: {
+            unrestricted_read: false,
+            read: true,
+            history_read: false,
+          },
+        },
+        {
+          resource: q.Index('message_thread_by_thread'),
+          actions: {
+            unrestricted_read: false,
+            read: true,
+            history_read: false,
+          },
+        },
+        {
+          resource: q.Index('message_thread_by_thread_by_date'),
+          actions: {
+            unrestricted_read: false,
+            read: true,
+            history_read: false,
+          },
+        },
+        {
+          resource: q.Index('thread_users_by_user'),
+          actions: {
+            unrestricted_read: false,
+            read: true,
+            history_read: false,
+          },
+        },
+        {
           resource: q.Function('current_user'),
           actions: {
             call: true,
@@ -100,6 +202,24 @@ module.exports = async () => {
         },
         {
           resource: q.Function('campaigns_by_user_type'),
+          actions: {
+            call: true,
+          },
+        },
+        {
+          resource: q.Function('create_message'),
+          actions: {
+            call: true,
+          },
+        },
+        {
+          resource: q.Function('threads'),
+          actions: {
+            call: true,
+          },
+        },
+        {
+          resource: q.Function('messages'),
           actions: {
             call: true,
           },

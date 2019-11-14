@@ -5,11 +5,18 @@ type Query {
   # Campaigns listing
   campaigns: [Campaign]
     @resolver(name: "campaigns_by_user_type", paginated: true)
+
+  threads: [Thread] @resolver(name: "threads", paginated: true)
+  threadMessages(threadId: ID!): [Message]
+    @resolver(name: "messages", paginated: true)
 }
 
 type Mutation {
   login(email: String!, password: String!): Auth @resolver(name: "user_login")
-  register(email: String!, password: String!, type: UserType!): Auth @resolver(name: "register")
+  register(email: String!, password: String!, type: UserType!): User
+    @resolver(name: "register")
+  createMessage(threadId: ID!, text: String!): Message
+    @resolver(name: "create_message")
 }
 
 type Auth @embedded {
@@ -38,6 +45,8 @@ type User {
   # User applications/requests to
   # join Campaigns
   bookings: [Booking] @relation
+
+  threads: [Thread] @relation
 }
 
 type Campaign {
@@ -71,4 +80,17 @@ type Booking {
   user: User!
   cost: Float!
   state: BookingState!
+}
+
+type Thread {
+  users: [User] @relation
+  messages: [Message] @relation
+  latestMessage: Message @embedded
+}
+
+type Message {
+  date: Date!
+  thread: Thread! @relation
+  user: User!
+  text: String!
 }

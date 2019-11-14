@@ -1,9 +1,9 @@
 import React from 'react';
-import { SafeAreaView, TouchableWithoutFeedback } from 'react-native';
+import { Platform, SafeAreaView, TouchableWithoutFeedback } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { withTheme } from 'styled-components/native';
 
-import { Main, List, Item } from './styles';
+import { Main, List, Logo, Item } from './styles';
 import Container from '../../components/Container';
 
 const iconNames = {
@@ -21,6 +21,7 @@ const Navigation = ({ navigation, onTabPress, theme }) => {
       <SafeAreaView>
         <Container>
           <List>
+            {Platform.OS === 'web' && <Logo />}
             {routes.map((route, index) => {
               const isFocused = index === navigation.state.index;
 

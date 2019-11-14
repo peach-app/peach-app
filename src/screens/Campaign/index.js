@@ -16,13 +16,13 @@ import Title from '../../components/Title';
 import Avatar from '../../components/Avatar';
 import { SkeletonText } from '../../components/Skeletons';
 import { Grid, GridItem } from '../../components/Grid';
+import { useUser } from '../../contexts/User';
 
-import GET_USER from './graphql/get-user';
 import GET_CAMPAIGN from './graphql/get-campaign';
 
 const Campaign = ({ navigation }) => {
   const id = navigation.getParam('id');
-  const { data: user } = useQuery(GET_USER);
+  const { user } = useUser();
   const { data: campaign, loading, networkStatus, refetch } = useQuery(
     GET_CAMPAIGN,
     {

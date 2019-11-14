@@ -1,12 +1,16 @@
 import styled from 'styled-components/native';
 import Text from '../../components/Text';
+import Container from '../../components/Container';
 
 export const Main = styled.View`
   border-bottom-width: 1px;
-  padding-horizontal: 55px;
   height: 55px;
-  justify-content: center;
   border-color: ${props => props.theme.greyLight};
+`;
+
+export const Wrapper = styled(Container)`
+  height: 100%;
+  justify-content: center;
 `;
 
 export const Action = styled.View`

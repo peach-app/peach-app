@@ -6,6 +6,7 @@ import Navigation from '../components/Navigation';
 import Campaign from '../screens/Campaign';
 import Campaigns from '../screens/Campaigns';
 import Inbox from '../screens/Inbox';
+import Thread from '../screens/Thread';
 import Discover from '../screens/Discover';
 import Account from '../screens/Account';
 import AccountEdit from '../screens/AccountEdit';
@@ -16,6 +17,16 @@ const CampaignStack = createStackNavigator(
   {
     Campaigns,
     CreateCampaign,
+  },
+  {
+    headerMode: 'none',
+  }
+);
+
+const InboxStack = createStackNavigator(
+  {
+    Inbox,
+    Thread,
   },
   {
     headerMode: 'none',
@@ -37,7 +48,7 @@ const TabNavigator = createBottomTabNavigator(
   {
     Discover,
     Campaigns: CampaignStack,
-    Inbox,
+    Inbox: InboxStack,
     Account: AccountStack,
   },
   {
