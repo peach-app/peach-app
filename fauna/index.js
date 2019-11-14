@@ -19,6 +19,7 @@ console.log({ FAUNADB_SECRET });
     await require('./functions/create_message')();
     await require('./functions/threads')();
     await require('./functions/messages')();
+    await require('./functions/create_campaign')();
 
     // Indexes
     await require('./indexes/message_thread_by_thread_by_date')();
