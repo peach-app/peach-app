@@ -17,6 +17,13 @@ type Mutation {
     @resolver(name: "register")
   createMessage(threadId: ID!, text: String!): Message
     @resolver(name: "create_message")
+  createCampaign(
+    name: String!
+    private: Boolean!
+    description: String!
+    dueDate: String!
+    budget: String!
+  ): Campaign @resolver(name: "create_campaign")
 }
 
 type Auth @embedded {
