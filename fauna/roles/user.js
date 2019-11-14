@@ -56,7 +56,15 @@ module.exports = async () => {
                 )
               )
             ),
-            create: false,
+            create: q.Query(
+              q.Lambda(
+                ['ref'],
+                q.Equals(
+                  q.Select(['data', 'type'], q.Get(q.Identity())),
+                  USER_TYPE.BRAND
+                )
+              )
+            ),
             delete: q.Query(
               q.Lambda(
                 'ref',
@@ -220,6 +228,12 @@ module.exports = async () => {
         },
         {
           resource: q.Function('messages'),
+          actions: {
+            call: true,
+          },
+        },
+        {
+          resource: q.Function('create_campaign'),
           actions: {
             call: true,
           },
