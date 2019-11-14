@@ -13,7 +13,7 @@ type Query {
 
 type Mutation {
   login(email: String!, password: String!): Auth @resolver(name: "user_login")
-  register(email: String!, password: String!, type: UserType!): User
+  register(email: String!, password: String!, type: UserType!): Auth
     @resolver(name: "register")
   createMessage(threadId: ID!, text: String!): Message
     @resolver(name: "create_message")
