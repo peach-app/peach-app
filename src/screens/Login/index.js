@@ -4,7 +4,6 @@ import * as Yup from 'yup';
 import { useMutation } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 
-import { Header } from './styles';
 import SafeAreaView from '../../components/SafeAreaView';
 import StatusBar from '../../components/StatusBar';
 import Container from '../../components/Container';
@@ -56,13 +55,20 @@ const Login = () => {
         <SafeAreaView>
           <Container>
             <StatusBar />
-            <Header>
-              <Intro>
-                <BackButton />
-                <Title isCenter>Login</Title>
-              </Intro>
-            </Header>
             <Grid>
+              <GridItem size={12}>
+                <Intro>
+                  <Grid>
+                    <GridItem size={12}>
+                      <BackButton />
+                    </GridItem>
+                    <GridItem size={12}>
+                      <Title>Login</Title>
+                    </GridItem>
+                  </Grid>
+                </Intro>
+              </GridItem>
+
               {error && (
                 <GridItem size={12}>
                   <Text>Incorrect Email or Password</Text>

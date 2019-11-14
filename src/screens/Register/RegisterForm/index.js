@@ -6,7 +6,6 @@ import Intro from '../../../components/Intro';
 import Title from '../../../components/Title';
 import BackButton from '../../../components/BackButton';
 import Tabs from '../../../components/Tabs';
-import { Header } from '../styles';
 import TextInput from '../../../components/TextInput/Input';
 import { Grid, GridItem } from '../../../components/Grid';
 import Button from '../../../components/Button';
@@ -20,16 +19,23 @@ const RegisterForm = ({ onFormSubmit, isLoading, error }) => {
   const { register, handleSubmit, errors, setValue } = useForm({
     validationSchema,
   });
+
   return (
     <Container>
-      <Header>
-        <Intro>
-          <BackButton />
-          <Title isCenter>Sign Up</Title>
-        </Intro>
-      </Header>
       <Grid>
-        <GridItem size="12">
+        <GridItem size={12}>
+          <Intro>
+            <Grid>
+              <GridItem size={12}>
+                <BackButton />
+              </GridItem>
+              <GridItem size={12}>
+                <Title>Sign Up</Title>
+              </GridItem>
+            </Grid>
+          </Intro>
+        </GridItem>
+        <GridItem size={12}>
           <Tabs
             activeTabIndex={activeTab}
             onTabPress={setTab}
@@ -37,7 +43,7 @@ const RegisterForm = ({ onFormSubmit, isLoading, error }) => {
           />
         </GridItem>
         {FORM_INPUTS.map((input, index) => (
-          <GridItem key={index} size="12">
+          <GridItem key={index} size={12}>
             <TextInput
               {...input}
               ref={register({ name: input.name })}
@@ -51,7 +57,7 @@ const RegisterForm = ({ onFormSubmit, isLoading, error }) => {
             <Text>Incorrect Email or Password</Text>
           </GridItem>
         )}
-        <GridItem size="12">
+        <GridItem size={12}>
           <Actions>
             <Button
               isLoading={isLoading}
