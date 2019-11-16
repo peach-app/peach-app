@@ -39,6 +39,8 @@ type User {
 
   type: UserType!
 
+  account: Account @unique
+
   # User created Campaigns
   campaigns: [Campaign] @relation
 
@@ -93,4 +95,10 @@ type Message {
   thread: Thread! @relation
   user: User!
   text: String!
+}
+
+type Account {
+  id: String! @unique
+  user: User! @relation
+  balance: Float
 }

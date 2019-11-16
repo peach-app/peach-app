@@ -115,6 +115,17 @@ module.exports = async () => {
           },
         },
         {
+          resource: q.Collection('Account'),
+          actions: {
+            read: true,
+            write: false,
+            create: false,
+            delete: false,
+            history_read: false,
+            history_write: false,
+          },
+        },
+        {
           resource: q.Index('campaigns'),
           actions: {
             unrestricted_read: false,
@@ -188,6 +199,14 @@ module.exports = async () => {
         },
         {
           resource: q.Index('thread_users_by_user'),
+          actions: {
+            unrestricted_read: false,
+            read: true,
+            history_read: false,
+          },
+        },
+        {
+          resource: q.Index('account_user_by_user'),
           actions: {
             unrestricted_read: false,
             read: true,
