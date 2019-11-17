@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components/native';
 import { connect } from 'formik';
 
-import Text from '../../components/Text';
+import Label from '../Label';
 
 const Input = styled.TextInput`
   border-width: 1px;
@@ -16,22 +16,24 @@ const Input = styled.TextInput`
   font-family: futura-book;
 `;
 
-const Label = styled(Text)`
-  margin-bottom: ${props => props.theme.spacingSmall}px;
-`;
-
-const TextInput = ({ name, label, formik, ...props }) => (
-  <>
-    {label && <Label>{label}</Label>}
-    <Input
-      {...props}
-      hasError={formik.errors[name]}
-      onChangeText={formik.handleChange(name)}
-      onBlur={formik.handleBlur(name)}
-      value={formik.values[name]}
-    />
-  </>
-);
+const TextInput = ({ name, label, formik, ...props }) => {
+  // TO DO:
+  // REFACTOR WITH HOOKS
+  const error = formik.errors[name];
+  return (
+    <>
+      {label && <Label>{label}</Label>}
+      <Input
+        {...props}
+        hasError={error}
+        onChangeText={formik.handleChange(name)}
+        onBlur={formik.handleBlur(name)}
+        value={formik.values[name]}
+      />
+      {error && <Label error>{error}</Label>}
+    </>
+  );
+};
 
 TextInput.propTypes = {
   name: PropTypes.string.isRequired,
