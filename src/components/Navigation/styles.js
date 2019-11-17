@@ -42,5 +42,5 @@ export const Item = styled.View`
       androind: props.theme.spacingSmall,
       web: props.theme.spacing,
     })}px;
-  padding-vertical: ${props => props.theme.spacing}px;
+  padding-vertical: ${props => props.theme.spacingSmall}px;
 `;
