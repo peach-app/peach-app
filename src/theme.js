@@ -15,6 +15,7 @@ const theme = {
   spacingMedium: 24,
   spacingLarge: 32,
   spacingXLarge: 48,
+  inputBorderWidth: 1
 };
 
 export const darkModeOverrides = {
