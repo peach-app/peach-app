@@ -5,7 +5,7 @@ import get from 'lodash/fp/get';
 import getOr from 'lodash/fp/getOr';
 
 import { Foot, Description } from './styles';
-import { NETWORK_STATUS, USER_TYPE } from '../../consts';
+import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from '../../consts';
 import Header from '../../components/Header';
 import Intro from '../../components/Intro';
 import SafeAreaView from '../../components/SafeAreaView';
@@ -37,6 +37,7 @@ const Campaign = ({ navigation }) => {
   const brandName =
     get('findCampaignByID.user.name', campaign) ||
     get('findCampaignByID.user.email', campaign);
+  const bookignState = get('findCampaignByID.userBooking.state', campaign);
 
   return (
     <SafeAreaView>
@@ -88,7 +89,10 @@ const Campaign = ({ navigation }) => {
 
       {get('user.type', user) === USER_TYPE.INFLUENCER && (
         <Foot>
-          <Button title="Apply" fixedWidth />
+          {!bookignState && <Button title="Apply" fixedWidth />}
+          {bookignState === BOOKING_STATE.APPLIED && (
+            <Button title="Cancel Application" fixedWidth />
+          )}
         </Foot>
       )}
     </SafeAreaView>

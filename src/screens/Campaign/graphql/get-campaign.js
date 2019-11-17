@@ -12,6 +12,9 @@ export default gql`
           url
         }
       }
+      userBooking {
+        state
+      }
     }
   }
 `;
