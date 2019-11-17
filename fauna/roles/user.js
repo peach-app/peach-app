@@ -12,6 +12,7 @@ module.exports = async () => {
         },
       ],
       privileges: [
+        // COLLECTIONS
         {
           resource: q.Collection('Booking'),
           actions: {
@@ -114,6 +115,8 @@ module.exports = async () => {
             history_write: false,
           },
         },
+
+        // INDEXES
         {
           resource: q.Index('campaigns'),
           actions: {
@@ -195,6 +198,14 @@ module.exports = async () => {
           },
         },
         {
+          resource: q.Index('booking_by_campaign_user'),
+          actions: {
+            read: true,
+          },
+        },
+
+        // USER FUNCTIONS
+        {
           resource: q.Function('current_user'),
           actions: {
             call: true,
@@ -202,6 +213,12 @@ module.exports = async () => {
         },
         {
           resource: q.Function('campaigns_by_user_type'),
+          actions: {
+            call: true,
+          },
+        },
+        {
+          resource: q.Function('find_campaign_by_id'),
           actions: {
             call: true,
           },

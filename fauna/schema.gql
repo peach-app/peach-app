@@ -6,6 +6,9 @@ type Query {
   campaigns: [Campaign]
     @resolver(name: "campaigns_by_user_type", paginated: true)
 
+  findCampaignByID(id: ID): Campaign @resolver(name: "find_campaign_by_id")
+
+  # Inbox threads
   threads: [Thread] @resolver(name: "threads", paginated: true)
   threadMessages(threadId: ID!): [Message]
     @resolver(name: "messages", paginated: true)
@@ -59,6 +62,7 @@ type Campaign {
   private: Boolean
   budget: Float
   bookings: [Booking] @relation
+  userBooking: Booking @embedded
 }
 
 enum BookingState {
@@ -76,7 +80,7 @@ enum BookingState {
 }
 
 type Booking {
-  campaign: Campaign!
+  campaign: Campaign! @relation
   user: User!
   cost: Float!
   state: BookingState!
