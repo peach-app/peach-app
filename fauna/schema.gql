@@ -19,9 +19,9 @@ type Mutation {
     @resolver(name: "create_message")
   createCampaign(
     name: String!
-    private: Boolean!
     description: String!
     dueDate: String!
+    private: Boolean!
     budget: String!
   ): Campaign @resolver(name: "create_campaign")
 }
