@@ -3,16 +3,16 @@ import gql from 'graphql-tag';
 export default gql`
   mutation(
     $name: String!
-    $private: Boolean!
     $description: String!
     $dueDate: String!
+    $private: Boolean!
     $budget: String!
   ) {
     createCampaign(
       name: $name
-      private: $private
       description: $description
       dueDate: $dueDate
+      private: $private
       budget: $budget
     ) {
       _id
