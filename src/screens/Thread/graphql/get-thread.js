@@ -5,6 +5,7 @@ export default gql`
     findThreadByID(id: $id) {
       users {
         data {
+          _id
           name
           email
         }

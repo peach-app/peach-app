@@ -6,6 +6,7 @@ export default gql`
       name
       description
       user {
+        _id
         name
         email
         avatar {

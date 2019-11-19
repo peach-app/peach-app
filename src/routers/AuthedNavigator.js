@@ -12,6 +12,7 @@ import Account from '../screens/Account';
 import AccountEdit from '../screens/AccountEdit';
 import Payouts from '../screens/Payouts';
 import CreateCampaign from '../screens/CreateCampaign';
+import Profile from '../screens/Profile';
 
 const CampaignStack = createStackNavigator(
   {
@@ -60,6 +61,7 @@ const AuthedNavigator = createStackNavigator(
   {
     Home: TabNavigator,
     Campaign,
+    Profile,
   },
   {
     headerMode: 'none',

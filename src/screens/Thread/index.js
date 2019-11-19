@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { KeyboardAvoidingView } from 'react-native';
 import getOr from 'lodash/fp/getOr';
@@ -50,14 +50,17 @@ const Thread = ({ navigation }) => {
     });
   };
 
+  const title = useMemo(() => {
+    return getOr([], 'findThreadByID.users.data', thread)
+      .filter(threadUser => threadUser._id !== user.user._id)
+      .map(threadUser => threadUser.name || threadUser.email)
+      .join(', ');
+  }, [thread, user]);
+
   return (
     <SafeAreaView>
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
-        <Header
-          title={getOr([], 'findThreadByID.users.data', thread)
-            .map(user => user.name || user.email)
-            .join(', ')}
-        />
+        <Header title={title} />
         <FlatList
           inverted
           keyExtractor={item => item._id}
