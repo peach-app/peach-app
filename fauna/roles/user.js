@@ -75,7 +75,9 @@ module.exports = async () => {
           resource: q.Collection('User'),
           actions: {
             read: true,
-            write: false,
+            write: q.Query(
+              q.Lambda('ref', q.Equals(q.Identity(), q.Var('ref')))
+            ),
             create: false,
             delete: false,
             history_read: false,

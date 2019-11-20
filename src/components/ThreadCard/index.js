@@ -19,7 +19,7 @@ const ThreadCard = ({ isLoading, navigation, _id, users, latestMessage }) => {
 
   const threadUsers = useMemo(() => {
     return getOr([], 'data', users).filter(
-      threadUser => threadUser._id !== user.user._id
+      threadUser => threadUser._id !== user._id
     );
   }, [users, user]);
 

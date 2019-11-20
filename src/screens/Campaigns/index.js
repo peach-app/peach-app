@@ -23,7 +23,7 @@ const Campaigns = ({ navigation }) => {
   const { data, loading, networkStatus, refetch } = useQuery(GET_CAMPAIGNS, {
     notifyOnNetworkStatusChange: true,
   });
-  const userType = get('user.type', user);
+  const userType = get('type', user);
   const isBrand = userType === USER_TYPE.BRAND;
   const isInfluencer = userType === USER_TYPE.INFLUENCER;
 

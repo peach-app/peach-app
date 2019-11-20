@@ -39,7 +39,8 @@
     "react-navigation-stack": "^1.10.3",
     "react-navigation-tabs": "^2.5.6",
     "styled-components": "^4.4.0-reactnativewebfix",
-    "yup": "^0.27.0"
+    "yup": "^0.27.0",
+    "expo-permissions": "~7.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.3",

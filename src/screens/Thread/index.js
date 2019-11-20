@@ -52,7 +52,7 @@ const Thread = ({ navigation }) => {
 
   const title = useMemo(() => {
     return getOr([], 'findThreadByID.users.data', thread)
-      .filter(threadUser => threadUser._id !== user.user._id)
+      .filter(threadUser => threadUser._id !== user._id)
       .map(threadUser => threadUser.name || threadUser.email)
       .join(', ');
   }, [thread, user]);
@@ -67,7 +67,7 @@ const Thread = ({ navigation }) => {
           data={getOr([], 'threadMessages.data', data)}
           renderItem={({ item }) => (
             <MessageBubble
-              isSelf={get('user._id', user) === get('user._id', item)}
+              isSelf={get('_id', user) === get('user._id', item)}
               {...item}
             />
           )}

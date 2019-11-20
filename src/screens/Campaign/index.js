@@ -93,7 +93,7 @@ const Campaign = ({ navigation }) => {
         </Container>
       </ScrollView>
 
-      {get('user.type', user) === USER_TYPE.INFLUENCER && (
+      {get('type', user) === USER_TYPE.INFLUENCER && (
         <Foot>
           {!bookingState && <Button title="Apply" fixedWidth />}
           {bookingState === BOOKING_STATE.APPLIED && (

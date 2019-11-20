@@ -1,15 +1,45 @@
 import React, { useContext } from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import get from 'lodash/fp/get';
 
+import UPDATE_PUSH_TOKEN from './graphql/update-push-token';
 import GET_USER from './graphql/get-user';
 
 const UserContext = React.createContext();
 
+const registerForPushNotificationsAsync = async () => {
+  const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+
+  if (status !== 'granted') {
+    return;
+  }
+
+  return Notifications.getExpoPushTokenAsync();
+};
+
 export const Provider = ({ children }) => {
-  const { data: user, loading } = useQuery(GET_USER);
+  const [updatePushToken] = useMutation(UPDATE_PUSH_TOKEN);
+  const { data, loading } = useQuery(GET_USER, {
+    onCompleted: async data => {
+      if (data.user.pushToken) return;
+
+      const token = await registerForPushNotificationsAsync();
+
+      if (token) {
+        updatePushToken({
+          variables: {
+            id: get('user._id', data),
+            token,
+          },
+        });
+      }
+    },
+  });
 
   return (
-    <UserContext.Provider value={{ user, loading }}>
+    <UserContext.Provider value={{ user: get('user', data), loading }}>
       {children}
     </UserContext.Provider>
   );
