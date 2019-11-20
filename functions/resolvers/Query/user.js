@@ -3,6 +3,7 @@ module.exports = async (root, args, { client, q }) => {
     q.Merge(
       {
         _id: q.Select(['id'], q.Identity()),
+        ref: q.Identity(),
       },
       q.Select(['data'], q.Get(q.Identity()))
     )
