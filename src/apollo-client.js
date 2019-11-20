@@ -12,7 +12,7 @@ const httpLink = new HttpLink({
 });
 
 const restLink = new RestLink({
-  uri: 'https://dashboard.peachapp.io/.netlify/functions',
+  uri: 'http://localhost:8888/.netlify/functions',
 });
 
 const authLink = setContext(async (_, { headers }) => {
@@ -21,7 +21,7 @@ const authLink = setContext(async (_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: token
+      Authorization: token
         ? `Bearer ${token}`
         : 'Bearer fnADcuFlk7ACAC2eAW2YzfTZiA9vbQZ5-caS0x6Q',
     },

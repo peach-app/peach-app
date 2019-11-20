@@ -5,7 +5,7 @@ import { MessageBubbleFragment } from '../../../components/MessageBubble';
 export default gql`
   ${MessageBubbleFragment}
 
-  query($id: ID!) {
+  query getMessages($id: ID!) {
     threadMessages(threadId: $id) {
       data {
         _id

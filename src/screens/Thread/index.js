@@ -25,7 +25,7 @@ const Thread = ({ navigation }) => {
       id,
     },
   });
-  const { data, refetch } = useQuery(GET_MESSAGES, {
+  const { data } = useQuery(GET_MESSAGES, {
     variables: {
       id,
     },
@@ -33,10 +33,8 @@ const Thread = ({ navigation }) => {
   });
 
   const [createMessage, { loading }] = useMutation(CREATE_MESSAGE, {
-    onCompleted: () => {
-      setText('');
-      refetch();
-    },
+    onCompleted: () => setText(''),
+    refetchQueries: ['getMessages'],
   });
 
   const onSubmit = () => {
@@ -44,8 +42,10 @@ const Thread = ({ navigation }) => {
 
     createMessage({
       variables: {
-        text,
-        threadId: id,
+        body: {
+          text,
+          threadId: id,
+        },
       },
     });
   };
