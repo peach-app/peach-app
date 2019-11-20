@@ -1,18 +1,13 @@
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
-import { RestLink } from 'apollo-link-rest';
 import { setContext } from 'apollo-link-context';
 import { AsyncStorage } from 'react-native';
 
 const cache = new InMemoryCache();
 
 const httpLink = new HttpLink({
-  uri: 'https://graphql.fauna.com/graphql',
-});
-
-const restLink = new RestLink({
-  uri: 'https://dashboard.peachapp.io/.netlify/functions',
+  uri: 'http://localhost:8888/.netlify/functions/graphql',
 });
 
 const authLink = setContext(async (_, { headers }) => {
@@ -30,7 +25,7 @@ const authLink = setContext(async (_, { headers }) => {
 
 const client = new ApolloClient({
   cache,
-  link: authLink.concat(restLink.concat(httpLink)),
+  link: authLink.concat(httpLink),
 });
 
 export default client;

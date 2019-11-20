@@ -3,6 +3,8 @@ const { makeRole } = require('../helpers/updateOrCreate');
 const { USER_TYPE } = require('../consts');
 
 module.exports = async () => {
+  console.log('Creating "user" role');
+
   await client.query(
     makeRole({
       name: 'user',
@@ -17,11 +19,6 @@ module.exports = async () => {
           resource: q.Collection('Booking'),
           actions: {
             read: true,
-            write: false,
-            create: false,
-            delete: false,
-            history_read: false,
-            history_write: false,
           },
         },
         {
@@ -57,7 +54,6 @@ module.exports = async () => {
                 )
               )
             ),
-            create: false,
             delete: q.Query(
               q.Lambda(
                 'ref',
@@ -67,52 +63,31 @@ module.exports = async () => {
                 )
               )
             ),
-            history_read: false,
-            history_write: false,
           },
         },
         {
           resource: q.Collection('User'),
           actions: {
             read: true,
-            write: false,
-            create: false,
-            delete: false,
-            history_read: false,
-            history_write: false,
           },
         },
         {
           resource: q.Collection('Thread'),
           actions: {
             read: true,
-            write: false,
-            create: false,
-            delete: false,
-            history_read: false,
-            history_write: false,
           },
         },
         {
           resource: q.Collection('Message'),
           actions: {
             read: true,
-            write: false,
             create: true,
-            delete: false,
-            history_read: false,
-            history_write: false,
           },
         },
         {
           resource: q.Collection('thread_users'),
           actions: {
             read: true,
-            write: false,
-            create: false,
-            delete: false,
-            history_read: false,
-            history_write: false,
           },
         },
 
@@ -120,81 +95,61 @@ module.exports = async () => {
         {
           resource: q.Index('campaigns'),
           actions: {
-            unrestricted_read: false,
             read: true,
-            history_read: false,
           },
         },
         {
           resource: q.Index('booking_campaign_by_campaign'),
           actions: {
-            unrestricted_read: false,
             read: true,
-            history_read: false,
           },
         },
         {
           resource: q.Index('booking_user_by_user'),
           actions: {
-            unrestricted_read: false,
             read: true,
-            history_read: false,
           },
         },
         {
           resource: q.Index('campaign_user_by_user'),
           actions: {
-            unrestricted_read: false,
             read: true,
-            history_read: false,
           },
         },
         {
           resource: q.Index('thread_users_by_thread'),
           actions: {
-            unrestricted_read: false,
             read: true,
-            history_read: false,
           },
         },
         {
           resource: q.Index('all_thread_users'),
           actions: {
-            unrestricted_read: false,
             read: true,
-            history_read: false,
           },
         },
         {
           resource: q.Index('thread_users_by_thread_and_user'),
           actions: {
-            unrestricted_read: false,
             read: true,
-            history_read: false,
           },
         },
         {
           resource: q.Index('message_thread_by_thread'),
           actions: {
-            unrestricted_read: false,
             read: true,
-            history_read: false,
           },
         },
         {
           resource: q.Index('message_thread_by_thread_by_date'),
           actions: {
-            unrestricted_read: false,
             read: true,
-            history_read: false,
           },
         },
         {
           resource: q.Index('thread_users_by_user'),
           actions: {
-            unrestricted_read: false,
             read: true,
-            history_read: false,
           },
         },
         {
@@ -203,47 +158,7 @@ module.exports = async () => {
             read: true,
           },
         },
-
-        // USER FUNCTIONS
-        {
-          resource: q.Function('current_user'),
-          actions: {
-            call: true,
-          },
-        },
-        {
-          resource: q.Function('campaigns_by_user_type'),
-          actions: {
-            call: true,
-          },
-        },
-        {
-          resource: q.Function('find_campaign_by_id'),
-          actions: {
-            call: true,
-          },
-        },
-        {
-          resource: q.Function('create_message'),
-          actions: {
-            call: true,
-          },
-        },
-        {
-          resource: q.Function('threads'),
-          actions: {
-            call: true,
-          },
-        },
-        {
-          resource: q.Function('messages'),
-          actions: {
-            call: true,
-          },
-        },
       ],
     })
   );
-
-  console.log('"user" role created');
 };

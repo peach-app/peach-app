@@ -2,6 +2,8 @@ const { client, q } = require('../helpers/db');
 const { makeIndex } = require('../helpers/updateOrCreate');
 
 module.exports = async () => {
+  console.log('Creating "message_thread_by_thread_by_date" index');
+
   await client.query(
     makeIndex({
       name: 'message_thread_by_thread_by_date',
@@ -20,6 +22,4 @@ module.exports = async () => {
       ],
     })
   );
-
-  console.log('"message_thread_by_thread_by_date" index created');
 };

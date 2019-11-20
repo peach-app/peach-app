@@ -11,6 +11,14 @@ console.log({ FAUNADB_SECRET });
 
 (async () => {
   try {
+    // Collections
+    await require('./collections/User')();
+    await require('./collections/thread_users')();
+    await require('./collections/Thread')();
+    await require('./collections/Message')();
+    await require('./collections/Campaign')();
+    await require('./collections/Booking')();
+
     // Indexes
     await require('./indexes/message_thread_by_thread_by_date')();
     await require('./indexes/booking_user_by_user')();

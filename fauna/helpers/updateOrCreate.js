@@ -9,6 +9,7 @@ const creator = (TypeFunc, CreateFunc) => ({ name, ...rest }) => {
 };
 
 module.exports = {
+  makeCollection: creator(q.Collection, q.CreateCollection),
   makeRole: creator(q.Role, q.CreateRole),
   makeIndex: creator(q.Index, q.CreateIndex),
 };
