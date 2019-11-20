@@ -12,10 +12,24 @@ import Intro from '../../components/Intro';
 import CampaignCard from '../../components/CampaignCard';
 import GET_CAMPAIGNS from './graphql/get-campaigns';
 
+import gql from 'graphql-tag';
+const TEST = gql`
+  {
+    hello
+  }
+`;
+
 const Discover = () => {
   const { data, loading, networkStatus, refetch } = useQuery(GET_CAMPAIGNS, {
     notifyOnNetworkStatusChange: true,
   });
+
+  const { data: thing } = useQuery(TEST, {
+    context: {
+      useLambda: true,
+    },
+  });
+  console.log(thing);
 
   return (
     <SafeAreaView>

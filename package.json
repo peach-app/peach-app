@@ -17,8 +17,10 @@
     "apollo-link-context": "^1.0.19",
     "apollo-link-http": "^1.5.16",
     "apollo-link-rest": "^0.7.3",
+    "apollo-server-lambda": "^2.9.9",
     "expo": "^35.0.0",
     "expo-font": "~7.0.0",
+    "expo-permissions": "~7.0.0",
     "formik": "^1.5.8",
     "graphql": "^14.5.8",
     "graphql-anywhere": "^4.2.4",
@@ -39,8 +41,7 @@
     "react-navigation-stack": "^1.10.3",
     "react-navigation-tabs": "^2.5.6",
     "styled-components": "^4.4.0-reactnativewebfix",
-    "yup": "^0.27.0",
-    "expo-permissions": "~7.0.0"
+    "yup": "^0.27.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.3",
