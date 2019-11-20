@@ -1,13 +1,14 @@
 import React, { Children } from 'react';
+import { TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import get from 'lodash/fp/get';
 
 import { Main, Image, Initial, List, Item } from './styles';
 import { SkeletonCircle } from '../../components/Skeletons';
 
-const Avatar = ({ size, source, fallback, isLoading }) => (
+const Avatar = ({ size, source, fallback, isLoading, onPress }) => (
   <SkeletonCircle isLoading={isLoading} size={size}>
-    <Main size={size}>
+    <Main size={size} as={onPress && TouchableOpacity} onPress={onPress}>
       {get('uri', source) ? (
         <Image source={source} />
       ) : (
@@ -40,6 +41,7 @@ Avatar.propTypes = {
     PropTypes.string,
     PropTypes.shape({ uri: PropTypes.string }),
   ]),
+  onPress: PropTypes.func,
 };
 
 export default Avatar;

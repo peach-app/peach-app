@@ -16,6 +16,7 @@ console.log({ FAUNADB_SECRET });
     await require('./functions/current_user')();
     await require('./functions/register')();
     await require('./functions/campaigns_by_user_type')();
+    await require('./functions/find_campaign_by_id')();
     await require('./functions/create_message')();
     await require('./functions/threads')();
     await require('./functions/messages')();
@@ -26,6 +27,7 @@ console.log({ FAUNADB_SECRET });
     await require('./indexes/booking_user_by_user')();
     await require('./indexes/campaign_user_by_user')();
     await require('./indexes/thread_users_by_user')();
+    await require('./indexes/booking_by_campaign_user')();
 
     // Roles
     await require('./roles/auth')();

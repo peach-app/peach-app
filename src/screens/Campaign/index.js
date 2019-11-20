@@ -5,7 +5,8 @@ import get from 'lodash/fp/get';
 import getOr from 'lodash/fp/getOr';
 
 import { Foot, Description } from './styles';
-import { NETWORK_STATUS, USER_TYPE } from '../../consts';
+import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from '../../consts';
+import Text from '../../components/Text';
 import Header from '../../components/Header';
 import Intro from '../../components/Intro';
 import SafeAreaView from '../../components/SafeAreaView';
@@ -37,11 +38,12 @@ const Campaign = ({ navigation }) => {
   const brandName =
     get('findCampaignByID.user.name', campaign) ||
     get('findCampaignByID.user.email', campaign);
+  const bookingState = get('findCampaignByID.userBooking.state', campaign);
 
   return (
     <SafeAreaView>
       <StatusBar />
-      <Header title={brandName} />
+      <Header />
       <ScrollView
         style={{ flex: 1 }}
         refreshControl={
@@ -59,6 +61,11 @@ const Campaign = ({ navigation }) => {
                   isLoading={fetching}
                   size={50}
                   fallback={brandName}
+                  onPress={() =>
+                    navigation.navigate('Profile', {
+                      id: get('findCampaignByID.user._id', campaign),
+                    })
+                  }
                   source={{
                     uri: get('findCampaignByID.user.avatar.url', campaign),
                   }}
@@ -88,7 +95,13 @@ const Campaign = ({ navigation }) => {
 
       {get('user.type', user) === USER_TYPE.INFLUENCER && (
         <Foot>
-          <Button title="Apply" fixedWidth />
+          {!bookingState && <Button title="Apply" fixedWidth />}
+          {bookingState === BOOKING_STATE.APPLIED && (
+            <Text>Your application is pending for this campaign.</Text>
+          )}
+          {bookingState === BOOKING_STATE.REQUESTED && (
+            <Text>The brand has requested you onto this campaign.</Text>
+          )}
         </Foot>
       )}
     </SafeAreaView>

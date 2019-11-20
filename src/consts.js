@@ -7,7 +7,6 @@ export const FORM_ERROR_MESSAGES = {
   INVALID_EMAIL: 'Please enter a valid email',
   REQUIRED_PASSWORD: 'We need you to set a password',
   REQUIRED_EMAIL: 'We need your email',
-  REQUIRED_FIELD: 'Please fill in the field above',
 };
 
 export const USER_TYPE = {
@@ -18,4 +17,12 @@ export const USER_TYPE = {
 export const CAMPAIGN_TYPE = {
   PRIVATE: 'PRIVATE',
   PUBLIC: 'PUBLIC',
+};
+
+export const BOOKING_STATE = {
+  ACCEPTED: 'ACCEPTED',
+  DECLINED: 'DECLINED',
+  COMPLETE: 'COMPLETE',
+  APPLIED: 'APPLIED',
+  REQUESTED: 'REQUESTED',
 };

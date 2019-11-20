@@ -4,6 +4,13 @@
   functions = "functions"
 
 [[redirects]]
+  from = "/.netlify/functions/*"
+  to = "/"
+  
+  [redirects.headers]
+    Access-Control-Allow-Origin = "*"
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
