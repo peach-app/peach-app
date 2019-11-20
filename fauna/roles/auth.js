@@ -16,7 +16,7 @@ module.exports = async () => {
           },
         },
         {
-          resource: q.Index('unique_User_email'),
+          resource: q.Index('unique_user_email'),
           actions: {
             read: true,
           },
