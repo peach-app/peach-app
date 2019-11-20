@@ -18,7 +18,7 @@ const authLink = setContext(async (_, { headers }) => {
       ...headers,
       Authorization: token
         ? `Bearer ${token}`
-        : 'Bearer fnADcuFlk7ACAC2eAW2YzfTZiA9vbQZ5-caS0x6Q',
+        : 'Bearer fnADdrl55iACAOcrhbuVMnLTitIXrA7On8_h1BdQ',
     },
   };
 });

@@ -47,7 +47,7 @@ const Discover = () => {
           </>
         }
         keyExtractor={item => item._id}
-        data={getOr([], 'discover.data', data)}
+        data={getOr([], 'discover', data)}
         renderItem={({ item }) => (
           <FlatListItem>
             <CampaignCard {...item} />

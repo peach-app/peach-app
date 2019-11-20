@@ -5,6 +5,7 @@ module.exports = gql`
     user: User
     # Discover campaigns listing
     discover: [Campaign]
+
     # Campaigns listing
     campaigns: [Campaign]
 
