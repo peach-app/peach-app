@@ -17,6 +17,7 @@
     "apollo-link-context": "^1.0.19",
     "apollo-link-http": "^1.5.16",
     "apollo-link-rest": "^0.7.3",
+    "apollo-server-lambda": "^2.9.9",
     "expo": "^35.0.0",
     "expo-font": "~7.0.0",
     "formik": "^1.5.8",

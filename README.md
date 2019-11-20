@@ -31,7 +31,7 @@ Influencer + Brand Collaboration
 
 10. Create a new key, with the role set to "auth"
 
-11. Replace the "authorization" token within ./src/apollo-client.js with the new token
+11. Replace the "Authorization" token within ./src/apollo-client.js with the new token
 
 ![Auth Token](/docs/assets/auth-token.png)
 
