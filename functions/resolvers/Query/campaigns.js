@@ -1,4 +1,5 @@
 module.exports = async (root, args, { client, q }) => {
+  console.log('go');
   return client.query(
     q.Select(
       ['data'],
