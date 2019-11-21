@@ -3,4 +3,5 @@ module.exports = {
   Mutation: require('./Mutation'),
   User: require('./User'),
   Campaign: require('./Campaign'),
+  Thread: require('./Thread'),
 };

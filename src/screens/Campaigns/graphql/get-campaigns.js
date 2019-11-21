@@ -6,8 +6,10 @@ export default gql`
   ${CampaignCardFragment}
   {
     campaigns {
-      _id
-      ...CampaignCardFragment
+      data {
+        _id
+        ...CampaignCardFragment
+      }
     }
   }
 `;

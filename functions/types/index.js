@@ -4,22 +4,19 @@ module.exports = gql`
   type Query {
     user: User
     # Discover campaigns listing
-    discover: [Campaign]
+    discover: CampaignPage
 
     # Campaigns listing
-    campaigns: [Campaign]
+    campaigns: CampaignPage
 
-    findCampaignByID(id: ID): Campaign
-
-    # Inbox threads
-    threads: [Thread]
-    threadMessages(threadId: ID!): [Message]
+    findCampaignById(id: ID): Campaign
+    findThreadById(id: ID!): Thread
   }
 
   type Mutation {
     login(email: String!, password: String!): Auth
     register(email: String!, password: String!, type: UserType!): Auth
-    createMessage(threadId: ID!, text: String!): Message
+    sendMessage(threadId: ID!, text: String!): Message
   }
 
   type Auth {
@@ -35,6 +32,10 @@ module.exports = gql`
     INFLUENCER
   }
 
+  type UserPage {
+    data: [User]
+  }
+
   type User {
     _id: ID!
     name: String
@@ -44,13 +45,18 @@ module.exports = gql`
     type: UserType!
 
     # User created Campaigns
-    campaigns: [Campaign]
+    campaigns: CampaignPage
 
     # User applications/requests to
     # join Campaigns
-    bookings: [Booking]
+    bookings: BookingPage
 
-    threads: [Thread]
+    # Inbox thread listing
+    threads: ThreadPage
+  }
+
+  type CampaignPage {
+    data: [Campaign]
   }
 
   type Campaign {
@@ -80,6 +86,10 @@ module.exports = gql`
     REQUESTED
   }
 
+  type BookingPage {
+    data: [Booking]
+  }
+
   type Booking {
     _id: ID!
     campaign: Campaign!
@@ -88,16 +98,23 @@ module.exports = gql`
     state: BookingState!
   }
 
+  type ThreadPage {
+    data: [Thread]
+  }
+
   type Thread {
     _id: ID!
-    users: [User]
-    messages: [Message]
+    users: UserPage
+    messages: MessagePage
     latestMessage: Message
+  }
+
+  type MessagePage {
+    data: [Message]
   }
 
   type Message {
     _id: ID!
-    thread: Thread!
     user: User!
     text: String!
   }

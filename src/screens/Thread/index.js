@@ -12,37 +12,29 @@ import { FlatList } from '../../components/FlatList';
 import MessageBubble from '../../components/MessageBubble';
 import { useUser } from '../../contexts/User';
 
-import GET_MESSAGES from './graphql/get-messages';
-import CREATE_MESSAGE from './graphql/create-message';
+import SEND_MESSAGE from './graphql/send-message';
 import GET_THREAD from './graphql/get-thread';
 
 const Thread = ({ navigation }) => {
   const [text, setText] = useState('');
   const id = navigation.getParam('id');
   const { user } = useUser();
-  const { data: thread } = useQuery(GET_THREAD, {
-    variables: {
-      id,
-    },
-  });
-  const { data, refetch } = useQuery(GET_MESSAGES, {
+  const { data } = useQuery(GET_THREAD, {
     variables: {
       id,
     },
     pollInterval: 3000,
   });
 
-  const [createMessage, { loading }] = useMutation(CREATE_MESSAGE, {
-    onCompleted: () => {
-      setText('');
-      refetch();
-    },
+  const [sendMessage, { loading }] = useMutation(SEND_MESSAGE, {
+    onCompleted: () => setText(''),
+    refetchQueries: ['getThread'],
   });
 
   const onSubmit = () => {
     if (!text) return;
 
-    createMessage({
+    sendMessage({
       variables: {
         text,
         threadId: id,
@@ -51,11 +43,11 @@ const Thread = ({ navigation }) => {
   };
 
   const title = useMemo(() => {
-    return getOr([], 'findThreadByID.users.data', thread)
+    return getOr([], 'findThreadById.users.data', data)
       .filter(threadUser => threadUser._id !== user.user._id)
       .map(threadUser => threadUser.name || threadUser.email)
       .join(', ');
-  }, [thread, user]);
+  }, [data, user]);
 
   return (
     <SafeAreaView>
@@ -64,7 +56,7 @@ const Thread = ({ navigation }) => {
         <FlatList
           inverted
           keyExtractor={item => item._id}
-          data={getOr([], 'threadMessages.data', data)}
+          data={getOr([], 'findThreadById.messages.data', data)}
           renderItem={({ item }) => (
             <MessageBubble
               isSelf={get('user._id', user) === get('user._id', item)}

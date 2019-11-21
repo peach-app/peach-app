@@ -81,7 +81,7 @@ const Campaigns = ({ navigation }) => {
           </>
         }
         keyExtractor={item => item._id}
-        data={getOr([], 'campaigns', data)}
+        data={getOr([], 'campaigns.data', data)}
         renderItem={({ item }) => (
           <FlatListItem>
             <CampaignCard {...item} />

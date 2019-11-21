@@ -17,27 +17,25 @@ Influencer + Brand Collaboration
 
 ![New Key](/docs/assets/key.png)
 
-5. Go to the "GraphQL" tab, and upload the schema from ./fauna/schema.gql
+6. In terminal run: `export FAUNADB_SECRET=YourFaunaSecretKey`
 
-![GraphQL Schema](/docs/assets/graphql.png)
+7. Then run: `npm run deploy:db`
 
-6. In terminal run: `cd fauna`
+8. Head back to the "Security" tab in fauna
 
-7. Then: `export FAUNADB_SECRET=YourFaunaSecretKey`
+9. Create a new key, with the role set to "auth"
 
-8. Then: `node index`
-
-9. Head back to the "Security" tab in fauna
-
-10. Create a new key, with the role set to "auth"
-
-11. Replace the "Authorization" token within ./src/apollo-client.js with the new token
+10. Replace the "Authorization" token within ./src/apollo-client.js with the new token
 
 ![Auth Token](/docs/assets/auth-token.png)
 
 ## Run Development
 
-`npm start`
+1. Run expo: `npm start`
+
+2. Open a new tab
+
+3. Then run the GraphQL lambda: `netlify dev`
 
 ## Production Deploy
 

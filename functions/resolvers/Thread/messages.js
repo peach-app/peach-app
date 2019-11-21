@@ -1,7 +1,8 @@
 module.exports = async (root, args, { client, q }) => {
+  console.log('go');
   return client.query(
     q.Map(
-      q.Paginate(q.Match(q.Index('all_campaign'))),
+      q.Paginate(q.Match(q.Index('message_thread_by_thread'), root.ref)),
       q.Lambda(
         'ref',
         q.Merge(
