@@ -5,7 +5,6 @@ module.exports = async (root, args, { client, q }) => {
       q.Lambda('ref', {
         _id: q.Select(['id'], q.Var('ref')),
         ref: q.Var('ref'),
-        latestMessage: { text: 'wow' },
       })
     )
   );
