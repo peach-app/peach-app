@@ -4,10 +4,10 @@ import gql from 'graphql-tag';
 
 import { Main, Bubble, Text } from './styles';
 
-const MessageBubble = ({ isSelf, text }) => (
-  <Main isSelf={isSelf}>
-    <Bubble isSelf={isSelf}>
-      <Text isSelf={isSelf} selectable>
+const MessageBubble = ({ sentBySelf, text }) => (
+  <Main isSelf={sentBySelf}>
+    <Bubble isSelf={sentBySelf}>
+      <Text isSelf={sentBySelf} selectable>
         {text}
       </Text>
     </Bubble>
@@ -15,13 +15,14 @@ const MessageBubble = ({ isSelf, text }) => (
 );
 
 MessageBubble.propTypes = {
-  isSelf: PropTypes.bool,
+  sentBySelf: PropTypes.bool.isRequired,
   text: PropTypes.string.isRequired,
 };
 
 export const MessageBubbleFragment = gql`
   fragment MessageBubbleFragment on Message {
     text
+    sentBySelf
   }
 `;
 

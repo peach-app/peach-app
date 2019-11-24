@@ -117,5 +117,6 @@ module.exports = gql`
     _id: ID!
     user: User!
     text: String!
+    sentBySelf: Boolean
   }
 `;

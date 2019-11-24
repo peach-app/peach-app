@@ -4,4 +4,5 @@ module.exports = {
   User: require('./User'),
   Campaign: require('./Campaign'),
   Thread: require('./Thread'),
+  Message: require('./Message'),
 };

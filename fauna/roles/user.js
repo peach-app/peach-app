@@ -141,7 +141,7 @@ module.exports = async () => {
           },
         },
         {
-          resource: q.Index('message_thread_by_thread_by_date'),
+          resource: q.Index('message_thread_by_thread_by_ts'),
           actions: {
             read: true,
           },
