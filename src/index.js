@@ -7,11 +7,13 @@ import * as Font from 'expo-font';
 
 import { Provider as AuthProvider, useAuth } from './contexts/Auth';
 import { Provider as UserProvider } from './contexts/User';
+import { Provider as ModalProvider } from './contexts/Modal';
 import ThemeProvider from './theme-provider';
 import client from './apollo-client';
 
 import UnAuthedNavigator from './routers/UnAuthedRouter';
 import AuthedNavigator from './routers/AuthedNavigator';
+import RootModal from './components/Modals/RootModal';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -51,9 +53,12 @@ export default () => (
     <ApolloProvider client={client}>
       <AppearanceProvider>
         <ThemeProvider>
-          <Main>
-            <App />
-          </Main>
+          <ModalProvider>
+            <RootModal />
+            <Main>
+              <App />
+            </Main>
+          </ModalProvider>
         </ThemeProvider>
       </AppearanceProvider>
     </ApolloProvider>
