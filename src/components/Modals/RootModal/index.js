@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import ModalContext from '../../../contexts/Modal';
+import Modals from './modals';
 
+const RootModal = () => {
+  const { modal, closeModal } = useContext(ModalContext);
+  if (!modal.type) {
+    return null;
+  }
+  const CurrentModal = Modals[modal.type];
+  return <CurrentModal onClose={closeModal} {...modal.props} />;
+};
 
-const RootModal = props => {
-
-    const a = 'a';
-
-    return (
-        <Label>SEXY</Label>
-    )
-
-}
+export default RootModal;
