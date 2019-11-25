@@ -11,23 +11,31 @@ console.log({ FAUNADB_SECRET });
 
 (async () => {
   try {
-    // Functions
-    await require('./functions/user_login')();
-    await require('./functions/current_user')();
-    await require('./functions/register')();
-    await require('./functions/campaigns_by_user_type')();
-    await require('./functions/find_campaign_by_id')();
-    await require('./functions/create_message')();
-    await require('./functions/threads')();
-    await require('./functions/messages')();
-    await require('./functions/create_campaign')();
+    // Collections
+    await require('./collections/User')();
+    await require('./collections/thread_users')();
+    await require('./collections/Thread')();
+    await require('./collections/Message')();
+    await require('./collections/Campaign')();
+    await require('./collections/Booking')();
 
     // Indexes
-    await require('./indexes/message_thread_by_thread_by_date')();
+    await require('./indexes/all_user')();
+    await require('./indexes/all_thread')();
+    await require('./indexes/all_thread_users')();
+    await require('./indexes/all_message')();
+    await require('./indexes/all_booking')();
+    await require('./indexes/all_campaign')();
+    await require('./indexes/message_thread_by_thread_by_ts')();
+    await require('./indexes/message_thread_by_thread')();
+    await require('./indexes/booking_campaign_by_campaign')();
     await require('./indexes/booking_user_by_user')();
     await require('./indexes/campaign_user_by_user')();
     await require('./indexes/thread_users_by_user')();
     await require('./indexes/booking_by_campaign_user')();
+    await require('./indexes/unique_user_email')();
+    await require('./indexes/thread_users_by_thread')();
+    await require('./indexes/thread_users_by_thread_and_user')();
 
     // Roles
     await require('./roles/auth')();

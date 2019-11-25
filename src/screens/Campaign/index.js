@@ -36,9 +36,9 @@ const Campaign = ({ navigation }) => {
 
   const fetching = loading && networkStatus === NETWORK_STATUS.FETCHING;
   const brandName =
-    get('findCampaignByID.user.name', campaign) ||
-    get('findCampaignByID.user.email', campaign);
-  const bookingState = get('findCampaignByID.userBooking.state', campaign);
+    get('findCampaignById.user.name', campaign) ||
+    get('findCampaignById.user.email', campaign);
+  const bookingState = get('findCampaignById.userBooking.state', campaign);
 
   return (
     <SafeAreaView>
@@ -63,11 +63,11 @@ const Campaign = ({ navigation }) => {
                   fallback={brandName}
                   onPress={() =>
                     navigation.navigate('Profile', {
-                      id: get('findCampaignByID.user._id', campaign),
+                      id: get('findCampaignById.user._id', campaign),
                     })
                   }
                   source={{
-                    uri: get('findCampaignByID.user.avatar.url', campaign),
+                    uri: get('findCampaignById.user.avatar.url', campaign),
                   }}
                 />
               </Intro>
@@ -75,7 +75,7 @@ const Campaign = ({ navigation }) => {
             <GridItem size={12}>
               <Title>
                 <SkeletonText loadingText="Campaign Title" isLoading={fetching}>
-                  {getOr('', 'findCampaignByID.name', campaign)}
+                  {getOr('', 'findCampaignById.name', campaign)}
                 </SkeletonText>
               </Title>
             </GridItem>
@@ -85,7 +85,7 @@ const Campaign = ({ navigation }) => {
                   loadingText="Campaign description loading..."
                   isLoading={fetching}
                 >
-                  {getOr('', 'findCampaignByID.description', campaign)}
+                  {getOr('', 'findCampaignById.description', campaign)}
                 </SkeletonText>
               </Description>
             </GridItem>

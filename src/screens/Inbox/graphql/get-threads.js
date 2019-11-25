@@ -6,9 +6,12 @@ export default gql`
   ${ThreadCardFragment}
 
   {
-    threads {
-      data {
-        ...ThreadCardFragment
+    user {
+      _id
+      threads {
+        data {
+          ...ThreadCardFragment
+        }
       }
     }
   }

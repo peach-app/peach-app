@@ -29,7 +29,7 @@ const Inbox = () => {
           />
         }
         keyExtractor={item => item._id}
-        data={getOr([], 'threads.data', data)}
+        data={getOr([], 'user.threads.data', data)}
         ListHeaderComponent={
           <>
             <FlatListItem>
