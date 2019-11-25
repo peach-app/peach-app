@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { RefreshControl } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import getOr from 'lodash/fp/getOr';
@@ -26,6 +27,14 @@ const Campaigns = ({ navigation }) => {
   const userType = get('user.type', user);
   const isBrand = userType === USER_TYPE.BRAND;
   const isInfluencer = userType === USER_TYPE.INFLUENCER;
+
+  useEffect(() => {
+    if (navigation.state.params) {
+      if (navigation.state.params.shouldRefetchQuery) {
+        refetch();
+      }
+    }
+  }, [navigation.state.params]);
 
   return (
     <SafeAreaView>
@@ -90,6 +99,11 @@ const Campaigns = ({ navigation }) => {
       />
     </SafeAreaView>
   );
+};
+
+Campaigns.propTypes = {
+  // eslint-disable-next-line
+  navigation: PropTypes.object,
 };
 
 export default Campaigns;
