@@ -10,10 +10,10 @@ module.exports = async () => {
       source: q.Collection('Booking'),
       terms: [
         {
-          field: ['data', 'user'],
+          field: ['data', 'campaign'],
         },
         {
-          field: ['data', 'campaign'],
+          field: ['data', 'user'],
         },
       ],
     })

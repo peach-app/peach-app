@@ -3,7 +3,7 @@ module.exports = async (root, args, { client, q }) => {
     q.Let(
       {
         message: q.Get(
-          q.Match(q.Index('message_thread_by_thread_by_ts'), root.ref)
+          q.Match(q.Index('message_ts_thread_by_thread'), root.ref)
         ),
       },
       q.Merge(q.Select(['data'], q.Var('message')), {
