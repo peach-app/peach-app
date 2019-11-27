@@ -105,19 +105,19 @@ module.exports = async () => {
           },
         },
         {
-          resource: q.Index('booking_campaign_by_campaign'),
+          resource: q.Index('booking_by_campaign'),
           actions: {
             read: true,
           },
         },
         {
-          resource: q.Index('booking_user_by_user'),
+          resource: q.Index('booking_by_user'),
           actions: {
             read: true,
           },
         },
         {
-          resource: q.Index('campaign_user_by_user'),
+          resource: q.Index('campaign_by_user'),
           actions: {
             read: true,
           },
@@ -129,19 +129,19 @@ module.exports = async () => {
           },
         },
         {
-          resource: q.Index('thread_users_by_thread_and_user'),
+          resource: q.Index('thread_users_by_thread_user'),
           actions: {
             read: true,
           },
         },
         {
-          resource: q.Index('message_thread_by_thread'),
+          resource: q.Index('message_by_thread'),
           actions: {
             read: true,
           },
         },
         {
-          resource: q.Index('message_thread_by_thread_by_ts'),
+          resource: q.Index('message_ts_thread_by_thread'),
           actions: {
             read: true,
           },

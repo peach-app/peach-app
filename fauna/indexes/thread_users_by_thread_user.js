@@ -2,11 +2,11 @@ const { client, q } = require('../helpers/db');
 const { makeIndex } = require('../helpers/updateOrCreate');
 
 module.exports = async () => {
-  console.log('Creating "thread_users_by_thread_and_user" index');
+  console.log('Creating "thread_users_by_thread_user" index');
 
   await client.query(
     makeIndex({
-      name: 'thread_users_by_thread_and_user',
+      name: 'thread_users_by_thread_user',
       source: q.Collection('thread_users'),
       terms: [
         {

@@ -2,15 +2,15 @@ const { client, q } = require('../helpers/db');
 const { makeIndex } = require('../helpers/updateOrCreate');
 
 module.exports = async () => {
-  console.log('Creating "campaign_user_by_user" index');
+  console.log('Creating "message_by_thread" index');
 
   await client.query(
     makeIndex({
-      name: 'campaign_user_by_user',
-      source: q.Collection('Campaign'),
+      name: 'message_by_thread',
+      source: q.Collection('Message'),
       terms: [
         {
-          field: ['data', 'user'],
+          field: ['data', 'thread'],
         },
       ],
     })
