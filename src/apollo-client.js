@@ -2,12 +2,21 @@ import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
 import { setContext } from 'apollo-link-context';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, Platform } from 'react-native';
 
 const cache = new InMemoryCache();
 
+const uri = {
+  development: 'http://localhost:8888/.netlify/functions/graphql',
+  production: Platform.select({
+    web: '/.netlify/functions/graphql',
+    ios: 'https://dashboard.peachapp.io/.netlify/functions/graphql',
+    android: 'https://dashboard.peachapp.io/.netlify/functions/graphql',
+  }),
+}[process.env.NODE_ENV];
+
 const httpLink = new HttpLink({
-  uri: 'http://localhost:8888/.netlify/functions/graphql',
+  uri,
 });
 
 const authLink = setContext(async (_, { headers }) => {
