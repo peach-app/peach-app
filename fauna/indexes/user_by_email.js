@@ -7,6 +7,7 @@ module.exports = async () => {
   await client.query(
     makeIndex({
       name: 'user_by_email',
+      unique: true,
       source: q.Collection('User'),
       terms: [
         {
