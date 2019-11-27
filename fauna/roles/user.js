@@ -167,53 +167,6 @@ module.exports = async () => {
             read: true,
           },
         },
-<<<<<<< HEAD
-
-        // USER FUNCTIONS
-        {
-          resource: q.Function('current_user'),
-          actions: {
-            call: true,
-          },
-        },
-        {
-          resource: q.Function('campaigns_by_user_type'),
-          actions: {
-            call: true,
-          },
-        },
-        {
-          resource: q.Function('find_campaign_by_id'),
-          actions: {
-            call: true,
-          },
-        },
-        {
-          resource: q.Function('create_message'),
-          actions: {
-            call: true,
-          },
-        },
-        {
-          resource: q.Function('threads'),
-          actions: {
-            call: true,
-          },
-        },
-        {
-          resource: q.Function('messages'),
-          actions: {
-            call: true,
-          },
-        },
-        {
-          resource: q.Function('create_campaign'),
-          actions: {
-            call: true,
-          },
-        },
-=======
->>>>>>> feature/graphql
       ],
     })
   );
