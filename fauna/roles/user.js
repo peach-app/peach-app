@@ -1,6 +1,5 @@
 const { client, q } = require('../helpers/db');
 const { makeRole } = require('../helpers/updateOrCreate');
-const { USER_TYPE } = require('../consts');
 
 module.exports = async () => {
   console.log('Creating "user" role');
@@ -24,27 +23,7 @@ module.exports = async () => {
         {
           resource: q.Collection('Campaign'),
           actions: {
-            read: q.Query(
-              q.Lambda(
-                'ref',
-                q.If(
-                  // If user is brand
-                  q.Equals(
-                    q.Select(['data', 'type'], q.Get(q.Identity())),
-                    USER_TYPE.BRAND
-                  ),
-
-                  // Return own campaigns
-                  q.Equals(
-                    q.Select(['data', 'user'], q.Get(q.Var('ref'))),
-                    q.Identity()
-                  ),
-
-                  // Return all
-                  true
-                )
-              )
-            ),
+            read: true,
             write: q.Query(
               q.Lambda(
                 'ref',

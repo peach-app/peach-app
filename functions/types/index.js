@@ -11,6 +11,7 @@ module.exports = gql`
 
     findCampaignById(id: ID): Campaign
     findThreadById(id: ID!): Thread
+    findUserByID(id: ID!): User
   }
 
   type Mutation {

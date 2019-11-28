@@ -102,6 +102,9 @@ const Campaign = ({ navigation }) => {
           {bookingState === BOOKING_STATE.REQUESTED && (
             <Text>The brand has requested you onto this campaign.</Text>
           )}
+          {bookingState === BOOKING_STATE.ACCEPTED && (
+            <Text>Booking accepted.</Text>
+          )}
         </Foot>
       )}
     </SafeAreaView>

@@ -4,4 +4,5 @@ module.exports = {
   campaigns: require('./campaigns'),
   findCampaignById: require('./findCampaignById'),
   findThreadById: require('./findThreadById'),
+  findUserByID: require('./findUserByID'),
 };
