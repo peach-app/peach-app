@@ -26,7 +26,9 @@ module.exports = async (root, args, { client, q }) => {
 
       // Return campaigns by user bookings
       q.Map(
-        q.Paginate(q.Match(q.Index('booking_by_user'), q.Identity())),
+        q.Paginate(
+          q.Match(q.Index('booking_by_user_state'), q.Identity(), args.state)
+        ),
         q.Lambda(
           'ref',
           q.Let(

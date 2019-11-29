@@ -4,8 +4,9 @@ import { CampaignCardFragment } from '../../../components/CampaignCard';
 
 export default gql`
   ${CampaignCardFragment}
-  {
-    campaigns {
+
+  query($state: BookingState!) {
+    campaigns(state: $state) {
       data {
         _id
         ...CampaignCardFragment

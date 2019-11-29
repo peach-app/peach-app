@@ -3,6 +3,7 @@ import { ScrollView } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 
+import { Main } from './styles';
 import SafeAreaView from '../../components/SafeAreaView';
 import Header from '../../components/Header';
 import Intro from '../../components/Intro';
@@ -26,11 +27,13 @@ const Profile = ({ navigation }) => {
       <Header title={name} />
       <ScrollView>
         <Intro>
-          <Avatar
-            fallback={name}
-            source={{ uri: get('findUserByID.avatar.url', data) }}
-            size={120}
-          />
+          <Main>
+            <Avatar
+              fallback={name}
+              source={{ uri: get('findUserByID.avatar.url', data) }}
+              size={120}
+            />
+          </Main>
         </Intro>
       </ScrollView>
     </SafeAreaView>

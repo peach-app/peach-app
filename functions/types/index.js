@@ -7,7 +7,7 @@ module.exports = gql`
     discover: CampaignPage
 
     # Campaigns listing
-    campaigns: CampaignPage
+    campaigns(state: BookingState): CampaignPage
 
     findCampaignById(id: ID): Campaign
     findThreadById(id: ID!): Thread

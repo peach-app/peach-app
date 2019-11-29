@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 import getOr from 'lodash/fp/getOr';
 import get from 'lodash/fp/get';
 
-import { NETWORK_STATUS, USER_TYPE } from '../../consts';
+import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from '../../consts';
 import SafeAreaView from '../../components/SafeAreaView';
 import { FlatList, FlatListItem } from '../../components/FlatList';
 import Title from '../../components/Title';
@@ -17,11 +17,20 @@ import { useUser } from '../../contexts/User';
 
 import GET_CAMPAIGNS from './graphql/get-campaigns';
 
+const TAB_INDEX_BOOKING_STATE = [
+  BOOKING_STATE.ACCEPTED,
+  BOOKING_STATE.APPLIED,
+  BOOKING_STATE.REQUESTED,
+];
+
 const Campaigns = ({ navigation }) => {
   const [activeTab, setTab] = useState(0);
   const { user } = useUser();
   const { data, loading, networkStatus, refetch } = useQuery(GET_CAMPAIGNS, {
     notifyOnNetworkStatusChange: true,
+    variables: {
+      state: TAB_INDEX_BOOKING_STATE[activeTab],
+    },
   });
   const userType = get('user.type', user);
   const isBrand = userType === USER_TYPE.BRAND;
