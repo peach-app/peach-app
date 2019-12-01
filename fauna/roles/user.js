@@ -18,16 +18,15 @@ module.exports = async () => {
           resource: q.Collection('Booking'),
           actions: {
             read: true,
-            write: q.Query(
+            create: q.Query(
               q.Lambda(
-                'ref',
+                'booking',
                 q.Equals(
-                  q.Select(['data', 'user'], q.Get(q.Var('ref'))),
+                  q.Select(['data', 'user'], q.Var('booking')),
                   q.Identity()
                 )
               )
             ),
-            create: true,
           },
         },
         {
@@ -70,7 +69,18 @@ module.exports = async () => {
           resource: q.Collection('Message'),
           actions: {
             read: true,
-            create: true,
+            create: q.Query(
+              q.Lambda(
+                'message',
+                q.Exists(
+                  q.Match(
+                    q.Index('thread_users_by_thread_user'),
+                    q.Select(['data', 'thread'], q.Var('message')),
+                    q.Identity()
+                  )
+                )
+              )
+            ),
           },
         },
         {

@@ -1,26 +1,22 @@
 module.exports = async (root, args, { client, q }) => {
   return client.query(
-    q.If(
-      q.Exists(q.Match(q.Index('thread_users_by_user'), q.Identity())),
-      q.Let(
+    q.Let(
+      {
+        message: q.Create(q.Collection('Message'), {
+          data: {
+            user: q.Identity(),
+            thread: q.Ref(q.Collection('Thread'), args.threadId),
+            text: args.text,
+          },
+        }),
+      },
+      q.Merge(
         {
-          message: q.Select(
-            ['ref'],
-            q.Create(q.Collection('Message'), {
-              data: {
-                user: q.Identity(),
-                thread: q.Ref(q.Collection('Thread'), args.threadId),
-                text: args.text,
-              },
-            })
-          ),
+          _id: q.Select(['ref', 'id'], q.Var('message')),
+          ref: q.Select(['ref'], q.Var('message')),
         },
-        q.Merge(q.Select(['data'], q.Get(q.Var('message'))), {
-          _id: q.Select(['id'], q.Var('message')),
-          ref: q.Var('message'),
-        })
-      ),
-      q.Abort('User does not belong to thread.')
+        q.Select(['data'], q.Var('message'))
+      )
     )
   );
 };
