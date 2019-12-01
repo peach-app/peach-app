@@ -18,6 +18,7 @@ module.exports = gql`
     login(email: String!, password: String!): Auth
     register(email: String!, password: String!, type: UserType!): Auth
     sendMessage(threadId: ID!, text: String!): Message
+    applyToCampaign(id: ID!): Booking
   }
 
   type Auth {

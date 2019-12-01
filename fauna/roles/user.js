@@ -18,6 +18,16 @@ module.exports = async () => {
           resource: q.Collection('Booking'),
           actions: {
             read: true,
+            write: q.Query(
+              q.Lambda(
+                'ref',
+                q.Equals(
+                  q.Select(['data', 'user'], q.Get(q.Var('ref'))),
+                  q.Identity()
+                )
+              )
+            ),
+            create: true,
           },
         },
         {
@@ -28,8 +38,8 @@ module.exports = async () => {
               q.Lambda(
                 'ref',
                 q.Equals(
-                  q.Identity(),
-                  q.Select(['data', 'user'], q.Get(q.Var('ref')))
+                  q.Select(['data', 'user'], q.Get(q.Var('ref'))),
+                  q.Identity()
                 )
               )
             ),
@@ -37,8 +47,8 @@ module.exports = async () => {
               q.Lambda(
                 'ref',
                 q.Equals(
-                  q.Identity(),
-                  q.Select(['data', 'user'], q.Get(q.Var('ref')))
+                  q.Select(['data', 'user'], q.Get(q.Var('ref'))),
+                  q.Identity()
                 )
               )
             ),

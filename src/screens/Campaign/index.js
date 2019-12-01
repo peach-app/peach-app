@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, RefreshControl } from 'react-native';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 import getOr from 'lodash/fp/getOr';
 
@@ -20,6 +20,7 @@ import { Grid, GridItem } from '../../components/Grid';
 import { useUser } from '../../contexts/User';
 
 import GET_CAMPAIGN from './graphql/get-campaign';
+import APPLY_TO_CAMPAIGN from './graphql/apply-to-campaign';
 
 const Campaign = ({ navigation }) => {
   const id = navigation.getParam('id');
@@ -31,6 +32,16 @@ const Campaign = ({ navigation }) => {
       variables: {
         id,
       },
+    }
+  );
+
+  const [applyToCampaign, { loading: applying }] = useMutation(
+    APPLY_TO_CAMPAIGN,
+    {
+      variables: {
+        id,
+      },
+      refetchQueries: ['getCampaign', 'getCampaigns'],
     }
   );
 
@@ -95,15 +106,22 @@ const Campaign = ({ navigation }) => {
 
       {get('user.type', user) === USER_TYPE.INFLUENCER && (
         <Foot>
-          {!bookingState && <Button title="Apply" fixedWidth />}
+          {!bookingState && (
+            <Button
+              title="Apply"
+              fixedWidth
+              onPress={applyToCampaign}
+              isLoading={applying}
+            />
+          )}
           {bookingState === BOOKING_STATE.APPLIED && (
             <Text>Your application is pending for this campaign.</Text>
           )}
           {bookingState === BOOKING_STATE.REQUESTED && (
-            <Text>The brand has requested you onto this campaign.</Text>
+            <Text>The brand has requested you for this campaign.</Text>
           )}
           {bookingState === BOOKING_STATE.ACCEPTED && (
-            <Text>Booking accepted.</Text>
+            <Text>You've been accepted onto this campaign!</Text>
           )}
         </Foot>
       )}

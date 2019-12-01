@@ -36,6 +36,10 @@ const Campaigns = ({ navigation }) => {
   const isBrand = userType === USER_TYPE.BRAND;
   const isInfluencer = userType === USER_TYPE.INFLUENCER;
 
+  const fetching =
+    loading &&
+    (networkStatus === NETWORK_STATUS.SET_VARIABLES || NETWORK_STATUS.FETCHING);
+
   return (
     <SafeAreaView>
       <FlatList
@@ -78,7 +82,7 @@ const Campaigns = ({ navigation }) => {
               />
             </FlatListItem>
 
-            {loading && networkStatus === NETWORK_STATUS.FETCHING && (
+            {fetching && (
               <>
                 {Array.from(Array(3)).map((_, key) => (
                   <FlatListItem key={key}>
@@ -90,7 +94,7 @@ const Campaigns = ({ navigation }) => {
           </>
         }
         keyExtractor={item => item._id}
-        data={getOr([], 'campaigns.data', data)}
+        data={!fetching && getOr([], 'campaigns.data', data)}
         renderItem={({ item }) => (
           <FlatListItem>
             <CampaignCard {...item} />

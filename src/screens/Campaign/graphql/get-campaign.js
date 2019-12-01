@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  query($id: ID!) {
+  query getCampaign($id: ID!) {
     findCampaignById(id: $id) {
       name
       description

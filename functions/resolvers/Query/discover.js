@@ -5,7 +5,10 @@ module.exports = async (root, args, { client, q }) => {
       q.Lambda(
         'ref',
         q.Merge(
-          { _id: q.Select(['id'], q.Var('ref')), ref: q.Var('ref') },
+          {
+            _id: q.Select(['id'], q.Var('ref')),
+            ref: q.Var('ref'),
+          },
           q.Select(['data'], q.Get(q.Var('ref')))
         )
       )
