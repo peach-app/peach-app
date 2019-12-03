@@ -1,6 +1,6 @@
 const { USER_TYPE } = require('../../consts');
 
-module.exports = async (root, args, { client, q }) => {
+module.exports = async (root, args, { client, q, DocumentDataWithId }) => {
   return client.query(
     q.If(
       // If current user is a BRAND
@@ -12,16 +12,7 @@ module.exports = async (root, args, { client, q }) => {
       // Return user created campaigns
       q.Map(
         q.Paginate(q.Match(q.Index('campaign_by_user'), q.Identity())),
-        q.Lambda(
-          'ref',
-          q.Merge(
-            {
-              _id: q.Select(['id'], q.Var('ref')),
-              ref: q.Var('ref'),
-            },
-            q.Select(['data'], q.Get(q.Var('ref')))
-          )
-        )
+        q.Lambda('ref', DocumentDataWithId(q.Get(q.Var('ref'))))
       ),
 
       // Return campaigns by user bookings
@@ -35,13 +26,7 @@ module.exports = async (root, args, { client, q }) => {
             {
               campaign: q.Select(['data', 'campaign'], q.Get(q.Var('ref'))),
             },
-            q.Merge(
-              {
-                _id: q.Select(['id'], q.Var('campaign')),
-                ref: q.Var('campaign'),
-              },
-              q.Select(['data'], q.Get(q.Var('campaign')))
-            )
+            DocumentDataWithId(q.Get(q.Var('campaign')))
           )
         )
       )

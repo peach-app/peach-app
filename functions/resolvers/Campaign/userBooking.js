@@ -1,4 +1,4 @@
-module.exports = async (root, args, { client, q }) => {
+module.exports = async (root, args, { client, q, DocumentDataWithId }) => {
   return client.query(
     q.Let(
       {
@@ -10,18 +10,7 @@ module.exports = async (root, args, { client, q }) => {
       },
       q.If(
         q.Exists(q.Var('match')),
-        q.Let(
-          {
-            booking: q.Get(q.Var('match')),
-          },
-          q.Merge(
-            {
-              _id: q.Select(['ref', 'id'], q.Var('booking')),
-              ref: q.Select(['ref'], q.Var('booking')),
-            },
-            q.Select(['data'], q.Var('booking'))
-          )
-        ),
+        DocumentDataWithId(q.Get(q.Var('match'))),
         null
       )
     )

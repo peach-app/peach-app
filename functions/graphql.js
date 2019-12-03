@@ -2,6 +2,8 @@ const { ApolloServer } = require('apollo-server-lambda');
 const faunadb = require('faunadb');
 const q = faunadb.query;
 
+const DocumentDataWithId = require('./helpers/DocumentDataWithId');
+
 const typeDefs = require('./types');
 const resolvers = require('./resolvers');
 
@@ -14,6 +16,7 @@ const server = new ApolloServer({
     const client = new faunadb.Client({ secret });
 
     return {
+      DocumentDataWithId,
       client,
       q,
     };

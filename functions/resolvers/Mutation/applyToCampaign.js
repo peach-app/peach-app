@@ -1,6 +1,6 @@
 const { BOOKING_STATE } = require('../../consts');
 
-module.exports = async (root, args, { client, q }) => {
+module.exports = async (root, args, { client, q, DocumentDataWithId }) => {
   const { id } = args;
 
   return client.query(
@@ -24,13 +24,7 @@ module.exports = async (root, args, { client, q }) => {
             },
           }),
         },
-        q.Merge(
-          {
-            _id: q.Select(['ref', 'id'], q.Var('booking')),
-            ref: q.Select(['ref'], q.Var('booking')),
-          },
-          q.Select(['data'], q.Var('booking'))
-        )
+        DocumentDataWithId(q.Var('booking'))
       )
     )
   );

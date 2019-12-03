@@ -1,16 +1,10 @@
-module.exports = async (root, args, { client, q }) => {
+module.exports = async (root, args, { client, q, DocumentDataWithId }) => {
   return client.query(
     q.Let(
       {
         ref: q.Ref(q.Collection('User'), args.id),
       },
-      q.Merge(
-        {
-          _id: q.Select(['id'], q.Var('ref')),
-          ref: q.Var('ref'),
-        },
-        q.Select(['data'], q.Get(q.Var('ref')))
-      )
+      DocumentDataWithId(q.Get(q.Var('ref')))
     )
   );
 };
