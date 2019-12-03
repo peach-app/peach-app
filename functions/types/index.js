@@ -70,7 +70,7 @@ module.exports = gql`
     description: String
     private: Boolean
     budget: Float
-    bookings: [Booking]
+    bookings(state: BookingState): BookingPage
     userBooking: Booking
   }
 

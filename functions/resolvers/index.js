@@ -5,4 +5,5 @@ module.exports = {
   Campaign: require('./Campaign'),
   Thread: require('./Thread'),
   Message: require('./Message'),
+  Booking: require('./Booking'),
 };

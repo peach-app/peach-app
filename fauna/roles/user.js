@@ -110,6 +110,12 @@ module.exports = async () => {
           },
         },
         {
+          resource: q.Index('booking_by_campaign_state'),
+          actions: {
+            read: true,
+          },
+        },
+        {
           resource: q.Index('booking_by_user'),
           actions: {
             read: true,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ScrollView, RefreshControl } from 'react-native';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
@@ -14,7 +14,9 @@ import StatusBar from '../../components/StatusBar';
 import Button from '../../components/Button';
 import Container from '../../components/Container';
 import Title from '../../components/Title';
+import Tabs from '../../components/Tabs';
 import Avatar from '../../components/Avatar';
+import Booking from '../../components/Booking';
 import { SkeletonText } from '../../components/Skeletons';
 import { Grid, GridItem } from '../../components/Grid';
 import { useUser } from '../../contexts/User';
@@ -22,15 +24,30 @@ import { useUser } from '../../contexts/User';
 import GET_CAMPAIGN from './graphql/get-campaign';
 import APPLY_TO_CAMPAIGN from './graphql/apply-to-campaign';
 
+const TAB_INDEX_BOOKING_STATE = [
+  BOOKING_STATE.ACCEPTED,
+  BOOKING_STATE.APPLIED,
+  BOOKING_STATE.REQUESTED,
+  BOOKING_STATE.DECLINED,
+];
+
 const Campaign = ({ navigation }) => {
+  const [activeTab, setTab] = useState(0);
   const id = navigation.getParam('id');
   const { user } = useUser();
+
+  const isBrand = get('user.type', user) === USER_TYPE.BRAND;
+  const isInfluencer = get('user.type', user) === USER_TYPE.INFLUENCER;
+
   const { data: campaign, loading, networkStatus, refetch } = useQuery(
     GET_CAMPAIGN,
     {
       notifyOnNetworkStatusChange: true,
       variables: {
         id,
+        isBrand,
+        isInfluencer,
+        bookingsState: TAB_INDEX_BOOKING_STATE[activeTab],
       },
     }
   );
@@ -49,7 +66,7 @@ const Campaign = ({ navigation }) => {
   const brandName =
     get('findCampaignById.user.name', campaign) ||
     get('findCampaignById.user.email', campaign);
-  const bookingState = get('findCampaignById.userBooking.state', campaign);
+  const userBookingState = get('findCampaignById.userBooking.state', campaign);
 
   return (
     <SafeAreaView>
@@ -68,45 +85,77 @@ const Campaign = ({ navigation }) => {
           <Grid>
             <GridItem size={12}>
               <Intro>
-                <Avatar
-                  isLoading={fetching}
-                  size={50}
-                  fallback={brandName}
-                  onPress={() =>
-                    navigation.navigate('Profile', {
-                      id: get('findCampaignById.user._id', campaign),
-                    })
-                  }
-                  source={{
-                    uri: get('findCampaignById.user.avatar.url', campaign),
-                  }}
-                />
+                <Grid>
+                  {isInfluencer && (
+                    <GridItem size={12}>
+                      <Avatar
+                        isLoading={fetching}
+                        size={50}
+                        fallback={brandName}
+                        onPress={() =>
+                          navigation.navigate('Profile', {
+                            id: get('findCampaignById.user._id', campaign),
+                          })
+                        }
+                        source={{
+                          uri: get(
+                            'findCampaignById.user.avatar.url',
+                            campaign
+                          ),
+                        }}
+                      />
+                    </GridItem>
+                  )}
+
+                  <GridItem size={12}>
+                    <Title>
+                      <SkeletonText
+                        loadingText="Campaign Title"
+                        isLoading={fetching}
+                      >
+                        {getOr('', 'findCampaignById.name', campaign)}
+                      </SkeletonText>
+                    </Title>
+                  </GridItem>
+
+                  <GridItem size={12}>
+                    <Description>
+                      <SkeletonText
+                        loadingText="Campaign description loading..."
+                        isLoading={fetching}
+                      >
+                        {getOr('', 'findCampaignById.description', campaign)}
+                      </SkeletonText>
+                    </Description>
+                  </GridItem>
+                </Grid>
               </Intro>
             </GridItem>
-            <GridItem size={12}>
-              <Title>
-                <SkeletonText loadingText="Campaign Title" isLoading={fetching}>
-                  {getOr('', 'findCampaignById.name', campaign)}
-                </SkeletonText>
-              </Title>
-            </GridItem>
-            <GridItem size={12}>
-              <Description>
-                <SkeletonText
-                  loadingText="Campaign description loading..."
-                  isLoading={fetching}
-                >
-                  {getOr('', 'findCampaignById.description', campaign)}
-                </SkeletonText>
-              </Description>
-            </GridItem>
+
+            {isBrand && (
+              <>
+                <GridItem size={12}>
+                  <Tabs
+                    activeTabIndex={activeTab}
+                    onTabPress={index => setTab(index)}
+                    tabs={['Accepted', 'Applied', 'Requested', 'Declined']}
+                  />
+                </GridItem>
+
+                {getOr([], 'findCampaignById.bookings.data', campaign).map(
+                  booking => (
+                    <Booking key={booking._id} {...booking} />
+                  )
+                )}
+              </>
+            )}
           </Grid>
         </Container>
       </ScrollView>
 
-      {get('user.type', user) === USER_TYPE.INFLUENCER && (
+      {isInfluencer && (
         <Foot>
-          {!bookingState && (
+          {!userBookingState && (
             <Button
               title="Apply"
               fixedWidth
@@ -114,13 +163,13 @@ const Campaign = ({ navigation }) => {
               isLoading={applying}
             />
           )}
-          {bookingState === BOOKING_STATE.APPLIED && (
+          {userBookingState === BOOKING_STATE.APPLIED && (
             <Text>Your application is pending for this campaign.</Text>
           )}
-          {bookingState === BOOKING_STATE.REQUESTED && (
+          {userBookingState === BOOKING_STATE.REQUESTED && (
             <Text>The brand has requested you for this campaign.</Text>
           )}
-          {bookingState === BOOKING_STATE.ACCEPTED && (
+          {userBookingState === BOOKING_STATE.ACCEPTED && (
             <Text>You've been accepted onto this campaign!</Text>
           )}
         </Foot>
