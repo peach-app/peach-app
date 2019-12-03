@@ -62,17 +62,25 @@ const CampaignCard = ({
   </TouchableOpacity>
 );
 
+CampaignCard.defaultProps = {
+  isLoading: false,
+  _id: '',
+  name: '',
+  description: '',
+  user: null,
+};
+
 CampaignCard.propTypes = {
   isLoading: PropTypes.bool,
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
-  }),
+  }).isRequired,
   _id: PropTypes.string,
   name: PropTypes.string,
   description: PropTypes.string,
   user: PropTypes.shape({
     name: PropTypes.string,
-    email: PropTypes.string,
+    email: PropTypes.string.isRequired,
     avatar: PropTypes.shape({
       url: PropTypes.string,
     }),

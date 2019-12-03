@@ -96,7 +96,7 @@ module.exports = gql`
     _id: ID!
     campaign: Campaign!
     user: User!
-    cost: Float!
+    cost: Int!
     state: BookingState!
   }
 

@@ -17,6 +17,7 @@
     "apollo-link-context": "^1.0.19",
     "apollo-link-http": "^1.5.16",
     "apollo-server-lambda": "^2.9.9",
+    "dinero.js": "^1.6.0",
     "expo": "^35.0.0",
     "expo-font": "~7.0.0",
     "formik": "^1.5.8",

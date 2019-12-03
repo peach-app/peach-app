@@ -63,6 +63,9 @@ const Campaign = ({ navigation }) => {
   );
 
   const fetching = loading && networkStatus === NETWORK_STATUS.FETCHING;
+  const fetchingBookings =
+    fetching || (loading && networkStatus === NETWORK_STATUS.SET_VARIABLES);
+
   const brandName =
     get('findCampaignById.user.name', campaign) ||
     get('findCampaignById.user.email', campaign);
@@ -142,11 +145,24 @@ const Campaign = ({ navigation }) => {
                   />
                 </GridItem>
 
-                {getOr([], 'findCampaignById.bookings.data', campaign).map(
-                  booking => (
-                    <Booking key={booking._id} {...booking} />
-                  )
+                {fetchingBookings && (
+                  <>
+                    {Array.from(Array(3)).map((_, key) => (
+                      <GridItem size={12} key={key}>
+                        <Booking isLoading />
+                      </GridItem>
+                    ))}
+                  </>
                 )}
+
+                {!fetchingBookings &&
+                  getOr([], 'findCampaignById.bookings.data', campaign).map(
+                    booking => (
+                      <GridItem size={12} key={booking._id}>
+                        <Booking {...booking} />
+                      </GridItem>
+                    )
+                  )}
               </>
             )}
           </Grid>
