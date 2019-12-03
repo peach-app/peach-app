@@ -1,16 +1,14 @@
-module.exports = async (_, args, { client, q }) => {
-  console.log('args', args);
-  const a = client.query(
-    q.Create(q.Collection('Campaign'), {
-      data: {
-        ...args,
+module.exports = async (_, args, { client, q, DocumentDataWithId }) => {
+  return client.query(
+    q.Let(
+      {
+        campaign: q.Create(q.Collection('Campaign'), {
+          data: {
+            ...args,
+          },
+        }),
       },
-    }),
-    q.Merge(
-      { _id: q.Select(['id'], q.Var('ref')) },
-      q.Select(['data'], q.Get(q.Var('ref')))
+      DocumentDataWithId(q.Var('campaign'))
     )
   );
-  console.log('a', await a);
-  return a;
 };
