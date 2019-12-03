@@ -1,3 +1,4 @@
+const { USER_TYPE } = require('../consts');
 const { client, q } = require('../helpers/db');
 const { makeRole } = require('../helpers/updateOrCreate');
 
