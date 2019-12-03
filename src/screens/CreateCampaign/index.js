@@ -24,6 +24,7 @@ const CreateCampaign = ({ navigation }) => {
 
   const [createCampaign, { loading }] = useMutation(CREATE_CAMPAIGN_MUTATION, {
     // TO DO, HOW ARE WE GOING TO HANDLE ERRORS?
+    // ERROR BOUNDARY?
     onError: err => console.log('errro', err),
     onCompleted: () =>
       openModal({

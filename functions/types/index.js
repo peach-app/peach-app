@@ -7,10 +7,11 @@ module.exports = gql`
     discover: CampaignPage
 
     # Campaigns listing
-    campaigns: CampaignPage
+    campaigns(state: BookingState): CampaignPage
 
     findCampaignById(id: ID): Campaign
     findThreadById(id: ID!): Thread
+    findUserByID(id: ID!): User
   }
 
   type Mutation {
@@ -24,6 +25,7 @@ module.exports = gql`
       private: Boolean!
       budget: String!
     ): Campaign
+    applyToCampaign(id: ID!): Booking
   }
 
   type Auth {
@@ -75,7 +77,7 @@ module.exports = gql`
     description: String
     private: Boolean
     budget: Float
-    bookings: [Booking]
+    bookings(state: BookingState): BookingPage
     userBooking: Booking
   }
 
@@ -101,7 +103,7 @@ module.exports = gql`
     _id: ID!
     campaign: Campaign!
     user: User!
-    cost: Float!
+    cost: Int!
     state: BookingState!
   }
 

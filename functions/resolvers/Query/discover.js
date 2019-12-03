@@ -1,14 +1,8 @@
-module.exports = async (root, args, { client, q }) => {
+module.exports = async (root, args, { client, q, DocumentDataWithId }) => {
   return client.query(
     q.Map(
       q.Paginate(q.Match(q.Index('all_campaign'))),
-      q.Lambda(
-        'ref',
-        q.Merge(
-          { _id: q.Select(['id'], q.Var('ref')), ref: q.Var('ref') },
-          q.Select(['data'], q.Get(q.Var('ref')))
-        )
-      )
+      q.Lambda('ref', DocumentDataWithId(q.Get(q.Var('ref'))))
     )
   );
 };

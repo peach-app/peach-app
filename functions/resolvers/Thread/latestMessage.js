@@ -1,15 +1,14 @@
-module.exports = async (root, args, { client, q }) => {
+module.exports = async (root, args, { client, q, DocumentDataWithId }) => {
   return client.query(
     q.Let(
       {
-        message: q.Get(
-          q.Match(q.Index('message_ts_thread_by_thread'), root.ref)
-        ),
+        match: q.Match(q.Index('message_ts_thread_by_thread'), root.ref),
       },
-      q.Merge(q.Select(['data'], q.Var('message')), {
-        _id: q.Select(['ref', 'id'], q.Var('message')),
-        ref: q.Select(['ref'], q.Var('message')),
-      })
+      q.If(
+        q.Exists(q.Var('match')),
+        DocumentDataWithId(q.Get(q.Var('match'))),
+        null
+      )
     )
   );
 };

@@ -26,7 +26,7 @@ type Mutation {
     dueDate: String!
     private: Boolean!
     budget: String!
-  ): Campaign @resolver(name: "create_campaign")
+  ): Campaign @resolver(name: "createCampaign")
 }
 
 type Auth @embedded {

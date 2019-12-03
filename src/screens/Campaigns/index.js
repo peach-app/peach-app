@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/react-hooks';
 import getOr from 'lodash/fp/getOr';
 import get from 'lodash/fp/get';
 
-import { NETWORK_STATUS, USER_TYPE } from '../../consts';
+import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from '../../consts';
 import SafeAreaView from '../../components/SafeAreaView';
 import { FlatList, FlatListItem } from '../../components/FlatList';
 import Title from '../../components/Title';
@@ -18,11 +18,20 @@ import { useUser } from '../../contexts/User';
 
 import GET_CAMPAIGNS from './graphql/get-campaigns';
 
+const TAB_INDEX_BOOKING_STATE = [
+  BOOKING_STATE.ACCEPTED,
+  BOOKING_STATE.APPLIED,
+  BOOKING_STATE.REQUESTED,
+];
+
 const Campaigns = ({ navigation }) => {
   const [activeTab, setTab] = useState(0);
   const { user } = useUser();
   const { data, loading, networkStatus, refetch } = useQuery(GET_CAMPAIGNS, {
     notifyOnNetworkStatusChange: true,
+    variables: {
+      state: TAB_INDEX_BOOKING_STATE[activeTab],
+    },
   });
   const userType = get('user.type', user);
   const isBrand = userType === USER_TYPE.BRAND;
@@ -35,6 +44,10 @@ const Campaigns = ({ navigation }) => {
       }
     }
   }, [navigation.state.params]);
+
+  const fetching =
+    loading &&
+    (networkStatus === NETWORK_STATUS.SET_VARIABLES || NETWORK_STATUS.FETCHING);
 
   return (
     <SafeAreaView>
@@ -78,7 +91,7 @@ const Campaigns = ({ navigation }) => {
               />
             </FlatListItem>
 
-            {loading && networkStatus === NETWORK_STATUS.FETCHING && (
+            {fetching && (
               <>
                 {Array.from(Array(3)).map((_, key) => (
                   <FlatListItem key={key}>
@@ -90,7 +103,7 @@ const Campaigns = ({ navigation }) => {
           </>
         }
         keyExtractor={item => item._id}
-        data={getOr([], 'campaigns.data', data)}
+        data={!fetching && getOr([], 'campaigns.data', data)}
         renderItem={({ item }) => (
           <FlatListItem>
             <CampaignCard {...item} />

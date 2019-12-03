@@ -1,6 +1,11 @@
 export const NETWORK_STATUS = {
   FETCHING: 1,
+  SET_VARIABLES: 2,
+  FETCH_MORE: 3,
   REFETCHING: 4,
+  POLL: 6,
+  READY: 7,
+  ERROR: 8,
 };
 
 export const FORM_ERROR_MESSAGES = {

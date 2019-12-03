@@ -47,8 +47,8 @@ const AccountStack = createStackNavigator(
 
 const TabNavigator = createBottomTabNavigator(
   {
-    Discover,
     Campaigns: CampaignStack,
+    Discover,
     Inbox: InboxStack,
     Account: AccountStack,
   },

@@ -3,4 +3,5 @@ module.exports = {
   login: require('./login'),
   sendMessage: require('./sendMessage'),
   createCampaign: require('./createCampaign'),
+  applyToCampaign: require('./applyToCampaign'),
 };
