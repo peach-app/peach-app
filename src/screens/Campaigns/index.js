@@ -8,6 +8,7 @@ import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from '../../consts';
 import SafeAreaView from '../../components/SafeAreaView';
 import { FlatList, FlatListItem } from '../../components/FlatList';
 import Title from '../../components/Title';
+import Text from '../../components/Text';
 import Intro from '../../components/Intro';
 import Tabs from '../../components/Tabs';
 import IconButton from '../../components/IconButton';
@@ -39,6 +40,7 @@ const Campaigns = ({ navigation }) => {
   const fetching =
     loading &&
     (networkStatus === NETWORK_STATUS.SET_VARIABLES || NETWORK_STATUS.FETCHING);
+  const campaigns = getOr([], 'campaigns.data', data);
 
   return (
     <SafeAreaView>
@@ -77,24 +79,25 @@ const Campaigns = ({ navigation }) => {
                 tabs={
                   isInfluencer
                     ? ['Open', 'Applied', 'Requested']
-                    : ['Open', 'Completed']
+                    : ['All', 'Applications']
                 }
               />
             </FlatListItem>
 
-            {fetching && (
-              <>
-                {Array.from(Array(3)).map((_, key) => (
-                  <FlatListItem key={key}>
-                    <CampaignCard isLoading />
-                  </FlatListItem>
-                ))}
-              </>
+            {!fetching && campaigns.length <= 0 && (
+              <Text isCenter>No campaigns.</Text>
             )}
+
+            {fetching &&
+              Array.from(Array(3)).map((_, key) => (
+                <FlatListItem key={key}>
+                  <CampaignCard isLoading />
+                </FlatListItem>
+              ))}
           </>
         }
         keyExtractor={item => item._id}
-        data={!fetching && getOr([], 'campaigns.data', data)}
+        data={!fetching && campaigns}
         renderItem={({ item }) => (
           <FlatListItem>
             <CampaignCard {...item} />

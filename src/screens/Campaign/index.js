@@ -25,10 +25,10 @@ import GET_CAMPAIGN from './graphql/get-campaign';
 import APPLY_TO_CAMPAIGN from './graphql/apply-to-campaign';
 
 const TAB_INDEX_BOOKING_STATE = [
-  BOOKING_STATE.ACCEPTED,
   BOOKING_STATE.APPLIED,
-  BOOKING_STATE.REQUESTED,
+  BOOKING_STATE.ACCEPTED,
   BOOKING_STATE.DECLINED,
+  BOOKING_STATE.REQUESTED,
 ];
 
 const Campaign = ({ navigation }) => {
@@ -70,6 +70,7 @@ const Campaign = ({ navigation }) => {
     get('findCampaignById.user.name', campaign) ||
     get('findCampaignById.user.email', campaign);
   const userBookingState = get('findCampaignById.userBooking.state', campaign);
+  const bookings = getOr([], 'findCampaignById.bookings.data', campaign);
 
   return (
     <SafeAreaView>
@@ -141,7 +142,7 @@ const Campaign = ({ navigation }) => {
                   <Tabs
                     activeTabIndex={activeTab}
                     onTabPress={index => setTab(index)}
-                    tabs={['Accepted', 'Applied', 'Requested', 'Declined']}
+                    tabs={['Applied', 'Accepted', 'Declined', 'Requested']}
                   />
                 </GridItem>
 
@@ -155,14 +156,23 @@ const Campaign = ({ navigation }) => {
                   </>
                 )}
 
-                {!fetchingBookings &&
-                  getOr([], 'findCampaignById.bookings.data', campaign).map(
-                    booking => (
+                {!fetchingBookings && (
+                  <>
+                    {bookings.length <= 0 && (
+                      <GridItem size={12}>
+                        <Text isCenter>
+                          No influencers{' '}
+                          {TAB_INDEX_BOOKING_STATE[activeTab].toLowerCase()}.
+                        </Text>
+                      </GridItem>
+                    )}
+                    {bookings.map(booking => (
                       <GridItem size={12} key={booking._id}>
                         <Booking {...booking} />
                       </GridItem>
-                    )
-                  )}
+                    ))}
+                  </>
+                )}
               </>
             )}
           </Grid>

@@ -10,7 +10,7 @@ export const Main = styled.TouchableOpacity`
   padding: 0 ${props => props.theme.spacing}px;
   justify-content: center;
   border-radius: 200px;
-  min-height: 40px;
+  min-height: ${props => (props.isSmall ? 32 : 40)}px;
   ${props =>
     props.isGhost &&
     `
