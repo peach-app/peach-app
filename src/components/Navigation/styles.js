@@ -20,7 +20,7 @@ export const List = styled.View`
   flex-direction: row;
   justify-content: ${Platform.select({
     ios: 'space-around',
-    androind: 'space-around',
+    android: 'space-around',
     web: 'flex-end',
   })};
   margin-horizontal: -${props => props.theme.spacingSmall}px;
@@ -39,7 +39,7 @@ export const Item = styled.View`
   padding-horizontal: ${props =>
     Platform.select({
       ios: props.theme.spacingSmall,
-      androind: props.theme.spacingSmall,
+      android: props.theme.spacingSmall,
       web: props.theme.spacing,
     })}px;
   padding-vertical: ${props => props.theme.spacingSmall}px;
