@@ -38,6 +38,7 @@ const Campaign = ({ navigation }) => {
 
   const isBrand = get('user.type', user) === USER_TYPE.BRAND;
   const isInfluencer = get('user.type', user) === USER_TYPE.INFLUENCER;
+  const tabBookingState = TAB_INDEX_BOOKING_STATE[activeTab];
 
   const { data: campaign, loading, networkStatus, refetch } = useQuery(
     GET_CAMPAIGN,
@@ -47,7 +48,7 @@ const Campaign = ({ navigation }) => {
         id,
         isBrand,
         isInfluencer,
-        bookingsState: TAB_INDEX_BOOKING_STATE[activeTab],
+        bookingsState: tabBookingState,
       },
     }
   );
@@ -161,8 +162,9 @@ const Campaign = ({ navigation }) => {
                     {bookings.length <= 0 && (
                       <GridItem size={12}>
                         <Text isCenter>
-                          No influencers{' '}
-                          {TAB_INDEX_BOOKING_STATE[activeTab].toLowerCase()}.
+                          {tabBookingState === BOOKING_STATE.APPLIED
+                            ? 'No influnecer applications to update at this moment.'
+                            : `No influencers ${tabBookingState.toLowerCase()} on this campaign.`}
                         </Text>
                       </GridItem>
                     )}

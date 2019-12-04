@@ -20,6 +20,8 @@ Button.defaultProps = {
   isLoading: false,
   isGhost: false,
   isSmall: false,
+  isDark: false,
+  isShaded: false,
 };
 
 Button.propTypes = {
@@ -27,6 +29,8 @@ Button.propTypes = {
   title: PropTypes.string.isRequired,
   isGhost: PropTypes.bool,
   isSmall: PropTypes.bool,
+  isDark: PropTypes.bool,
+  isShaded: PropTypes.bool,
 };
 
 export default Button;

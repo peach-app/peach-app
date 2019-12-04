@@ -27,6 +27,18 @@ module.exports = async () => {
                 )
               )
             ),
+            write: q.Query(
+              q.Lambda(
+                ['newData', 'booking'],
+                q.Equals(
+                  q.Select(
+                    ['data', 'user'],
+                    q.Get(q.Select(['data', 'campaign'], q.Var('booking')))
+                  ),
+                  q.Identity()
+                )
+              )
+            ),
           },
         },
         {
@@ -35,18 +47,18 @@ module.exports = async () => {
             read: true,
             write: q.Query(
               q.Lambda(
-                'ref',
+                ['newData', 'campaign'],
                 q.Equals(
-                  q.Select(['data', 'user'], q.Get(q.Var('ref'))),
+                  q.Select(['data', 'user'], q.Var('campaign')),
                   q.Identity()
                 )
               )
             ),
             delete: q.Query(
               q.Lambda(
-                'ref',
+                'campaign',
                 q.Equals(
-                  q.Select(['data', 'user'], q.Get(q.Var('ref'))),
+                  q.Select(['data', 'user'], q.Var('campaign')),
                   q.Identity()
                 )
               )

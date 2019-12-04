@@ -3,4 +3,5 @@ module.exports = {
   login: require('./login'),
   sendMessage: require('./sendMessage'),
   applyToCampaign: require('./applyToCampaign'),
+  updateBookingState: require('./updateBookingState'),
 };
