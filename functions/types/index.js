@@ -4,7 +4,7 @@ module.exports = gql`
   type Query {
     user: User
     # Discover campaigns listing
-    discover: CampaignPage
+    discover: Discover
 
     # Campaigns listing
     campaigns(state: BookingState): CampaignPage
@@ -12,6 +12,8 @@ module.exports = gql`
     findCampaignById(id: ID): Campaign
     findThreadById(id: ID!): Thread
     findUserByID(id: ID!): User
+
+    searchUsers(type: UserType!, query: String!): UserPage
   }
 
   type Mutation {
@@ -20,6 +22,10 @@ module.exports = gql`
     sendMessage(threadId: ID!, text: String!): Message
     applyToCampaign(id: ID!): Booking
     updateBookingState(id: ID!, state: BookingState!): Boolean
+  }
+
+  type Discover {
+    campaigns: CampaignPage
   }
 
   type Auth {

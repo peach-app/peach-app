@@ -11,14 +11,17 @@ import Title from '../../components/Title';
 import Text from '../../components/Text';
 import Intro from '../../components/Intro';
 import CampaignCard from '../../components/CampaignCard';
-import GET_CAMPAIGNS from './graphql/get-campaigns';
+import GET_DISCOVER_CAMPAIGNS from './graphql/get-discover-campaigns';
 
 const DiscoverCampaigns = () => {
-  const { data, loading, networkStatus, refetch } = useQuery(GET_CAMPAIGNS, {
-    notifyOnNetworkStatusChange: true,
-  });
+  const { data, loading, networkStatus, refetch } = useQuery(
+    GET_DISCOVER_CAMPAIGNS,
+    {
+      notifyOnNetworkStatusChange: true,
+    }
+  );
 
-  const campaigns = getOr([], 'discover.data', data);
+  const campaigns = getOr([], 'discover.campaigns.data', data);
   const fetching = loading && networkStatus === NETWORK_STATUS.FETCHING;
 
   return (

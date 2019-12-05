@@ -2,6 +2,7 @@ import React from 'react';
 import { ScrollView } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
+import startCase from 'lodash/startCase';
 
 import { Main } from './styles';
 import SafeAreaView from '../../components/SafeAreaView';
@@ -24,7 +25,7 @@ const Profile = ({ navigation }) => {
 
   return (
     <SafeAreaView>
-      <Header title={name} />
+      <Header title={startCase(name)} />
       <ScrollView>
         <Intro>
           <Main>
