@@ -12,7 +12,9 @@ import Text from '../../components/Text';
 import { SkeletonText } from '../../components/Skeletons';
 
 const UserCard = ({ navigation, isLoading, _id, name, email, avatar }) => (
-  <TouchableOpacity onPress={() => navigation.navigate('Profile', { id: _id })}>
+  <TouchableOpacity
+    onPress={() => !isLoading && navigation.navigate('Profile', { id: _id })}
+  >
     <Grid noWrap align="center">
       <GridItem>
         <Avatar

@@ -8,6 +8,7 @@ import Campaigns from '../screens/Campaigns';
 import Inbox from '../screens/Inbox';
 import Thread from '../screens/Thread';
 import Discover from '../screens/Discover';
+import Search from '../screens/Search';
 import Account from '../screens/Account';
 import AccountEdit from '../screens/AccountEdit';
 import Payouts from '../screens/Payouts';
@@ -18,6 +19,16 @@ const CampaignStack = createStackNavigator(
   {
     Campaigns,
     CreateCampaign,
+  },
+  {
+    headerMode: 'none',
+  }
+);
+
+const DiscoverStack = createStackNavigator(
+  {
+    Discover,
+    Search,
   },
   {
     headerMode: 'none',
@@ -48,7 +59,7 @@ const AccountStack = createStackNavigator(
 const TabNavigator = createBottomTabNavigator(
   {
     Campaigns: CampaignStack,
-    Discover,
+    Discover: DiscoverStack,
     Inbox: InboxStack,
     Account: AccountStack,
   },

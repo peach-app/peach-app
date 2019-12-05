@@ -5,7 +5,7 @@ import { Touchable, Icon } from './styles';
 
 const IconButton = ({ onPress, size, name }) => (
   <Touchable onPress={onPress} size={size}>
-    <Icon size={size} name={name} />
+    <Icon size={size - 8} name={name} />
   </Touchable>
 );
 
