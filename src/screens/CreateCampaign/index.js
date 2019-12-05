@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import { useMutation } from '@apollo/react-hooks';
@@ -15,29 +15,22 @@ import DatePicker from '../../components/DatePicker';
 import { CAMPAIGN_TYPE, MODAL_TYPES } from '../../consts';
 import CREATE_CAMPAIGN_MUTATION from './graphql/create-campaign';
 import { validationSchema, FORM_INITIAL_VALUES } from './consts';
-import ModalContext from '../../contexts/Modal';
+import { useModal } from '../../contexts/Modal';
 
 const CreateCampaign = ({ navigation }) => {
   const [activeTab, setTab] = useState(0);
 
-  const { openModal } = useContext(ModalContext);
+  // const { openModal } = useModal();
 
-  const [createCampaign, { loading }] = useMutation(CREATE_CAMPAIGN_MUTATION, {
-    // TO DO, HOW ARE WE GOING TO HANDLE ERRORS?
-    // ERROR BOUNDARY?
-    onError: err => console.log('errro', err),
-    onCompleted: () =>
-      openModal({
-        type: MODAL_TYPES.CAMPAIGN_CREATION,
-        props: {
-          onButtonClick: () => {
-            navigation.navigate('Campaigns', {
-              shouldRefetchQuery: true,
-            });
-          },
-        },
-      }),
-  });
+  // const [createCampaign, { loading }] = useMutation(CREATE_CAMPAIGN_MUTATION, {
+  //   // TO DO, HOW ARE WE GOING TO HANDLE ERRORS?
+  //   // ERROR BOUNDARY?
+  //   onError: err => console.log('errro', err),
+  //   onCompleted: () =>
+  //     navigation.navigate('RequestInfluencers', {
+  //       shouldRefetchQuery: true,
+  //     }),
+  // });
 
   return (
     <Formik
@@ -46,14 +39,12 @@ const CreateCampaign = ({ navigation }) => {
       initialValues={FORM_INITIAL_VALUES}
       validationSchema={validationSchema}
       onSubmit={({ name, description, budget, dueDate }) => {
-        createCampaign({
-          variables: {
-            name,
-            description,
-            dueDate,
-            private: activeTab === 1,
-            budget,
-          },
+        navigation.navigate('RequestInfluencers', {
+          name,
+          description,
+          dueDate,
+          private: activeTab === 1,
+          budget,
         });
       }}
     >
@@ -86,7 +77,7 @@ const CreateCampaign = ({ navigation }) => {
               <GridItem size={12}>
                 <Actions>
                   <Button
-                    isLoading={loading}
+                    // isLoading={loading}
                     onPress={handleSubmit}
                     title="Create"
                     fixedWidth
