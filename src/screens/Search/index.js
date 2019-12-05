@@ -36,15 +36,17 @@ const Search = () => {
         <Container>
           <Intro>
             <Header>
-              <Grid>
-                <GridItem size={12}>
+              <Grid align="center">
+                <GridItem>
                   <BackButton />
                 </GridItem>
 
-                <GridItem size={12}>
+                <GridItem flex={1}>
                   <TextInput
                     placeholder="Search for influencers..."
                     autoFocus
+                    clearButtonMode="while-editing"
+                    autoCapitalize="none"
                     onChangeText={query => {
                       search({
                         variables: {

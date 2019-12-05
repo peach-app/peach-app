@@ -14,6 +14,7 @@ import Tabs from '../../components/Tabs';
 import IconButton from '../../components/IconButton';
 import { Grid, GridItem } from '../../components/Grid';
 import CampaignCard from '../../components/CampaignCard';
+import NoResultText from '../../components/NoResultText';
 import { useUser } from '../../contexts/User';
 
 import GET_CAMPAIGNS from './graphql/get-campaigns';
@@ -85,7 +86,7 @@ const Campaigns = ({ navigation }) => {
             </FlatListItem>
 
             {!fetching && campaigns.length <= 0 && (
-              <Text isCenter>No campaigns.</Text>
+              <NoResultText>No active campaigns at this time.</NoResultText>
             )}
 
             {fetching &&

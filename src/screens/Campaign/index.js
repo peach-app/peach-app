@@ -19,6 +19,7 @@ import Avatar from '../../components/Avatar';
 import Booking from '../../components/Booking';
 import { SkeletonText } from '../../components/Skeletons';
 import { Grid, GridItem } from '../../components/Grid';
+import NoResultText from '../../components/NoResultText';
 import { useUser } from '../../contexts/User';
 
 import GET_CAMPAIGN from './graphql/get-campaign';
@@ -161,11 +162,11 @@ const Campaign = ({ navigation }) => {
                   <>
                     {bookings.length <= 0 && (
                       <GridItem size={12}>
-                        <Text isCenter>
+                        <NoResultText>
                           {tabBookingState === BOOKING_STATE.APPLIED
                             ? 'No influnecer applications to update at this moment.'
                             : `No influencers ${tabBookingState.toLowerCase()} on this campaign.`}
-                        </Text>
+                        </NoResultText>
                       </GridItem>
                     )}
                     {bookings.map(booking => (

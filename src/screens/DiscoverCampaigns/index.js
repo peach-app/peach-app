@@ -8,9 +8,9 @@ import SafeAreaView from '../../components/SafeAreaView';
 import StatusBar from '../../components/StatusBar';
 import { FlatList, FlatListItem } from '../../components/FlatList';
 import Title from '../../components/Title';
-import Text from '../../components/Text';
 import Intro from '../../components/Intro';
 import CampaignCard from '../../components/CampaignCard';
+import NoResultText from '../../components/NoResultText';
 import GET_DISCOVER_CAMPAIGNS from './graphql/get-discover-campaigns';
 
 const DiscoverCampaigns = () => {
@@ -43,7 +43,7 @@ const DiscoverCampaigns = () => {
             </FlatListItem>
 
             {!fetching && campaigns.length <= 0 && (
-              <Text>No campaigns to discover.</Text>
+              <NoResultText>No campaigns to discover.</NoResultText>
             )}
 
             {fetching &&
