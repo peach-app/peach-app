@@ -13,11 +13,13 @@ import AccountEdit from '../screens/AccountEdit';
 import Payouts from '../screens/Payouts';
 import CreateCampaign from '../screens/CreateCampaign';
 import Profile from '../screens/Profile';
+import RequestInfluencers from '../screens/RequestInfluencers';
 
 const CampaignStack = createStackNavigator(
   {
     Campaigns,
     CreateCampaign,
+    RequestInfluencers,
   },
   {
     headerMode: 'none',
