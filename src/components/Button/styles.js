@@ -1,4 +1,4 @@
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 
 import Text from '../../components/Text';
 
@@ -10,7 +10,7 @@ export const Main = styled.TouchableOpacity`
   padding: 0 ${props => props.theme.spacing}px;
   justify-content: center;
   border-radius: 200px;
-  min-height: 40px;
+  min-height: ${props => (props.isSmall ? 32 : 40)}px;
   ${props =>
     props.isGhost &&
     `
@@ -19,8 +19,18 @@ export const Main = styled.TouchableOpacity`
     `}
   ${props =>
     !props.isGhost &&
-    `
-      background-color: ${props.isDark ? props.theme.black : props.theme.brand};
+    css`
+      background-color: ${props => {
+        if (props.isDark) {
+          return props.theme.black;
+        }
+
+        if (props.isShaded) {
+          return props.theme.greyDark;
+        }
+
+        return props.theme.brand;
+      }};
     `};
   ${props =>
     props.fixedWidth &&

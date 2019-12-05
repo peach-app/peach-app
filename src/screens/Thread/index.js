@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { KeyboardAvoidingView } from 'react-native';
 import getOr from 'lodash/fp/getOr';
+import startCase from 'lodash/startCase';
 
 import { Composer, Wrapper, TextInput, Send, Icon } from './styles';
 import SafeAreaView from '../../components/SafeAreaView';
@@ -48,7 +49,7 @@ const Thread = ({ navigation }) => {
   return (
     <SafeAreaView>
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
-        <Header title={title} />
+        <Header title={startCase(title)} />
         <FlatList
           inverted
           keyExtractor={item => item._id}

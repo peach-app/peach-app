@@ -19,16 +19,17 @@ import Avatar from '../../components/Avatar';
 import Booking from '../../components/Booking';
 import { SkeletonText } from '../../components/Skeletons';
 import { Grid, GridItem } from '../../components/Grid';
+import NoResultText from '../../components/NoResultText';
 import { useUser } from '../../contexts/User';
 
 import GET_CAMPAIGN from './graphql/get-campaign';
 import APPLY_TO_CAMPAIGN from './graphql/apply-to-campaign';
 
 const TAB_INDEX_BOOKING_STATE = [
-  BOOKING_STATE.ACCEPTED,
   BOOKING_STATE.APPLIED,
-  BOOKING_STATE.REQUESTED,
+  BOOKING_STATE.ACCEPTED,
   BOOKING_STATE.DECLINED,
+  BOOKING_STATE.REQUESTED,
 ];
 
 const Campaign = ({ navigation }) => {
@@ -38,6 +39,7 @@ const Campaign = ({ navigation }) => {
 
   const isBrand = get('user.type', user) === USER_TYPE.BRAND;
   const isInfluencer = get('user.type', user) === USER_TYPE.INFLUENCER;
+  const tabBookingState = TAB_INDEX_BOOKING_STATE[activeTab];
 
   const { data: campaign, loading, networkStatus, refetch } = useQuery(
     GET_CAMPAIGN,
@@ -47,7 +49,7 @@ const Campaign = ({ navigation }) => {
         id,
         isBrand,
         isInfluencer,
-        bookingsState: TAB_INDEX_BOOKING_STATE[activeTab],
+        bookingsState: tabBookingState,
       },
     }
   );
@@ -70,6 +72,7 @@ const Campaign = ({ navigation }) => {
     get('findCampaignById.user.name', campaign) ||
     get('findCampaignById.user.email', campaign);
   const userBookingState = get('findCampaignById.userBooking.state', campaign);
+  const bookings = getOr([], 'findCampaignById.bookings.data', campaign);
 
   return (
     <SafeAreaView>
@@ -141,7 +144,7 @@ const Campaign = ({ navigation }) => {
                   <Tabs
                     activeTabIndex={activeTab}
                     onTabPress={index => setTab(index)}
-                    tabs={['Accepted', 'Applied', 'Requested', 'Declined']}
+                    tabs={['Applied', 'Accepted', 'Declined', 'Requested']}
                   />
                 </GridItem>
 
@@ -155,14 +158,24 @@ const Campaign = ({ navigation }) => {
                   </>
                 )}
 
-                {!fetchingBookings &&
-                  getOr([], 'findCampaignById.bookings.data', campaign).map(
-                    booking => (
+                {!fetchingBookings && (
+                  <>
+                    {bookings.length <= 0 && (
+                      <GridItem size={12}>
+                        <NoResultText>
+                          {tabBookingState === BOOKING_STATE.APPLIED
+                            ? 'No influnecer applications to update at this moment.'
+                            : `No influencers ${tabBookingState.toLowerCase()} on this campaign.`}
+                        </NoResultText>
+                      </GridItem>
+                    )}
+                    {bookings.map(booking => (
                       <GridItem size={12} key={booking._id}>
                         <Booking {...booking} />
                       </GridItem>
-                    )
-                  )}
+                    ))}
+                  </>
+                )}
               </>
             )}
           </Grid>

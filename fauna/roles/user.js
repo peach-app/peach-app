@@ -28,6 +28,18 @@ module.exports = async () => {
                 )
               )
             ),
+            write: q.Query(
+              q.Lambda(
+                ['newData', 'booking'],
+                q.Equals(
+                  q.Select(
+                    ['data', 'user'],
+                    q.Get(q.Select(['data', 'campaign'], q.Var('booking')))
+                  ),
+                  q.Identity()
+                )
+              )
+            ),
           },
         },
         {
@@ -36,9 +48,9 @@ module.exports = async () => {
             read: true,
             write: q.Query(
               q.Lambda(
-                'ref',
+                ['newData', 'campaign'],
                 q.Equals(
-                  q.Select(['data', 'user'], q.Get(q.Var('ref'))),
+                  q.Select(['data', 'user'], q.Var('campaign')),
                   q.Identity()
                 )
               )
@@ -54,9 +66,9 @@ module.exports = async () => {
             ),
             delete: q.Query(
               q.Lambda(
-                'ref',
+                'campaign',
                 q.Equals(
-                  q.Select(['data', 'user'], q.Get(q.Var('ref'))),
+                  q.Select(['data', 'user'], q.Var('campaign')),
                   q.Identity()
                 )
               )
@@ -175,6 +187,12 @@ module.exports = async () => {
         },
         {
           resource: q.Index('booking_by_campaign_user'),
+          actions: {
+            read: true,
+          },
+        },
+        {
+          resource: q.Index('user_by_type'),
           actions: {
             read: true,
           },

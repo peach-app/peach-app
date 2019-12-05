@@ -6,4 +6,5 @@ module.exports = {
   Thread: require('./Thread'),
   Message: require('./Message'),
   Booking: require('./Booking'),
+  Discover: require('./Discover'),
 };

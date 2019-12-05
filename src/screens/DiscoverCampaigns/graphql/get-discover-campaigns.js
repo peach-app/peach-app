@@ -4,11 +4,14 @@ import { CampaignCardFragment } from '../../../components/CampaignCard';
 
 export default gql`
   ${CampaignCardFragment}
+
   {
     discover {
-      data {
-        _id
-        ...CampaignCardFragment
+      campaigns {
+        data {
+          _id
+          ...CampaignCardFragment
+        }
       }
     }
   }
