@@ -23,7 +23,6 @@ export const Provider = ({ children }) => {
   }
 
   const setToken = async token => {
-    console.log('tpken', token);
     if (token) {
       await AsyncStorage.setItem('token', token);
     } else {
