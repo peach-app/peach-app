@@ -5,6 +5,7 @@ import get from 'lodash/fp/get';
 import Dinero from 'dinero.js';
 import { withNavigation } from 'react-navigation';
 import { useMutation } from '@apollo/react-hooks';
+import startCase from 'lodash/startCase';
 
 import { BOOKING_STATE } from '../../consts';
 import { Grid, GridItem } from '../../components/Grid';
@@ -46,7 +47,7 @@ const Booking = ({ _id, cost, state, user, isLoading, navigation }) => {
                 isLoading={isLoading}
                 loadingText="Booking user name loading"
               >
-                {get('name', user) || get('email', user)}
+                {startCase(get('name', user) || get('email', user))}
               </SkeletonText>
             </Text>
             <Text>
