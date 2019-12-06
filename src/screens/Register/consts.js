@@ -20,6 +20,7 @@ export const FORM_INPUTS = [
 ];
 
 export const validationSchema = yup.object().shape({
+  name: yup.string().required(FORM_ERROR_MESSAGES.REQUIRED_NAME),
   email: yup
     .string()
     .required(FORM_ERROR_MESSAGES.REQUIRED_EMAIL)
