@@ -10,6 +10,7 @@ import Title from '../../components/Title';
 import Intro from '../../components/Intro';
 import { FlatList, FlatListItem } from '../../components/FlatList';
 import ThreadCard from '../../components/ThreadCard';
+import NoResultText from '../../components/NoResultText';
 import GET_THREADS from './graphql/get-threads';
 
 const Inbox = () => {
@@ -17,6 +18,8 @@ const Inbox = () => {
     notifyOnNetworkStatusChange: true,
     pollInterval: 10000,
   });
+
+  const messages = getOr([], 'user.threads.data', data);
 
   return (
     <SafeAreaView>
@@ -29,7 +32,7 @@ const Inbox = () => {
           />
         }
         keyExtractor={item => item._id}
-        data={getOr([], 'user.threads.data', data)}
+        data={messages}
         ListHeaderComponent={
           <>
             <FlatListItem>
@@ -37,6 +40,10 @@ const Inbox = () => {
                 <Title>Messages</Title>
               </Intro>
             </FlatListItem>
+
+            {!loading && messages.length <= 0 && (
+              <NoResultText>No active threads yet.</NoResultText>
+            )}
 
             {loading && networkStatus === NETWORK_STATUS.FETCHING && (
               <>
