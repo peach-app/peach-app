@@ -18,7 +18,12 @@ module.exports = gql`
 
   type Mutation {
     login(email: String!, password: String!): Auth
-    register(email: String!, password: String!, type: UserType!): Auth
+    register(
+      name: String!
+      email: String!
+      password: String!
+      type: UserType!
+    ): Auth
     sendMessage(threadId: ID!, text: String!): Message
     applyToCampaign(id: ID!): Booking
     updateBookingState(id: ID!, state: BookingState!): Boolean
