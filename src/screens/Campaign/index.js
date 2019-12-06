@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, RefreshControl } from 'react-native';
+import { RefreshControl } from 'react-native';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 import getOr from 'lodash/fp/getOr';
@@ -12,7 +12,6 @@ import Intro from '../../components/Intro';
 import SafeAreaView from '../../components/SafeAreaView';
 import StatusBar from '../../components/StatusBar';
 import Button from '../../components/Button';
-import Container from '../../components/Container';
 import Title from '../../components/Title';
 import Tabs from '../../components/Tabs';
 import Avatar from '../../components/Avatar';
@@ -20,6 +19,7 @@ import Booking from '../../components/Booking';
 import { SkeletonText } from '../../components/Skeletons';
 import { Grid, GridItem } from '../../components/Grid';
 import NoResultText from '../../components/NoResultText';
+import { FlatList, FlatListItem } from '../../components/FlatList';
 import { useUser } from '../../contexts/User';
 
 import GET_CAMPAIGN from './graphql/get-campaign';
@@ -78,18 +78,16 @@ const Campaign = ({ navigation }) => {
     <SafeAreaView>
       <StatusBar />
       <Header />
-      <ScrollView
-        style={{ flex: 1 }}
+      <FlatList
         refreshControl={
           <RefreshControl
             refreshing={loading && networkStatus === NETWORK_STATUS.REFETCHING}
             onRefresh={refetch}
           />
         }
-      >
-        <Container>
-          <Grid>
-            <GridItem size={12}>
+        ListHeaderComponent={
+          <>
+            <FlatListItem>
               <Intro>
                 <Grid>
                   {isInfluencer && (
@@ -136,53 +134,51 @@ const Campaign = ({ navigation }) => {
                   </GridItem>
                 </Grid>
               </Intro>
-            </GridItem>
+            </FlatListItem>
 
             {isBrand && (
               <>
-                <GridItem size={12}>
+                <FlatListItem>
                   <Tabs
                     activeTabIndex={activeTab}
                     onTabPress={index => setTab(index)}
                     tabs={['Applied', 'Accepted', 'Declined', 'Requested']}
                   />
-                </GridItem>
+                </FlatListItem>
+
+                {!fetchingBookings && bookings.length <= 0 && (
+                  <FlatListItem>
+                    <NoResultText>
+                      {tabBookingState === BOOKING_STATE.APPLIED
+                        ? 'No influnecer applications to update at this moment.'
+                        : `No influencers ${tabBookingState.toLowerCase()} on this campaign.`}
+                    </NoResultText>
+                  </FlatListItem>
+                )}
 
                 {fetchingBookings && (
                   <>
                     {Array.from(Array(3)).map((_, key) => (
-                      <GridItem size={12} key={key}>
+                      <FlatListItem key={key}>
                         <Booking isLoading />
-                      </GridItem>
-                    ))}
-                  </>
-                )}
-
-                {!fetchingBookings && (
-                  <>
-                    {bookings.length <= 0 && (
-                      <GridItem size={12}>
-                        <NoResultText>
-                          {tabBookingState === BOOKING_STATE.APPLIED
-                            ? 'No influnecer applications to update at this moment.'
-                            : `No influencers ${tabBookingState.toLowerCase()} on this campaign.`}
-                        </NoResultText>
-                      </GridItem>
-                    )}
-                    {bookings.map(booking => (
-                      <GridItem size={12} key={booking._id}>
-                        <Booking {...booking} />
-                      </GridItem>
+                      </FlatListItem>
                     ))}
                   </>
                 )}
               </>
             )}
-          </Grid>
-        </Container>
-      </ScrollView>
+          </>
+        }
+        data={!fetchingBookings && bookings}
+        keyExtractor={item => item._id}
+        renderItem={({ item }) => (
+          <FlatListItem>
+            <Booking {...item} />
+          </FlatListItem>
+        )}
+      />
 
-      {isInfluencer && (
+      {isInfluencer && !loading && (
         <Foot>
           {!userBookingState && (
             <Button
@@ -200,6 +196,12 @@ const Campaign = ({ navigation }) => {
           )}
           {userBookingState === BOOKING_STATE.ACCEPTED && (
             <Text>You've been accepted onto this campaign!</Text>
+          )}
+          {userBookingState === BOOKING_STATE.DECLINED && (
+            <Text>Your application for this campaign was unsuccesful.</Text>
+          )}
+          {userBookingState === BOOKING_STATE.COMPLETE && (
+            <Text>Your work here is done</Text>
           )}
         </Foot>
       )}

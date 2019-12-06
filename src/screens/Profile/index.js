@@ -4,11 +4,10 @@ import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 import startCase from 'lodash/startCase';
 
-import { Main } from './styles';
 import SafeAreaView from '../../components/SafeAreaView';
 import Header from '../../components/Header';
-import Intro from '../../components/Intro';
-import Avatar from '../../components/Avatar';
+import Container from '../../components/Container';
+import ProfileHeader from '../../components/ProfileHeader';
 
 import GET_USER from './graphql/get-user';
 
@@ -27,15 +26,9 @@ const Profile = ({ navigation }) => {
     <SafeAreaView>
       <Header title={startCase(name)} />
       <ScrollView>
-        <Intro>
-          <Main>
-            <Avatar
-              fallback={name}
-              source={{ uri: get('findUserByID.avatar.url', data) }}
-              size={120}
-            />
-          </Main>
-        </Intro>
+        <Container>
+          <ProfileHeader {...get('findUserByID', data)} />
+        </Container>
       </ScrollView>
     </SafeAreaView>
   );

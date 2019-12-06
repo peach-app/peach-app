@@ -1,10 +1,4 @@
 module.exports = async (root, args, { client, q, DocumentDataWithId }) => {
-  if (!args.query) {
-    return {
-      data: [],
-    };
-  }
-
   return client.query(
     q.Map(
       q.Paginate(

@@ -4,17 +4,15 @@ import { useLazyQuery } from '@apollo/react-hooks';
 import getOr from 'lodash/fp/getOr';
 import debounce from 'lodash/debounce';
 
-import { Header } from './styles';
+import { Main } from './styles';
 import { NETWORK_STATUS } from '../../consts';
 import SafeAreaView from '../../components/SafeAreaView';
 import { FlatList, FlatListItem } from '../../components/FlatList';
 import UserCard from '../../components/UserCard';
 import Container from '../../components/Container';
-import BackButton from '../../components/BackButton';
-import { Grid, GridItem } from '../../components/Grid';
 import TextInput from '../../components/TextInput/Input';
-import Text from '../../components/Text';
-import Intro from '../../components/Intro';
+import NoResultText from '../../components/NoResultText';
+import Header from '../../components/Header';
 
 import SEARCH_INFLUENCERS from './graphql/search-influencers';
 
@@ -33,32 +31,23 @@ const Search = () => {
   return (
     <SafeAreaView>
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+        <Header title="Search" />
         <Container>
-          <Intro>
-            <Header>
-              <Grid align="center">
-                <GridItem>
-                  <BackButton />
-                </GridItem>
-
-                <GridItem flex={1}>
-                  <TextInput
-                    placeholder="Search for influencers..."
-                    autoFocus
-                    clearButtonMode="while-editing"
-                    autoCapitalize="none"
-                    onChangeText={query => {
-                      search({
-                        variables: {
-                          query,
-                        },
-                      });
-                    }}
-                  />
-                </GridItem>
-              </Grid>
-            </Header>
-          </Intro>
+          <Main>
+            <TextInput
+              placeholder="Search for influencers..."
+              autoFocus
+              clearButtonMode="while-editing"
+              autoCapitalize="none"
+              onChangeText={query => {
+                search({
+                  variables: {
+                    query,
+                  },
+                });
+              }}
+            />
+          </Main>
         </Container>
 
         <FlatList
@@ -66,7 +55,7 @@ const Search = () => {
             <>
               {!fetching && influencers.length <= 0 && (
                 <FlatListItem>
-                  <Text isCenter>0 influencers found.</Text>
+                  <NoResultText>0 influencers found.</NoResultText>
                 </FlatListItem>
               )}
 
