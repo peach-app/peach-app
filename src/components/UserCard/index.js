@@ -6,19 +6,27 @@ import get from 'lodash/fp/get';
 import startCase from 'lodash/startCase';
 import PropTypes from 'prop-types';
 
-import { Grid, GridItem } from '../../components/Grid';
-import Avatar from '../../components/Avatar';
-import Text from '../../components/Text';
-import { SkeletonText } from '../../components/Skeletons';
+import { Grid, GridItem } from "../Grid";
+import Avatar from "../Avatar";
+import Text from "../Text";
+import { SkeletonText } from "../Skeletons";
 
-const UserCard = ({ navigation, isLoading, _id, name, email, avatar }) => (
+const UserCard = ({
+  navigation,
+  isLoading,
+  _id,
+  name,
+  email,
+  avatar,
+  size,
+}) => (
   <TouchableOpacity
     onPress={() => !isLoading && navigation.navigate('Profile', { id: _id })}
   >
     <Grid noWrap align="center">
       <GridItem>
         <Avatar
-          size={50}
+          size={size || 50}
           isLoading={isLoading}
           source={{ uri: get('url', avatar) }}
           fallback={name || email}

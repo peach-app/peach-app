@@ -20,6 +20,7 @@ const Register = () => {
       <StatusBar />
       <RegisterForm
         onFormSubmit={variables => {
+          console.log('variables', variables);
           register({ variables });
         }}
         error={error}

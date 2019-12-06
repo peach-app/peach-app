@@ -17,12 +17,7 @@ export const TextInput = styled.TextInput.attrs(props => ({
 `;
 
 export const InfluencersContainer = styled.View`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  flex-wrap: wrap;
+  
   shadow-color: ${props => props.theme.foreground};
   shadow-offset: {
     width: 0,
@@ -30,20 +25,33 @@ export const InfluencersContainer = styled.View`
   };
   shadow-opacity: 0.22;
   shadow-radius: 2.22;
-
+  border-radius: 3px;
   elevation: 3;
+  max-height: 200;
+`;
+
+export const InfluencersWrapper = styled.View`
+  height: 200px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
 `;
 
 export const dropZoneStyles = {
   backgroundColor: '#fff',
-  padding: 15,
+  position: 'relative',
   height: 200,
   width: '100%',
-  minHeight: 200,
+  // maxHeight: 200,
   display: 'flex',
   alignItmes: 'center',
   justifyContent: 'center',
   textAlign: 'center',
+  flexWrap: 'wrap',
+  flexDirection: 'row',
   //   borderColor: 'black',
   //   borderStyle: 'dotted',
   //   borderWidth: 1,
@@ -55,8 +63,7 @@ export const dropZoneStyles = {
     height: 1,
   },
   shadowOpacity: 0.22,
-  shadowRadius: 2.22,
-
+  shadowRadius: 1.22,
   elevation: 3,
 };
 
@@ -70,4 +77,5 @@ export const DropZoneText = styled(Text)`
 
 export const AvatarWrapper = styled.View`
   padding: 10px;
+  z-index: 10;
 `;

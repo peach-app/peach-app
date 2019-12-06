@@ -20,17 +20,17 @@ import { useModal } from '../../contexts/Modal';
 const CreateCampaign = ({ navigation }) => {
   const [activeTab, setTab] = useState(0);
 
-  // const { openModal } = useModal();
+  const { openModal } = useModal();
 
-  // const [createCampaign, { loading }] = useMutation(CREATE_CAMPAIGN_MUTATION, {
-  //   // TO DO, HOW ARE WE GOING TO HANDLE ERRORS?
-  //   // ERROR BOUNDARY?
-  //   onError: err => console.log('errro', err),
-  //   onCompleted: () =>
-  //     navigation.navigate('RequestInfluencers', {
-  //       shouldRefetchQuery: true,
-  //     }),
-  // });
+  const [createCampaign, { loading }] = useMutation(CREATE_CAMPAIGN_MUTATION, {
+    // TO DO, HOW ARE WE GOING TO HANDLE ERRORS?
+    // ERROR BOUNDARY?
+    onError: err => console.log('errro', err),
+    onCompleted: () =>
+      navigation.navigate('RequestInfluencers', {
+        shouldRefetchQuery: true,
+      }),
+  });
 
   return (
     <Formik
@@ -77,7 +77,7 @@ const CreateCampaign = ({ navigation }) => {
               <GridItem size={12}>
                 <Actions>
                   <Button
-                    // isLoading={loading}
+                    isLoading={loading}
                     onPress={handleSubmit}
                     title="Create"
                     fixedWidth
