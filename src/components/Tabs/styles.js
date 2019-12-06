@@ -4,6 +4,7 @@ import Title from '../../components/Title';
 
 export const Main = styled.ScrollView.attrs({
   horizontal: true,
+  showsHorizontalScrollIndicator: false,
 })`
   padding-bottom: ${props => props.theme.spacingSmall}px;
 `;

@@ -3,6 +3,7 @@ import { withNavigation } from 'react-navigation';
 import { useQuery } from '@apollo/react-hooks';
 import getOr from 'lodash/fp/getOr';
 
+import { NETWORK_STATUS } from '../../consts';
 import SafeAreaView from '../../components/SafeAreaView';
 import Intro from '../../components/Intro';
 import Title from '../../components/Title';
@@ -16,7 +17,11 @@ import GET_DISCOVER_USERS from './graphql/get-discover-users';
 
 const DiscoverInfluencers = ({ navigation }) => {
   const [activeTab, setTab] = useState(0);
-  const { data } = useQuery(GET_DISCOVER_USERS);
+  const { data, loading, networkStatus } = useQuery(GET_DISCOVER_USERS, {
+    notifyOnNetworkStatusChange: true,
+  });
+
+  const fetching = loading && networkStatus === NETWORK_STATUS.FETCHING;
 
   return (
     <SafeAreaView>
@@ -54,6 +59,13 @@ const DiscoverInfluencers = ({ navigation }) => {
                 onTabPress={index => setTab(index)}
               />
             </FlatListItem>
+
+            {fetching &&
+              Array.from(Array(3)).map((_, key) => (
+                <FlatListItem key={key}>
+                  <UserCard isLoading />
+                </FlatListItem>
+              ))}
           </>
         }
         keyExtractor={item => item._id}
