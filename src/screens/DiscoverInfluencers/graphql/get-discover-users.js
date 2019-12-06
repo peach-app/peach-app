@@ -1,17 +1,17 @@
 import gql from 'graphql-tag';
 
 import { USER_TYPE } from '../../../consts';
-import { SlimUserCardFragment } from '../../../components/SlimUserCard';
+import { UserCardFragment } from '../../../components/UserCard';
 
 export default gql`
-  ${SlimUserCardFragment}
+  ${UserCardFragment}
 
   {
     discover {
       popularUsers(type: ${USER_TYPE.INFLUENCER}) {
         data {
           _id
-          ...SlimUserCardFragment
+          ...UserCardFragment
         }
       }
     }
