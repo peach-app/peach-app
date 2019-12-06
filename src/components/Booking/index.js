@@ -42,7 +42,7 @@ const Booking = ({ _id, cost, state, user, isLoading, navigation }) => {
             />
           </GridItem>
           <GridItem flex={1}>
-            <Text>
+            <Text numberOfLines={1}>
               <SkeletonText
                 isLoading={isLoading}
                 loadingText="Booking user name loading"
