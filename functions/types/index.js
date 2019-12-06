@@ -31,6 +31,7 @@ module.exports = gql`
 
   type Discover {
     campaigns: CampaignPage
+    popularUsers(type: UserType!): UserPage
   }
 
   type Auth {
