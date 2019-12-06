@@ -11,7 +11,7 @@ import { FlatList, FlatListItem } from '../../components/FlatList';
 import UserCard from '../../components/UserCard';
 import Container from '../../components/Container';
 import TextInput from '../../components/TextInput/Input';
-import Text from '../../components/Text';
+import NoResultText from '../../components/NoResultText';
 import Header from '../../components/Header';
 
 import SEARCH_INFLUENCERS from './graphql/search-influencers';
@@ -55,7 +55,7 @@ const Search = () => {
             <>
               {!fetching && influencers.length <= 0 && (
                 <FlatListItem>
-                  <Text isCenter>0 influencers found.</Text>
+                  <NoResultText>0 influencers found.</NoResultText>
                 </FlatListItem>
               )}
 

@@ -11,7 +11,7 @@ const ProfileHeader = ({ name, email, avatar, isLoading }) => (
     <Center>
       <Avatar
         isLoading={isLoading}
-        size={90}
+        size={100}
         fallback={name || email}
         source={{
           uri: get('url', avatar),
