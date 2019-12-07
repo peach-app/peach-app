@@ -1,16 +1,18 @@
-import { USER_TYPE, FORM_ERROR_MESSAGES } from '../../consts';
-import * as yup from 'yup';
+import { USER_TYPE } from '../../consts';
 
 export const USER_TYPE_TABS = Object.values(USER_TYPE);
 
 export const FORM_INPUTS = [
   {
-    label: 'Full Name',
+    label: 'Name',
     name: 'name',
+    autoCapitalize: 'none',
   },
   {
     label: 'Email Address',
     name: 'email',
+    keyboardType: 'email-address',
+    autoCapitalize: 'none',
   },
   {
     label: 'Password',
@@ -19,11 +21,9 @@ export const FORM_INPUTS = [
   },
 ];
 
-export const validationSchema = yup.object().shape({
-  name: yup.string().required(FORM_ERROR_MESSAGES.REQUIRED_NAME),
-  email: yup
-    .string()
-    .required(FORM_ERROR_MESSAGES.REQUIRED_EMAIL)
-    .email(FORM_ERROR_MESSAGES.INVALID_EMAIL),
-  password: yup.string().required(FORM_ERROR_MESSAGES.REQUIRED_PASSWORD),
-});
+export const FORM_ERROR_MESSAGES = {
+  REQUIRED_NAME: 'Please enter your name',
+  REQUIRED_EMAIL: 'Please enter an email address',
+  INVALID_EMAIL: 'Please enter a valid email address',
+  REQUIRED_PASSWORD: 'Please enter a password',
+};

@@ -18,7 +18,7 @@ import BackButton from '../../components/BackButton';
 import { useAuth } from '../../contexts/Auth';
 import LOGIN from './graphql/login';
 
-const LoginSchema = Yup.object().shape({
+const validationSchema = Yup.object().shape({
   email: Yup.string()
     .email('Please enter a valid email address')
     .required('Please enter an email address'),
@@ -40,7 +40,7 @@ const Login = () => {
       email: '',
       password: '',
     },
-    validationSchema: LoginSchema,
+    validationSchema,
     onSubmit: ({ email, password }) => {
       login({
         variables: {
