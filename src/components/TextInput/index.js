@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components/native';
-import { connect } from 'formik';
 
-import Text from '../../components/Text';
+import Text from '../Text';
 
 const Input = styled.TextInput`
   border-width: 1px;
@@ -17,25 +16,25 @@ const Input = styled.TextInput`
 `;
 
 const Label = styled(Text)`
-  margin-bottom: ${props => props.theme.spacingSmall}px;
+  margin-vertical: ${props => props.theme.spacingSmall}px;
 `;
 
-const TextInput = ({ name, label, formik, ...props }) => (
+const TextInput = ({ label, error, ...props }) => (
   <>
     {label && <Label>{label}</Label>}
-    <Input
-      {...props}
-      hasError={formik.errors[name]}
-      onChangeText={formik.handleChange(name)}
-      onBlur={formik.handleBlur(name)}
-      value={formik.values[name]}
-    />
+    <Input hasError={error} {...props} />
+    {error && <Label>{error}</Label>}
   </>
 );
 
-TextInput.propTypes = {
-  name: PropTypes.string.isRequired,
-  label: PropTypes.string,
+TextInput.defaultProps = {
+  label: null,
+  error: null,
 };
 
-export default connect(TextInput);
+TextInput.propTypes = {
+  label: PropTypes.string,
+  error: PropTypes.string,
+};
+
+export default TextInput;

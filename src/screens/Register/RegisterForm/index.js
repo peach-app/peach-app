@@ -6,7 +6,7 @@ import Intro from '../../../components/Intro';
 import Title from '../../../components/Title';
 import BackButton from '../../../components/BackButton';
 import Tabs from '../../../components/Tabs';
-import TextInput from '../../../components/TextInput/Input';
+import TextInput from '../../../components/TextInput';
 import { Grid, GridItem } from '../../../components/Grid';
 import Button from '../../../components/Button';
 import Actions from '../../../components/Actions';
