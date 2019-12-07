@@ -27,7 +27,7 @@ const CampaignCard = ({
           isLoading={isLoading}
           size={50}
           source={{ uri: get('avatar.url', user) }}
-          fallback={get('name', user) || get('email', user)}
+          fallback={get('name', user)}
         />
       </GridItem>
       <GridItem flex={1}>
@@ -49,7 +49,7 @@ const CampaignCard = ({
         </Description>
         <User>
           <SkeletonText isLoading={isLoading} loadingText="Campaign user">
-            {get('name', user) || get('email', user)}
+            {get('name', user)}
           </SkeletonText>
         </User>
       </GridItem>
@@ -80,7 +80,6 @@ CampaignCard.propTypes = {
   description: PropTypes.string,
   user: PropTypes.shape({
     name: PropTypes.string,
-    email: PropTypes.string.isRequired,
     avatar: PropTypes.shape({
       url: PropTypes.string,
     }),
@@ -94,7 +93,6 @@ export const CampaignCardFragment = gql`
     description
     user {
       name
-      email
       avatar {
         url
       }

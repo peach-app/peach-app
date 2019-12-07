@@ -17,7 +17,6 @@ export default gql`
       user {
         _id
         name
-        email
         avatar @include(if: $isInfluencer) {
           url
         }

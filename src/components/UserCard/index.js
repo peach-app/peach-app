@@ -11,7 +11,7 @@ import Avatar from '../../components/Avatar';
 import Text from '../../components/Text';
 import { SkeletonText } from '../../components/Skeletons';
 
-const UserCard = ({ navigation, isLoading, _id, name, email, avatar }) => (
+const UserCard = ({ navigation, isLoading, _id, name, avatar }) => (
   <TouchableOpacity
     onPress={() => !isLoading && navigation.navigate('Profile', { id: _id })}
   >
@@ -21,7 +21,7 @@ const UserCard = ({ navigation, isLoading, _id, name, email, avatar }) => (
           size={50}
           isLoading={isLoading}
           source={{ uri: get('url', avatar) }}
-          fallback={name || email}
+          fallback={name}
         />
       </GridItem>
       <GridItem flex={1}>
@@ -38,14 +38,12 @@ const UserCard = ({ navigation, isLoading, _id, name, email, avatar }) => (
 UserCard.defaultProps = {
   isLoading: false,
   name: '',
-  email: '',
   avatar: null,
 };
 
 UserCard.propTypes = {
   isLoading: PropTypes.bool,
   name: PropTypes.string,
-  email: PropTypes.string,
   avatar: PropTypes.shape({
     url: PropTypes.string.isRequired,
   }),
@@ -58,7 +56,6 @@ export const UserCardFragment = gql`
   fragment UserCardFragment on User {
     _id
     name
-    email
     avatar {
       url
     }

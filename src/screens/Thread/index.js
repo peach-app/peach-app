@@ -42,7 +42,7 @@ const Thread = ({ navigation }) => {
 
   const title = useMemo(() => {
     return getOr([], 'findThreadById.users.data', data)
-      .map(user => user.name || user.email)
+      .map(user => user.name)
       .join(', ');
   }, [data]);
 

@@ -11,7 +11,6 @@ export default gql`
         data {
           _id
           name
-          email
         }
       }
       messages {

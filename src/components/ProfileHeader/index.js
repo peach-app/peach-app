@@ -6,13 +6,13 @@ import get from 'lodash/fp/get';
 import { Main, Center } from './styles';
 import Avatar from '../../components/Avatar';
 
-const ProfileHeader = ({ name, email, avatar, isLoading }) => (
+const ProfileHeader = ({ name, avatar, isLoading }) => (
   <Main>
     <Center>
       <Avatar
         isLoading={isLoading}
         size={100}
-        fallback={name || email}
+        fallback={name}
         source={{
           uri: get('url', avatar),
         }}
@@ -24,7 +24,6 @@ const ProfileHeader = ({ name, email, avatar, isLoading }) => (
 ProfileHeader.propTypes = {
   isLoading: PropTypes.bool,
   name: PropTypes.string,
-  email: PropTypes.string,
   avatar: PropTypes.shape({
     url: PropTypes.string,
   }),
@@ -33,7 +32,6 @@ ProfileHeader.propTypes = {
 export const ProfileHeaderFragment = gql`
   fragment ProfileHeaderFragment on User {
     name
-    email
     avatar {
       url
     }

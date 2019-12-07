@@ -38,7 +38,7 @@ const Booking = ({ _id, cost, state, user, isLoading, navigation }) => {
               }
               isLoading={isLoading}
               source={{ uri: get('avatar.url', user) }}
-              fallback={get('name', user) || get('email', user)}
+              fallback={get('name', user)}
             />
           </GridItem>
           <GridItem flex={1}>
@@ -47,7 +47,7 @@ const Booking = ({ _id, cost, state, user, isLoading, navigation }) => {
                 isLoading={isLoading}
                 loadingText="Booking user name loading"
               >
-                {startCase(get('name', user) || get('email', user))}
+                {startCase(get('name', user))}
               </SkeletonText>
             </Text>
             <Text>
@@ -127,7 +127,6 @@ export const BookingFragment = gql`
     user {
       _id
       name
-      email
       avatar {
         url
       }
