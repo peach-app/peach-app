@@ -27,6 +27,7 @@ module.exports = gql`
     sendMessage(threadId: ID!, text: String!): Message
     applyToCampaign(id: ID!): Booking
     updateBookingState(id: ID!, state: BookingState!): Boolean
+    updateUser(name: String): Boolean
   }
 
   type Discover {
