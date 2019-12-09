@@ -74,9 +74,7 @@ const Campaigns = ({ navigation }) => {
                       <IconButton
                         size={30}
                         name="ios-add"
-                        onPress={() =>
-                          navigation.navigate('RequestInfluencers')
-                        }
+                        onPress={() => navigation.navigate('CreateCampaign')}
                       />
                     </GridItem>
                   )}

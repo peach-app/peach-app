@@ -4,9 +4,9 @@ import { FORM_ERROR_MESSAGES } from '../../consts';
 export const validationSchema = Yup.object().shape({
   name: Yup.string().required(FORM_ERROR_MESSAGES.REQUIRED_FIELD),
   description: Yup.string().required(FORM_ERROR_MESSAGES.REQUIRED_FIELD),
-  budget: Yup.number()
+  budget: Yup.number(FORM_ERROR_MESSAGES.INVALID_NUMBER)
     .required(FORM_ERROR_MESSAGES.REQUIRED_FIELD)
-    .positive(),
+    .positive(FORM_ERROR_MESSAGES.POSITIVE_AMOUNT),
   dueDate: Yup.string().required(FORM_ERROR_MESSAGES.REQUIRED_FIELD),
 });
 

@@ -27,8 +27,14 @@ const CreateCampaign = ({ navigation }) => {
     // ERROR BOUNDARY?
     onError: err => console.log('errro', err),
     onCompleted: () =>
-      navigation.navigate('RequestInfluencers', {
-        shouldRefetchQuery: true,
+      openModal({
+        type: MODAL_TYPES.CAMPAIGN_CREATION,
+        props: {
+          onButtonClick: () =>
+            navigation.navigate('Campaigns', {
+              shouldRefetchQuery: true,
+            }),
+        },
       }),
   });
 
@@ -39,12 +45,14 @@ const CreateCampaign = ({ navigation }) => {
       initialValues={FORM_INITIAL_VALUES}
       validationSchema={validationSchema}
       onSubmit={({ name, description, budget, dueDate }) => {
-        navigation.navigate('RequestInfluencers', {
-          name,
-          description,
-          dueDate,
-          private: activeTab === 1,
-          budget,
+        createCampaign({
+          variables: {
+            name,
+            description,
+            dueDate,
+            private: activeTab === 1,
+            budget,
+          },
         });
       }}
     >

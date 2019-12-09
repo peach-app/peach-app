@@ -12,6 +12,8 @@ export const FORM_ERROR_MESSAGES = {
   INVALID_EMAIL: 'Please enter a valid email',
   REQUIRED_PASSWORD: 'We need you to set a password',
   REQUIRED_EMAIL: 'We need your email',
+  INVALID_NUMBER: 'Please enter a valid budget amount',
+  POSITIVE_AMOUNT: 'Please enter a positive amount for the bugdet',
 };
 
 export const USER_TYPE = {
