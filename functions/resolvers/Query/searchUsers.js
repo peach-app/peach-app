@@ -3,22 +3,19 @@ module.exports = async (root, args, { client, q, DocumentDataWithId }) => {
     q.Map(
       q.Paginate(
         q.Filter(
-          q.Match(q.Index('user_by_type'), args.type),
+          q.Match(q.Index('user_name_by_type'), args.type),
           q.Lambda(
-            'ref',
+            ['name', 'ref'],
             q.Not(
               q.Equals(
-                q.FindStr(
-                  q.Select(['data', 'name'], q.Get(q.Var('ref'))),
-                  args.query.toLowerCase()
-                ),
+                q.FindStr(q.LowerCase(q.Var('name')), args.query.toLowerCase()),
                 -1
               )
             )
           )
         )
       ),
-      q.Lambda('ref', DocumentDataWithId(q.Get(q.Var('ref'))))
+      q.Lambda(['name', 'ref'], DocumentDataWithId(q.Get(q.Var('ref'))))
     )
   );
 };

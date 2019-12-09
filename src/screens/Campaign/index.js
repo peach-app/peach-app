@@ -68,9 +68,7 @@ const Campaign = ({ navigation }) => {
   const fetchingBookings =
     fetching || (loading && networkStatus === NETWORK_STATUS.SET_VARIABLES);
 
-  const brandName =
-    get('findCampaignById.user.name', campaign) ||
-    get('findCampaignById.user.email', campaign);
+  const brandName = get('findCampaignById.user.name', campaign);
   const userBookingState = get('findCampaignById.userBooking.state', campaign);
   const bookings = getOr([], 'findCampaignById.bookings.data', campaign);
 

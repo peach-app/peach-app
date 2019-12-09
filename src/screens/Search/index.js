@@ -10,7 +10,7 @@ import SafeAreaView from '../../components/SafeAreaView';
 import { FlatList, FlatListItem } from '../../components/FlatList';
 import UserCard from '../../components/UserCard';
 import Container from '../../components/Container';
-import TextInput from '../../components/TextInput/Input';
+import TextInput from '../../components/TextInput';
 import NoResultText from '../../components/NoResultText';
 import Header from '../../components/Header';
 

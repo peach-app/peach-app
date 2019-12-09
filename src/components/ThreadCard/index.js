@@ -5,6 +5,7 @@ import { withNavigation } from 'react-navigation';
 import gql from 'graphql-tag';
 import get from 'lodash/fp/get';
 import getOr from 'lodash/fp/getOr';
+import startCase from 'lodash/startCase';
 
 import { Icon, Users, Text } from './styles';
 import { Grid, GridItem } from '../../components/Grid';
@@ -25,7 +26,7 @@ const ThreadCard = ({ isLoading, navigation, _id, users, latestMessage }) => (
               key={user._id}
               isLoading={isLoading}
               size={50}
-              fallback={user.name || user.email}
+              fallback={user.name}
               source={{
                 uri: get('avatar.url', user),
               }}
@@ -36,7 +37,7 @@ const ThreadCard = ({ isLoading, navigation, _id, users, latestMessage }) => (
       <GridItem flex={1}>
         <Users numberOfLines={1}>
           {getOr([], 'data', users)
-            .map(user => user.name || user.email)
+            .map(user => startCase(user.name))
             .join(', ')}
         </Users>
         <Text numberOfLines={2}>
@@ -75,7 +76,6 @@ export const ThreadCardFragment = gql`
       data {
         _id
         name
-        email
         avatar {
           url
         }

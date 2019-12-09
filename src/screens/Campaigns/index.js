@@ -73,7 +73,7 @@ const Campaigns = ({ navigation }) => {
                     <GridItem>
                       <IconButton
                         size={30}
-                        name="ios-add"
+                        name="ios-add-circle"
                         onPress={() => navigation.navigate('CreateCampaign')}
                       />
                     </GridItem>

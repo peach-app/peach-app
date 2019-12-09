@@ -2,10 +2,15 @@ import styled from 'styled-components/native';
 
 import Title from '../../components/Title';
 
-export const Main = styled.ScrollView.attrs({
+export const Main = styled.ScrollView.attrs(props => ({
   horizontal: true,
-})`
+  showsHorizontalScrollIndicator: false,
+  contentContainerStyle: {
+    paddingHorizontal: props.theme.spacing,
+  },
+}))`
   padding-bottom: ${props => props.theme.spacingSmall}px;
+  margin-horizontal: ${props => -props.theme.spacing}px;
 `;
 
 export const Item = styled.View`

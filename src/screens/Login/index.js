@@ -1,5 +1,5 @@
 import React from 'react';
-import { Formik } from 'formik';
+import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
@@ -18,11 +18,11 @@ import BackButton from '../../components/BackButton';
 import { useAuth } from '../../contexts/Auth';
 import LOGIN from './graphql/login';
 
-const LoginSchema = Yup.object().shape({
+const validationSchema = Yup.object().shape({
   email: Yup.string()
-    .email()
-    .required(),
-  password: Yup.string().required(),
+    .email('Please enter a valid email address')
+    .required('Please enter an email address'),
+  password: Yup.string().required('Please enter a password'),
 });
 
 const Login = () => {
@@ -33,76 +33,82 @@ const Login = () => {
     },
   });
 
+  const formik = useFormik({
+    validateOnBlur: false,
+    validateOnChange: false,
+    initialValues: {
+      email: '',
+      password: '',
+    },
+    validationSchema,
+    onSubmit: ({ email, password }) => {
+      login({
+        variables: {
+          email,
+          password,
+        },
+      });
+    },
+  });
+
   return (
-    <Formik
-      validateOnBlur={false}
-      validateOnChange={false}
-      initialValues={{
-        email: '',
-        password: '',
-      }}
-      validationSchema={LoginSchema}
-      onSubmit={({ email, password }) => {
-        login({
-          variables: {
-            email,
-            password,
-          },
-        });
-      }}
-    >
-      {({ handleSubmit }) => (
-        <SafeAreaView>
-          <Container>
-            <StatusBar />
-            <Grid>
-              <GridItem size={12}>
-                <Intro>
-                  <Grid>
-                    <GridItem size={12}>
-                      <BackButton />
-                    </GridItem>
-                    <GridItem size={12}>
-                      <Title>Login</Title>
-                    </GridItem>
-                  </Grid>
-                </Intro>
-              </GridItem>
-
-              {error && (
+    <SafeAreaView>
+      <Container>
+        <StatusBar />
+        <Grid>
+          <GridItem size={12}>
+            <Intro>
+              <Grid>
                 <GridItem size={12}>
-                  <Text>Incorrect Email or Password</Text>
+                  <BackButton />
                 </GridItem>
-              )}
+                <GridItem size={12}>
+                  <Title>Login</Title>
+                </GridItem>
+              </Grid>
+            </Intro>
+          </GridItem>
 
-              <GridItem size={12}>
-                <TextInput
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                  label="Email Address"
-                  name="email"
-                />
-              </GridItem>
+          {error && (
+            <GridItem size={12}>
+              <Text isCenter>Incorrect Email or Password</Text>
+            </GridItem>
+          )}
 
-              <GridItem size={12}>
-                <TextInput label="Password" name="password" secureTextEntry />
-              </GridItem>
+          <GridItem size={12}>
+            <TextInput
+              keyboardType="email-address"
+              autoCapitalize="none"
+              label="Email Address"
+              error={formik.errors.email}
+              onChangeText={formik.handleChange('email')}
+              onBlur={formik.handleBlur('email')}
+            />
+          </GridItem>
 
-              <GridItem size={12}>
-                <Actions>
-                  <Button
-                    isLoading={loading}
-                    onPress={handleSubmit}
-                    title="Login"
-                    fixedWidth
-                  />
-                </Actions>
-              </GridItem>
-            </Grid>
-          </Container>
-        </SafeAreaView>
-      )}
-    </Formik>
+          <GridItem size={12}>
+            <TextInput
+              label="Password"
+              secureTextEntry
+              error={formik.errors.password}
+              onChangeText={formik.handleChange('password')}
+              onBlur={formik.handleBlur('password')}
+            />
+          </GridItem>
+
+          <GridItem size={12}>
+            <Actions>
+              <Button
+                isLoading={loading}
+                onPress={formik.handleSubmit}
+                title="Login"
+                fixedWidth
+              />
+            </Actions>
+          </GridItem>
+        </Grid>
+      </Container>
+    </SafeAreaView>
   );
 };
 

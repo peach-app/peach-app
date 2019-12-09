@@ -19,8 +19,7 @@ const Profile = ({ navigation }) => {
     },
   });
 
-  const name =
-    get('findUserByID.name', data) || get('findUserByID.email', data);
+  const name = get('findUserByID.name', data);
 
   return (
     <SafeAreaView>

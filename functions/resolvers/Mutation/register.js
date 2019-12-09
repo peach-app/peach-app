@@ -3,18 +3,22 @@ module.exports = async (root, args, { client, q }) => {
   const email = args.email.toLowerCase();
 
   return client.query(
-    q.Do(
-      q.Create(q.Collection('User'), {
-        data: {
-          name,
-          email,
-          type,
-        },
-        credentials: { password },
-      }),
-      q.Login(q.Match(q.Index('user_by_email'), email), {
-        password,
-      })
+    q.If(
+      q.Exists(q.Match(q.Index('user_by_email'), email)),
+      q.Abort('A user with this email address already exists.'),
+      q.Do(
+        q.Create(q.Collection('User'), {
+          data: {
+            name,
+            email,
+            type,
+          },
+          credentials: { password },
+        }),
+        q.Login(q.Match(q.Index('user_by_email'), email), {
+          password,
+        })
+      )
     )
   );
 };

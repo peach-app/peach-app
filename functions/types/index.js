@@ -34,10 +34,12 @@ module.exports = gql`
     ): Campaign
     applyToCampaign(id: ID!): Booking
     updateBookingState(id: ID!, state: BookingState!): Boolean
+    updateUser(name: String): Boolean
   }
 
   type Discover {
     campaigns: CampaignPage
+    popularUsers(type: UserType!): UserPage
   }
 
   type Auth {

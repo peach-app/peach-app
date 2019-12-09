@@ -5,4 +5,5 @@ module.exports = {
   createCampaign: require('./createCampaign'),
   applyToCampaign: require('./applyToCampaign'),
   updateBookingState: require('./updateBookingState'),
+  updateUser: require('./updateUser'),
 };
