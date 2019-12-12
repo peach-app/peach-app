@@ -62,6 +62,7 @@ module.exports = gql`
   type User {
     _id: ID!
     name: String
+    bio: String
     avatar: Media
     email: String!
 

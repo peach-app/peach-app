@@ -6,12 +6,13 @@ import get from 'lodash/fp/get';
 import startCase from 'lodash/startCase';
 import PropTypes from 'prop-types';
 
-import { Grid, GridItem } from '../Grid';
-import Avatar from '../Avatar';
-import Text from '../Text';
-import { SkeletonText } from '../Skeletons';
+import { Bio } from './styles';
+import { Grid, GridItem } from '../../components/Grid';
+import Avatar from '../../components/Avatar';
+import Text from '../../components/Text';
+import { SkeletonText } from '../../components/Skeletons';
 
-const UserCard = ({ navigation, isLoading, _id, name, avatar }) => (
+const UserCard = ({ navigation, isLoading, _id, name, bio, avatar }) => (
   <TouchableOpacity
     onPress={() => !isLoading && navigation.navigate('Profile', { id: _id })}
   >
@@ -25,25 +26,30 @@ const UserCard = ({ navigation, isLoading, _id, name, avatar }) => (
         />
       </GridItem>
       <GridItem flex={1}>
-        <Text>
+        <Text numberOfLines={1}>
           <SkeletonText loadingText="Loading User" isLoading={isLoading}>
             {startCase(name)}
           </SkeletonText>
         </Text>
+        {bio && <Bio numberOfLines={2}>{bio}</Bio>}
       </GridItem>
     </Grid>
   </TouchableOpacity>
 );
 
 UserCard.defaultProps = {
+  _id: null,
   isLoading: false,
   name: '',
+  bio: null,
   avatar: null,
 };
 
 UserCard.propTypes = {
   isLoading: PropTypes.bool,
+  _id: PropTypes.string,
   name: PropTypes.string,
+  bio: PropTypes.string,
   avatar: PropTypes.shape({
     url: PropTypes.string.isRequired,
   }),
@@ -56,6 +62,7 @@ export const UserCardFragment = gql`
   fragment UserCardFragment on User {
     _id
     name
+    bio
     avatar {
       url
     }
