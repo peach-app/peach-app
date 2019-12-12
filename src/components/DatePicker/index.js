@@ -48,6 +48,7 @@ const DatePickerComponent = ({
             color: theme.brand,
             fontWeight: 'bold',
           },
+          datePickerCon: { backgroundColor: theme.background },
         }}
         showIcon={false}
         onDateChange={onChange}
