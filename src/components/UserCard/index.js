@@ -12,7 +12,7 @@ import Avatar from '../../components/Avatar';
 import Text from '../../components/Text';
 import { SkeletonText } from '../../components/Skeletons';
 
-const UserCard = ({ navigation, isLoading, _id, name, bio, avatar }) => (
+const UserCard = ({ navigation, isLoading, _id, name, bio, avatar, size }) => (
   <TouchableOpacity
     onPress={() => !isLoading && navigation.navigate('Profile', { id: _id })}
   >
