@@ -5,6 +5,7 @@ module.exports = async (_, args, { client, q, DocumentDataWithId }) => {
         campaign: q.Create(q.Collection('Campaign'), {
           data: {
             ...args,
+            user: q.Identity(),
           },
         }),
       },
