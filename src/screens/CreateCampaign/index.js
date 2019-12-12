@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Formik } from 'formik';
+import { useFormik } from 'formik';
 import { useMutation } from '@apollo/react-hooks';
 import SafeAreaView from '../../components/SafeAreaView';
 import StatusBar from '../../components/StatusBar';
@@ -38,69 +38,94 @@ const CreateCampaign = ({ navigation }) => {
       }),
   });
 
-  return (
-    <Formik
-      validateOnBlur={false}
-      validateOnChange={false}
-      initialValues={FORM_INITIAL_VALUES}
-      validationSchema={validationSchema}
-      onSubmit={({ name, description, budget, dueDate }) => {
-        createCampaign({
-          variables: {
-            name,
-            description,
-            dueDate,
-            private: activeTab === 1,
-            budget,
-          },
-        });
-      }}
-    >
-      {({ handleSubmit }) => (
-        <SafeAreaView>
-          <StatusBar />
-          <Header title="Create Campaign" />
-          <Container>
-            <Grid>
-              <GridItem size={12}>
-                <Tabs
-                  activeTabIndex={activeTab}
-                  onTabPress={setTab}
-                  tabs={Object.values(CAMPAIGN_TYPE)}
-                />
-              </GridItem>
-              <GridItem size={12}>
-                <TextInput label="Campaign name" name="name" />
-              </GridItem>
-              <GridItem size={12}>
-                <TextInput label="Description" name="description" />
-              </GridItem>
+  const formik = useFormik({
+    validateOnBlur: false,
+    validateOnChange: false,
+    initialValues: FORM_INITIAL_VALUES,
+    validationSchema,
+    onSubmit: ({ name, description, budget, dueDate }) => {
+      createCampaign({
+        variables: {
+          name,
+          description,
+          dueDate,
+          private: activeTab === 1,
+          budget,
+        },
+      });
+    },
+  });
 
-              <GridItem size={12}>
-                <TextInput label="Budget" name="budget" />
-              </GridItem>
-              <GridItem size={12}>
-                <DatePicker name="dueDate" label="Due date" withIcon />
-              </GridItem>
-              <GridItem size={12}>
-                <Actions>
-                  <Button
-                    isLoading={loading}
-                    onPress={handleSubmit}
-                    title="Create"
-                    fixedWidth
-                  />
-                </Actions>
-              </GridItem>
-            </Grid>
-          </Container>
-        </SafeAreaView>
-      )}
-    </Formik>
+  return (
+    <SafeAreaView>
+      <StatusBar />
+      <Header title="Create Campaign" />
+      <Container>
+        <Grid>
+          <GridItem size={12}>
+            <Tabs
+              activeTabIndex={activeTab}
+              onTabPress={setTab}
+              tabs={Object.values(CAMPAIGN_TYPE)}
+            />
+          </GridItem>
+          <GridItem size={12}>
+            <TextInput
+              label="Campaign name"
+              name="name"
+              error={formik.errors.name}
+              onChangeText={formik.handleChange('name')}
+            />
+          </GridItem>
+          <GridItem size={12}>
+            <TextInput
+              label="Description"
+              name="description"
+              error={formik.errors.description}
+              onChangeText={formik.handleChange('description')}
+            />
+          </GridItem>
+
+          <GridItem size={12}>
+            <TextInput
+              label="Budget"
+              name="budget"
+              error={formik.errors.budget}
+              onChangeText={formik.handleChange('budget')}
+            />
+          </GridItem>
+          <GridItem size={12}>
+            <DatePicker
+              name="dueDate"
+              label="Due date"
+              withIcon
+              error={formik.errors.dueDate}
+              onChange={formik.handleChange('dueDate')}
+              date={formik.values.dueDate}
+            />
+          </GridItem>
+          <GridItem size={12}>
+            <Actions>
+              <Button
+                isLoading={loading}
+                onPress={formik.handleSubmit}
+                title="Create"
+                fixedWidth
+              />
+            </Actions>
+          </GridItem>
+        </Grid>
+      </Container>
+    </SafeAreaView>
   );
 };
+
+// )}
+// </Formik>
+// );
 CreateCampaign.propTypes = {
   // eslint-disable-next-line
   navigation: PropTypes.object,
 };
+
 export default CreateCampaign;
