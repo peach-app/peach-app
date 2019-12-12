@@ -124,9 +124,6 @@ const CreateCampaign = ({ navigation }) => {
   );
 };
 
-// )}
-// </Formik>
-// );
 CreateCampaign.propTypes = {
   // eslint-disable-next-line
   navigation: PropTypes.object,
