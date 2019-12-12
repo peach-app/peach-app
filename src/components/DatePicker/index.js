@@ -1,24 +1,29 @@
+/* eslint-disable react/require-default-props */
 import React from 'react';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-native-datepicker';
 import moment from 'moment';
 import { withTheme } from 'styled-components/native';
-import { useField } from 'formik';
 import Label from '../Label';
 
 const DATE_FORMAT = 'YYYY-MM-DD';
 
-const DatePickerComponent = ({ label, theme, name, placeholder, mode }) => {
-  const [field, meta] = useField(name);
-  const { error } = meta;
+const DatePickerComponent = ({
+  label,
+  theme,
+  placeholder,
+  mode,
+  error,
+  onChange,
+  date,
+}) => {
   return (
     <>
       {label && <Label>{label}</Label>}
-
       <DatePicker
-        date={field.value}
-        mode={mode || 'date'}
-        placeholder={placeholder || 'select date'}
+        date={date}
+        mode={mode}
+        placeholder={placeholder}
         format={DATE_FORMAT}
         minDate={moment().format(DATE_FORMAT)}
         confirmBtnText="Confirm"
@@ -45,19 +50,29 @@ const DatePickerComponent = ({ label, theme, name, placeholder, mode }) => {
           },
         }}
         showIcon={false}
-        onDateChange={field.onChange(name)}
+        onDateChange={onChange}
       />
 
       {error && <Label error>{error}</Label>}
     </>
   );
 };
+
+DatePickerComponent.defaultProps = {
+  placeholder: 'Select date',
+  mode: 'date',
+  label: 'Date',
+};
+
 DatePickerComponent.propTypes = {
   label: PropTypes.string,
-  theme: PropTypes.object,
-  name: PropTypes.string,
+  // eslint-disable-next-line react/forbid-prop-types
+  theme: PropTypes.object.isRequired,
   placeholder: PropTypes.string,
   mode: PropTypes.string,
+  error: PropTypes.string,
+  onChange: PropTypes.func,
+  date: PropTypes.string,
 };
 
 export default withTheme(DatePickerComponent);
