@@ -73,6 +73,7 @@ const CreateCampaign = ({ navigation }) => {
             <TextInput
               label="Campaign name"
               name="name"
+              placeholder="e.g Soft Tea campaign"
               error={formik.errors.name}
               onChangeText={formik.handleChange('name')}
             />
@@ -81,6 +82,7 @@ const CreateCampaign = ({ navigation }) => {
             <TextInput
               label="Description"
               name="description"
+              placeholder="Picture at home drinking tea"
               error={formik.errors.description}
               onChangeText={formik.handleChange('description')}
             />
@@ -90,6 +92,7 @@ const CreateCampaign = ({ navigation }) => {
             <TextInput
               label="Budget"
               name="budget"
+              placeholder="£150"
               error={formik.errors.budget}
               onChangeText={formik.handleChange('budget')}
             />
@@ -99,6 +102,7 @@ const CreateCampaign = ({ navigation }) => {
               name="dueDate"
               label="Due date"
               withIcon
+              placeholder="The action date"
               error={formik.errors.dueDate}
               onChange={formik.handleChange('dueDate')}
               date={formik.values.dueDate}
