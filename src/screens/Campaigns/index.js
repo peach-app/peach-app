@@ -3,12 +3,12 @@ import { RefreshControl } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import getOr from 'lodash/fp/getOr';
 import get from 'lodash/fp/get';
+import head from 'lodash/fp/head';
 
 import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from '../../consts';
 import SafeAreaView from '../../components/SafeAreaView';
 import { FlatList, FlatListItem } from '../../components/FlatList';
 import Title from '../../components/Title';
-import Text from '../../components/Text';
 import Intro from '../../components/Intro';
 import Tabs from '../../components/Tabs';
 import IconButton from '../../components/IconButton';
@@ -28,19 +28,20 @@ const TAB_INDEX_BOOKING_STATE = [
 const Campaigns = ({ navigation }) => {
   const [activeTab, setTab] = useState(0);
   const { user } = useUser();
-  const { data, loading, networkStatus, refetch } = useQuery(GET_CAMPAIGNS, {
-    notifyOnNetworkStatusChange: true,
-    variables: {
-      state: TAB_INDEX_BOOKING_STATE[activeTab],
-    },
-  });
+  const { data, loading, networkStatus, refetch, fetchMore } = useQuery(
+    GET_CAMPAIGNS,
+    {
+      notifyOnNetworkStatusChange: true,
+      variables: {
+        state: TAB_INDEX_BOOKING_STATE[activeTab],
+      },
+    }
+  );
   const userType = get('user.type', user);
   const isBrand = userType === USER_TYPE.BRAND;
   const isInfluencer = userType === USER_TYPE.INFLUENCER;
 
-  const fetching =
-    loading &&
-    (networkStatus === NETWORK_STATUS.SET_VARIABLES || NETWORK_STATUS.FETCHING);
+  const fetching = loading && networkStatus === NETWORK_STATUS.FETCHING;
   const campaigns = getOr([], 'campaigns.data', data);
 
   return (
@@ -52,6 +53,26 @@ const Campaigns = ({ navigation }) => {
             onRefresh={refetch}
           />
         }
+        onEndReached={() => {
+          const after = get('id', head(get('campaigns.after', data)));
+
+          if (!after || loading) return;
+
+          fetchMore({
+            variables: {
+              after,
+            },
+            updateQuery: (cache, { fetchMoreResult }) => ({
+              campaigns: {
+                ...fetchMoreResult.campaigns,
+                data: [
+                  ...cache.campaigns.data,
+                  ...fetchMoreResult.campaigns.data,
+                ],
+              },
+            }),
+          });
+        }}
         ListHeaderComponent={
           <>
             <FlatListItem>
@@ -98,7 +119,7 @@ const Campaigns = ({ navigation }) => {
           </>
         }
         keyExtractor={item => item._id}
-        data={!fetching && campaigns}
+        data={campaigns}
         renderItem={({ item }) => (
           <FlatListItem>
             <CampaignCard {...item} />

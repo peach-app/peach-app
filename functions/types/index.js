@@ -7,7 +7,12 @@ module.exports = gql`
     discover: Discover
 
     # Campaigns listing
-    campaigns(state: BookingState): CampaignPage
+    campaigns(
+      state: BookingState
+      size: Int
+      after: ID
+      before: ID
+    ): CampaignPage
 
     findCampaignById(id: ID): Campaign
     findThreadById(id: ID!): Thread
@@ -30,8 +35,12 @@ module.exports = gql`
     updateUser(name: String): Boolean
   }
 
+  type Ref {
+    id: ID
+  }
+
   type Discover {
-    campaigns: CampaignPage
+    campaigns(size: Int, after: ID, before: ID): CampaignPage
     popularUsers(type: UserType!): UserPage
   }
 
@@ -74,6 +83,8 @@ module.exports = gql`
 
   type CampaignPage {
     data: [Campaign]
+    after: [Ref]
+    before: [Ref]
   }
 
   type Campaign {

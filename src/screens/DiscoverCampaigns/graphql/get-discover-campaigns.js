@@ -5,12 +5,15 @@ import { CampaignCardFragment } from '../../../components/CampaignCard';
 export default gql`
   ${CampaignCardFragment}
 
-  {
+  query($after: ID) {
     discover {
-      campaigns {
+      campaigns(size: 20, after: $after) {
         data {
           _id
           ...CampaignCardFragment
+        }
+        after {
+          id
         }
       }
     }
