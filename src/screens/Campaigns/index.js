@@ -132,8 +132,9 @@ const Campaigns = ({ navigation }) => {
 };
 
 Campaigns.propTypes = {
-  // eslint-disable-next-line
-  navigation: PropTypes.object,
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default Campaigns;
