@@ -30,14 +30,12 @@ const CreateCampaign = ({ navigation }) => {
     // TO DO, HOW ARE WE GOING TO HANDLE ERRORS?
     // ERROR BOUNDARY?
     onError: err => console.log('errro', err),
+    refetchQueries: ['getCampaigns'],
     onCompleted: () =>
       openModal({
         type: MODAL_TYPES.CAMPAIGN_CREATION,
         props: {
-          onButtonClick: () =>
-            navigation.navigate('Campaigns', {
-              shouldRefetchQuery: true,
-            }),
+          onButtonClick: () => navigation.goBack(),
         },
       }),
   });
