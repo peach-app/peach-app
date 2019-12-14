@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ScrollView, KeyboardAvoidingView } from 'react-native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from '@apollo/react-hooks';
@@ -71,58 +72,64 @@ const Register = () => {
   return (
     <SafeAreaView>
       <StatusBar />
-      <Container>
-        <Grid>
-          <GridItem size={12}>
-            <Intro>
-              <Grid>
-                <GridItem size={12}>
-                  <BackButton />
+      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+        <ScrollView>
+          <Container>
+            <Grid>
+              <GridItem size={12}>
+                <Intro>
+                  <Grid>
+                    <GridItem size={12}>
+                      <BackButton />
+                    </GridItem>
+                    <GridItem size={12}>
+                      <Title>Sign Up</Title>
+                    </GridItem>
+                  </Grid>
+                </Intro>
+              </GridItem>
+
+              <GridItem size={12}>
+                <Tabs
+                  activeTabIndex={activeTab}
+                  onTabPress={setTab}
+                  tabs={USER_TYPE_TABS}
+                />
+              </GridItem>
+
+              {FORM_INPUTS.map(input => (
+                <GridItem key={input.name} size={12}>
+                  <TextInput
+                    {...input}
+                    error={formik.errors[input.name]}
+                    onChangeText={formik.handleChange(input.name)}
+                    onBlur={formik.handleBlur(input.name)}
+                  />
                 </GridItem>
+              ))}
+
+              {error && (
                 <GridItem size={12}>
-                  <Title>Sign Up</Title>
+                  <Text isCenter>
+                    An error occurred, please try again later.
+                  </Text>
                 </GridItem>
-              </Grid>
-            </Intro>
-          </GridItem>
+              )}
 
-          <GridItem size={12}>
-            <Tabs
-              activeTabIndex={activeTab}
-              onTabPress={setTab}
-              tabs={USER_TYPE_TABS}
-            />
-          </GridItem>
-
-          {FORM_INPUTS.map(input => (
-            <GridItem key={input.name} size={12}>
-              <TextInput
-                {...input}
-                error={formik.errors[input.name]}
-                onChangeText={formik.handleChange(input.name)}
-                onBlur={formik.handleBlur(input.name)}
-              />
-            </GridItem>
-          ))}
-
-          {error && (
-            <GridItem size={12}>
-              <Text isCenter>An error occurred, please try again later.</Text>
-            </GridItem>
-          )}
-
-          <GridItem size={12}>
-            <Actions>
-              <Button
-                isLoading={loading}
-                onPress={formik.handleSubmit}
-                title="Sign Up"
-                fixedWidth
-              />
-            </Actions>
-          </GridItem>
-        </Grid>
-      </Container>
+              <GridItem size={12}>
+                <Actions>
+                  <Button
+                    isLoading={loading}
+                    onPress={formik.handleSubmit}
+                    title="Sign Up"
+                    fixedWidth
+                  />
+                </Actions>
+              </GridItem>
+            </Grid>
+          </Container>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };

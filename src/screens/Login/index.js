@@ -1,4 +1,5 @@
 import React from 'react';
+import { ScrollView, KeyboardAvoidingView } from 'react-native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from '@apollo/react-hooks';
@@ -52,61 +53,65 @@ const Login = () => {
 
   return (
     <SafeAreaView>
-      <Container>
-        <StatusBar />
-        <Grid>
-          <GridItem size={12}>
-            <Intro>
-              <Grid>
+      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+        <ScrollView>
+          <Container>
+            <StatusBar />
+            <Grid>
+              <GridItem size={12}>
+                <Intro>
+                  <Grid>
+                    <GridItem size={12}>
+                      <BackButton />
+                    </GridItem>
+                    <GridItem size={12}>
+                      <Title>Login</Title>
+                    </GridItem>
+                  </Grid>
+                </Intro>
+              </GridItem>
+
+              <GridItem size={12}>
+                <TextInput
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  label="Email Address"
+                  error={formik.errors.email}
+                  onChangeText={formik.handleChange('email')}
+                  onBlur={formik.handleBlur('email')}
+                />
+              </GridItem>
+
+              <GridItem size={12}>
+                <TextInput
+                  label="Password"
+                  secureTextEntry
+                  error={formik.errors.password}
+                  onChangeText={formik.handleChange('password')}
+                  onBlur={formik.handleBlur('password')}
+                />
+              </GridItem>
+
+              {error && (
                 <GridItem size={12}>
-                  <BackButton />
+                  <Text isCenter>Incorrect Email or Password</Text>
                 </GridItem>
-                <GridItem size={12}>
-                  <Title>Login</Title>
-                </GridItem>
-              </Grid>
-            </Intro>
-          </GridItem>
+              )}
 
-          <GridItem size={12}>
-            <TextInput
-              keyboardType="email-address"
-              autoCapitalize="none"
-              label="Email Address"
-              error={formik.errors.email}
-              onChangeText={formik.handleChange('email')}
-              onBlur={formik.handleBlur('email')}
-            />
-          </GridItem>
-
-          <GridItem size={12}>
-            <TextInput
-              label="Password"
-              secureTextEntry
-              error={formik.errors.password}
-              onChangeText={formik.handleChange('password')}
-              onBlur={formik.handleBlur('password')}
-            />
-          </GridItem>
-
-          {error && (
-            <GridItem size={12}>
-              <Text isCenter>Incorrect Email or Password</Text>
-            </GridItem>
-          )}
-
-          <GridItem size={12}>
-            <Actions>
-              <Button
-                isLoading={loading}
-                onPress={formik.handleSubmit}
-                title="Login"
-                fixedWidth
-              />
-            </Actions>
-          </GridItem>
-        </Grid>
-      </Container>
+              <GridItem size={12}>
+                <Actions>
+                  <Button
+                    isLoading={loading}
+                    onPress={formik.handleSubmit}
+                    title="Login"
+                    fixedWidth
+                  />
+                </Actions>
+              </GridItem>
+            </Grid>
+          </Container>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
