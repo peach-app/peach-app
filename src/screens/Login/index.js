@@ -35,7 +35,6 @@ const Login = () => {
 
   const formik = useFormik({
     validateOnBlur: false,
-    validateOnChange: false,
     initialValues: {
       email: '',
       password: '',
@@ -69,12 +68,6 @@ const Login = () => {
             </Intro>
           </GridItem>
 
-          {error && (
-            <GridItem size={12}>
-              <Text isCenter>Incorrect Email or Password</Text>
-            </GridItem>
-          )}
-
           <GridItem size={12}>
             <TextInput
               keyboardType="email-address"
@@ -95,6 +88,12 @@ const Login = () => {
               onBlur={formik.handleBlur('password')}
             />
           </GridItem>
+
+          {error && (
+            <GridItem size={12}>
+              <Text isCenter>Incorrect Email or Password</Text>
+            </GridItem>
+          )}
 
           <GridItem size={12}>
             <Actions>

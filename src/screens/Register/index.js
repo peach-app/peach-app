@@ -27,6 +27,9 @@ const validationSchema = Yup.object().shape({
     .required(FORM_ERROR_MESSAGES.REQUIRED_EMAIL)
     .email(FORM_ERROR_MESSAGES.INVALID_EMAIL),
   password: Yup.string().required(FORM_ERROR_MESSAGES.REQUIRED_PASSWORD),
+  confirmPassword: Yup.string().required(
+    FORM_ERROR_MESSAGES.REQUIRED_CONFIRM_PASSWORD
+  ),
 });
 
 const Register = () => {
@@ -40,14 +43,20 @@ const Register = () => {
 
   const formik = useFormik({
     validateOnBlur: false,
-    validateOnChange: false,
     validationSchema,
     initialValues: {
       name: '',
       email: '',
       password: '',
     },
-    onSubmit: ({ name, email, password }) => {
+    onSubmit: ({ name, email, password, confirmPassword }) => {
+      if (password !== confirmPassword) {
+        formik.setErrors({
+          confirmPassword: "Passwords don't correctly match",
+        });
+        return false;
+      }
+
       register({
         variables: {
           name,
@@ -85,12 +94,6 @@ const Register = () => {
             />
           </GridItem>
 
-          {error && (
-            <GridItem size={12}>
-              <Text isCenter>An error occurred, please try again later.</Text>
-            </GridItem>
-          )}
-
           {FORM_INPUTS.map(input => (
             <GridItem key={input.name} size={12}>
               <TextInput
@@ -101,6 +104,12 @@ const Register = () => {
               />
             </GridItem>
           ))}
+
+          {error && (
+            <GridItem size={12}>
+              <Text isCenter>An error occurred, please try again later.</Text>
+            </GridItem>
+          )}
 
           <GridItem size={12}>
             <Actions>
