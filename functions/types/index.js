@@ -32,7 +32,7 @@ module.exports = gql`
     sendMessage(threadId: ID!, text: String!): Message
     applyToCampaign(id: ID!): Booking
     updateBookingState(id: ID!, state: BookingState!): Boolean
-    updateUser(name: String): Boolean
+    updateUser(user: UserInput): Boolean
   }
 
   type Ref {
@@ -59,6 +59,11 @@ module.exports = gql`
 
   type UserPage {
     data: [User]
+  }
+
+  input UserInput {
+    name: String
+    bio: String
   }
 
   type User {

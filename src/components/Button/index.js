@@ -22,6 +22,7 @@ Button.defaultProps = {
   isSmall: false,
   isDark: false,
   isShaded: false,
+  fixedWidth: false,
 };
 
 Button.propTypes = {
@@ -31,6 +32,7 @@ Button.propTypes = {
   isSmall: PropTypes.bool,
   isDark: PropTypes.bool,
   isShaded: PropTypes.bool,
+  fixedWidth: PropTypes.bool,
 };
 
 export default Button;

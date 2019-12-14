@@ -8,6 +8,7 @@ export default gql`
   query($id: ID!) {
     findUserByID(id: $id) {
       ...ProfileHeaderFragment
+      bio
     }
   }
 `;

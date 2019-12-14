@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { KeyboardAvoidingView } from 'react-native';
-import { useLazyQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import getOr from 'lodash/fp/getOr';
 import debounce from 'lodash/debounce';
 
@@ -17,15 +17,21 @@ import Header from '../../components/Header';
 import SEARCH_INFLUENCERS from './graphql/search-influencers';
 
 const Search = () => {
-  const [searchInfluencers, { data, loading, networkStatus }] = useLazyQuery(
+  const { data, loading, networkStatus, refetch } = useQuery(
     SEARCH_INFLUENCERS,
     {
+      variables: {
+        query: '',
+      },
       notifyOnNetworkStatusChange: true,
     }
   );
 
-  const search = useMemo(() => debounce(searchInfluencers, 500), []);
-  const fetching = loading && networkStatus === NETWORK_STATUS.FETCHING;
+  const search = useMemo(() => debounce(refetch, 500), []);
+  const fetching =
+    loading &&
+    (networkStatus === NETWORK_STATUS.FETCHING ||
+      networkStatus === NETWORK_STATUS.SET_VARIABLES);
   const influencers = getOr([], 'searchUsers.data', data);
 
   return (
@@ -41,9 +47,7 @@ const Search = () => {
               autoCapitalize="none"
               onChangeText={query => {
                 search({
-                  variables: {
-                    query,
-                  },
+                  query,
                 });
               }}
             />
@@ -68,7 +72,7 @@ const Search = () => {
             </>
           }
           keyExtractor={item => item._id}
-          data={influencers}
+          data={!fetching && influencers}
           renderItem={({ item }) => (
             <FlatListItem>
               <UserCard {...item} />

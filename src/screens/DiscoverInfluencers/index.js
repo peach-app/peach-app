@@ -48,13 +48,7 @@ const DiscoverInfluencers = ({ navigation }) => {
 
             <FlatListItem>
               <Tabs
-                tabs={[
-                  'Popular',
-                  'Hard Workers',
-                  'Newbies',
-                  'Artists',
-                  'Promoters',
-                ]}
+                tabs={['Popular']}
                 activeTabIndex={activeTab}
                 onTabPress={index => setTab(index)}
               />

@@ -10,7 +10,8 @@ const Input = styled.TextInput`
   border-color: ${props =>
     props.hasError ? props.theme.error : props.theme.grey};
   border-radius: ${props => props.theme.radius}px;
-  padding: 0 ${props => props.theme.spacing}px;
+  padding: ${props => props.theme.spacingSmall}px
+    ${props => props.theme.spacing}px;
   min-height: 38px;
   font-family: futura-book;
 `;

@@ -4,6 +4,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import get from 'lodash/fp/get';
+import startCase from 'lodash/startCase';
 
 import SafeAreaView from '../../components/SafeAreaView';
 import Header from '../../components/Header';
@@ -23,7 +24,6 @@ const validationSchema = Yup.object().shape({
 });
 
 const AccountEdit = ({ navigation }) => {
-  const { data } = useQuery(GET_USER);
   const [save, { loading, error }] = useMutation(SAVE_USER, {
     refetchQueries: ['getUser'],
     onCompleted: () => {
@@ -36,13 +36,26 @@ const AccountEdit = ({ navigation }) => {
     validateOnChange: false,
     validationSchema,
     initialValues: {
-      name: get('user.name', data),
+      name: '',
+      bio: '',
     },
-    onSubmit: ({ name }) => {
+    onSubmit: ({ name, bio }) => {
       save({
         variables: {
-          name,
+          user: {
+            name,
+            bio,
+          },
         },
+      });
+    },
+  });
+
+  useQuery(GET_USER, {
+    onCompleted: data => {
+      formik.setValues({
+        name: startCase(get('user.name', data)),
+        bio: get('user.bio', data),
       });
     },
   });
@@ -62,6 +75,18 @@ const AccountEdit = ({ navigation }) => {
                   error={formik.errors.name}
                   onChangeText={formik.handleChange('name')}
                   onBlur={formik.handleBlur('name')}
+                />
+              </GridItem>
+
+              <GridItem size={12}>
+                <TextInput
+                  label="Bio"
+                  multiline
+                  autoCapitalize="none"
+                  value={formik.values.bio}
+                  error={formik.errors.bio}
+                  onChangeText={formik.handleChange('bio')}
+                  onBlur={formik.handleBlur('bio')}
                 />
               </GridItem>
 
