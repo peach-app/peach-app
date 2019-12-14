@@ -9,6 +9,7 @@ import SafeAreaView from '../../components/SafeAreaView';
 import Header from '../../components/Header';
 import Loading from '../../components/Loading';
 import { FlatList } from '../../components/FlatList';
+import NoResultText from '../../components/NoResultText';
 import MessageBubble from '../../components/MessageBubble';
 
 import SEND_MESSAGE from './graphql/send-message';
@@ -53,6 +54,7 @@ const Thread = ({ navigation }) => {
         <FlatList
           inverted
           keyExtractor={item => item._id}
+          ListFooterComponent={<NoResultText>No more messages...</NoResultText>}
           data={getOr([], 'findThreadById.messages.data', data)}
           renderItem={({ item }) => <MessageBubble {...item} />}
         />
