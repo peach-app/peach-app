@@ -1,7 +1,16 @@
 import React from 'react';
-import { View } from 'react-native';
+import styled from 'styled-components';
 import Modal from 'react-native-modal';
 import { withTheme } from 'styled-components/native';
+
+const ModalWrapper = styled.View`
+background-color: ${({ theme }) => theme.background}
+padding-horizontal: 20px;
+padding-vertical: 50px;
+border-radius: 4px;
+borderColor: ${({ theme }) => theme.foreground}
+
+`;
 
 const ModalComponent = ({
   isOpen,
@@ -18,17 +27,7 @@ const ModalComponent = ({
     style={{ justifyContent: 'flex-end', margin: 0 }}
     backdropColor={theme.foreground}
   >
-    <View
-      style={{
-        backgroundColor: theme.background,
-        paddingHorizontal: 20,
-        paddingVertical: 50,
-        borderRadius: 4,
-        borderColor: 'white',
-      }}
-    >
-      {children}
-    </View>
+    <ModalWrapper>{children}</ModalWrapper>
   </Modal>
 );
 
