@@ -74,7 +74,9 @@ const Campaigns = ({ navigation }) => {
                       <IconButton
                         size={30}
                         name="ios-add-circle"
-                        onPress={() => navigation.navigate('CreateCampaign')}
+                        onPress={() =>
+                          navigation.navigate('RequestInfluencers')
+                        }
                       />
                     </GridItem>
                   )}

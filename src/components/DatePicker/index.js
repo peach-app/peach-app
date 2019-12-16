@@ -30,9 +30,8 @@ const DatePickerComponent = ({
         cancelBtnText="Cancel"
         customStyles={{
           dateInput: {
-            flex: 1,
+            width: undefined,
             borderWidth: theme.inputBorderWidth,
-            color: theme.foreground,
             borderColor: error ? theme.error : theme.grey,
             borderRadius: theme.radius,
             paddingVertical: 0,

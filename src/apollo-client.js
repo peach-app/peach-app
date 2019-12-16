@@ -7,7 +7,7 @@ import { AsyncStorage, Platform } from 'react-native';
 const cache = new InMemoryCache();
 
 const uri = {
-  development: 'http://192.168.1.141:8888/.netlify/functions/graphql',
+  development: 'http://192.168.1.182:8888/.netlify/functions/graphql',
   production: Platform.select({
     web: '/.netlify/functions/graphql',
     ios: 'https://dashboard.peachapp.io/.netlify/functions/graphql',
