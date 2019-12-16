@@ -3,8 +3,8 @@ import { RefreshControl } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import getOr from 'lodash/fp/getOr';
 import get from 'lodash/fp/get';
-import head from 'lodash/fp/head';
 
+import formatRefs from '../../helpers/formatRefs';
 import { NETWORK_STATUS } from '../../consts';
 import SafeAreaView from '../../components/SafeAreaView';
 import StatusBar from '../../components/StatusBar';
@@ -37,9 +37,9 @@ const DiscoverCampaigns = () => {
           />
         }
         onEndReached={() => {
-          const after = get('id', head(get('discover.campaigns.after', data)));
+          const after = formatRefs(get('discover.campaigns.after', data));
 
-          if (!after || loading) return;
+          if (after.length <= 0 || loading) return;
 
           fetchMore({
             variables: {

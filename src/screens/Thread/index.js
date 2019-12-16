@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { KeyboardAvoidingView } from 'react-native';
 import getOr from 'lodash/fp/getOr';
+import get from 'lodash/fp/get';
 import startCase from 'lodash/startCase';
 
 import { Composer, Wrapper, TextInput, Send, Icon } from './styles';
@@ -9,7 +10,6 @@ import SafeAreaView from '../../components/SafeAreaView';
 import Header from '../../components/Header';
 import Loading from '../../components/Loading';
 import { FlatList } from '../../components/FlatList';
-import NoResultText from '../../components/NoResultText';
 import MessageBubble from '../../components/MessageBubble';
 
 import SEND_MESSAGE from './graphql/send-message';
@@ -18,7 +18,7 @@ import GET_THREAD from './graphql/get-thread';
 const Thread = ({ navigation }) => {
   const [text, setText] = useState('');
   const id = navigation.getParam('id');
-  const { data } = useQuery(GET_THREAD, {
+  const { data, fetchMore, startPolling, stopPolling } = useQuery(GET_THREAD, {
     variables: {
       id,
     },
@@ -52,11 +52,43 @@ const Thread = ({ navigation }) => {
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
         <Header title={startCase(title)} />
         <FlatList
+          onScroll={e => {
+            const { y } = e.nativeEvent.contentOffset;
+
+            stopPolling();
+
+            if (y <= 0) {
+              startPolling(3000);
+            }
+          }}
           inverted
           keyExtractor={item => item._id}
-          ListFooterComponent={<NoResultText>No more messages...</NoResultText>}
           data={getOr([], 'findThreadById.messages.data', data)}
           renderItem={({ item }) => <MessageBubble {...item} />}
+          onEndReached={() => {
+            const after = get('findThreadById.messages.after', data);
+
+            if (!after || loading) return;
+
+            fetchMore({
+              variables: {
+                id,
+                after,
+              },
+              updateQuery: (cache, { fetchMoreResult }) => ({
+                findThreadById: {
+                  ...fetchMoreResult.findThreadById,
+                  messages: {
+                    ...fetchMoreResult.findThreadById.messages,
+                    data: [
+                      ...cache.findThreadById.messages.data,
+                      ...fetchMoreResult.findThreadById.messages.data,
+                    ],
+                  },
+                },
+              }),
+            });
+          }}
         />
 
         <Composer>

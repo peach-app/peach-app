@@ -3,8 +3,8 @@ import { RefreshControl } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import getOr from 'lodash/fp/getOr';
 import get from 'lodash/fp/get';
-import head from 'lodash/fp/head';
 
+import formatRefs from '../../helpers/formatRefs';
 import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from '../../consts';
 import SafeAreaView from '../../components/SafeAreaView';
 import { FlatList, FlatListItem } from '../../components/FlatList';
@@ -54,9 +54,9 @@ const Campaigns = ({ navigation }) => {
           />
         }
         onEndReached={() => {
-          const after = get('id', head(get('campaigns.after', data)));
+          const after = formatRefs(get('campaigns.after', data));
 
-          if (!after || loading) return;
+          if (after.length <= 0 || loading) return;
 
           fetchMore({
             variables: {

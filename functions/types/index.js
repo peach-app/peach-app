@@ -10,8 +10,8 @@ module.exports = gql`
     campaigns(
       state: BookingState
       size: Int
-      after: ID
-      before: ID
+      after: [RefInput]
+      before: [RefInput]
     ): CampaignPage
 
     findCampaignById(id: ID): Campaign
@@ -35,12 +35,28 @@ module.exports = gql`
     updateUser(user: UserInput): Boolean
   }
 
-  type Ref {
+  # Fauna references #
+  type Collection {
     id: ID
   }
 
+  type Ref {
+    id: ID
+    collection: Collection
+  }
+
+  input CollectionInput {
+    id: ID
+  }
+
+  input RefInput {
+    id: ID
+    collection: CollectionInput
+  }
+  # //////////////// #
+
   type Discover {
-    campaigns(size: Int, after: ID, before: ID): CampaignPage
+    campaigns(size: Int, after: [RefInput], before: [RefInput]): CampaignPage
     popularUsers(type: UserType!): UserPage
   }
 
@@ -138,12 +154,14 @@ module.exports = gql`
   type Thread {
     _id: ID!
     users: UserPage
-    messages: MessagePage
+    messages(size: Int, after: Float, before: Float): MessagePage
     latestMessage: Message
   }
 
   type MessagePage {
     data: [Message]
+    after: Float
+    before: Float
   }
 
   type Message {

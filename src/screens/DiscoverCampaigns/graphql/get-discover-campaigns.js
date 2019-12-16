@@ -5,7 +5,7 @@ import { CampaignCardFragment } from '../../../components/CampaignCard';
 export default gql`
   ${CampaignCardFragment}
 
-  query($after: ID) {
+  query($after: [RefInput]) {
     discover {
       campaigns(size: 20, after: $after) {
         data {
@@ -14,6 +14,9 @@ export default gql`
         }
         after {
           id
+          collection {
+            id
+          }
         }
       }
     }
