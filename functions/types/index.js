@@ -30,13 +30,7 @@ module.exports = gql`
       type: UserType!
     ): Auth
     sendMessage(threadId: ID!, text: String!): Message
-    createCampaign(
-      name: String!
-      description: String!
-      dueDate: String!
-      private: Boolean!
-      budget: String!
-    ): Campaign
+    createCampaign(campaign: CampaignInput): Campaign
     applyToCampaign(id: ID!): Booking
     updateBookingState(id: ID!, state: BookingState!): Boolean
     updateUser(name: String): Boolean
@@ -153,5 +147,13 @@ module.exports = gql`
     user: User!
     text: String!
     sentBySelf: Boolean
+  }
+
+  input CampaignInput {
+    name: String!
+    description: String!
+    dueDate: String!
+    private: Boolean!
+    budget: String!
   }
 `;
