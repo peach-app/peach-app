@@ -1,7 +1,7 @@
 const theme = {
   background: '#FEFEFE',
   foreground: '#000',
-  brand: '#FF7F76',
+  brand: '#fc516a',
   black: '#000',
   white: '#fff',
   greyDark: '#aaa',
