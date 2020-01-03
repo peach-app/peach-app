@@ -88,6 +88,7 @@ module.exports = gql`
     bio: String
     avatar: Media
     email: String!
+    onboarded: Boolean
 
     type: UserType!
 

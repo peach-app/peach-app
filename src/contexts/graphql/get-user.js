@@ -9,6 +9,7 @@ export default gql`
     user {
       _id
       type
+      onboarded
       ...ProfileHeaderFragment
     }
   }
