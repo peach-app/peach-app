@@ -8,7 +8,7 @@ import formatRefs from '../../helpers/formatRefs';
 import { NETWORK_STATUS } from '../../consts';
 import SafeAreaView from '../../components/SafeAreaView';
 import StatusBar from '../../components/StatusBar';
-import { FlatList, FlatListItem } from '../../components/FlatList';
+import FlatList from '../../components/FlatList';
 import Title from '../../components/Title';
 import Intro from '../../components/Intro';
 import CampaignCard from '../../components/CampaignCard';
@@ -61,11 +61,11 @@ const DiscoverCampaigns = () => {
         }}
         ListHeaderComponent={
           <>
-            <FlatListItem>
+            <FlatList.Item>
               <Intro>
                 <Title>Discover</Title>
               </Intro>
-            </FlatListItem>
+            </FlatList.Item>
 
             {!fetching && campaigns.length <= 0 && (
               <NoResultText>No campaigns to discover.</NoResultText>
@@ -73,18 +73,18 @@ const DiscoverCampaigns = () => {
 
             {fetching &&
               Array.from(Array(3)).map((_, key) => (
-                <FlatListItem key={key}>
+                <FlatList.Item key={key}>
                   <CampaignCard isLoading />
-                </FlatListItem>
+                </FlatList.Item>
               ))}
           </>
         }
         keyExtractor={item => item._id}
         data={campaigns}
         renderItem={({ item }) => (
-          <FlatListItem>
+          <FlatList.Item>
             <CampaignCard {...item} />
-          </FlatListItem>
+          </FlatList.Item>
         )}
       />
     </SafeAreaView>

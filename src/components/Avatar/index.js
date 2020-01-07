@@ -20,7 +20,7 @@ const Avatar = ({ size, source, fallback, isLoading, onPress }) => (
   </SkeletonCircle>
 );
 
-export const AvatarList = ({ children }) => (
+const AvatarList = ({ children }) => (
   <List>
     {Children.map(children, child => (
       <Item>{child}</Item>
@@ -43,5 +43,7 @@ Avatar.propTypes = {
   ]),
   onPress: PropTypes.func,
 };
+
+Avatar.List = AvatarList;
 
 export default Avatar;

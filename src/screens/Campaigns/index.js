@@ -7,12 +7,12 @@ import get from 'lodash/fp/get';
 import formatRefs from '../../helpers/formatRefs';
 import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from '../../consts';
 import SafeAreaView from '../../components/SafeAreaView';
-import { FlatList, FlatListItem } from '../../components/FlatList';
+import FlatList from '../../components/FlatList';
 import Title from '../../components/Title';
 import Intro from '../../components/Intro';
 import Tabs from '../../components/Tabs';
 import IconButton from '../../components/IconButton';
-import { Grid, GridItem } from '../../components/Grid';
+import Grid from '../../components/Grid';
 import CampaignCard from '../../components/CampaignCard';
 import NoResultText from '../../components/NoResultText';
 import { useUser } from '../../contexts/User';
@@ -75,26 +75,26 @@ const Campaigns = ({ navigation }) => {
         }}
         ListHeaderComponent={
           <>
-            <FlatListItem>
+            <FlatList.Item>
               <Intro>
                 <Grid align="flex-end">
-                  <GridItem flex={1}>
+                  <Grid.Item flex={1}>
                     <Title>Campaigns</Title>
-                  </GridItem>
+                  </Grid.Item>
                   {isBrand && (
-                    <GridItem>
+                    <Grid.Item>
                       <IconButton
                         size={30}
                         name="ios-add-circle"
                         onPress={() => navigation.navigate('CreateCampaign')}
                       />
-                    </GridItem>
+                    </Grid.Item>
                   )}
                 </Grid>
               </Intro>
-            </FlatListItem>
+            </FlatList.Item>
 
-            <FlatListItem>
+            <FlatList.Item>
               <Tabs
                 activeTabIndex={activeTab}
                 onTabPress={index => setTab(index)}
@@ -104,7 +104,7 @@ const Campaigns = ({ navigation }) => {
                     : ['All', 'Applications']
                 }
               />
-            </FlatListItem>
+            </FlatList.Item>
 
             {!fetching && campaigns.length <= 0 && (
               <NoResultText>No active campaigns at this time.</NoResultText>
@@ -112,18 +112,18 @@ const Campaigns = ({ navigation }) => {
 
             {fetching &&
               Array.from(Array(3)).map((_, key) => (
-                <FlatListItem key={key}>
+                <FlatList.Item key={key}>
                   <CampaignCard isLoading />
-                </FlatListItem>
+                </FlatList.Item>
               ))}
           </>
         }
         keyExtractor={item => item._id}
         data={campaigns}
         renderItem={({ item }) => (
-          <FlatListItem>
+          <FlatList.Item>
             <CampaignCard {...item} />
-          </FlatListItem>
+          </FlatList.Item>
         )}
       />
     </SafeAreaView>

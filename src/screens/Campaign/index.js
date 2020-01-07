@@ -17,9 +17,9 @@ import Tabs from '../../components/Tabs';
 import Avatar from '../../components/Avatar';
 import Booking from '../../components/Booking';
 import { SkeletonText } from '../../components/Skeletons';
-import { Grid, GridItem } from '../../components/Grid';
+import Grid from '../../components/Grid';
 import NoResultText from '../../components/NoResultText';
-import { FlatList, FlatListItem } from '../../components/FlatList';
+import FlatList from '../../components/FlatList';
 import { useUser } from '../../contexts/User';
 
 import GET_CAMPAIGN from './graphql/get-campaign';
@@ -85,11 +85,11 @@ const Campaign = ({ navigation }) => {
         }
         ListHeaderComponent={
           <>
-            <FlatListItem>
+            <FlatList.Item>
               <Intro>
                 <Grid>
                   {isInfluencer && (
-                    <GridItem size={12}>
+                    <Grid.Item size={12}>
                       <Avatar
                         isLoading={fetching}
                         size={50}
@@ -106,10 +106,10 @@ const Campaign = ({ navigation }) => {
                           ),
                         }}
                       />
-                    </GridItem>
+                    </Grid.Item>
                   )}
 
-                  <GridItem size={12}>
+                  <Grid.Item size={12}>
                     <Title>
                       <SkeletonText
                         loadingText="Campaign Title"
@@ -118,9 +118,9 @@ const Campaign = ({ navigation }) => {
                         {getOr('', 'findCampaignById.name', campaign)}
                       </SkeletonText>
                     </Title>
-                  </GridItem>
+                  </Grid.Item>
 
-                  <GridItem size={12}>
+                  <Grid.Item size={12}>
                     <Description>
                       <SkeletonText
                         loadingText="Campaign description loading..."
@@ -129,37 +129,37 @@ const Campaign = ({ navigation }) => {
                         {getOr('', 'findCampaignById.description', campaign)}
                       </SkeletonText>
                     </Description>
-                  </GridItem>
+                  </Grid.Item>
                 </Grid>
               </Intro>
-            </FlatListItem>
+            </FlatList.Item>
 
             {isBrand && (
               <>
-                <FlatListItem>
+                <FlatList.Item>
                   <Tabs
                     activeTabIndex={activeTab}
                     onTabPress={index => setTab(index)}
                     tabs={['Applied', 'Accepted', 'Declined', 'Requested']}
                   />
-                </FlatListItem>
+                </FlatList.Item>
 
                 {!fetchingBookings && bookings.length <= 0 && (
-                  <FlatListItem>
+                  <FlatList.Item>
                     <NoResultText>
                       {tabBookingState === BOOKING_STATE.APPLIED
                         ? 'No influnecer applications to update at this moment.'
                         : `No influencers ${tabBookingState.toLowerCase()} on this campaign.`}
                     </NoResultText>
-                  </FlatListItem>
+                  </FlatList.Item>
                 )}
 
                 {fetchingBookings && (
                   <>
                     {Array.from(Array(3)).map((_, key) => (
-                      <FlatListItem key={key}>
+                      <FlatList.Item key={key}>
                         <Booking isLoading />
-                      </FlatListItem>
+                      </FlatList.Item>
                     ))}
                   </>
                 )}
@@ -170,9 +170,9 @@ const Campaign = ({ navigation }) => {
         data={!fetchingBookings && bookings}
         keyExtractor={item => item._id}
         renderItem={({ item }) => (
-          <FlatListItem>
+          <FlatList.Item>
             <Booking {...item} />
-          </FlatListItem>
+          </FlatList.Item>
         )}
       />
 

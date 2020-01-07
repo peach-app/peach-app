@@ -7,7 +7,7 @@ import debounce from 'lodash/debounce';
 import { Main } from './styles';
 import { NETWORK_STATUS } from '../../consts';
 import SafeAreaView from '../../components/SafeAreaView';
-import { FlatList, FlatListItem } from '../../components/FlatList';
+import FlatList from '../../components/FlatList';
 import UserCard from '../../components/UserCard';
 import Container from '../../components/Container';
 import TextInput from '../../components/TextInput';
@@ -58,25 +58,25 @@ const Search = () => {
           ListHeaderComponent={
             <>
               {!fetching && influencers.length <= 0 && (
-                <FlatListItem>
+                <FlatList.Item>
                   <NoResultText>0 influencers found.</NoResultText>
-                </FlatListItem>
+                </FlatList.Item>
               )}
 
               {fetching &&
                 Array.from(Array(3)).map((_, key) => (
-                  <FlatListItem key={key}>
+                  <FlatList.Item key={key}>
                     <UserCard isLoading />
-                  </FlatListItem>
+                  </FlatList.Item>
                 ))}
             </>
           }
           keyExtractor={item => item._id}
           data={!fetching && influencers}
           renderItem={({ item }) => (
-            <FlatListItem>
+            <FlatList.Item>
               <UserCard {...item} />
-            </FlatListItem>
+            </FlatList.Item>
           )}
         />
       </KeyboardAvoidingView>

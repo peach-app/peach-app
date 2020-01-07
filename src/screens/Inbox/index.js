@@ -8,7 +8,7 @@ import SafeAreaView from '../../components/SafeAreaView';
 import StatusBar from '../../components/StatusBar';
 import Title from '../../components/Title';
 import Intro from '../../components/Intro';
-import { FlatList, FlatListItem } from '../../components/FlatList';
+import FlatList from '../../components/FlatList';
 import ThreadCard from '../../components/ThreadCard';
 import NoResultText from '../../components/NoResultText';
 import GET_THREADS from './graphql/get-threads';
@@ -35,11 +35,11 @@ const Inbox = () => {
         data={messages}
         ListHeaderComponent={
           <>
-            <FlatListItem>
+            <FlatList.Item>
               <Intro>
                 <Title>Messages</Title>
               </Intro>
-            </FlatListItem>
+            </FlatList.Item>
 
             {!loading && messages.length <= 0 && (
               <NoResultText>No active threads yet.</NoResultText>
@@ -48,18 +48,18 @@ const Inbox = () => {
             {loading && networkStatus === NETWORK_STATUS.FETCHING && (
               <>
                 {Array.from(Array(3)).map((_, key) => (
-                  <FlatListItem key={key}>
+                  <FlatList.Item key={key}>
                     <ThreadCard isLoading />
-                  </FlatListItem>
+                  </FlatList.Item>
                 ))}
               </>
             )}
           </>
         }
         renderItem={({ item }) => (
-          <FlatListItem>
+          <FlatList.Item>
             <ThreadCard {...item} />
-          </FlatListItem>
+          </FlatList.Item>
         )}
       />
     </SafeAreaView>

@@ -8,7 +8,7 @@ import { useMutation } from '@apollo/react-hooks';
 import startCase from 'lodash/startCase';
 
 import { BOOKING_STATE } from '../../consts';
-import { Grid, GridItem } from '../../components/Grid';
+import Grid from '../../components/Grid';
 import { SkeletonText } from '../../components/Skeletons';
 import Button from '../../components/Button';
 import Avatar from '../../components/Avatar';
@@ -28,9 +28,9 @@ const Booking = ({ _id, cost, state, user, isLoading, navigation }) => {
 
   return (
     <Grid>
-      <GridItem size={12}>
+      <Grid.Item size={12}>
         <Grid noWrap align="center">
-          <GridItem>
+          <Grid.Item>
             <Avatar
               size={50}
               onPress={() =>
@@ -40,8 +40,8 @@ const Booking = ({ _id, cost, state, user, isLoading, navigation }) => {
               source={{ uri: get('avatar.url', user) }}
               fallback={get('name', user)}
             />
-          </GridItem>
-          <GridItem flex={1}>
+          </Grid.Item>
+          <Grid.Item flex={1}>
             <Text numberOfLines={1}>
               <SkeletonText
                 isLoading={isLoading}
@@ -55,14 +55,14 @@ const Booking = ({ _id, cost, state, user, isLoading, navigation }) => {
                 Rate: {Dinero({ amount: cost, currency: 'GBP' }).toFormat()}
               </SkeletonText>
             </Text>
-          </GridItem>
+          </Grid.Item>
         </Grid>
-      </GridItem>
+      </Grid.Item>
 
       {state === BOOKING_STATE.APPLIED && (
-        <GridItem size={12}>
+        <Grid.Item size={12}>
           <Grid>
-            <GridItem flex={1}>
+            <Grid.Item flex={1}>
               <Button
                 title="Accept"
                 isSmall
@@ -75,8 +75,8 @@ const Booking = ({ _id, cost, state, user, isLoading, navigation }) => {
                   });
                 }}
               />
-            </GridItem>
-            <GridItem flex={1}>
+            </Grid.Item>
+            <Grid.Item flex={1}>
               <Button
                 title="Decline"
                 isShaded
@@ -90,9 +90,9 @@ const Booking = ({ _id, cost, state, user, isLoading, navigation }) => {
                   });
                 }}
               />
-            </GridItem>
+            </Grid.Item>
           </Grid>
-        </GridItem>
+        </Grid.Item>
       )}
     </Grid>
   );

@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 
-export const FlatList = styled.FlatList.attrs(props => ({
+const FlatList = styled.FlatList.attrs(props => ({
   contentContainerStyle: {
     paddingHorizontal: props.theme.spacing,
     width: 900,
@@ -9,6 +9,10 @@ export const FlatList = styled.FlatList.attrs(props => ({
   },
 }))``;
 
-export const FlatListItem = styled.View`
+const FlatListItem = styled.View`
   padding-bottom: ${props => props.theme.spacing}px;
 `;
+
+FlatList.Item = FlatListItem;
+
+export default FlatList;
