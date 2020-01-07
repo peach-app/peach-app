@@ -5,7 +5,7 @@ import SafeAreaView from '../../components/SafeAreaView';
 import Header from '../../components/Header';
 import StatusBar from '../../components/StatusBar';
 import Container from '../../components/Container';
-import { Grid, GridItem } from '../../components/Grid';
+import Grid from '../../components/Grid';
 import TextInput from '../../components/TextInput';
 import Actions from '../../components/Actions';
 import Button from '../../components/Button';
@@ -24,7 +24,7 @@ const OnboardingPaymentDetails = () => {
       <Header title="Payment Details" />
       <Container>
         <Grid>
-          <GridItem size={12}>
+          <Grid.Item size={12}>
             <Intro>
               <TextInput
                 label="Card Number"
@@ -33,13 +33,13 @@ const OnboardingPaymentDetails = () => {
                 onBlur={formik.handleBlur('cardNum')}
               />
             </Intro>
-          </GridItem>
+          </Grid.Item>
 
-          <GridItem size={12}>
+          <Grid.Item size={12}>
             <Actions>
               <Button title="Finish" fixedWidth />
             </Actions>
-          </GridItem>
+          </Grid.Item>
         </Grid>
       </Container>
     </SafeAreaView>

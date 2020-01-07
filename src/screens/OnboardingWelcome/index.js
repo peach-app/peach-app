@@ -7,7 +7,7 @@ import Intro from '../../components/Intro';
 import Title from '../../components/Title';
 import Text from '../../components/Text';
 import Container from '../../components/Container';
-import { Grid, GridItem } from '../../components/Grid';
+import Grid from '../../components/Grid';
 import Button from '../../components/Button';
 
 import OnboardingBanner from '../../assets/onboarding.png';
@@ -17,24 +17,24 @@ const OnboardingWelcome = ({ navigation }) => (
     <StatusBar />
     <Container>
       <Grid>
-        <GridItem size={12}>
+        <Grid.Item size={12}>
           <Intro>
             <Title>Welcome</Title>
           </Intro>
-        </GridItem>
-        <GridItem size={12}>
+        </Grid.Item>
+        <Grid.Item size={12}>
           <Text>
             We need a few more details from you before you can start using the
             Peach app.
           </Text>
-        </GridItem>
-        <GridItem size={12}>
+        </Grid.Item>
+        <Grid.Item size={12}>
           <Button
             onPress={() => navigation.navigate('PaymentDetails')}
             title="Begin"
             fixedWidth
           />
-        </GridItem>
+        </Grid.Item>
       </Grid>
     </Container>
 
