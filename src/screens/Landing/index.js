@@ -5,7 +5,7 @@ import { ImageBackground, Main, Content, Actions } from './styles';
 import StatusBar from '../../components/StatusBar';
 import Button from '../../components/Button';
 import Container from '../../components/Container';
-import { Grid, GridItem } from '../../components/Grid';
+import Grid from '../../components/Grid';
 
 const Landing = ({ navigation }) => (
   <ImageBackground>
@@ -16,20 +16,20 @@ const Landing = ({ navigation }) => (
           <Container>
             <Actions>
               <Grid>
-                <GridItem size={12}>
+                <Grid.Item size={12}>
                   <Button
                     isDark
                     title="Login"
                     onPress={() => navigation.navigate('Login')}
                   />
-                </GridItem>
-                <GridItem size={12}>
+                </Grid.Item>
+                <Grid.Item size={12}>
                   <Button
                     isDark
                     title="Create an account"
                     onPress={() => navigation.navigate('Register')}
                   />
-                </GridItem>
+                </Grid.Item>
               </Grid>
             </Actions>
           </Container>

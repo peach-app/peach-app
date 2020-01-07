@@ -9,7 +9,7 @@ import { Composer, Wrapper, TextInput, Send, Icon } from './styles';
 import SafeAreaView from '../../components/SafeAreaView';
 import Header from '../../components/Header';
 import Loading from '../../components/Loading';
-import { FlatList } from '../../components/FlatList';
+import FlatList from '../../components/FlatList';
 import MessageBubble from '../../components/MessageBubble';
 
 import SEND_MESSAGE from './graphql/send-message';

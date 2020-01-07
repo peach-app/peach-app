@@ -9,7 +9,7 @@ import startCase from 'lodash/startCase';
 import SafeAreaView from '../../components/SafeAreaView';
 import Header from '../../components/Header';
 import Container from '../../components/Container';
-import { Grid, GridItem } from '../../components/Grid';
+import Grid from '../../components/Grid';
 import TextInput from '../../components/TextInput';
 import Intro from '../../components/Intro';
 import Actions from '../../components/Actions';
@@ -67,7 +67,7 @@ const AccountEdit = ({ navigation }) => {
         <Container>
           <Intro>
             <Grid>
-              <GridItem size={12}>
+              <Grid.Item size={12}>
                 <TextInput
                   label="Name"
                   autoCapitalize="none"
@@ -76,9 +76,9 @@ const AccountEdit = ({ navigation }) => {
                   onChangeText={formik.handleChange('name')}
                   onBlur={formik.handleBlur('name')}
                 />
-              </GridItem>
+              </Grid.Item>
 
-              <GridItem size={12}>
+              <Grid.Item size={12}>
                 <TextInput
                   label="Bio"
                   multiline
@@ -88,17 +88,17 @@ const AccountEdit = ({ navigation }) => {
                   onChangeText={formik.handleChange('bio')}
                   onBlur={formik.handleBlur('bio')}
                 />
-              </GridItem>
+              </Grid.Item>
 
               {error && (
-                <GridItem size={12}>
+                <Grid.Item size={12}>
                   <Text isCenter>
                     Unable to save changes, please try again later.
                   </Text>
-                </GridItem>
+                </Grid.Item>
               )}
 
-              <GridItem size={12}>
+              <Grid.Item size={12}>
                 <Actions>
                   <Button
                     isLoading={loading}
@@ -107,7 +107,7 @@ const AccountEdit = ({ navigation }) => {
                     fixedWidth
                   />
                 </Actions>
-              </GridItem>
+              </Grid.Item>
             </Grid>
           </Intro>
         </Container>

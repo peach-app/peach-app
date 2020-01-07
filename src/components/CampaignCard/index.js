@@ -6,7 +6,7 @@ import gql from 'graphql-tag';
 import get from 'lodash/fp/get';
 
 import { Icon, MainTitle, Description, User } from './styles';
-import { Grid, GridItem } from '../../components/Grid';
+import Grid from '../../components/Grid';
 import Avatar from '../../components/Avatar';
 import { SkeletonText } from '../../components/Skeletons';
 
@@ -22,15 +22,15 @@ const CampaignCard = ({
     onPress={() => !isLoading && navigation.navigate('Campaign', { id: _id })}
   >
     <Grid noWrap align="center">
-      <GridItem>
+      <Grid.Item>
         <Avatar
           isLoading={isLoading}
           size={50}
           source={{ uri: get('avatar.url', user) }}
           fallback={get('name', user)}
         />
-      </GridItem>
-      <GridItem flex={1}>
+      </Grid.Item>
+      <Grid.Item flex={1}>
         <MainTitle numberOfLines={2}>
           <SkeletonText
             isLoading={isLoading}
@@ -52,11 +52,11 @@ const CampaignCard = ({
             {get('name', user)}
           </SkeletonText>
         </User>
-      </GridItem>
+      </Grid.Item>
       {!isLoading && (
-        <GridItem>
+        <Grid.Item>
           <Icon name="ios-arrow-forward" />
-        </GridItem>
+        </Grid.Item>
       )}
     </Grid>
   </TouchableOpacity>

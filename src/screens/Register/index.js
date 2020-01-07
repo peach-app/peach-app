@@ -10,7 +10,7 @@ import { useAuth } from '../../contexts/Auth';
 import SafeAreaView from '../../components/SafeAreaView';
 import StatusBar from '../../components/StatusBar';
 import Container from '../../components/Container';
-import { Grid, GridItem } from '../../components/Grid';
+import Grid from '../../components/Grid';
 import Intro from '../../components/Intro';
 import Title from '../../components/Title';
 import Tabs from '../../components/Tabs';
@@ -76,47 +76,47 @@ const Register = () => {
         <ScrollView>
           <Container>
             <Grid>
-              <GridItem size={12}>
+              <Grid.Item size={12}>
                 <Intro>
                   <Grid>
-                    <GridItem size={12}>
+                    <Grid.Item size={12}>
                       <BackButton />
-                    </GridItem>
-                    <GridItem size={12}>
+                    </Grid.Item>
+                    <Grid.Item size={12}>
                       <Title>Sign Up</Title>
-                    </GridItem>
+                    </Grid.Item>
                   </Grid>
                 </Intro>
-              </GridItem>
+              </Grid.Item>
 
-              <GridItem size={12}>
+              <Grid.Item size={12}>
                 <Tabs
                   activeTabIndex={activeTab}
                   onTabPress={setTab}
                   tabs={USER_TYPE_TABS}
                 />
-              </GridItem>
+              </Grid.Item>
 
               {FORM_INPUTS.map(input => (
-                <GridItem key={input.name} size={12}>
+                <Grid.Item key={input.name} size={12}>
                   <TextInput
                     {...input}
                     error={formik.errors[input.name]}
                     onChangeText={formik.handleChange(input.name)}
                     onBlur={formik.handleBlur(input.name)}
                   />
-                </GridItem>
+                </Grid.Item>
               ))}
 
               {error && (
-                <GridItem size={12}>
+                <Grid.Item size={12}>
                   <Text isCenter>
                     An error occurred, please try again later.
                   </Text>
-                </GridItem>
+                </Grid.Item>
               )}
 
-              <GridItem size={12}>
+              <Grid.Item size={12}>
                 <Actions>
                   <Button
                     isLoading={loading}
@@ -125,7 +125,7 @@ const Register = () => {
                     fixedWidth
                   />
                 </Actions>
-              </GridItem>
+              </Grid.Item>
             </Grid>
           </Container>
         </ScrollView>

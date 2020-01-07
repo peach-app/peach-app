@@ -10,7 +10,7 @@ import Header from '../../components/Header';
 import Container from '../../components/Container';
 import ProfileHeader from '../../components/ProfileHeader';
 import Text from '../../components/Text';
-import { Grid, GridItem } from '../../components/Grid';
+import Grid from '../../components/Grid';
 import Actions from '../../components/Actions';
 import Button from '../../components/Button';
 import { useUser } from '../../contexts/User';
@@ -36,22 +36,22 @@ const Profile = ({ navigation }) => {
       <ScrollView>
         <Container>
           <Grid>
-            <GridItem size={12}>
+            <Grid.Item size={12}>
               <ProfileHeader {...get('findUserByID', data)} />
-            </GridItem>
+            </Grid.Item>
 
             {bio && (
-              <GridItem size={12}>
+              <Grid.Item size={12}>
                 <Text isCenter>{bio}</Text>
-              </GridItem>
+              </Grid.Item>
             )}
 
             {isBrand && (
-              <GridItem size={12}>
+              <Grid.Item size={12}>
                 <Actions>
                   <Button title="Request work" fixedWidth />
                 </Actions>
-              </GridItem>
+              </Grid.Item>
             )}
           </Grid>
         </Container>

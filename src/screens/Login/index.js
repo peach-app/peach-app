@@ -8,7 +8,7 @@ import get from 'lodash/fp/get';
 import SafeAreaView from '../../components/SafeAreaView';
 import StatusBar from '../../components/StatusBar';
 import Container from '../../components/Container';
-import { Grid, GridItem } from '../../components/Grid';
+import Grid from '../../components/Grid';
 import Intro from '../../components/Intro';
 import Title from '../../components/Title';
 import Button from '../../components/Button';
@@ -58,20 +58,20 @@ const Login = () => {
           <Container>
             <StatusBar />
             <Grid>
-              <GridItem size={12}>
+              <Grid.Item size={12}>
                 <Intro>
                   <Grid>
-                    <GridItem size={12}>
+                    <Grid.Item size={12}>
                       <BackButton />
-                    </GridItem>
-                    <GridItem size={12}>
+                    </Grid.Item>
+                    <Grid.Item size={12}>
                       <Title>Login</Title>
-                    </GridItem>
+                    </Grid.Item>
                   </Grid>
                 </Intro>
-              </GridItem>
+              </Grid.Item>
 
-              <GridItem size={12}>
+              <Grid.Item size={12}>
                 <TextInput
                   keyboardType="email-address"
                   autoCapitalize="none"
@@ -80,9 +80,9 @@ const Login = () => {
                   onChangeText={formik.handleChange('email')}
                   onBlur={formik.handleBlur('email')}
                 />
-              </GridItem>
+              </Grid.Item>
 
-              <GridItem size={12}>
+              <Grid.Item size={12}>
                 <TextInput
                   label="Password"
                   secureTextEntry
@@ -90,15 +90,15 @@ const Login = () => {
                   onChangeText={formik.handleChange('password')}
                   onBlur={formik.handleBlur('password')}
                 />
-              </GridItem>
+              </Grid.Item>
 
               {error && (
-                <GridItem size={12}>
+                <Grid.Item size={12}>
                   <Text isCenter>Incorrect Email or Password</Text>
-                </GridItem>
+                </Grid.Item>
               )}
 
-              <GridItem size={12}>
+              <Grid.Item size={12}>
                 <Actions>
                   <Button
                     isLoading={loading}
@@ -107,7 +107,7 @@ const Login = () => {
                     fixedWidth
                   />
                 </Actions>
-              </GridItem>
+              </Grid.Item>
             </Grid>
           </Container>
         </ScrollView>

@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 
-export const Grid = styled.View`
+const Grid = styled.View`
   flex-direction: row;
   margin: ${props => `-${props.theme.spacing}px -${props.theme.spacing}px 0 0`};
   ${props => !props.noWrap && `flex-wrap: wrap;`}
@@ -8,7 +8,7 @@ export const Grid = styled.View`
   ${props => props.justify && `justify-content: ${props.justify};`}
 `;
 
-export const GridItem = styled.View`
+const GridItem = styled.View`
   ${props => {
     if (props.width) {
       return `width: ${props.width}px`;
@@ -26,3 +26,7 @@ export const GridItem = styled.View`
   }}
   padding: ${props => `${props.theme.spacing}px ${props.theme.spacing}px 0 0`};
 `;
+
+Grid.Item = GridItem;
+
+export default Grid;
