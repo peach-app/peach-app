@@ -15,6 +15,10 @@ const Header = ({ title }) => (
   </Main>
 );
 
+Header.defaultProps = {
+  title: null,
+};
+
 Header.propTypes = {
   title: PropTypes.string,
 };

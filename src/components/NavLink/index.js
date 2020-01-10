@@ -10,6 +10,10 @@ const NavLink = ({ title, iconProps, ...props }) => (
   </Main>
 );
 
+NavLink.defaultProps = {
+  iconProps: null,
+};
+
 NavLink.propTypes = {
   title: PropTypes.string.isRequired,
   iconProps: PropTypes.object,

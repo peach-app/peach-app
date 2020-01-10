@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Platform, SafeAreaView, TouchableWithoutFeedback } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { withTheme } from 'styled-components/native';
@@ -45,6 +46,20 @@ const Navigation = ({ navigation, onTabPress, theme }) => {
       </SafeAreaView>
     </Main>
   );
+};
+
+Navigation.propTypes = {
+  navigation: PropTypes.shape({
+    state: PropTypes.shape({
+      index: PropTypes.number.isRequired,
+      routes: PropTypes.array.isRequired,
+    }).isRequired,
+  }).isRequired,
+  onTabPress: PropTypes.func.isRequired,
+  theme: PropTypes.shape({
+    foreground: PropTypes.string.isRequired,
+    greyDark: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default withTheme(Navigation);

@@ -21,6 +21,12 @@ const ProfileHeader = ({ name, avatar, isLoading }) => (
   </Main>
 );
 
+ProfileHeader.defaultProps = {
+  isLoading: false,
+  name: '',
+  avatar: null,
+};
+
 ProfileHeader.propTypes = {
   isLoading: PropTypes.bool,
   name: PropTypes.string,

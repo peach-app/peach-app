@@ -5,17 +5,20 @@ import get from 'lodash/fp/get';
 
 import { Main, Image, Initial, List, Item } from './styles';
 import { SkeletonCircle } from '../../components/Skeletons';
+import Branch from '../../components/Branch';
 
 const Avatar = ({ size, source, fallback, isLoading, onPress }) => (
   <SkeletonCircle isLoading={isLoading} size={size}>
     <Main size={size} as={onPress && TouchableOpacity} onPress={onPress}>
-      {get('uri', source) ? (
-        <Image source={source} />
-      ) : (
-        <Initial size={size}>
-          {(fallback || '').slice(0, 1).toUpperCase()}
-        </Initial>
-      )}
+      <Branch
+        test={!!get('uri', source)}
+        left={<Image source={source} />}
+        right={
+          <Initial size={size}>
+            {(fallback || '').slice(0, 1).toUpperCase()}
+          </Initial>
+        }
+      />
     </Main>
   </SkeletonCircle>
 );
@@ -29,14 +32,17 @@ const AvatarList = ({ children }) => (
 );
 
 Avatar.defaultProps = {
+  isLoading: false,
   size: 40,
-  fallback: '',
+  fallback: null,
+  source: null,
+  onPress: null,
 };
 
 Avatar.propTypes = {
   isLoading: PropTypes.bool,
   size: PropTypes.number,
-  fallback: PropTypes.string.isRequired,
+  fallback: PropTypes.string,
   source: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.shape({ uri: PropTypes.string }),

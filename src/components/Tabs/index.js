@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { TouchableWithoutFeedback } from 'react-native';
 
 import { Main, Item, TabTitle } from './styles';
@@ -14,5 +15,11 @@ const Tabs = ({ activeTabIndex, onTabPress, tabs }) => (
     ))}
   </Main>
 );
+
+Tabs.propTypes = {
+  activeTabIndex: PropTypes.number.isRequired,
+  onTabPress: PropTypes.func.isRequired,
+  tabs: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
 
 export default Tabs;

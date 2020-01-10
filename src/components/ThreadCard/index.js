@@ -58,12 +58,17 @@ const ThreadCard = ({ isLoading, navigation, _id, users, latestMessage }) => (
   </TouchableOpacity>
 );
 
+ThreadCard.defaultProps = {
+  _id: null,
+  isLoading: false,
+};
+
 ThreadCard.propTypes = {
   isLoading: PropTypes.bool,
   _id: PropTypes.string,
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
-  }),
+  }).isRequired,
 };
 
 export const ThreadCardFragment = gql`
