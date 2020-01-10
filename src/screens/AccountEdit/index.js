@@ -31,13 +31,16 @@ const AccountEdit = ({ navigation }) => {
     },
   });
 
+  const { data } = useQuery(GET_USER);
+
   const formik = useFormik({
     validateOnBlur: false,
     validateOnChange: false,
     validationSchema,
+    enableReinitialize: true,
     initialValues: {
-      name: '',
-      bio: '',
+      name: startCase(get('user.name', data)),
+      bio: get('user.bio', data),
     },
     onSubmit: ({ name, bio }) => {
       save({
@@ -47,15 +50,6 @@ const AccountEdit = ({ navigation }) => {
             bio,
           },
         },
-      });
-    },
-  });
-
-  useQuery(GET_USER, {
-    onCompleted: data => {
-      formik.setValues({
-        name: startCase(get('user.name', data)),
-        bio: get('user.bio', data),
       });
     },
   });
