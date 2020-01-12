@@ -4,14 +4,16 @@ import { useQuery } from '@apollo/react-hooks';
 import getOr from 'lodash/fp/getOr';
 
 import { NETWORK_STATUS } from '../../consts';
-import SafeAreaView from '../../components/SafeAreaView';
-import Intro from '../../components/Intro';
-import Title from '../../components/Title';
-import Grid from '../../components/Grid';
-import IconButton from '../../components/IconButton';
-import UserCard from '../../components/UserCard';
-import FlatList from '../../components/FlatList';
-import Tabs from '../../components/Tabs';
+import {
+  SafeAreaView,
+  Intro,
+  Title,
+  Grid,
+  IconButton,
+  UserCard,
+  FlatList,
+  Tabs,
+} from '../../components';
 
 import GET_DISCOVER_USERS from './graphql/get-discover-users';
 

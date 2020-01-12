@@ -2,10 +2,7 @@ import React from 'react';
 import { SafeAreaView } from 'react-native';
 
 import { ImageBackground, Main, Content, Actions } from './styles';
-import StatusBar from '../../components/StatusBar';
-import Button from '../../components/Button';
-import Container from '../../components/Container';
-import Grid from '../../components/Grid';
+import { StatusBar, Button, Container, Grid } from '../../components';
 
 const Landing = ({ navigation }) => (
   <ImageBackground>

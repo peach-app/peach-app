@@ -4,13 +4,15 @@ import getOr from 'lodash/fp/getOr';
 import { useQuery } from '@apollo/react-hooks';
 
 import { NETWORK_STATUS } from '../../consts';
-import SafeAreaView from '../../components/SafeAreaView';
-import StatusBar from '../../components/StatusBar';
-import Title from '../../components/Title';
-import Intro from '../../components/Intro';
-import FlatList from '../../components/FlatList';
-import ThreadCard from '../../components/ThreadCard';
-import NoResultText from '../../components/NoResultText';
+import {
+  SafeAreaView,
+  StatusBar,
+  Title,
+  Intro,
+  FlatList,
+  ThreadCard,
+  NoResultText,
+} from '../../components';
 import GET_THREADS from './graphql/get-threads';
 
 const Inbox = () => {

@@ -6,13 +6,15 @@ import debounce from 'lodash/debounce';
 
 import { Main } from './styles';
 import { NETWORK_STATUS } from '../../consts';
-import SafeAreaView from '../../components/SafeAreaView';
-import FlatList from '../../components/FlatList';
-import UserCard from '../../components/UserCard';
-import Container from '../../components/Container';
-import TextInput from '../../components/TextInput';
-import NoResultText from '../../components/NoResultText';
-import Header from '../../components/Header';
+import {
+  SafeAreaView,
+  FlatList,
+  UserCard,
+  Container,
+  TextInput,
+  NoResultText,
+  Header,
+} from '../../components';
 
 import SEARCH_INFLUENCERS from './graphql/search-influencers';
 

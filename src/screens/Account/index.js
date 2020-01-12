@@ -3,11 +3,13 @@ import { ScrollView } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 
-import SafeAreaView from '../../components/SafeAreaView';
-import StatusBar from '../../components/StatusBar';
-import Container from '../../components/Container';
-import NavLink from '../../components/NavLink';
-import ProfileHeader from '../../components/ProfileHeader';
+import {
+  SafeAreaView,
+  StatusBar,
+  Container,
+  NavLink,
+  ProfileHeader,
+} from '../../components';
 import GET_USER from './graphql/get-user';
 import { useAuth } from '../../contexts/Auth';
 

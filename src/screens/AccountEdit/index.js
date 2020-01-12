@@ -6,15 +6,17 @@ import * as Yup from 'yup';
 import get from 'lodash/fp/get';
 import startCase from 'lodash/startCase';
 
-import SafeAreaView from '../../components/SafeAreaView';
-import Header from '../../components/Header';
-import Container from '../../components/Container';
-import Grid from '../../components/Grid';
-import TextInput from '../../components/TextInput';
-import Intro from '../../components/Intro';
-import Actions from '../../components/Actions';
-import Button from '../../components/Button';
-import Text from '../../components/Text';
+import {
+  SafeAreaView,
+  Header,
+  Container,
+  Grid,
+  TextInput,
+  Intro,
+  Actions,
+  Button,
+  Text,
+} from '../../components';
 
 import GET_USER from './graphql/get-user';
 import SAVE_USER from './graphql/save-user';

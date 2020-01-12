@@ -7,18 +7,20 @@ import get from 'lodash/fp/get';
 
 import { USER_TYPE_TABS, FORM_INPUTS, FORM_ERROR_MESSAGES } from './consts';
 import { useAuth } from '../../contexts/Auth';
-import SafeAreaView from '../../components/SafeAreaView';
-import StatusBar from '../../components/StatusBar';
-import Container from '../../components/Container';
-import Grid from '../../components/Grid';
-import Intro from '../../components/Intro';
-import Title from '../../components/Title';
-import Tabs from '../../components/Tabs';
-import TextInput from '../../components/TextInput';
-import Text from '../../components/Text';
-import Actions from '../../components/Actions';
-import Button from '../../components/Button';
-import BackButton from '../../components/BackButton';
+import {
+  SafeAreaView,
+  StatusBar,
+  Container,
+  Grid,
+  Intro,
+  Title,
+  Tabs,
+  TextInput,
+  Text,
+  Actions,
+  Button,
+  BackButton,
+} from '../../components';
 
 import REGISTER from './graphql/register';
 

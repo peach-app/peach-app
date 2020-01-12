@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import * as Animatable from 'react-native-animatable';
 
-import Text from '../../components/Text';
+import { Text } from '../../components';
 
 export const Foot = styled(Animatable.View).attrs({
   animation: 'fadeInUp',

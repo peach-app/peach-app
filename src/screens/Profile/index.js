@@ -5,14 +5,16 @@ import get from 'lodash/fp/get';
 import startCase from 'lodash/startCase';
 
 import { USER_TYPE } from '../../consts';
-import SafeAreaView from '../../components/SafeAreaView';
-import Header from '../../components/Header';
-import Container from '../../components/Container';
-import ProfileHeader from '../../components/ProfileHeader';
-import Text from '../../components/Text';
-import Grid from '../../components/Grid';
-import Actions from '../../components/Actions';
-import Button from '../../components/Button';
+import {
+  SafeAreaView,
+  Header,
+  Container,
+  ProfileHeader,
+  Text,
+  Grid,
+  Actions,
+  Button,
+} from '../../components';
 import { useUser } from '../../contexts/User';
 
 import GET_USER from './graphql/get-user';
