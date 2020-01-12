@@ -10,25 +10,23 @@ import startCase from 'lodash/startCase';
 import { BOOKING_STATE } from '../../consts';
 import Grid from '../../components/Grid';
 import { SkeletonText } from '../../components/Skeletons';
-import Button from '../../components/Button';
+import Loading from '../../components/Loading';
+import IconButton from '../../components/IconButton';
 import Avatar from '../../components/Avatar';
 import Text from '../../components/Text';
 import UPDATE_BOOKING_STATE from './graphql/update-booking-state';
 
 const Booking = ({ _id, cost, state, user, isLoading, navigation }) => {
-  const [updateBookingState, { loading: updating }] = useMutation(
-    UPDATE_BOOKING_STATE,
-    {
-      refetchQueries: ['getCampaign'],
-      variables: {
-        id: _id,
-      },
-    }
-  );
+  const [updateBookingState, { loading }] = useMutation(UPDATE_BOOKING_STATE, {
+    refetchQueries: ['getCampaign'],
+    variables: {
+      id: _id,
+    },
+  });
 
   return (
-    <Grid>
-      <Grid.Item size={12}>
+    <Grid align="center">
+      <Grid.Item flex={1}>
         <Grid noWrap align="center">
           <Grid.Item>
             <Avatar
@@ -59,40 +57,41 @@ const Booking = ({ _id, cost, state, user, isLoading, navigation }) => {
         </Grid>
       </Grid.Item>
 
-      {state === BOOKING_STATE.APPLIED && (
-        <Grid.Item size={12}>
-          <Grid>
-            <Grid.Item flex={1}>
-              <Button
-                title="Accept"
-                isSmall
-                isLoading={updating}
-                onPress={() => {
-                  updateBookingState({
-                    variables: {
-                      state: BOOKING_STATE.ACCEPTED,
-                    },
-                  });
-                }}
-              />
-            </Grid.Item>
-            <Grid.Item flex={1}>
-              <Button
-                title="Decline"
-                isShaded
-                isSmall
-                isLoading={updating}
-                onPress={() => {
-                  updateBookingState({
-                    variables: {
-                      state: BOOKING_STATE.DECLINED,
-                    },
-                  });
-                }}
-              />
-            </Grid.Item>
-          </Grid>
+      {loading && (
+        <Grid.Item>
+          <Loading />
         </Grid.Item>
+      )}
+
+      {state === BOOKING_STATE.APPLIED && !loading && (
+        <>
+          <Grid.Item width={48}>
+            <IconButton
+              name="ios-checkmark-circle-outline"
+              size={32}
+              onPress={() => {
+                updateBookingState({
+                  variables: {
+                    state: BOOKING_STATE.ACCEPTED,
+                  },
+                });
+              }}
+            />
+          </Grid.Item>
+          <Grid.Item width={48}>
+            <IconButton
+              name="ios-close-circle-outline"
+              size={32}
+              onPress={() => {
+                updateBookingState({
+                  variables: {
+                    state: BOOKING_STATE.DECLINED,
+                  },
+                });
+              }}
+            />
+          </Grid.Item>
+        </>
       )}
     </Grid>
   );
