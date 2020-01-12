@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Touchable, Icon } from './styles';
 
-const IconButton = ({ onPress, size, name }) => (
+export const IconButton = ({ onPress, size, name }) => (
   <Touchable onPress={onPress} size={size}>
     <Icon size={size} name={name} />
   </Touchable>

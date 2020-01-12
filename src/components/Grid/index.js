@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 
-const Grid = styled.View`
+export const Grid = styled.View`
   flex-direction: row;
   margin: ${props => `-${props.theme.spacing}px -${props.theme.spacing}px 0 0`};
   ${props => !props.noWrap && `flex-wrap: wrap;`}

@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 
-const FlatList = styled.FlatList.attrs(props => ({
+export const FlatList = styled.FlatList.attrs(props => ({
   contentContainerStyle: {
     paddingHorizontal: props.theme.spacing,
     width: 900,

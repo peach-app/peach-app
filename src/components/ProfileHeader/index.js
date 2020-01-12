@@ -6,7 +6,7 @@ import get from 'lodash/fp/get';
 import { Main, Center } from './styles';
 import Avatar from '../../components/Avatar';
 
-const ProfileHeader = ({ name, avatar, isLoading }) => (
+export const ProfileHeader = ({ name, avatar, isLoading }) => (
   <Main>
     <Center>
       <Avatar

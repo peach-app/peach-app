@@ -7,7 +7,7 @@ import { Main, Image, Initial, List, Item } from './styles';
 import { SkeletonCircle } from '../../components/Skeletons';
 import Branch from '../../components/Branch';
 
-const Avatar = ({ size, source, fallback, isLoading, onPress }) => (
+export const Avatar = ({ size, source, fallback, isLoading, onPress }) => (
   <SkeletonCircle isLoading={isLoading} size={size}>
     <Main size={size} as={onPress && TouchableOpacity} onPress={onPress}>
       <Branch

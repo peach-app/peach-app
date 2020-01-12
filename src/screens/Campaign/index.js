@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { RefreshControl } from 'react-native';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 import getOr from 'lodash/fp/getOr';
 
@@ -23,7 +23,6 @@ import FlatList from '../../components/FlatList';
 import { useUser } from '../../contexts/User';
 
 import GET_CAMPAIGN from './graphql/get-campaign';
-import APPLY_TO_CAMPAIGN from './graphql/apply-to-campaign';
 
 const TAB_INDEX_BOOKING_STATE = [
   BOOKING_STATE.APPLIED,
@@ -51,16 +50,6 @@ const Campaign = ({ navigation }) => {
         isInfluencer,
         bookingsState: tabBookingState,
       },
-    }
-  );
-
-  const [applyToCampaign, { loading: applying }] = useMutation(
-    APPLY_TO_CAMPAIGN,
-    {
-      variables: {
-        id,
-      },
-      refetchQueries: ['getCampaign', 'getCampaigns'],
     }
   );
 
@@ -182,8 +171,7 @@ const Campaign = ({ navigation }) => {
             <Button
               title="Apply"
               fixedWidth
-              onPress={applyToCampaign}
-              isLoading={applying}
+              onPress={() => navigation.navigate('Apply', { id })}
             />
           )}
           {userBookingState === BOOKING_STATE.APPLIED && (

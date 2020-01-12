@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Branch = ({ test, left, right }) => {
+export const Branch = ({ test, left, right }) => {
   if (test) {
     return <>{left}</>;
   }

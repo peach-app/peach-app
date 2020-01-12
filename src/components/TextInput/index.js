@@ -20,7 +20,7 @@ const Label = styled(Text)`
   margin-vertical: ${props => props.theme.spacingSmall}px;
 `;
 
-const TextInput = ({ label, error, ...props }) => (
+export const TextInput = ({ label, error, ...props }) => (
   <>
     {label && <Label>{label}</Label>}
     <Input hasError={error} {...props} />

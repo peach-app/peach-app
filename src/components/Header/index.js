@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Main, Wrapper, Action, MainTitle } from './styles';
 import BackButton from '../../components/BackButton';
 
-const Header = ({ title }) => (
+export const Header = ({ title }) => (
   <Main>
     <Wrapper>
       <Action>

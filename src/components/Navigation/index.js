@@ -14,7 +14,7 @@ const iconNames = {
   Account: 'ios-contact',
 };
 
-const Navigation = ({ navigation, onTabPress, theme }) => {
+const NavigationMain = ({ navigation, onTabPress, theme }) => {
   const { routes } = navigation.state;
 
   return (
@@ -48,7 +48,7 @@ const Navigation = ({ navigation, onTabPress, theme }) => {
   );
 };
 
-Navigation.propTypes = {
+NavigationMain.propTypes = {
   navigation: PropTypes.shape({
     state: PropTypes.shape({
       index: PropTypes.number.isRequired,
@@ -62,4 +62,5 @@ Navigation.propTypes = {
   }).isRequired,
 };
 
-export default withTheme(Navigation);
+export default withTheme(NavigationMain);
+export const navigation = withTheme(NavigationMain);

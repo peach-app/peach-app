@@ -12,7 +12,7 @@ import Avatar from '../../components/Avatar';
 import Text from '../../components/Text';
 import { SkeletonText } from '../../components/Skeletons';
 
-const UserCard = ({ navigation, isLoading, _id, name, bio, avatar }) => (
+const UserCardMain = ({ navigation, isLoading, _id, name, bio, avatar }) => (
   <TouchableOpacity
     onPress={() => !isLoading && navigation.navigate('Profile', { id: _id })}
   >
@@ -37,7 +37,7 @@ const UserCard = ({ navigation, isLoading, _id, name, bio, avatar }) => (
   </TouchableOpacity>
 );
 
-UserCard.defaultProps = {
+UserCardMain.defaultProps = {
   _id: null,
   isLoading: false,
   name: '',
@@ -45,7 +45,7 @@ UserCard.defaultProps = {
   avatar: null,
 };
 
-UserCard.propTypes = {
+UserCardMain.propTypes = {
   isLoading: PropTypes.bool,
   _id: PropTypes.string,
   name: PropTypes.string,
@@ -69,4 +69,5 @@ export const UserCardFragment = gql`
   }
 `;
 
-export default withNavigation(UserCard);
+export default withNavigation(UserCardMain);
+export const UserCard = withNavigation(UserCardMain);

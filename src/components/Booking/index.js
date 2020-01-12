@@ -16,7 +16,7 @@ import Avatar from '../../components/Avatar';
 import Text from '../../components/Text';
 import UPDATE_BOOKING_STATE from './graphql/update-booking-state';
 
-const Booking = ({ _id, cost, state, user, isLoading, navigation }) => {
+const BookingMain = ({ _id, cost, state, user, isLoading, navigation }) => {
   const [updateBookingState, { loading }] = useMutation(UPDATE_BOOKING_STATE, {
     refetchQueries: ['getCampaign'],
     variables: {
@@ -97,7 +97,7 @@ const Booking = ({ _id, cost, state, user, isLoading, navigation }) => {
   );
 };
 
-Booking.defaultProps = {
+BookingMain.defaultProps = {
   isLoading: false,
   _id: null,
   cost: 0,
@@ -105,7 +105,7 @@ Booking.defaultProps = {
   state: '',
 };
 
-Booking.propTypes = {
+BookingMain.propTypes = {
   isLoading: PropTypes.bool,
   _id: PropTypes.string,
   cost: PropTypes.number,
@@ -133,4 +133,5 @@ export const BookingFragment = gql`
   }
 `;
 
-export default withNavigation(Booking);
+export default withNavigation(BookingMain);
+export const Booking = withNavigation(BookingMain);

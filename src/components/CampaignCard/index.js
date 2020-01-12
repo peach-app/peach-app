@@ -10,7 +10,7 @@ import Grid from '../../components/Grid';
 import Avatar from '../../components/Avatar';
 import { SkeletonText } from '../../components/Skeletons';
 
-const CampaignCard = ({
+const CampaignCardMain = ({
   isLoading,
   navigation,
   _id,
@@ -62,7 +62,7 @@ const CampaignCard = ({
   </TouchableOpacity>
 );
 
-CampaignCard.defaultProps = {
+CampaignCardMain.defaultProps = {
   isLoading: false,
   _id: '',
   name: '',
@@ -70,7 +70,7 @@ CampaignCard.defaultProps = {
   user: null,
 };
 
-CampaignCard.propTypes = {
+CampaignCardMain.propTypes = {
   isLoading: PropTypes.bool,
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
@@ -100,4 +100,5 @@ export const CampaignCardFragment = gql`
   }
 `;
 
-export default withNavigation(CampaignCard);
+export default withNavigation(CampaignCardMain);
+export const CampaignCard = withNavigation(CampaignCardMain);

@@ -14,7 +14,13 @@ import { SkeletonText } from '../../components/Skeletons';
 
 const fakeAvatars = [{ _id: 0 }, { _id: 1 }];
 
-const ThreadCard = ({ isLoading, navigation, _id, users, latestMessage }) => (
+const ThreadCardMain = ({
+  isLoading,
+  navigation,
+  _id,
+  users,
+  latestMessage,
+}) => (
   <TouchableOpacity
     onPress={() => !isLoading && navigation.navigate('Thread', { id: _id })}
   >
@@ -58,12 +64,12 @@ const ThreadCard = ({ isLoading, navigation, _id, users, latestMessage }) => (
   </TouchableOpacity>
 );
 
-ThreadCard.defaultProps = {
+ThreadCardMain.defaultProps = {
   _id: null,
   isLoading: false,
 };
 
-ThreadCard.propTypes = {
+ThreadCardMain.propTypes = {
   isLoading: PropTypes.bool,
   _id: PropTypes.string,
   navigation: PropTypes.shape({
@@ -89,4 +95,5 @@ export const ThreadCardFragment = gql`
   }
 `;
 
-export default withNavigation(ThreadCard);
+export default withNavigation(ThreadCardMain);
+export const ThreadCard = withNavigation(ThreadCardMain);
