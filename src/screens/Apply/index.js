@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useMutation } from '@apollo/react-hooks';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 import {
   SafeAreaView,
@@ -16,15 +18,31 @@ import {
 
 import APPLY_TO_CAMPAIGN from './graphql/apply-to-campaign';
 
+const validationSchema = Yup.object().shape({
+  cost: Yup.number().required('Please enter your pay rate for this campaign'),
+});
+
 const Apply = ({ navigation }) => {
   const id = navigation.getParam('id');
 
   const [applyToCampaign, { loading }] = useMutation(APPLY_TO_CAMPAIGN, {
-    variables: {
-      id,
-    },
     refetchQueries: ['getCampaign', 'getCampaigns'],
     onCompleted: () => navigation.goBack(),
+  });
+
+  const formik = useFormik({
+    validationSchema,
+    initialValues: {
+      cost: '',
+    },
+    onSubmit: ({ cost }) => {
+      applyToCampaign({
+        variables: {
+          id,
+          cost: parseFloat(cost),
+        },
+      });
+    },
   });
 
   return (
@@ -35,7 +53,12 @@ const Apply = ({ navigation }) => {
         <Intro>
           <Grid>
             <Grid.Item size={12}>
-              <TextInput label="Pay Rate" />
+              <TextInput
+                label="Pay Rate (GBP)"
+                error={formik.errors.cost}
+                onChangeText={formik.handleChange('cost')}
+                onBlur={formik.handleBlur('cost')}
+              />
             </Grid.Item>
             <Grid.Item size={12}>
               <Actions>
@@ -43,7 +66,7 @@ const Apply = ({ navigation }) => {
                   fixedWidth
                   title="Apply"
                   isLoading={loading}
-                  onPress={applyToCampaign}
+                  onPress={formik.handleSubmit}
                 />
               </Actions>
             </Grid.Item>
