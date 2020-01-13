@@ -1,15 +1,17 @@
 import styled from 'styled-components/native';
-import SafeAreaView from '../../components/SafeAreaView';
+import { SafeAreaView } from '../../components';
 
 export const Main = styled(SafeAreaView)`
   background-color: ${props => props.theme.brandSecondary};
 `;
 
-export const Foot = styled.View`
+export const Content = styled.View`
   flex: 1;
+  justify-content: center;
 `;
 
 export const Image = styled.Image`
   width: 100%;
+  height: 200px;
   resize-mode: contain;
 `;

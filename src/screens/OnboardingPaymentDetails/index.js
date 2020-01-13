@@ -1,17 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 
-import SafeAreaView from '../../components/SafeAreaView';
-import Header from '../../components/Header';
-import StatusBar from '../../components/StatusBar';
-import Container from '../../components/Container';
-import Grid from '../../components/Grid';
-import TextInput from '../../components/TextInput';
-import Actions from '../../components/Actions';
-import Button from '../../components/Button';
-import Intro from '../../components/Intro';
+import {
+  SafeAreaView,
+  Header,
+  StatusBar,
+  Container,
+  Grid,
+  TextInput,
+  Actions,
+  Button,
+  Intro,
+} from '../../components';
 
-const OnboardingPaymentDetails = () => {
+const OnboardingPaymentDetails = ({ navigation }) => {
   const formik = useFormik({
     initialValues: {
       cardNum: '',
@@ -37,13 +40,23 @@ const OnboardingPaymentDetails = () => {
 
           <Grid.Item size={12}>
             <Actions>
-              <Button title="Finish" fixedWidth />
+              <Button
+                title="Next"
+                fixedWidth
+                onPress={() => navigation.navigate('Complete')}
+              />
             </Actions>
           </Grid.Item>
         </Grid>
       </Container>
     </SafeAreaView>
   );
+};
+
+OnboardingPaymentDetails.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 export default OnboardingPaymentDetails;

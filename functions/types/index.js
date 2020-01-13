@@ -33,6 +33,7 @@ module.exports = gql`
     applyToCampaign(id: ID!, cost: Int!): Booking
     updateBookingState(id: ID!, state: BookingState!): Boolean
     updateUser(user: UserInput): Boolean
+    completeOnboarding: Boolean
   }
 
   # Fauna references #
