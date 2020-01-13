@@ -6,15 +6,17 @@ import get from 'lodash/fp/get';
 
 import formatRefs from '../../helpers/formatRefs';
 import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from '../../consts';
-import SafeAreaView from '../../components/SafeAreaView';
-import FlatList from '../../components/FlatList';
-import Title from '../../components/Title';
-import Intro from '../../components/Intro';
-import Tabs from '../../components/Tabs';
-import IconButton from '../../components/IconButton';
-import Grid from '../../components/Grid';
-import CampaignCard from '../../components/CampaignCard';
-import NoResultText from '../../components/NoResultText';
+import {
+  SafeAreaView,
+  FlatList,
+  Title,
+  Intro,
+  Tabs,
+  IconButton,
+  Grid,
+  CampaignCard,
+  NoResultText,
+} from '../../components';
 import { useUser } from '../../contexts/User';
 
 import GET_CAMPAIGNS from './graphql/get-campaigns';

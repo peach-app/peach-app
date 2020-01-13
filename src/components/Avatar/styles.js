@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import Title from '../../components/Title';
+import { Title } from '../Title';
 
 export const Main = styled.View`
   width: ${props => props.size}px;

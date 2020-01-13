@@ -6,13 +6,15 @@ import get from 'lodash/fp/get';
 
 import formatRefs from '../../helpers/formatRefs';
 import { NETWORK_STATUS } from '../../consts';
-import SafeAreaView from '../../components/SafeAreaView';
-import StatusBar from '../../components/StatusBar';
-import FlatList from '../../components/FlatList';
-import Title from '../../components/Title';
-import Intro from '../../components/Intro';
-import CampaignCard from '../../components/CampaignCard';
-import NoResultText from '../../components/NoResultText';
+import {
+  SafeAreaView,
+  StatusBar,
+  FlatList,
+  Title,
+  Intro,
+  CampaignCard,
+  NoResultText,
+} from '../../components';
 import GET_DISCOVER_CAMPAIGNS from './graphql/get-discover-campaigns';
 
 const DiscoverCampaigns = () => {

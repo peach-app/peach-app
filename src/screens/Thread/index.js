@@ -6,11 +6,13 @@ import get from 'lodash/fp/get';
 import startCase from 'lodash/startCase';
 
 import { Composer, Wrapper, TextInput, Send, Icon } from './styles';
-import SafeAreaView from '../../components/SafeAreaView';
-import Header from '../../components/Header';
-import Loading from '../../components/Loading';
-import FlatList from '../../components/FlatList';
-import MessageBubble from '../../components/MessageBubble';
+import {
+  SafeAreaView,
+  Header,
+  Loading,
+  FlatList,
+  MessageBubble,
+} from '../../components';
 
 import SEND_MESSAGE from './graphql/send-message';
 import GET_THREAD from './graphql/get-thread';

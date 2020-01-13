@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 
-import Title from '../../components/Title';
+import { Title } from '../Title';
 
 export const Main = styled.ScrollView.attrs(props => ({
   horizontal: true,

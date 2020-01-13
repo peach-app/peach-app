@@ -1,29 +1,31 @@
 import React, { useState } from 'react';
 import { RefreshControl } from 'react-native';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 import getOr from 'lodash/fp/getOr';
 
 import { Foot, Description } from './styles';
 import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from '../../consts';
-import Text from '../../components/Text';
-import Header from '../../components/Header';
-import Intro from '../../components/Intro';
-import SafeAreaView from '../../components/SafeAreaView';
-import StatusBar from '../../components/StatusBar';
-import Button from '../../components/Button';
-import Title from '../../components/Title';
-import Tabs from '../../components/Tabs';
-import Avatar from '../../components/Avatar';
-import Booking from '../../components/Booking';
-import { SkeletonText } from '../../components/Skeletons';
-import Grid from '../../components/Grid';
-import NoResultText from '../../components/NoResultText';
-import FlatList from '../../components/FlatList';
+import {
+  Text,
+  Header,
+  Intro,
+  SafeAreaView,
+  StatusBar,
+  Button,
+  Title,
+  Tabs,
+  Avatar,
+  Booking,
+  SkeletonText,
+  Grid,
+  NoResultText,
+  FlatList,
+} from '../../components';
+
 import { useUser } from '../../contexts/User';
 
 import GET_CAMPAIGN from './graphql/get-campaign';
-import APPLY_TO_CAMPAIGN from './graphql/apply-to-campaign';
 
 const TAB_INDEX_BOOKING_STATE = [
   BOOKING_STATE.APPLIED,
@@ -51,16 +53,6 @@ const Campaign = ({ navigation }) => {
         isInfluencer,
         bookingsState: tabBookingState,
       },
-    }
-  );
-
-  const [applyToCampaign, { loading: applying }] = useMutation(
-    APPLY_TO_CAMPAIGN,
-    {
-      variables: {
-        id,
-      },
-      refetchQueries: ['getCampaign', 'getCampaigns'],
     }
   );
 
@@ -182,8 +174,7 @@ const Campaign = ({ navigation }) => {
             <Button
               title="Apply"
               fixedWidth
-              onPress={applyToCampaign}
-              isLoading={applying}
+              onPress={() => navigation.navigate('Apply', { id })}
             />
           )}
           {userBookingState === BOOKING_STATE.APPLIED && (

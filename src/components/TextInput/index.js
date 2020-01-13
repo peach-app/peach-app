@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components/native';
 
-import Text from '../Text';
+import { Text } from '../Text';
 
 const Input = styled.TextInput`
   border-width: 1px;
@@ -20,7 +20,7 @@ const Label = styled(Text)`
   margin-vertical: ${props => props.theme.spacingSmall}px;
 `;
 
-const TextInput = ({ label, error, ...props }) => (
+export const TextInput = ({ label, error, ...props }) => (
   <>
     {label && <Label>{label}</Label>}
     <Input hasError={error} {...props} />
@@ -37,5 +37,3 @@ TextInput.propTypes = {
   label: PropTypes.string,
   error: PropTypes.string,
 };
-
-export default TextInput;

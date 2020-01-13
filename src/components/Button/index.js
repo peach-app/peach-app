@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { ActivityIndicator, Main, Title, Loader } from './styles';
 
-const Button = ({ title, isLoading, isGhost, isSmall, ...props }) => (
+export const Button = ({ title, isLoading, isGhost, isSmall, ...props }) => (
   <Main {...props} isGhost={isGhost} isSmall={isSmall}>
     <Title isGhost={isGhost} isLoading={isLoading}>
       {title}
@@ -34,5 +34,3 @@ Button.propTypes = {
   isShaded: PropTypes.bool,
   fixedWidth: PropTypes.bool,
 };
-
-export default Button;

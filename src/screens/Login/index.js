@@ -5,17 +5,19 @@ import * as Yup from 'yup';
 import { useMutation } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 
-import SafeAreaView from '../../components/SafeAreaView';
-import StatusBar from '../../components/StatusBar';
-import Container from '../../components/Container';
-import Grid from '../../components/Grid';
-import Intro from '../../components/Intro';
-import Title from '../../components/Title';
-import Button from '../../components/Button';
-import Actions from '../../components/Actions';
-import TextInput from '../../components/TextInput';
-import Text from '../../components/Text';
-import BackButton from '../../components/BackButton';
+import {
+  SafeAreaView,
+  StatusBar,
+  Container,
+  Grid,
+  Intro,
+  Title,
+  Button,
+  Actions,
+  TextInput,
+  Text,
+  BackButton,
+} from '../../components';
 import { useAuth } from '../../contexts/Auth';
 import LOGIN from './graphql/login';
 

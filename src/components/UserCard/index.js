@@ -7,12 +7,12 @@ import startCase from 'lodash/startCase';
 import PropTypes from 'prop-types';
 
 import { Bio } from './styles';
-import Grid from '../../components/Grid';
-import Avatar from '../../components/Avatar';
-import Text from '../../components/Text';
-import { SkeletonText } from '../../components/Skeletons';
+import { Grid } from '../Grid';
+import { Avatar } from '../Avatar';
+import { Text } from '../Text';
+import { SkeletonText } from '../Skeletons';
 
-const UserCard = ({ navigation, isLoading, _id, name, bio, avatar }) => (
+const UserCardMain = ({ navigation, isLoading, _id, name, bio, avatar }) => (
   <TouchableOpacity
     onPress={() => !isLoading && navigation.navigate('Profile', { id: _id })}
   >
@@ -37,7 +37,7 @@ const UserCard = ({ navigation, isLoading, _id, name, bio, avatar }) => (
   </TouchableOpacity>
 );
 
-UserCard.defaultProps = {
+UserCardMain.defaultProps = {
   _id: null,
   isLoading: false,
   name: '',
@@ -45,7 +45,7 @@ UserCard.defaultProps = {
   avatar: null,
 };
 
-UserCard.propTypes = {
+UserCardMain.propTypes = {
   isLoading: PropTypes.bool,
   _id: PropTypes.string,
   name: PropTypes.string,
@@ -69,4 +69,4 @@ export const UserCardFragment = gql`
   }
 `;
 
-export default withNavigation(UserCard);
+export const UserCard = withNavigation(UserCardMain);

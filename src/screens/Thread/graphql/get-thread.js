@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-import { MessageBubbleFragment } from '../../../components/MessageBubble';
+import { MessageBubbleFragment } from '../../../components';
 
 export default gql`
   ${MessageBubbleFragment}

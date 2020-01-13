@@ -30,7 +30,7 @@ module.exports = gql`
       type: UserType!
     ): Auth
     sendMessage(threadId: ID!, text: String!): Message
-    applyToCampaign(id: ID!): Booking
+    applyToCampaign(id: ID!, cost: Int!): Booking
     updateBookingState(id: ID!, state: BookingState!): Boolean
     updateUser(user: UserInput): Boolean
   }

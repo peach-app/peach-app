@@ -2,7 +2,7 @@ import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
 
-import Navigation from '../components/Navigation';
+import { Navigation } from '../components';
 import Campaign from '../screens/Campaign';
 import Campaigns from '../screens/Campaigns';
 import Inbox from '../screens/Inbox';
@@ -14,6 +14,7 @@ import AccountEdit from '../screens/AccountEdit';
 import Payouts from '../screens/Payouts';
 import CreateCampaign from '../screens/CreateCampaign';
 import Profile from '../screens/Profile';
+import Apply from '../screens/Apply';
 
 const CampaignStack = createStackNavigator(
   {
@@ -72,6 +73,7 @@ const AuthedNavigator = createStackNavigator(
   {
     Home: TabNavigator,
     Campaign,
+    Apply,
     Profile,
   },
   {
