@@ -5,5 +5,3 @@ export const Text = styled.Text`
   color: ${props => props.theme.foreground};
   ${props => props.isCenter && `text-align: center;`}
 `;
-
-export default Text;

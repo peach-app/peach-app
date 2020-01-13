@@ -6,9 +6,9 @@ import gql from 'graphql-tag';
 import get from 'lodash/fp/get';
 
 import { Icon, MainTitle, Description, User } from './styles';
-import Grid from '../../components/Grid';
-import Avatar from '../../components/Avatar';
-import { SkeletonText } from '../../components/Skeletons';
+import { Grid } from '../Grid';
+import { Avatar } from '../Avatar';
+import { SkeletonText } from '../Skeletons';
 
 const CampaignCardMain = ({
   isLoading,
@@ -100,5 +100,4 @@ export const CampaignCardFragment = gql`
   }
 `;
 
-export default withNavigation(CampaignCardMain);
 export const CampaignCard = withNavigation(CampaignCardMain);

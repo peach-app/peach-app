@@ -16,5 +16,4 @@ BackButtonMain.propTypes = {
   }).isRequired,
 };
 
-export default withNavigation(BackButtonMain);
 export const BackButton = withNavigation(BackButtonMain);

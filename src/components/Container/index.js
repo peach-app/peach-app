@@ -6,5 +6,3 @@ export const Container = styled.View`
   max-width: 100%;
   align-self: center;
 `;
-
-export default Container;

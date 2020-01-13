@@ -7,10 +7,10 @@ import startCase from 'lodash/startCase';
 import PropTypes from 'prop-types';
 
 import { Bio } from './styles';
-import Grid from '../../components/Grid';
-import Avatar from '../../components/Avatar';
-import Text from '../../components/Text';
-import { SkeletonText } from '../../components/Skeletons';
+import { Grid } from '../Grid';
+import { Avatar } from '../Avatar';
+import { Text } from '../Text';
+import { SkeletonText } from '../Skeletons';
 
 const UserCardMain = ({ navigation, isLoading, _id, name, bio, avatar }) => (
   <TouchableOpacity
@@ -69,5 +69,4 @@ export const UserCardFragment = gql`
   }
 `;
 
-export default withNavigation(UserCardMain);
 export const UserCard = withNavigation(UserCardMain);

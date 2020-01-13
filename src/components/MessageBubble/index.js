@@ -25,5 +25,3 @@ export const MessageBubbleFragment = gql`
     sentBySelf
   }
 `;
-
-export default MessageBubble;

@@ -8,12 +8,12 @@ import { useMutation } from '@apollo/react-hooks';
 import startCase from 'lodash/startCase';
 
 import { BOOKING_STATE } from '../../consts';
-import Grid from '../../components/Grid';
-import { SkeletonText } from '../../components/Skeletons';
-import Loading from '../../components/Loading';
-import IconButton from '../../components/IconButton';
-import Avatar from '../../components/Avatar';
-import Text from '../../components/Text';
+import { Grid } from '../Grid';
+import { SkeletonText } from '../Skeletons';
+import { Loading } from '../Loading';
+import { IconButton } from '../IconButton';
+import { Avatar } from '../Avatar';
+import { Text } from '../Text';
 import UPDATE_BOOKING_STATE from './graphql/update-booking-state';
 
 const BookingMain = ({ _id, cost, state, user, isLoading, navigation }) => {
@@ -133,5 +133,4 @@ export const BookingFragment = gql`
   }
 `;
 
-export default withNavigation(BookingMain);
 export const Booking = withNavigation(BookingMain);

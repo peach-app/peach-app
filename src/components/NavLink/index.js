@@ -18,5 +18,3 @@ NavLink.propTypes = {
   title: PropTypes.string.isRequired,
   iconProps: PropTypes.object,
 };
-
-export default NavLink;

@@ -14,5 +14,3 @@ IconButton.propTypes = {
   name: PropTypes.string.isRequired,
   onPress: PropTypes.func.isRequired,
 };
-
-export default IconButton;

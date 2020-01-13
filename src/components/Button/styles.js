@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components/native';
 
-import Text from '../../components/Text';
+import { Text } from '../Text';
 
 export const ActivityIndicator = styled.ActivityIndicator.attrs(props => ({
   color: props.theme.white,

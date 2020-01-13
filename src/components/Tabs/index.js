@@ -21,5 +21,3 @@ Tabs.propTypes = {
   onTabPress: PropTypes.func.isRequired,
   tabs: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
-
-export default Tabs;

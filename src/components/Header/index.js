@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Main, Wrapper, Action, MainTitle } from './styles';
-import BackButton from '../../components/BackButton';
+import { BackButton } from '../BackButton';
 
 export const Header = ({ title }) => (
   <Main>
@@ -22,5 +22,3 @@ Header.defaultProps = {
 Header.propTypes = {
   title: PropTypes.string,
 };
-
-export default Header;

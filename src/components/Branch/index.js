@@ -22,5 +22,3 @@ Branch.propTypes = {
     PropTypes.number,
   ]).isRequired,
 };
-
-export default Branch;

@@ -28,5 +28,3 @@ const GridItem = styled.View`
 `;
 
 Grid.Item = GridItem;
-
-export default Grid;

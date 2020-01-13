@@ -5,5 +5,3 @@ export const Actions = styled.View`
   justify-content: center;
   padding-top: ${props => props.theme.spacing}px;
 `;
-
-export default Actions;

@@ -2,7 +2,7 @@ import { createAppContainer } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
 
-import Navigation from '../components/Navigation';
+import { Navigation } from '../components';
 import Campaign from '../screens/Campaign';
 import Campaigns from '../screens/Campaigns';
 import Inbox from '../screens/Inbox';

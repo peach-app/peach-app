@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { withTheme } from 'styled-components/native';
 
 import { Main, List, Logo, Item } from './styles';
-import Container from '../../components/Container';
+import { Container } from '../Container';
 
 const iconNames = {
   Campaigns: 'ios-list',
@@ -62,5 +62,4 @@ NavigationMain.propTypes = {
   }).isRequired,
 };
 
-export default withTheme(NavigationMain);
-export const navigation = withTheme(NavigationMain);
+export const Navigation = withTheme(NavigationMain);

@@ -8,9 +8,9 @@ import getOr from 'lodash/fp/getOr';
 import startCase from 'lodash/startCase';
 
 import { Icon, Users, Text } from './styles';
-import Grid from '../../components/Grid';
-import Avatar from '../../components/Avatar';
-import { SkeletonText } from '../../components/Skeletons';
+import { Grid } from '../Grid';
+import { Avatar } from '../Avatar';
+import { SkeletonText } from '../Skeletons';
 
 const fakeAvatars = [{ _id: 0 }, { _id: 1 }];
 
@@ -95,5 +95,4 @@ export const ThreadCardFragment = gql`
   }
 `;
 
-export default withNavigation(ThreadCardMain);
 export const ThreadCard = withNavigation(ThreadCardMain);

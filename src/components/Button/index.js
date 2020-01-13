@@ -34,5 +34,3 @@ Button.propTypes = {
   isShaded: PropTypes.bool,
   fixedWidth: PropTypes.bool,
 };
-
-export default Button;

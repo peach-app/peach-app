@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import get from 'lodash/fp/get';
 
 import { Main, Image, Initial, List, Item } from './styles';
-import { SkeletonCircle } from '../../components/Skeletons';
-import Branch from '../../components/Branch';
+import { SkeletonCircle } from '../Skeletons';
+import { Branch } from '../Branch';
 
 export const Avatar = ({ size, source, fallback, isLoading, onPress }) => (
   <SkeletonCircle isLoading={isLoading} size={size}>
@@ -51,5 +51,3 @@ Avatar.propTypes = {
 };
 
 Avatar.List = AvatarList;
-
-export default Avatar;

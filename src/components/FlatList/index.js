@@ -14,5 +14,3 @@ const FlatListItem = styled.View`
 `;
 
 FlatList.Item = FlatListItem;
-
-export default FlatList;
