@@ -75,6 +75,7 @@ module.exports = async () => {
           resource: q.Collection('Thread'),
           actions: {
             read: true,
+            create: true,
           },
         },
         {
@@ -99,6 +100,7 @@ module.exports = async () => {
           resource: q.Collection('thread_users'),
           actions: {
             read: true,
+            create: true,
           },
         },
 
