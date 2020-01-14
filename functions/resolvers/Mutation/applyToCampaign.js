@@ -4,8 +4,6 @@ const { BOOKING_STATE } = require('../../consts');
 module.exports = async (root, args, { client, q, DocumentDataWithId }) => {
   const { id, cost } = args;
 
-  console.log(args);
-
   if (!cost) {
     throw new UserInputError('No pay rate supplied for application');
   }

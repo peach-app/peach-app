@@ -16,6 +16,7 @@ import {
   Grid,
   CampaignCard,
   NoResultText,
+  Branch,
 } from '../../components';
 import { useUser } from '../../contexts/User';
 
@@ -109,7 +110,19 @@ const Campaigns = ({ navigation }) => {
             </FlatList.Item>
 
             {!fetching && campaigns.length <= 0 && (
-              <NoResultText>No active campaigns at this time.</NoResultText>
+              <NoResultText isPara>
+                <Branch
+                  test={isBrand}
+                  left={`You don't have any campaigns yet.\nPress "+" to get started.`}
+                  right={`You haven't ${
+                    TAB_INDEX_BOOKING_STATE[activeTab] === BOOKING_STATE.APPLIED
+                      ? ''
+                      : 'been '
+                  }${TAB_INDEX_BOOKING_STATE[
+                    activeTab
+                  ].toLowerCase()} onto any campaigns yet.\nVisit "Browse" to start applying.`}
+                />
+              </NoResultText>
             )}
 
             {fetching &&
