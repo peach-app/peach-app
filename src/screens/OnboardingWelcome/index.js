@@ -24,7 +24,7 @@ const OnboardingWelcome = ({ navigation }) => (
             <Title>Welcome!</Title>
           </Grid.Item>
           <Grid.Item size={12}>
-            <Text>
+            <Text isPara>
               We need a few more details from you before you can start using the
               Peach app.
             </Text>

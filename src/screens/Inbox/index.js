@@ -1,9 +1,11 @@
 import React from 'react';
 import { RefreshControl } from 'react-native';
 import getOr from 'lodash/fp/getOr';
+import get from 'lodash/fp/get';
 import { useQuery } from '@apollo/react-hooks';
 
-import { NETWORK_STATUS } from '../../consts';
+import { useUser } from '../../contexts/User';
+import { NETWORK_STATUS, USER_TYPE } from '../../consts';
 import {
   SafeAreaView,
   StatusBar,
@@ -12,10 +14,14 @@ import {
   FlatList,
   ThreadCard,
   NoResultText,
+  Branch,
 } from '../../components';
 import GET_THREADS from './graphql/get-threads';
 
 const Inbox = () => {
+  const { user } = useUser();
+  const userType = get('user.type', user);
+
   const { data, loading, networkStatus, refetch } = useQuery(GET_THREADS, {
     notifyOnNetworkStatusChange: true,
     pollInterval: 10000,
@@ -44,7 +50,13 @@ const Inbox = () => {
             </FlatList.Item>
 
             {!loading && messages.length <= 0 && (
-              <NoResultText>No active threads yet.</NoResultText>
+              <NoResultText isPara>
+                <Branch
+                  test={userType === USER_TYPE.BRAND}
+                  left={`Threads will appear here when you\naccept an influencer onto a campaign.`}
+                  right={`Threads will appear here when \nyou join your first campaign.`}
+                />
+              </NoResultText>
             )}
 
             {loading && networkStatus === NETWORK_STATUS.FETCHING && (

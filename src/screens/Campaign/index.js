@@ -4,7 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 import getOr from 'lodash/fp/getOr';
 
-import { Foot, Description } from './styles';
+import { Foot } from './styles';
 import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from '../../consts';
 import {
   Text,
@@ -113,14 +113,14 @@ const Campaign = ({ navigation }) => {
                   </Grid.Item>
 
                   <Grid.Item size={12}>
-                    <Description>
+                    <Text isPara>
                       <SkeletonText
                         loadingText="Campaign description loading..."
                         isLoading={fetching}
                       >
                         {getOr('', 'findCampaignById.description', campaign)}
                       </SkeletonText>
-                    </Description>
+                    </Text>
                   </Grid.Item>
                 </Grid>
               </Intro>
@@ -187,7 +187,7 @@ const Campaign = ({ navigation }) => {
             <Text>You've been accepted onto this campaign!</Text>
           )}
           {userBookingState === BOOKING_STATE.DECLINED && (
-            <Text>Your application for this campaign was unsuccesful.</Text>
+            <Text>Your application for this campaign was unsuccessful.</Text>
           )}
           {userBookingState === BOOKING_STATE.COMPLETE && (
             <Text>Your work here is done</Text>

@@ -12,6 +12,7 @@ import {
   Actions,
   Button,
   Intro,
+  Text,
 } from '../../components';
 
 const OnboardingPaymentDetails = ({ navigation }) => {
@@ -24,24 +25,41 @@ const OnboardingPaymentDetails = ({ navigation }) => {
   return (
     <SafeAreaView>
       <StatusBar />
-      <Header title="Payment Details" />
+      <Header title="Bank Account Details" />
       <Container>
         <Grid>
           <Grid.Item size={12}>
             <Intro>
-              <TextInput
-                label="Card Number"
-                error={formik.errors.cardNum}
-                onChangeText={formik.handleChange('cardNum')}
-                onBlur={formik.handleBlur('cardNum')}
-              />
+              <Text isPara>
+                Enter your account details to speed up campaign application
+                approvals. Alternatively skip now, and enter your details when
+                you accept your first influencer.
+              </Text>
             </Intro>
+          </Grid.Item>
+
+          <Grid.Item size={12}>
+            <TextInput
+              label="Account number"
+              error={formik.errors.cardNum}
+              onChangeText={formik.handleChange('cardNum')}
+              onBlur={formik.handleBlur('cardNum')}
+            />
+          </Grid.Item>
+
+          <Grid.Item size={12}>
+            <TextInput
+              label="Sort code"
+              error={formik.errors.cardNum}
+              onChangeText={formik.handleChange('cardNum')}
+              onBlur={formik.handleBlur('cardNum')}
+            />
           </Grid.Item>
 
           <Grid.Item size={12}>
             <Actions>
               <Button
-                title="Next"
+                title="Skip"
                 fixedWidth
                 onPress={() => navigation.navigate('Complete')}
               />
