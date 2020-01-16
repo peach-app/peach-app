@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
+import { ScrollView, KeyboardAvoidingView } from 'react-native';
 
 import {
   SafeAreaView,
@@ -25,48 +26,51 @@ const OnboardingPaymentDetails = ({ navigation }) => {
   return (
     <SafeAreaView>
       <StatusBar />
-      <Header title="Bank Account Details" />
-      <Container>
-        <Grid>
-          <Grid.Item size={12}>
-            <Intro>
-              <Text isPara>
-                Enter your account details to speed up campaign application
-                approvals. Alternatively skip now, and enter your details when
-                you accept your first influencer.
-              </Text>
-            </Intro>
-          </Grid.Item>
+      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+        <Header title="Bank Account Details" />
+        <ScrollView>
+          <Container>
+            <Intro />
+            <Grid>
+              <Grid.Item size={12}>
+                <Text isPara>
+                  Enter your account details to speed up campaign application
+                  approvals. Alternatively skip now, and enter your details when
+                  you accept your first influencer.
+                </Text>
+              </Grid.Item>
 
-          <Grid.Item size={12}>
-            <TextInput
-              label="Account number"
-              error={formik.errors.cardNum}
-              onChangeText={formik.handleChange('cardNum')}
-              onBlur={formik.handleBlur('cardNum')}
-            />
-          </Grid.Item>
+              <Grid.Item size={12}>
+                <TextInput
+                  label="Account number"
+                  error={formik.errors.cardNum}
+                  onChangeText={formik.handleChange('cardNum')}
+                  onBlur={formik.handleBlur('cardNum')}
+                />
+              </Grid.Item>
 
-          <Grid.Item size={12}>
-            <TextInput
-              label="Sort code"
-              error={formik.errors.cardNum}
-              onChangeText={formik.handleChange('cardNum')}
-              onBlur={formik.handleBlur('cardNum')}
-            />
-          </Grid.Item>
+              <Grid.Item size={12}>
+                <TextInput
+                  label="Sort code"
+                  error={formik.errors.cardNum}
+                  onChangeText={formik.handleChange('cardNum')}
+                  onBlur={formik.handleBlur('cardNum')}
+                />
+              </Grid.Item>
 
-          <Grid.Item size={12}>
-            <Actions>
-              <Button
-                title="Skip"
-                fixedWidth
-                onPress={() => navigation.navigate('Complete')}
-              />
-            </Actions>
-          </Grid.Item>
-        </Grid>
-      </Container>
+              <Grid.Item size={12}>
+                <Actions>
+                  <Button
+                    title="Skip"
+                    fixedWidth
+                    onPress={() => navigation.navigate('Social')}
+                  />
+                </Actions>
+              </Grid.Item>
+            </Grid>
+          </Container>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
