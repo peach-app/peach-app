@@ -34,9 +34,9 @@ const OnboardingPaymentDetails = ({ navigation }) => {
             <Grid>
               <Grid.Item size={12}>
                 <Text isPara>
-                  Enter your account details to speed up campaign application
-                  approvals. Alternatively skip now, and enter your details when
-                  you accept your first influencer.
+                  {
+                    'Enter your account details to speed up campaign \napplication approvals.'
+                  }
                 </Text>
               </Grid.Item>
 

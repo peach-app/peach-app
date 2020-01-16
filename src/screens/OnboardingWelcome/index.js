@@ -25,8 +25,9 @@ const OnboardingWelcome = ({ navigation }) => (
           </Grid.Item>
           <Grid.Item size={12}>
             <Text isPara>
-              We need a few more details from you before you can start using the
-              Peach app.
+              {
+                'We need a few more details from you \nbefore you can start using the Peach app.'
+              }
             </Text>
           </Grid.Item>
           <Grid.Item size={12}>
