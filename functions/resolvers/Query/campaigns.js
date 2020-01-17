@@ -1,35 +1,34 @@
 const { USER_TYPE } = require('../../consts');
 
 module.exports = async (root, args, { client, q, DocumentDataWithId }) => {
+  const { state, size = 1, after, before } = args;
+
   return client.query(
-    q.If(
-      // If current user is a BRAND
-      q.Equals(
-        q.Select(['data', 'type'], q.Get(q.Identity())),
-        USER_TYPE.BRAND
-      ),
+    q.Map(
+      q.Paginate(
+        q.If(
+          q.Equals(
+            q.Select(['data', 'type'], q.Get(q.Identity())),
+            USER_TYPE.BRAND
+          ),
 
-      // Return user created campaigns
-      q.Map(
-        q.Paginate(q.Match(q.Index('campaign_by_user'), q.Identity())),
-        q.Lambda('ref', DocumentDataWithId(q.Get(q.Var('ref'))))
-      ),
+          // brand
+          q.Match(q.Index('campaign_by_user'), q.Identity()),
 
-      // Return campaigns by user bookings
-      q.Map(
-        q.Paginate(
-          q.Match(q.Index('booking_by_user_state'), q.Identity(), args.state)
-        ),
-        q.Lambda(
-          'ref',
-          q.Let(
-            {
-              campaign: q.Select(['data', 'campaign'], q.Get(q.Var('ref'))),
-            },
-            DocumentDataWithId(q.Get(q.Var('campaign')))
+          // influencer
+          q.Match(
+            q.Index('booking_campaign_by_user_state'),
+            q.Identity(),
+            state
           )
-        )
-      )
+        ),
+        {
+          size,
+          ...(after && { after: q.Ref(q.Collection('Campaign'), after) }),
+          ...(before && { before: q.Ref(q.Collection('Campaign'), before) }),
+        }
+      ),
+      q.Lambda('ref', DocumentDataWithId(q.Get(q.Var('ref'))))
     )
   );
 };

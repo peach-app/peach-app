@@ -7,7 +7,12 @@ module.exports = gql`
     discover: Discover
 
     # Campaigns listing
-    campaigns(state: BookingState): CampaignPage
+    campaigns(
+      state: BookingState
+      size: Int
+      after: ID
+      before: ID
+    ): CampaignPage
 
     findCampaignById(id: ID): Campaign
     findThreadById(id: ID!): Thread
@@ -25,20 +30,18 @@ module.exports = gql`
       type: UserType!
     ): Auth
     sendMessage(threadId: ID!, text: String!): Message
-    createCampaign(
-      name: String!
-      description: String!
-      dueDate: String!
-      private: Boolean!
-      budget: String!
-    ): Campaign
+    createCampaign(campaign: CampaignInput): Campaign
     applyToCampaign(id: ID!): Booking
     updateBookingState(id: ID!, state: BookingState!): Boolean
     updateUser(name: String): Boolean
   }
 
+  type Ref {
+    id: ID
+  }
+
   type Discover {
-    campaigns: CampaignPage
+    campaigns(size: Int, after: ID, before: ID): CampaignPage
     popularUsers(type: UserType!): UserPage
   }
 
@@ -81,6 +84,8 @@ module.exports = gql`
 
   type CampaignPage {
     data: [Campaign]
+    after: [Ref]
+    before: [Ref]
   }
 
   type Campaign {
@@ -142,5 +147,13 @@ module.exports = gql`
     user: User!
     text: String!
     sentBySelf: Boolean
+  }
+
+  input CampaignInput {
+    name: String!
+    description: String!
+    dueDate: String!
+    private: Boolean!
+    budget: String!
   }
 `;

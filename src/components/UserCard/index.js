@@ -7,12 +7,23 @@ import startCase from 'lodash/startCase';
 import PropTypes from 'prop-types';
 
 import { Bio } from './styles';
-import { Grid, GridItem } from "../Grid";
-import Avatar from "../Avatar";
-import Text from "../Text";
-import { SkeletonText } from "../Skeletons";
+import { Grid, GridItem } from '../Grid';
+import Avatar from '../Avatar';
+import Text from '../Text';
+import { SkeletonText } from '../Skeletons';
+import IconButton from '../IconButton';
 
-const UserCard = ({ navigation, isLoading, _id, name, bio, avatar, size }) => (
+const UserCard = ({
+  navigation,
+  isLoading,
+  _id,
+  name,
+  bio,
+  avatar,
+  size,
+  isActionable,
+  onActionPressed,
+}) => (
   <TouchableOpacity
     onPress={() => !isLoading && navigation.navigate('Profile', { id: _id })}
   >
@@ -33,6 +44,13 @@ const UserCard = ({ navigation, isLoading, _id, name, bio, avatar, size }) => (
         </Text>
         {bio && <Bio numberOfLines={2}>{bio}</Bio>}
       </GridItem>
+      {isActionable && (
+        <TouchableOpacity onPress={() => onActionPressed(_id, name)}>
+          <GridItem flex={1}>
+            <Text>Invite</Text>
+          </GridItem>
+        </TouchableOpacity>
+      )}
     </Grid>
   </TouchableOpacity>
 );

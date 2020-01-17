@@ -1,7 +1,9 @@
 import React from 'react';
 import { RefreshControl } from 'react-native';
-import getOr from 'lodash/fp/getOr';
 import { useQuery } from '@apollo/react-hooks';
+import getOr from 'lodash/fp/getOr';
+import get from 'lodash/fp/get';
+import head from 'lodash/fp/head';
 
 import { NETWORK_STATUS } from '../../consts';
 import SafeAreaView from '../../components/SafeAreaView';
@@ -14,7 +16,7 @@ import NoResultText from '../../components/NoResultText';
 import GET_DISCOVER_CAMPAIGNS from './graphql/get-discover-campaigns';
 
 const DiscoverCampaigns = () => {
-  const { data, loading, networkStatus, refetch } = useQuery(
+  const { data, loading, networkStatus, refetch, fetchMore } = useQuery(
     GET_DISCOVER_CAMPAIGNS,
     {
       notifyOnNetworkStatusChange: true,
@@ -34,6 +36,29 @@ const DiscoverCampaigns = () => {
             onRefresh={refetch}
           />
         }
+        onEndReached={() => {
+          const after = get('id', head(get('discover.campaigns.after', data)));
+
+          if (!after || loading) return;
+
+          fetchMore({
+            variables: {
+              after,
+            },
+            updateQuery: (cache, { fetchMoreResult }) => ({
+              discover: {
+                ...fetchMoreResult.discover,
+                campaigns: {
+                  ...fetchMoreResult.discover.campaigns,
+                  data: [
+                    ...cache.discover.campaigns.data,
+                    ...fetchMoreResult.discover.campaigns.data,
+                  ],
+                },
+              },
+            }),
+          });
+        }}
         ListHeaderComponent={
           <>
             <FlatListItem>
