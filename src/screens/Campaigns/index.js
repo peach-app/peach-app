@@ -4,18 +4,21 @@ import { RefreshControl } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import getOr from 'lodash/fp/getOr';
 import get from 'lodash/fp/get';
-import head from 'lodash/fp/head';
 
+import formatRefs from '../../helpers/formatRefs';
 import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from '../../consts';
-import SafeAreaView from '../../components/SafeAreaView';
-import { FlatList, FlatListItem } from '../../components/FlatList';
-import Title from '../../components/Title';
-import Intro from '../../components/Intro';
-import Tabs from '../../components/Tabs';
-import IconButton from '../../components/IconButton';
-import { Grid, GridItem } from '../../components/Grid';
-import CampaignCard from '../../components/CampaignCard';
-import NoResultText from '../../components/NoResultText';
+import {
+  SafeAreaView,
+  FlatList,
+  Title,
+  Intro,
+  Tabs,
+  IconButton,
+  Grid,
+  CampaignCard,
+  NoResultText,
+  Branch,
+} from '../../components';
 import { useUser } from '../../contexts/User';
 
 import GET_CAMPAIGNS from './graphql/get-campaigns';
@@ -55,9 +58,9 @@ const Campaigns = ({ navigation }) => {
           />
         }
         onEndReached={() => {
-          const after = get('id', head(get('campaigns.after', data)));
+          const after = formatRefs(get('campaigns.after', data));
 
-          if (!after || loading) return;
+          if (after.length <= 0 || loading) return;
 
           fetchMore({
             variables: {
@@ -76,14 +79,14 @@ const Campaigns = ({ navigation }) => {
         }}
         ListHeaderComponent={
           <>
-            <FlatListItem>
+            <FlatList.Item>
               <Intro>
                 <Grid align="flex-end">
-                  <GridItem flex={1}>
+                  <Grid.Item flex={1}>
                     <Title>Campaigns</Title>
-                  </GridItem>
+                  </Grid.Item>
                   {isBrand && (
-                    <GridItem>
+                    <Grid.Item>
                       <IconButton
                         size={30}
                         name="ios-add-circle"
@@ -91,13 +94,13 @@ const Campaigns = ({ navigation }) => {
                           navigation.navigate('RequestInfluencers')
                         }
                       />
-                    </GridItem>
+                    </Grid.Item>
                   )}
                 </Grid>
               </Intro>
-            </FlatListItem>
+            </FlatList.Item>
 
-            <FlatListItem>
+            <FlatList.Item>
               <Tabs
                 activeTabIndex={activeTab}
                 onTabPress={index => setTab(index)}
@@ -107,26 +110,38 @@ const Campaigns = ({ navigation }) => {
                     : ['All', 'Applications']
                 }
               />
-            </FlatListItem>
+            </FlatList.Item>
 
             {!fetching && campaigns.length <= 0 && (
-              <NoResultText>No active campaigns at this time.</NoResultText>
+              <NoResultText isPara>
+                <Branch
+                  test={isBrand}
+                  left={`You don't have any campaigns yet.\nPress "+" to get started.`}
+                  right={`You haven't ${
+                    TAB_INDEX_BOOKING_STATE[activeTab] === BOOKING_STATE.APPLIED
+                      ? ''
+                      : 'been '
+                  }${TAB_INDEX_BOOKING_STATE[
+                    activeTab
+                  ].toLowerCase()} onto any campaigns yet.\nVisit "Browse" to start applying.`}
+                />
+              </NoResultText>
             )}
 
             {fetching &&
               Array.from(Array(3)).map((_, key) => (
-                <FlatListItem key={key}>
+                <FlatList.Item key={key}>
                   <CampaignCard isLoading />
-                </FlatListItem>
+                </FlatList.Item>
               ))}
           </>
         }
         keyExtractor={item => item._id}
         data={campaigns}
         renderItem={({ item }) => (
-          <FlatListItem>
+          <FlatList.Item>
             <CampaignCard {...item} />
-          </FlatListItem>
+          </FlatList.Item>
         )}
       />
     </SafeAreaView>

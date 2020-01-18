@@ -10,8 +10,8 @@ module.exports = gql`
     campaigns(
       state: BookingState
       size: Int
-      after: ID
-      before: ID
+      after: [RefInput]
+      before: [RefInput]
     ): CampaignPage
 
     findCampaignById(id: ID): Campaign
@@ -31,17 +31,34 @@ module.exports = gql`
     ): Auth
     sendMessage(threadId: ID!, text: String!): Message
     createCampaign(campaign: CampaignInput): Campaign
-    applyToCampaign(id: ID!): Booking
+    applyToCampaign(id: ID!, cost: Int!): Booking
     updateBookingState(id: ID!, state: BookingState!): Boolean
-    updateUser(name: String): Boolean
+    updateUser(user: UserInput): Boolean
+    completeOnboarding: Boolean
+  }
+
+  # Fauna references #
+  type Collection {
+    id: ID
   }
 
   type Ref {
     id: ID
+    collection: Collection
   }
 
+  input CollectionInput {
+    id: ID
+  }
+
+  input RefInput {
+    id: ID
+    collection: CollectionInput
+  }
+  # //////////////// #
+
   type Discover {
-    campaigns(size: Int, after: ID, before: ID): CampaignPage
+    campaigns(size: Int, after: [RefInput], before: [RefInput]): CampaignPage
     popularUsers(type: UserType!): UserPage
   }
 
@@ -62,12 +79,18 @@ module.exports = gql`
     data: [User]
   }
 
+  input UserInput {
+    name: String
+    bio: String
+  }
+
   type User {
     _id: ID!
     name: String
     bio: String
     avatar: Media
     email: String!
+    onboarded: Boolean
 
     type: UserType!
 
@@ -134,12 +157,14 @@ module.exports = gql`
   type Thread {
     _id: ID!
     users: UserPage
-    messages: MessagePage
+    messages(size: Int, after: Float, before: Float): MessagePage
     latestMessage: Message
   }
 
   type MessagePage {
     data: [Message]
+    after: Float
+    before: Float
   }
 
   type Message {

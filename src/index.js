@@ -4,16 +4,31 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import styled from 'styled-components/native';
 import { AppearanceProvider } from 'react-native-appearance';
 import * as Font from 'expo-font';
-
+import get from 'lodash/fp/get';
 import { Provider as AuthProvider, useAuth } from './contexts/Auth';
-import { Provider as UserProvider } from './contexts/User';
 import { Provider as ModalProvider } from './contexts/Modal';
+import { Provider as UserProvider, useUser } from './contexts/User';
 import ThemeProvider from './theme-provider';
 import client from './apollo-client';
-
 import UnAuthedNavigator from './routers/UnAuthedRouter';
 import AuthedNavigator from './routers/AuthedNavigator';
 import RootModal from './components/Modals/RootModal';
+import OnboardingNavigator from './routers/OnboardingNavigator';
+
+const AuthedApp = () => {
+  const { user, loading } = useUser();
+
+  if (loading) {
+    return <AppLoading />;
+  }
+
+  if (get('user.onboarded', user)) {
+    return <AuthedNavigator />;
+  }
+
+  return <OnboardingNavigator />;
+};
+
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -36,7 +51,7 @@ const App = () => {
   if (isLoggedIn) {
     return (
       <UserProvider>
-        <AuthedNavigator />
+        <AuthedApp />
       </UserProvider>
     );
   }

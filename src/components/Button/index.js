@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { ActivityIndicator, Main, Title, Loader } from './styles';
 
-const Button = ({ title, isLoading, isGhost, isSmall, ...props }) => (
+export const Button = ({ title, isLoading, isGhost, isSmall, ...props }) => (
   <Main {...props} isGhost={isGhost} isSmall={isSmall}>
     <Title isGhost={isGhost} isLoading={isLoading}>
       {title}
@@ -22,6 +22,7 @@ Button.defaultProps = {
   isSmall: false,
   isDark: false,
   isShaded: false,
+  fixedWidth: false,
 };
 
 Button.propTypes = {
@@ -31,6 +32,5 @@ Button.propTypes = {
   isSmall: PropTypes.bool,
   isDark: PropTypes.bool,
   isShaded: PropTypes.bool,
+  fixedWidth: PropTypes.bool,
 };
-
-export default Button;

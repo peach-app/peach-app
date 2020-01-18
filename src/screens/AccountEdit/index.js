@@ -4,16 +4,19 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import get from 'lodash/fp/get';
+import startCase from 'lodash/startCase';
 
-import SafeAreaView from '../../components/SafeAreaView';
-import Header from '../../components/Header';
-import Container from '../../components/Container';
-import { Grid, GridItem } from '../../components/Grid';
-import TextInput from '../../components/TextInput';
-import Intro from '../../components/Intro';
-import Actions from '../../components/Actions';
-import Button from '../../components/Button';
-import Text from '../../components/Text';
+import {
+  SafeAreaView,
+  Header,
+  Container,
+  Grid,
+  TextInput,
+  Intro,
+  Actions,
+  Button,
+  Text,
+} from '../../components';
 
 import GET_USER from './graphql/get-user';
 import SAVE_USER from './graphql/save-user';
@@ -23,7 +26,6 @@ const validationSchema = Yup.object().shape({
 });
 
 const AccountEdit = ({ navigation }) => {
-  const { data } = useQuery(GET_USER);
   const [save, { loading, error }] = useMutation(SAVE_USER, {
     refetchQueries: ['getUser'],
     onCompleted: () => {
@@ -31,17 +33,24 @@ const AccountEdit = ({ navigation }) => {
     },
   });
 
+  const { data } = useQuery(GET_USER);
+
   const formik = useFormik({
     validateOnBlur: false,
     validateOnChange: false,
     validationSchema,
+    enableReinitialize: true,
     initialValues: {
-      name: get('user.name', data),
+      name: startCase(get('user.name', data)),
+      bio: get('user.bio', data),
     },
-    onSubmit: ({ name }) => {
+    onSubmit: ({ name, bio }) => {
       save({
         variables: {
-          name,
+          user: {
+            name,
+            bio,
+          },
         },
       });
     },
@@ -54,7 +63,7 @@ const AccountEdit = ({ navigation }) => {
         <Container>
           <Intro>
             <Grid>
-              <GridItem size={12}>
+              <Grid.Item size={12}>
                 <TextInput
                   label="Name"
                   autoCapitalize="none"
@@ -63,17 +72,29 @@ const AccountEdit = ({ navigation }) => {
                   onChangeText={formik.handleChange('name')}
                   onBlur={formik.handleBlur('name')}
                 />
-              </GridItem>
+              </Grid.Item>
+
+              <Grid.Item size={12}>
+                <TextInput
+                  label="Bio"
+                  multiline
+                  autoCapitalize="none"
+                  value={formik.values.bio}
+                  error={formik.errors.bio}
+                  onChangeText={formik.handleChange('bio')}
+                  onBlur={formik.handleBlur('bio')}
+                />
+              </Grid.Item>
 
               {error && (
-                <GridItem size={12}>
+                <Grid.Item size={12}>
                   <Text isCenter>
                     Unable to save changes, please try again later.
                   </Text>
-                </GridItem>
+                </Grid.Item>
               )}
 
-              <GridItem size={12}>
+              <Grid.Item size={12}>
                 <Actions>
                   <Button
                     isLoading={loading}
@@ -82,7 +103,7 @@ const AccountEdit = ({ navigation }) => {
                     fixedWidth
                   />
                 </Actions>
-              </GridItem>
+              </Grid.Item>
             </Grid>
           </Intro>
         </Container>

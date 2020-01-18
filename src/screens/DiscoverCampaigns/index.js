@@ -3,16 +3,18 @@ import { RefreshControl } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import getOr from 'lodash/fp/getOr';
 import get from 'lodash/fp/get';
-import head from 'lodash/fp/head';
 
+import formatRefs from '../../helpers/formatRefs';
 import { NETWORK_STATUS } from '../../consts';
-import SafeAreaView from '../../components/SafeAreaView';
-import StatusBar from '../../components/StatusBar';
-import { FlatList, FlatListItem } from '../../components/FlatList';
-import Title from '../../components/Title';
-import Intro from '../../components/Intro';
-import CampaignCard from '../../components/CampaignCard';
-import NoResultText from '../../components/NoResultText';
+import {
+  SafeAreaView,
+  StatusBar,
+  FlatList,
+  Title,
+  Intro,
+  CampaignCard,
+  NoResultText,
+} from '../../components';
 import GET_DISCOVER_CAMPAIGNS from './graphql/get-discover-campaigns';
 
 const DiscoverCampaigns = () => {
@@ -37,9 +39,9 @@ const DiscoverCampaigns = () => {
           />
         }
         onEndReached={() => {
-          const after = get('id', head(get('discover.campaigns.after', data)));
+          const after = formatRefs(get('discover.campaigns.after', data));
 
-          if (!after || loading) return;
+          if (after.length <= 0 || loading) return;
 
           fetchMore({
             variables: {
@@ -61,11 +63,11 @@ const DiscoverCampaigns = () => {
         }}
         ListHeaderComponent={
           <>
-            <FlatListItem>
+            <FlatList.Item>
               <Intro>
                 <Title>Discover</Title>
               </Intro>
-            </FlatListItem>
+            </FlatList.Item>
 
             {!fetching && campaigns.length <= 0 && (
               <NoResultText>No campaigns to discover.</NoResultText>
@@ -73,18 +75,18 @@ const DiscoverCampaigns = () => {
 
             {fetching &&
               Array.from(Array(3)).map((_, key) => (
-                <FlatListItem key={key}>
+                <FlatList.Item key={key}>
                   <CampaignCard isLoading />
-                </FlatListItem>
+                </FlatList.Item>
               ))}
           </>
         }
         keyExtractor={item => item._id}
         data={campaigns}
         renderItem={({ item }) => (
-          <FlatListItem>
+          <FlatList.Item>
             <CampaignCard {...item} />
-          </FlatListItem>
+          </FlatList.Item>
         )}
       />
     </SafeAreaView>

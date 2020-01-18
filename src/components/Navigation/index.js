@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Platform, SafeAreaView, TouchableWithoutFeedback } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { withTheme } from 'styled-components/native';
 
 import { Main, List, Logo, Item } from './styles';
-import Container from '../../components/Container';
+import { Container } from '../Container';
 
 const iconNames = {
   Campaigns: 'ios-list',
@@ -13,7 +14,7 @@ const iconNames = {
   Account: 'ios-contact',
 };
 
-const Navigation = ({ navigation, onTabPress, theme }) => {
+const NavigationMain = ({ navigation, onTabPress, theme }) => {
   const { routes } = navigation.state;
 
   return (
@@ -47,4 +48,18 @@ const Navigation = ({ navigation, onTabPress, theme }) => {
   );
 };
 
-export default withTheme(Navigation);
+NavigationMain.propTypes = {
+  navigation: PropTypes.shape({
+    state: PropTypes.shape({
+      index: PropTypes.number.isRequired,
+      routes: PropTypes.array.isRequired,
+    }).isRequired,
+  }).isRequired,
+  onTabPress: PropTypes.func.isRequired,
+  theme: PropTypes.shape({
+    foreground: PropTypes.string.isRequired,
+    greyDark: PropTypes.string.isRequired,
+  }).isRequired,
+};
+
+export const Navigation = withTheme(NavigationMain);

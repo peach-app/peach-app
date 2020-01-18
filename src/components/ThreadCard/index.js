@@ -8,19 +8,25 @@ import getOr from 'lodash/fp/getOr';
 import startCase from 'lodash/startCase';
 
 import { Icon, Users, Text } from './styles';
-import { Grid, GridItem } from '../../components/Grid';
-import Avatar, { AvatarList } from '../../components/Avatar';
-import { SkeletonText } from '../../components/Skeletons';
+import { Grid } from '../Grid';
+import { Avatar } from '../Avatar';
+import { SkeletonText } from '../Skeletons';
 
 const fakeAvatars = [{ _id: 0 }, { _id: 1 }];
 
-const ThreadCard = ({ isLoading, navigation, _id, users, latestMessage }) => (
+const ThreadCardMain = ({
+  isLoading,
+  navigation,
+  _id,
+  users,
+  latestMessage,
+}) => (
   <TouchableOpacity
     onPress={() => !isLoading && navigation.navigate('Thread', { id: _id })}
   >
     <Grid noWrap align="center">
-      <GridItem>
-        <AvatarList>
+      <Grid.Item>
+        <Avatar.List>
           {(isLoading ? fakeAvatars : getOr([], 'data', users)).map(user => (
             <Avatar
               key={user._id}
@@ -32,9 +38,9 @@ const ThreadCard = ({ isLoading, navigation, _id, users, latestMessage }) => (
               }}
             />
           ))}
-        </AvatarList>
-      </GridItem>
-      <GridItem flex={1}>
+        </Avatar.List>
+      </Grid.Item>
+      <Grid.Item flex={1}>
         <Users numberOfLines={1}>
           {getOr([], 'data', users)
             .map(user => startCase(user.name))
@@ -48,22 +54,27 @@ const ThreadCard = ({ isLoading, navigation, _id, users, latestMessage }) => (
             {getOr('Send the first message...', 'text', latestMessage)}
           </SkeletonText>
         </Text>
-      </GridItem>
+      </Grid.Item>
       {!isLoading && (
-        <GridItem>
+        <Grid.Item>
           <Icon name="ios-arrow-forward" />
-        </GridItem>
+        </Grid.Item>
       )}
     </Grid>
   </TouchableOpacity>
 );
 
-ThreadCard.propTypes = {
+ThreadCardMain.defaultProps = {
+  _id: null,
+  isLoading: false,
+};
+
+ThreadCardMain.propTypes = {
   isLoading: PropTypes.bool,
   _id: PropTypes.string,
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
-  }),
+  }).isRequired,
 };
 
 export const ThreadCardFragment = gql`
@@ -84,4 +95,4 @@ export const ThreadCardFragment = gql`
   }
 `;
 
-export default withNavigation(ThreadCard);
+export const ThreadCard = withNavigation(ThreadCardMain);

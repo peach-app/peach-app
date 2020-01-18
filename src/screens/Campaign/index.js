@@ -1,29 +1,31 @@
 import React, { useState } from 'react';
 import { RefreshControl } from 'react-native';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 import getOr from 'lodash/fp/getOr';
 
-import { Foot, Description } from './styles';
+import { Foot } from './styles';
 import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from '../../consts';
-import Text from '../../components/Text';
-import Header from '../../components/Header';
-import Intro from '../../components/Intro';
-import SafeAreaView from '../../components/SafeAreaView';
-import StatusBar from '../../components/StatusBar';
-import Button from '../../components/Button';
-import Title from '../../components/Title';
-import Tabs from '../../components/Tabs';
-import Avatar from '../../components/Avatar';
-import Booking from '../../components/Booking';
-import { SkeletonText } from '../../components/Skeletons';
-import { Grid, GridItem } from '../../components/Grid';
-import NoResultText from '../../components/NoResultText';
-import { FlatList, FlatListItem } from '../../components/FlatList';
+import {
+  Text,
+  Header,
+  Intro,
+  SafeAreaView,
+  StatusBar,
+  Button,
+  Title,
+  Tabs,
+  Avatar,
+  Booking,
+  SkeletonText,
+  Grid,
+  NoResultText,
+  FlatList,
+} from '../../components';
+
 import { useUser } from '../../contexts/User';
 
 import GET_CAMPAIGN from './graphql/get-campaign';
-import APPLY_TO_CAMPAIGN from './graphql/apply-to-campaign';
 
 const TAB_INDEX_BOOKING_STATE = [
   BOOKING_STATE.APPLIED,
@@ -54,16 +56,6 @@ const Campaign = ({ navigation }) => {
     }
   );
 
-  const [applyToCampaign, { loading: applying }] = useMutation(
-    APPLY_TO_CAMPAIGN,
-    {
-      variables: {
-        id,
-      },
-      refetchQueries: ['getCampaign', 'getCampaigns'],
-    }
-  );
-
   const fetching = loading && networkStatus === NETWORK_STATUS.FETCHING;
   const fetchingBookings =
     fetching || (loading && networkStatus === NETWORK_STATUS.SET_VARIABLES);
@@ -85,11 +77,11 @@ const Campaign = ({ navigation }) => {
         }
         ListHeaderComponent={
           <>
-            <FlatListItem>
+            <FlatList.Item>
               <Intro>
                 <Grid>
                   {isInfluencer && (
-                    <GridItem size={12}>
+                    <Grid.Item size={12}>
                       <Avatar
                         isLoading={fetching}
                         size={50}
@@ -106,10 +98,10 @@ const Campaign = ({ navigation }) => {
                           ),
                         }}
                       />
-                    </GridItem>
+                    </Grid.Item>
                   )}
 
-                  <GridItem size={12}>
+                  <Grid.Item size={12}>
                     <Title>
                       <SkeletonText
                         loadingText="Campaign Title"
@@ -118,48 +110,48 @@ const Campaign = ({ navigation }) => {
                         {getOr('', 'findCampaignById.name', campaign)}
                       </SkeletonText>
                     </Title>
-                  </GridItem>
+                  </Grid.Item>
 
-                  <GridItem size={12}>
-                    <Description>
+                  <Grid.Item size={12}>
+                    <Text isPara>
                       <SkeletonText
                         loadingText="Campaign description loading..."
                         isLoading={fetching}
                       >
                         {getOr('', 'findCampaignById.description', campaign)}
                       </SkeletonText>
-                    </Description>
-                  </GridItem>
+                    </Text>
+                  </Grid.Item>
                 </Grid>
               </Intro>
-            </FlatListItem>
+            </FlatList.Item>
 
             {isBrand && (
               <>
-                <FlatListItem>
+                <FlatList.Item>
                   <Tabs
                     activeTabIndex={activeTab}
                     onTabPress={index => setTab(index)}
                     tabs={['Applied', 'Accepted', 'Declined', 'Requested']}
                   />
-                </FlatListItem>
+                </FlatList.Item>
 
                 {!fetchingBookings && bookings.length <= 0 && (
-                  <FlatListItem>
+                  <FlatList.Item>
                     <NoResultText>
                       {tabBookingState === BOOKING_STATE.APPLIED
                         ? 'No influnecer applications to update at this moment.'
                         : `No influencers ${tabBookingState.toLowerCase()} on this campaign.`}
                     </NoResultText>
-                  </FlatListItem>
+                  </FlatList.Item>
                 )}
 
                 {fetchingBookings && (
                   <>
                     {Array.from(Array(3)).map((_, key) => (
-                      <FlatListItem key={key}>
+                      <FlatList.Item key={key}>
                         <Booking isLoading />
-                      </FlatListItem>
+                      </FlatList.Item>
                     ))}
                   </>
                 )}
@@ -170,9 +162,9 @@ const Campaign = ({ navigation }) => {
         data={!fetchingBookings && bookings}
         keyExtractor={item => item._id}
         renderItem={({ item }) => (
-          <FlatListItem>
+          <FlatList.Item>
             <Booking {...item} />
-          </FlatListItem>
+          </FlatList.Item>
         )}
       />
 
@@ -182,8 +174,7 @@ const Campaign = ({ navigation }) => {
             <Button
               title="Apply"
               fixedWidth
-              onPress={applyToCampaign}
-              isLoading={applying}
+              onPress={() => navigation.navigate('Apply', { id })}
             />
           )}
           {userBookingState === BOOKING_STATE.APPLIED && (
@@ -196,7 +187,7 @@ const Campaign = ({ navigation }) => {
             <Text>You've been accepted onto this campaign!</Text>
           )}
           {userBookingState === BOOKING_STATE.DECLINED && (
-            <Text>Your application for this campaign was unsuccesful.</Text>
+            <Text>Your application for this campaign was unsuccessful.</Text>
           )}
           {userBookingState === BOOKING_STATE.COMPLETE && (
             <Text>Your work here is done</Text>

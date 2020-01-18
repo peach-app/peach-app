@@ -6,11 +6,11 @@ import gql from 'graphql-tag';
 import get from 'lodash/fp/get';
 
 import { Icon, MainTitle, Description, User } from './styles';
-import { Grid, GridItem } from '../../components/Grid';
-import Avatar from '../../components/Avatar';
-import { SkeletonText } from '../../components/Skeletons';
+import { Grid } from '../Grid';
+import { Avatar } from '../Avatar';
+import { SkeletonText } from '../Skeletons';
 
-const CampaignCard = ({
+const CampaignCardMain = ({
   isLoading,
   navigation,
   _id,
@@ -22,15 +22,15 @@ const CampaignCard = ({
     onPress={() => !isLoading && navigation.navigate('Campaign', { id: _id })}
   >
     <Grid noWrap align="center">
-      <GridItem>
+      <Grid.Item>
         <Avatar
           isLoading={isLoading}
           size={50}
           source={{ uri: get('avatar.url', user) }}
           fallback={get('name', user)}
         />
-      </GridItem>
-      <GridItem flex={1}>
+      </Grid.Item>
+      <Grid.Item flex={1}>
         <MainTitle numberOfLines={2}>
           <SkeletonText
             isLoading={isLoading}
@@ -52,17 +52,17 @@ const CampaignCard = ({
             {get('name', user)}
           </SkeletonText>
         </User>
-      </GridItem>
+      </Grid.Item>
       {!isLoading && (
-        <GridItem>
+        <Grid.Item>
           <Icon name="ios-arrow-forward" />
-        </GridItem>
+        </Grid.Item>
       )}
     </Grid>
   </TouchableOpacity>
 );
 
-CampaignCard.defaultProps = {
+CampaignCardMain.defaultProps = {
   isLoading: false,
   _id: '',
   name: '',
@@ -70,7 +70,7 @@ CampaignCard.defaultProps = {
   user: null,
 };
 
-CampaignCard.propTypes = {
+CampaignCardMain.propTypes = {
   isLoading: PropTypes.bool,
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
@@ -100,4 +100,4 @@ export const CampaignCardFragment = gql`
   }
 `;
 
-export default withNavigation(CampaignCard);
+export const CampaignCard = withNavigation(CampaignCardMain);

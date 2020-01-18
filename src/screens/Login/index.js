@@ -1,20 +1,23 @@
 import React from 'react';
+import { ScrollView, KeyboardAvoidingView } from 'react-native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 
-import SafeAreaView from '../../components/SafeAreaView';
-import StatusBar from '../../components/StatusBar';
-import Container from '../../components/Container';
-import { Grid, GridItem } from '../../components/Grid';
-import Intro from '../../components/Intro';
-import Title from '../../components/Title';
-import Button from '../../components/Button';
-import Actions from '../../components/Actions';
-import TextInput from '../../components/TextInput';
-import Text from '../../components/Text';
-import BackButton from '../../components/BackButton';
+import {
+  SafeAreaView,
+  StatusBar,
+  Container,
+  Grid,
+  Intro,
+  Title,
+  Button,
+  Actions,
+  TextInput,
+  Text,
+  BackButton,
+} from '../../components';
 import { useAuth } from '../../contexts/Auth';
 import LOGIN from './graphql/login';
 
@@ -35,7 +38,6 @@ const Login = () => {
 
   const formik = useFormik({
     validateOnBlur: false,
-    validateOnChange: false,
     initialValues: {
       email: '',
       password: '',
@@ -53,61 +55,65 @@ const Login = () => {
 
   return (
     <SafeAreaView>
-      <Container>
-        <StatusBar />
-        <Grid>
-          <GridItem size={12}>
-            <Intro>
-              <Grid>
-                <GridItem size={12}>
-                  <BackButton />
-                </GridItem>
-                <GridItem size={12}>
-                  <Title>Login</Title>
-                </GridItem>
-              </Grid>
-            </Intro>
-          </GridItem>
+      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+        <ScrollView>
+          <Container>
+            <StatusBar />
+            <Grid>
+              <Grid.Item size={12}>
+                <Intro>
+                  <Grid>
+                    <Grid.Item size={12}>
+                      <BackButton />
+                    </Grid.Item>
+                    <Grid.Item size={12}>
+                      <Title>Login</Title>
+                    </Grid.Item>
+                  </Grid>
+                </Intro>
+              </Grid.Item>
 
-          {error && (
-            <GridItem size={12}>
-              <Text isCenter>Incorrect Email or Password</Text>
-            </GridItem>
-          )}
+              <Grid.Item size={12}>
+                <TextInput
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  label="Email Address"
+                  error={formik.errors.email}
+                  onChangeText={formik.handleChange('email')}
+                  onBlur={formik.handleBlur('email')}
+                />
+              </Grid.Item>
 
-          <GridItem size={12}>
-            <TextInput
-              keyboardType="email-address"
-              autoCapitalize="none"
-              label="Email Address"
-              error={formik.errors.email}
-              onChangeText={formik.handleChange('email')}
-              onBlur={formik.handleBlur('email')}
-            />
-          </GridItem>
+              <Grid.Item size={12}>
+                <TextInput
+                  label="Password"
+                  secureTextEntry
+                  error={formik.errors.password}
+                  onChangeText={formik.handleChange('password')}
+                  onBlur={formik.handleBlur('password')}
+                />
+              </Grid.Item>
 
-          <GridItem size={12}>
-            <TextInput
-              label="Password"
-              secureTextEntry
-              error={formik.errors.password}
-              onChangeText={formik.handleChange('password')}
-              onBlur={formik.handleBlur('password')}
-            />
-          </GridItem>
+              {error && (
+                <Grid.Item size={12}>
+                  <Text isCenter>Incorrect Email or Password</Text>
+                </Grid.Item>
+              )}
 
-          <GridItem size={12}>
-            <Actions>
-              <Button
-                isLoading={loading}
-                onPress={formik.handleSubmit}
-                title="Login"
-                fixedWidth
-              />
-            </Actions>
-          </GridItem>
-        </Grid>
-      </Container>
+              <Grid.Item size={12}>
+                <Actions>
+                  <Button
+                    isLoading={loading}
+                    onPress={formik.handleSubmit}
+                    title="Login"
+                    fixedWidth
+                  />
+                </Actions>
+              </Grid.Item>
+            </Grid>
+          </Container>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };

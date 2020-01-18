@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components/native';
 
-import Text from '../Text';
+import { Text } from '../Text';
 
 const Input = styled.TextInput`
   border-width: 1px;
@@ -10,7 +10,8 @@ const Input = styled.TextInput`
   border-color: ${props =>
     props.hasError ? props.theme.error : props.theme.grey};
   border-radius: ${props => props.theme.radius}px;
-  padding: 0 ${props => props.theme.spacing}px;
+  padding: ${props => props.theme.spacingSmall}px
+    ${props => props.theme.spacing}px;
   min-height: 38px;
   font-family: futura-book;
 `;
@@ -19,7 +20,7 @@ const Label = styled(Text)`
   margin-vertical: ${props => props.theme.spacingSmall}px;
 `;
 
-const TextInput = ({ label, error, ...props }) => (
+export const TextInput = ({ label, error, ...props }) => (
   <>
     {label && <Label>{label}</Label>}
     <Input hasError={error} {...props} />
@@ -36,5 +37,3 @@ TextInput.propTypes = {
   label: PropTypes.string,
   error: PropTypes.string,
 };
-
-export default TextInput;

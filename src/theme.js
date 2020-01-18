@@ -1,7 +1,8 @@
 const theme = {
   background: '#FEFEFE',
   foreground: '#000',
-  brand: '#FF7F76',
+  brand: '#fc516a',
+  brandSecondary: '#ffe6d4',
   black: '#000',
   white: '#fff',
   greyDark: '#aaa',
@@ -20,6 +21,7 @@ const theme = {
 };
 
 export const darkModeOverrides = {
+  brandSecondary: '#222',
   background: '#000',
   foreground: '#fff',
   greyDark: '#555',

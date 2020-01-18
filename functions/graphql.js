@@ -3,6 +3,7 @@ const faunadb = require('faunadb');
 const q = faunadb.query;
 
 const DocumentDataWithId = require('./helpers/DocumentDataWithId');
+const formatRefs = require('./helpers/formatRefs');
 
 const typeDefs = require('./types');
 const resolvers = require('./resolvers');
@@ -17,6 +18,7 @@ const server = new ApolloServer({
 
     return {
       DocumentDataWithId,
+      formatRefs,
       client,
       q,
     };

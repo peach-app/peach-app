@@ -4,9 +4,9 @@ import gql from 'graphql-tag';
 import get from 'lodash/fp/get';
 
 import { Main, Center } from './styles';
-import Avatar from '../../components/Avatar';
+import { Avatar } from '../Avatar';
 
-const ProfileHeader = ({ name, avatar, isLoading }) => (
+export const ProfileHeader = ({ name, avatar, isLoading }) => (
   <Main>
     <Center>
       <Avatar
@@ -20,6 +20,12 @@ const ProfileHeader = ({ name, avatar, isLoading }) => (
     </Center>
   </Main>
 );
+
+ProfileHeader.defaultProps = {
+  isLoading: false,
+  name: '',
+  avatar: null,
+};
 
 ProfileHeader.propTypes = {
   isLoading: PropTypes.bool,
@@ -37,5 +43,3 @@ export const ProfileHeaderFragment = gql`
     }
   }
 `;
-
-export default ProfileHeader;

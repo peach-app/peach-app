@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
-import Text from '../../components/Text';
-import Container from '../../components/Container';
+
+import { Text } from '../Text';
+import { Container } from '../Container';
 
 export const Main = styled.View`
   border-bottom-width: 1px;

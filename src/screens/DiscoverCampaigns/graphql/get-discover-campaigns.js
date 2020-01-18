@@ -1,11 +1,11 @@
 import gql from 'graphql-tag';
 
-import { CampaignCardFragment } from '../../../components/CampaignCard';
+import { CampaignCardFragment } from '../../../components';
 
 export default gql`
   ${CampaignCardFragment}
 
-  query($after: ID) {
+  query($after: [RefInput]) {
     discover {
       campaigns(size: 20, after: $after) {
         data {
@@ -14,6 +14,9 @@ export default gql`
         }
         after {
           id
+          collection {
+            id
+          }
         }
       }
     }

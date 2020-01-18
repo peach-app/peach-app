@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 
 import { Main, Bubble, Text } from './styles';
 
-const MessageBubble = ({ sentBySelf, text }) => (
+export const MessageBubble = ({ sentBySelf, text }) => (
   <Main isSelf={sentBySelf}>
     <Bubble isSelf={sentBySelf}>
       <Text isSelf={sentBySelf} selectable>
@@ -25,5 +25,3 @@ export const MessageBubbleFragment = gql`
     sentBySelf
   }
 `;
-
-export default MessageBubble;

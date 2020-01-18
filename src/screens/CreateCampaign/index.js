@@ -3,12 +3,8 @@ import { ScrollView, KeyboardAvoidingView } from 'react-native';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import { useMutation } from '@apollo/react-hooks';
-
 import { CAMPAIGN_TYPE, MODAL_TYPES } from '../../consts';
 import { validationSchema, FORM_INITIAL_VALUES } from './consts';
-import SafeAreaView from '../../components/SafeAreaView';
-import StatusBar from '../../components/StatusBar';
-import Header from '../../components/Header';
 import { Grid, GridItem } from '../../components/Grid';
 import TextInput from '../../components/TextInput';
 import Actions from '../../components/Actions';
@@ -18,6 +14,7 @@ import Intro from '../../components/Intro';
 import Tabs from '../../components/Tabs';
 import DatePicker from '../../components/DatePicker';
 import { useModal } from '../../contexts/Modal';
+import { SafeAreaView, StatusBar, Header } from '../../components';
 
 import CREATE_CAMPAIGN_MUTATION from './graphql/create-campaign';
 

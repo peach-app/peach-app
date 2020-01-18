@@ -1,7 +1,11 @@
 const { USER_TYPE } = require('../../consts');
 
-module.exports = async (root, args, { client, q, DocumentDataWithId }) => {
-  const { state, size = 1, after, before } = args;
+module.exports = async (
+  root,
+  args,
+  { client, q, DocumentDataWithId, formatRefs }
+) => {
+  const { state, size = 30, after, before } = args;
 
   return client.query(
     q.Map(
@@ -24,8 +28,8 @@ module.exports = async (root, args, { client, q, DocumentDataWithId }) => {
         ),
         {
           size,
-          ...(after && { after: q.Ref(q.Collection('Campaign'), after) }),
-          ...(before && { before: q.Ref(q.Collection('Campaign'), before) }),
+          ...(after && { after: formatRefs(after) }),
+          ...(before && { before: formatRefs(before) }),
         }
       ),
       q.Lambda('ref', DocumentDataWithId(q.Get(q.Var('ref'))))
