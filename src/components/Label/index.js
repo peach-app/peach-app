@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import Text from '../Text';
+import { Text } from '../Text';
 
 export default styled(Text)`
   margin-vertical: ${props => props.theme.spacingSmall}px;

@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 
-import Text from '../Text';
+import { Text } from '../Text';
 
 const SubTitle = styled(Text)`
   font-size: 20px;
