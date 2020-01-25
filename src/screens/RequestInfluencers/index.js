@@ -5,24 +5,8 @@ import { SafeAreaView, StatusBar, Header, SearchInfluencers , Grid,  Button} fro
 import { ACTION_COMPONENTS } from '../../consts';
 import { RequestedInfluencersWrapper } from './styles';
 import RequestedInfluencers from './RequestedInfluencers';
+import { formatInfluencersArray } from './helper'; 
 
-const formatInfluencersArray = (requestedInfluencers, actionedInfluencer) => {
-  console.log(requestedInfluencers, actionedInfluencer);
-
-  if (requestedInfluencers.length > 0) {
-
-    if (requestedInfluencers.find(influencer => influencer._id === actionedInfluencer._id)) {
-      return requestedInfluencers.filter(influencer => influencer._id !== actionedInfluencer._id);
-    }
-    return [...requestedInfluencers, actionedInfluencer];
-
-  }
-
-  console.log(actionedInfluencer);
-
-  return [actionedInfluencer];
-
-};
 
 
 const RequestInfluencers = ({ navigation }) => {
@@ -39,6 +23,13 @@ const RequestInfluencers = ({ navigation }) => {
           action={ACTION_COMPONENTS.ADD_REMOVE}
           actionedItems={requestedInfluencers}
         />
+          <Grid.Item size={12}>
+            <Button
+              onPress={() => console.log('yy')}
+              title="Finish"
+              fixedWidth
+            />
+            </Gird.Item>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
