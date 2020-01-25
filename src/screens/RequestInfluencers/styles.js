@@ -1,6 +1,5 @@
 import styled from 'styled-components/native';
-import { Platform } from 'react-native';
-import Text from '../../components/Text';
+import { Platform, View } from 'react-native';
 
 export const TextInput = styled.TextInput.attrs(props => ({
   placeholderTextColor: props.theme.greyDark,
@@ -27,10 +26,6 @@ export const InfluencersContainer = styled.View`
   max-height: 200;
 `;
 
-// shadow-opacity: 0.22;
-// shadow-radius: 2.22;
-// border-radius: 3px;
-// elevation: 3;
 
 export const InfluencersWrapper = styled.View`
   height: 200px;
@@ -69,15 +64,13 @@ export const dropZoneStyles = {
   elevation: 3,
 };
 
-export const DropZoneText = styled(Text)`
-  font-weight: bold;
-  color: black;
-  font-size: 20;
-  text-transform: uppercase;
-  text-align: center;
-`;
+
 
 export const AvatarWrapper = styled.View`
   padding: 10px;
   z-index: 10;
+`;
+
+export const RequestedInfluencersWrapper = styled(View)`
+  padding: ${props => props.theme.spacing}px;
 `;

@@ -37,3 +37,8 @@ export const BOOKING_STATE = {
 export const MODAL_TYPES = {
   CAMPAIGN_CREATION: 'CAMPAIGN_CREATION',
 };
+
+
+export const ACTION_COMPONENTS = {
+  ADD_REMOVE: 'ADD_REMOVE' 
+};

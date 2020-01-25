@@ -1,26 +1,37 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
+import { TouchableOpacity } from 'react-native';
 import { useLazyQuery } from '@apollo/react-hooks';
 import getOr from 'lodash/fp/getOr';
 import debounce from 'lodash/debounce';
 import { Main } from './styles';
-import { NETWORK_STATUS } from '../../consts';
-import { FlatList, FlatListItem } from '../FlatList';
-import UserCard from '../UserCard';
-import Container from '../Container';
-import TextInput from '../TextInput';
-import NoResultText from '../NoResultText';
+import { NETWORK_STATUS, ACTION_COMPONENTS } from '../../consts';
+import { FlatList, Container, UserCard, TextInput, NoResultText, AddRemoveAction, Grid } from '../';
+
 
 import SEARCH_INFLUENCERS from './graphql/search-influencers';
 
-const Search = ({ isActionable, onActionPressed }) => {
+const renderAction = (action, isActioned) => {
+  if (action === ACTION_COMPONENTS.ADD_REMOVE) {
+    return <AddRemoveAction isActioned={isActioned} />
+  }
+  return null;
+}
+
+export const SearchInfluencers = ({  onActionPressed, action, actionedItems }) => {
   const [searchInfluencers, { data, loading, networkStatus }] = useLazyQuery(
     SEARCH_INFLUENCERS,
     {
       notifyOnNetworkStatusChange: true,
     }
   );
+  
 
   const search = useMemo(() => debounce(searchInfluencers, 500), []);
+
+  useEffect(() => {
+    search({variables: { query: ''}})
+  }, []);
+
   const fetching = loading && networkStatus === NETWORK_STATUS.FETCHING;
   const influencers = getOr([], 'searchUsers.data', data);
 
@@ -36,7 +47,7 @@ const Search = ({ isActionable, onActionPressed }) => {
             onChangeText={query => {
               search({
                 variables: {
-                  query,
+                  query: query,
                 },
               });
             }}
@@ -48,33 +59,41 @@ const Search = ({ isActionable, onActionPressed }) => {
         ListHeaderComponent={
           <>
             {!fetching && influencers.length <= 0 && (
-              <FlatListItem>
+              <FlatList.Item>
                 <NoResultText>0 influencers found.</NoResultText>
-              </FlatListItem>
+               </FlatList.Item>
             )}
 
             {fetching &&
               Array.from(Array(3)).map((_, key) => (
-                <FlatListItem key={key}>
+                <FlatList.Item key={key}>
                   <UserCard isLoading />
-                </FlatListItem>
+                 </FlatList.Item>
               ))}
           </>
         }
         keyExtractor={item => item._id}
         data={influencers}
-        renderItem={({ item }) => (
-          <FlatListItem>
+        renderItem={({ item }) =>  (
+          <FlatList.Item>
+            <Grid noWrap align="center">
+              <Grid.Item flex={1}>
             <UserCard
               {...item}
-              isActionable={isActionable}
-              onActionPressed={() => onActionPressed(item)}
             />
-          </FlatListItem>
+            </Grid.Item>
+            <Grid.Item>
+             {action && (
+    <TouchableOpacity onPress={() =>  onActionPressed(item)}>
+      {renderAction(action, actionedItems.find(actionedItems => actionedItems._id === item._id))}
+    </TouchableOpacity>
+  )}
+  </Grid.Item>
+  </Grid>
+          </FlatList.Item>
         )}
       />
     </>
   );
 };
 
-export default Search;

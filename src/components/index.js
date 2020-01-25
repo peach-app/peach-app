@@ -26,3 +26,6 @@ export * from './TextInput';
 export * from './ThreadCard';
 export * from './Title';
 export * from './UserCard';
+export * from './SearchInfluencers';
+export * from './AddRemoveAction';
+export * from './Subtitle';
