@@ -29,3 +29,4 @@ export * from './UserCard';
 export * from './SearchInfluencers';
 export * from './AddRemoveAction';
 export * from './Subtitle';
+export * from './Modal';

@@ -38,6 +38,7 @@ const GridItem = styled.View`
     return null;
   }}
   padding: ${props => `${props.theme.spacing}px ${props.theme.spacing}px 0 0`};
+
 `;
 
 GridItem.defaultProps = {

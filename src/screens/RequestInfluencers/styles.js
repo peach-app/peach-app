@@ -70,7 +70,3 @@ export const AvatarWrapper = styled.View`
   padding: 10px;
   z-index: 10;
 `;
-
-export const RequestedInfluencersWrapper = styled(View)`
-  padding: ${props => props.theme.spacing}px;
-`;
