@@ -1,7 +1,7 @@
 /* eslint-disable react/require-default-props */
 import React from 'react';
 import PropTypes from 'prop-types';
-import DatePicker from 'react-native-datepicker';
+import { default as ImportedDatePicker } from 'react-native-datepicker';
 import moment from 'moment';
 import { withTheme } from 'styled-components/native';
 import Label from '../Label';
@@ -20,7 +20,7 @@ const DatePickerComponent = ({
   return (
     <>
       {label && <Label>{label}</Label>}
-      <DatePicker
+      <ImportedDatePicker
         date={date}
         mode={mode}
         placeholder={placeholder}
@@ -75,4 +75,4 @@ DatePickerComponent.propTypes = {
   date: PropTypes.string,
 };
 
-export default withTheme(DatePickerComponent);
+export const DatePicker =  withTheme(DatePickerComponent);

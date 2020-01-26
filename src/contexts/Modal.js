@@ -12,7 +12,7 @@ export const Provider = ({ children }) => {
 
   const openModal = modalArgs => setModal(modalArgs);
 
-  const closeModal = () => setModal(initialModalState);
+  const closeModal = () => console.log('LOOOOOOOG \n\n\n\n\n') || setModal(initialModalState);
 
   return (
     <ModalContext.Provider value={{ modal, openModal, closeModal }}>

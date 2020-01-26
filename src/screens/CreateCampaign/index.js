@@ -5,16 +5,8 @@ import { useFormik } from 'formik';
 import { useMutation } from '@apollo/react-hooks';
 import { CAMPAIGN_TYPE, MODAL_TYPES } from '../../consts';
 import { validationSchema, FORM_INITIAL_VALUES } from './consts';
-import { Grid, GridItem } from '../../components/Grid';
-import TextInput from '../../components/TextInput';
-import Actions from '../../components/Actions';
-import Button from '../../components/Button';
-import Container from '../../components/Container';
-import Intro from '../../components/Intro';
-import Tabs from '../../components/Tabs';
-import DatePicker from '../../components/DatePicker';
 import { useModal } from '../../contexts/Modal';
-import { SafeAreaView, StatusBar, Header } from '../../components';
+import { SafeAreaView, StatusBar, Header, TextInput, Actions, Button, Container, Intro, Tabs, DatePicker, Grid } from '../../components';
 
 import CREATE_CAMPAIGN_MUTATION from './graphql/create-campaign';
 
@@ -28,11 +20,12 @@ const CreateCampaign = ({ navigation }) => {
     // ERROR BOUNDARY?
     onError: err => console.log('errro', err),
     refetchQueries: ['getCampaigns'],
-    onCompleted: () =>
+    onCompleted: ({createCampaign: { _id: campaignId }}) =>
       openModal({
         type: MODAL_TYPES.CAMPAIGN_CREATION,
         props: {
-          onButtonClick: () => navigation.goBack(),
+          onFinish: () => navigation.goBack(),
+          onRequestInfluencers: () =>  navigation.navigate('RequestInfluencers', { campaignId })
         },
       }),
   });
@@ -63,7 +56,7 @@ const CreateCampaign = ({ navigation }) => {
         <ScrollView>
           <Container>
             <Grid>
-              <GridItem size={12}>
+              <Grid.Item size={12}>
                 <Intro>
                   <Tabs
                     activeTabIndex={activeTab}
@@ -71,8 +64,8 @@ const CreateCampaign = ({ navigation }) => {
                     tabs={Object.values(CAMPAIGN_TYPE)}
                   />
                 </Intro>
-              </GridItem>
-              <GridItem size={12}>
+              </Grid.Item>
+              <Grid.Item size={12}>
                 <TextInput
                   label="Campaign name"
                   name="name"
@@ -80,8 +73,8 @@ const CreateCampaign = ({ navigation }) => {
                   error={formik.errors.name}
                   onChangeText={formik.handleChange('name')}
                 />
-              </GridItem>
-              <GridItem size={12}>
+              </Grid.Item>
+              <Grid.Item size={12}>
                 <TextInput
                   label="Description"
                   name="description"
@@ -89,9 +82,9 @@ const CreateCampaign = ({ navigation }) => {
                   error={formik.errors.description}
                   onChangeText={formik.handleChange('description')}
                 />
-              </GridItem>
+              </Grid.Item>
 
-              <GridItem size={12}>
+              <Grid.Item size={12}>
                 <TextInput
                   label="Budget"
                   name="budget"
@@ -99,8 +92,8 @@ const CreateCampaign = ({ navigation }) => {
                   error={formik.errors.budget}
                   onChangeText={formik.handleChange('budget')}
                 />
-              </GridItem>
-              <GridItem size={12}>
+              </Grid.Item>
+              <Grid.Item size={12}>
                 <DatePicker
                   name="dueDate"
                   label="Due date"
@@ -110,8 +103,8 @@ const CreateCampaign = ({ navigation }) => {
                   onChange={formik.handleChange('dueDate')}
                   date={formik.values.dueDate}
                 />
-              </GridItem>
-              <GridItem size={12}>
+              </Grid.Item>
+              <Grid.Item size={12}>
                 <Actions>
                   <Button
                     isLoading={loading}
@@ -120,7 +113,7 @@ const CreateCampaign = ({ navigation }) => {
                     fixedWidth
                   />
                 </Actions>
-              </GridItem>
+              </Grid.Item>
             </Grid>
           </Container>
         </ScrollView>

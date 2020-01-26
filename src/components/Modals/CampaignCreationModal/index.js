@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { Title, SubTitle, Modal, Icon, Grid } from '../../'
+import { Title, SubTitle, Modal, Icon, Grid, Actions, Button } from '../../'
 
 
 const IconWrapper = styled.View`
@@ -10,19 +10,21 @@ const IconWrapper = styled.View`
   width: 100%;
 `;
 
-export default ({ onClose, onButtonClick }) => {
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      onClose();
-      onButtonClick();
-    }, 2500);
-    return () => clearTimeout(timer);
-  }, []);
+export default ({ onClose, onFinish, onRequestInfluencers }) => {
+
+ const onActionTaken = action => {
+   //refactor
+   // useEffect clean up with onClose does not work for somereason
+   // need to investigate
+   action();
+   onClose();
+ }
 
   return (
     <Modal isOpen onClose={onClose}>
       <Grid justify="center" align="center">
         <Grid.Item size={12}>
+          {/* Better icon or SVG here. */}
           <IconWrapper>
             <Icon size={100} name="ios-checkmark" />
           </IconWrapper>
@@ -33,9 +35,32 @@ export default ({ onClose, onButtonClick }) => {
         <Grid.Item size={12}>
           <SubTitle isCentered>
             All influencers on our platform will be able to discover and apply
-            for your campaign
+            for your campaign. If you want someone specific you can:
           </SubTitle>
         </Grid.Item>
+        <Grid.Item size={12}>
+              <Actions>
+                <Button
+                  fixedWidth
+                  title="Request Influencers"
+                  onPress={() => onActionTaken(onRequestInfluencers)}
+                />
+              </Actions>
+            </Grid.Item>
+            <Grid.Item size={12}>
+          <SubTitle isCentered>
+            or
+          </SubTitle>
+        </Grid.Item>
+            <Grid.Item size={12}>
+              <Actions>
+                <Button
+                  fixedWidth
+                  title="Finish"
+                  onPress={() => onActionTaken(onFinish)}
+                />
+              </Actions>
+            </Grid.Item>
       </Grid>
     </Modal>
   );

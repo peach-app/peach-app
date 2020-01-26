@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import set from 'lodash/fp/set';
+import get from 'lodash/fp/get';
 import { KeyboardAvoidingView } from 'react-native';
 import { SafeAreaView, StatusBar, Header, SearchInfluencers} from '../../components';
 import { ACTION_COMPONENTS, MODAL_TYPES } from '../../consts';
@@ -10,8 +10,10 @@ import { useModal } from '../../contexts/Modal';
 
 
 const RequestInfluencers = ({ navigation }) => {
-
   const { openModal } = useModal();
+  
+
+  const campaignId = get('state.params.campaignId', navigation);
 
   const [isLoading, setLoading] = useState(false);
 
@@ -26,7 +28,8 @@ const RequestInfluencers = ({ navigation }) => {
             type: MODAL_TYPES.CONFIRM_REQUEST_INFLUENCERS,
             props: {
              shouldCloseOnBackdropClick: true,
-             requestedInfluencers
+             requestedInfluencers,
+             campaignId
             }
           })
         } />

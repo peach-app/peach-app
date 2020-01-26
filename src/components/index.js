@@ -30,3 +30,5 @@ export * from './SearchInfluencers';
 export * from './AddRemoveAction';
 export * from './Subtitle';
 export * from './Modal';
+export * from './DatePicker'
+export * from './Icon';

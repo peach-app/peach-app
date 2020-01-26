@@ -91,7 +91,7 @@ const Campaigns = ({ navigation }) => {
                         size={30}
                         name="ios-add-circle"
                         onPress={() =>
-                          navigation.navigate('RequestInfluencers')
+                          navigation.navigate('CreateCampaign')
                         }
                       />
                     </Grid.Item>
