@@ -69,6 +69,7 @@ module.exports = async () => {
           resource: q.Collection('User'),
           actions: {
             read: true,
+            write: true,
           },
         },
         {
