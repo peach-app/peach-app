@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useNavigation } from '@react-navigation/native';
 
 import { Main, Content, Image } from './styles';
 import {
@@ -13,42 +13,40 @@ import {
 
 import OnboardingBanner from '../../assets/onboarding.png';
 
-const OnboardingWelcome = ({ navigation }) => (
-  <Main>
-    <StatusBar />
+const OnboardingWelcome = () => {
+  const navigation = useNavigation();
 
-    <Content>
-      <Container>
-        <Grid>
-          <Grid.Item size={12}>
-            <Title>Welcome!</Title>
-          </Grid.Item>
-          <Grid.Item size={12}>
-            <Text isPara>
-              {
-                'We need a few more details from you \nbefore you can start using the Peach app.'
-              }
-            </Text>
-          </Grid.Item>
-          <Grid.Item size={12}>
-            <Button
-              onPress={() => navigation.navigate('PaymentDetails')}
-              title="Begin"
-              fixedWidth
-            />
-          </Grid.Item>
-        </Grid>
-      </Container>
-    </Content>
+  return (
+    <Main>
+      <StatusBar />
 
-    <Image source={OnboardingBanner} />
-  </Main>
-);
+      <Content>
+        <Container>
+          <Grid>
+            <Grid.Item size={12}>
+              <Title>Welcome!</Title>
+            </Grid.Item>
+            <Grid.Item size={12}>
+              <Text isPara>
+                {
+                  'We need a few more details from you \nbefore you can start using the Peach app.'
+                }
+              </Text>
+            </Grid.Item>
+            <Grid.Item size={12}>
+              <Button
+                onPress={() => navigation.navigate('PaymentDetails')}
+                title="Begin"
+                fixedWidth
+              />
+            </Grid.Item>
+          </Grid>
+        </Container>
+      </Content>
 
-OnboardingWelcome.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
+      <Image source={OnboardingBanner} />
+    </Main>
+  );
 };
 
 export default OnboardingWelcome;

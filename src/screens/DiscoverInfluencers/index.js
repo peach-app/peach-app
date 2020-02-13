@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { withNavigation } from 'react-navigation';
+import { useNavigation } from '@react-navigation/native';
 import { useQuery } from '@apollo/react-hooks';
 import getOr from 'lodash/fp/getOr';
 
@@ -17,7 +17,8 @@ import {
 
 import GET_DISCOVER_USERS from './graphql/get-discover-users';
 
-const DiscoverInfluencers = ({ navigation }) => {
+const DiscoverInfluencers = () => {
+  const navigation = useNavigation();
   const [activeTab, setTab] = useState(0);
   const { data, loading, networkStatus } = useQuery(GET_DISCOVER_USERS, {
     notifyOnNetworkStatusChange: true,
@@ -76,4 +77,4 @@ const DiscoverInfluencers = ({ navigation }) => {
   );
 };
 
-export default withNavigation(DiscoverInfluencers);
+export default DiscoverInfluencers;

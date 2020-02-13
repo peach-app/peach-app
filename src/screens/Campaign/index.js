@@ -3,6 +3,7 @@ import { RefreshControl } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 import getOr from 'lodash/fp/getOr';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
 import { Foot } from './styles';
 import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from '../../consts';
@@ -34,9 +35,12 @@ const TAB_INDEX_BOOKING_STATE = [
   BOOKING_STATE.REQUESTED,
 ];
 
-const Campaign = ({ navigation }) => {
+const Campaign = () => {
   const [activeTab, setTab] = useState(0);
-  const id = navigation.getParam('id');
+  const navigation = useNavigation();
+  const {
+    params: { id },
+  } = useRoute();
   const { user } = useUser();
 
   const isBrand = get('user.type', user) === USER_TYPE.BRAND;

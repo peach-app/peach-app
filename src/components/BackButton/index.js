@@ -1,19 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { withNavigation } from 'react-navigation';
+import { useNavigation } from '@react-navigation/native';
 
 import { Main, Icon } from './styles';
 
-export const BackButtonMain = ({ navigation }) => (
-  <Main onPress={() => navigation.goBack()}>
-    <Icon />
-  </Main>
-);
+export const BackButton = () => {
+  const navigation = useNavigation();
 
-BackButtonMain.propTypes = {
-  navigation: PropTypes.shape({
-    goBack: PropTypes.func.isRequired,
-  }).isRequired,
+  return (
+    <Main onPress={() => navigation.goBack()}>
+      <Icon />
+    </Main>
+  );
 };
-
-export const BackButton = withNavigation(BackButtonMain);

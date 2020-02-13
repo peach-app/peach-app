@@ -1,8 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useMutation } from '@apollo/react-hooks';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
 import {
   SafeAreaView,
@@ -22,8 +22,11 @@ const validationSchema = Yup.object().shape({
   cost: Yup.number().required('Please enter your pay rate for this campaign'),
 });
 
-const Apply = ({ navigation }) => {
-  const id = navigation.getParam('id');
+const Apply = () => {
+  const {
+    params: { id },
+  } = useRoute();
+  const navigation = useNavigation();
 
   const [applyToCampaign, { loading }] = useMutation(APPLY_TO_CAMPAIGN, {
     refetchQueries: ['getCampaign', 'getCampaigns'],
@@ -75,13 +78,6 @@ const Apply = ({ navigation }) => {
       </Container>
     </SafeAreaView>
   );
-};
-
-Apply.propTypes = {
-  navigation: PropTypes.shape({
-    getParam: PropTypes.func.isRequired,
-    goBack: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
 export default Apply;

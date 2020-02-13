@@ -26,3 +26,4 @@ export * from './TextInput';
 export * from './ThreadCard';
 export * from './Title';
 export * from './UserCard';
+export * from './Splash';

@@ -3,6 +3,7 @@ import { RefreshControl } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import getOr from 'lodash/fp/getOr';
 import get from 'lodash/fp/get';
+import { useNavigation } from '@react-navigation/native';
 
 import formatRefs from '../../helpers/formatRefs';
 import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from '../../consts';
@@ -28,7 +29,8 @@ const TAB_INDEX_BOOKING_STATE = [
   BOOKING_STATE.REQUESTED,
 ];
 
-const Campaigns = ({ navigation }) => {
+const Campaigns = () => {
+  const navigation = useNavigation();
   const [activeTab, setTab] = useState(0);
   const { user } = useUser();
   const { data, loading, networkStatus, refetch, fetchMore } = useQuery(

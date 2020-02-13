@@ -5,28 +5,32 @@ import styled from 'styled-components/native';
 import { AppearanceProvider } from 'react-native-appearance';
 import * as Font from 'expo-font';
 import get from 'lodash/fp/get';
+import { NavigationContainer } from '@react-navigation/native';
 
+import { Splash } from './components';
 import { Provider as AuthProvider, useAuth } from './contexts/Auth';
 import { Provider as UserProvider, useUser } from './contexts/User';
 import ThemeProvider from './theme-provider';
 import client from './apollo-client';
 
-import UnAuthedNavigator from './routers/UnAuthedRouter';
-import AuthedNavigator from './routers/AuthedNavigator';
-import OnboardingNavigator from './routers/OnboardingNavigator';
+import {
+  UnAuthedNavigator,
+  OnboardingNavigator,
+  AuthedNavigator,
+} from './routers';
 
 const AuthedApp = () => {
   const { user, loading } = useUser();
 
   if (loading) {
-    return <AppLoading />;
+    return <Splash />;
   }
 
-  if (get('user.onboarded', user)) {
-    return <AuthedNavigator />;
+  if (!get('user.onboarded', user)) {
+    return <OnboardingNavigator />;
   }
 
-  return <OnboardingNavigator />;
+  return <AuthedNavigator />;
 };
 
 const App = () => {
@@ -63,15 +67,17 @@ const Main = styled.View`
 `;
 
 export default () => (
-  <AuthProvider>
-    <ApolloProvider client={client}>
-      <AppearanceProvider>
-        <ThemeProvider>
-          <Main>
-            <App />
-          </Main>
-        </ThemeProvider>
-      </AppearanceProvider>
-    </ApolloProvider>
-  </AuthProvider>
+  <NavigationContainer>
+    <AuthProvider>
+      <ApolloProvider client={client}>
+        <AppearanceProvider>
+          <ThemeProvider>
+            <Main>
+              <App />
+            </Main>
+          </ThemeProvider>
+        </AppearanceProvider>
+      </ApolloProvider>
+    </AuthProvider>
+  </NavigationContainer>
 );
