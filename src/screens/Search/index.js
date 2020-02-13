@@ -44,7 +44,6 @@ const Search = () => {
           <Main>
             <TextInput
               placeholder="Search for influencers..."
-              autoFocus
               clearButtonMode="while-editing"
               autoCapitalize="none"
               onChangeText={query => {
