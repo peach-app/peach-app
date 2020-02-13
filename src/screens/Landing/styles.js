@@ -18,7 +18,7 @@ export const ImageBackground = styled.ImageBackground.attrs({
     `,
     })}
   flex: 1;
-  background-color: ${props => props.theme.background};
+  background-color: ${props => props.theme.white};
 `;
 
 export const Main = styled.View`
