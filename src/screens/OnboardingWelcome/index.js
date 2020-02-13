@@ -13,7 +13,7 @@ import {
 
 import OnboardingBanner from '../../assets/onboarding.png';
 
-const OnboardingWelcome = () => {
+export const OnboardingWelcome = () => {
   const navigation = useNavigation();
 
   return (
@@ -48,5 +48,3 @@ const OnboardingWelcome = () => {
     </Main>
   );
 };
-
-export default OnboardingWelcome;

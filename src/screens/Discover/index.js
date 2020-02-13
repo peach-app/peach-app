@@ -4,10 +4,10 @@ import get from 'lodash/fp/get';
 import { USER_TYPE } from '../../consts';
 import { useUser } from '../../contexts/User';
 
-import DiscoverCampaigns from '../DiscoverCampaigns';
-import DiscoverInfluencers from '../DiscoverInfluencers';
+import { DiscoverCampaigns } from '../DiscoverCampaigns';
+import { DiscoverInfluencers } from '../DiscoverInfluencers';
 
-const Discover = () => {
+export const Discover = () => {
   const { user } = useUser();
   const type = get('user.type', user);
 
@@ -21,5 +21,3 @@ const Discover = () => {
 
   return null;
 };
-
-export default Discover;

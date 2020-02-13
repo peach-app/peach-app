@@ -16,7 +16,7 @@ import {
   Text,
 } from '../../components';
 
-const OnboardingPaymentDetails = () => {
+export const OnboardingPaymentDetails = () => {
   const navigation = useNavigation();
   const formik = useFormik({
     initialValues: {
@@ -75,5 +75,3 @@ const OnboardingPaymentDetails = () => {
     </SafeAreaView>
   );
 };
-
-export default OnboardingPaymentDetails;

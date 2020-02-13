@@ -18,7 +18,7 @@ import {
 import SEND_MESSAGE from './graphql/send-message';
 import GET_THREAD from './graphql/get-thread';
 
-const Thread = () => {
+export const Thread = () => {
   const [text, setText] = useState('');
   const {
     params: { id },
@@ -112,5 +112,3 @@ const Thread = () => {
     </SafeAreaView>
   );
 };
-
-export default Thread;

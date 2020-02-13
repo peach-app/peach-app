@@ -14,7 +14,7 @@ import {
   TextInput,
 } from '../../components';
 
-const OnboardingSocial = () => {
+export const OnboardingSocial = () => {
   const navigation = useNavigation();
 
   return (
@@ -57,5 +57,3 @@ const OnboardingSocial = () => {
     </SafeAreaView>
   );
 };
-
-export default OnboardingSocial;

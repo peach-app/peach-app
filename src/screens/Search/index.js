@@ -18,7 +18,7 @@ import {
 
 import SEARCH_INFLUENCERS from './graphql/search-influencers';
 
-const Search = () => {
+export const Search = () => {
   const { data, loading, networkStatus, refetch } = useQuery(
     SEARCH_INFLUENCERS,
     {
@@ -84,5 +84,3 @@ const Search = () => {
     </SafeAreaView>
   );
 };
-
-export default Search;

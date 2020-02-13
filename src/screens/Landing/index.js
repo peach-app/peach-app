@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { ImageBackground, Main, Content, Actions } from './styles';
 import { StatusBar, Button, Container, Grid } from '../../components';
 
-const Landing = () => {
+export const Landing = () => {
   const navigation = useNavigation();
 
   return (
@@ -40,5 +40,3 @@ const Landing = () => {
     </ImageBackground>
   );
 };
-
-export default Landing;

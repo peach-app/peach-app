@@ -1,10 +1,12 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import OnboardingWelcome from '../screens/OnboardingWelcome';
-import OnboardingPaymentDetails from '../screens/OnboardingPaymentDetails';
-import OnboardingSocial from '../screens/OnboardingSocial';
-import OnboardingComplete from '../screens/OnboardingComplete';
+import {
+  OnboardingWelcome,
+  OnboardingPaymentDetails,
+  OnboardingSocial,
+  OnboardingComplete,
+} from '../screens';
 
 const Stack = createNativeStackNavigator();
 

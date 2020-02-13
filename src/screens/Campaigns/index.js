@@ -29,7 +29,7 @@ const TAB_INDEX_BOOKING_STATE = [
   BOOKING_STATE.REQUESTED,
 ];
 
-const Campaigns = () => {
+export const Campaigns = () => {
   const navigation = useNavigation();
   const [activeTab, setTab] = useState(0);
   const { user } = useUser();
@@ -146,5 +146,3 @@ const Campaigns = () => {
     </SafeAreaView>
   );
 };
-
-export default Campaigns;

@@ -18,7 +18,7 @@ import {
 } from '../../components';
 import GET_THREADS from './graphql/get-threads';
 
-const Inbox = () => {
+export const Inbox = () => {
   const { user } = useUser();
   const userType = get('user.type', user);
 
@@ -79,5 +79,3 @@ const Inbox = () => {
     </SafeAreaView>
   );
 };
-
-export default Inbox;

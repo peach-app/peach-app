@@ -17,7 +17,7 @@ import {
 
 import GET_DISCOVER_USERS from './graphql/get-discover-users';
 
-const DiscoverInfluencers = () => {
+export const DiscoverInfluencers = () => {
   const navigation = useNavigation();
   const [activeTab, setTab] = useState(0);
   const { data, loading, networkStatus } = useQuery(GET_DISCOVER_USERS, {
@@ -76,5 +76,3 @@ const DiscoverInfluencers = () => {
     </SafeAreaView>
   );
 };
-
-export default DiscoverInfluencers;

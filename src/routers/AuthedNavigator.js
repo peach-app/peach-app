@@ -3,18 +3,20 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { Navigation } from '../components';
-import Campaign from '../screens/Campaign';
-import Campaigns from '../screens/Campaigns';
-import Inbox from '../screens/Inbox';
-import Thread from '../screens/Thread';
-import Discover from '../screens/Discover';
-import Search from '../screens/Search';
-import Account from '../screens/Account';
-import AccountEdit from '../screens/AccountEdit';
-import Payouts from '../screens/Payouts';
-import CreateCampaign from '../screens/CreateCampaign';
-import Profile from '../screens/Profile';
-import Apply from '../screens/Apply';
+import {
+  Campaign,
+  Campaigns,
+  Inbox,
+  Thread,
+  Discover,
+  Search,
+  Account,
+  AccountEdit,
+  Payouts,
+  CreateCampaign,
+  Profile,
+  Apply,
+} from '../screens';
 
 const CampaignStack = createNativeStackNavigator();
 

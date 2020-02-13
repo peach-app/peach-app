@@ -35,7 +35,7 @@ const validationSchema = Yup.object().shape({
   ),
 });
 
-const Register = () => {
+export const Register = () => {
   const [activeTab, setTab] = useState(0);
   const { setToken } = useAuth();
   const [register, { loading, error }] = useMutation(REGISTER, {
@@ -135,5 +135,3 @@ const Register = () => {
     </SafeAreaView>
   );
 };
-
-export default Register;

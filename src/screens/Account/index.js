@@ -14,7 +14,7 @@ import {
 import GET_USER from './graphql/get-user';
 import { useAuth } from '../../contexts/Auth';
 
-const Account = () => {
+export const Account = () => {
   const navigation = useNavigation();
   const { setToken } = useAuth();
   const { client, data, loading } = useQuery(GET_USER);
@@ -47,5 +47,3 @@ const Account = () => {
     </SafeAreaView>
   );
 };
-
-export default Account;

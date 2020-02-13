@@ -28,7 +28,7 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().required('Please enter a password'),
 });
 
-const Login = () => {
+export const Login = () => {
   const { setToken } = useAuth();
   const [login, { loading, error }] = useMutation(LOGIN, {
     onCompleted: data => {
@@ -117,5 +117,3 @@ const Login = () => {
     </SafeAreaView>
   );
 };
-
-export default Login;

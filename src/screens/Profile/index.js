@@ -20,7 +20,7 @@ import { useUser } from '../../contexts/User';
 
 import GET_USER from './graphql/get-user';
 
-const Profile = () => {
+export const Profile = () => {
   const { user } = useUser();
   const {
     params: { id },
@@ -64,5 +64,3 @@ const Profile = () => {
     </SafeAreaView>
   );
 };
-
-export default Profile;

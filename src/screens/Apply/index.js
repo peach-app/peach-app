@@ -22,7 +22,7 @@ const validationSchema = Yup.object().shape({
   cost: Yup.number().required('Please enter your pay rate for this campaign'),
 });
 
-const Apply = () => {
+export const Apply = () => {
   const {
     params: { id },
   } = useRoute();
@@ -79,5 +79,3 @@ const Apply = () => {
     </SafeAreaView>
   );
 };
-
-export default Apply;
