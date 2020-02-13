@@ -122,7 +122,7 @@ const Campaigns = () => {
                       : 'been '
                   }${TAB_INDEX_BOOKING_STATE[
                     activeTab
-                  ].toLowerCase()} onto any campaigns yet.\nVisit "Browse" to start applying.`}
+                  ].toLowerCase()} onto any campaigns yet.\nVisit "Discover" to start applying.`}
                 />
               </NoResultText>
             )}
