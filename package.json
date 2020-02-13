@@ -26,6 +26,7 @@
     "dinero.js": "^1.6.0",
     "expo": "^36.0.0",
     "expo-font": "~8.0.0",
+    "faunadb": "^2.11.1",
     "formik": "^2.0.6",
     "graphql": "^14.5.8",
     "graphql-anywhere": "^4.2.4",
@@ -56,9 +57,8 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-react": "^7.16.0",
-    "faunadb": "^2.8.1",
-    "prettier": "^1.18.2",
-    "npm-run-all": "^4.1.5"
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.18.2"
   },
   "private": true
 }
