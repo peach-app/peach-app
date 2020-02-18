@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { ThemeProvider as Provider } from 'styled-components/native';
+import React, { useState, useEffect, useContext } from 'react';
+import {
+  ThemeProvider as Provider,
+  ThemeContext,
+} from 'styled-components/native';
 import { Appearance, useColorScheme } from 'react-native-appearance';
 
 import theme, { darkModeOverrides } from './theme';
@@ -30,5 +33,7 @@ const ThemeProvider = ({ children }) => {
     </Provider>
   );
 };
+
+export const useTheme = () => useContext(ThemeContext);
 
 export default ThemeProvider;

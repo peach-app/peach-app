@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Platform, SafeAreaView, TouchableWithoutFeedback } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { ThemeContext } from 'styled-components/native';
 
 import { Main, List, Logo, Item } from './styles';
 import { Container } from '../Container';
+import { useTheme } from '../../theme-provider';
 
 const iconNames = {
   Campaigns: 'ios-list',
@@ -14,8 +15,7 @@ const iconNames = {
 };
 
 export const Navigation = ({ state, navigation }) => {
-  const theme = useContext(ThemeContext);
-  const { routes } = state;
+  const theme = useTheme();
 
   return (
     <Main>
@@ -23,7 +23,7 @@ export const Navigation = ({ state, navigation }) => {
         <Container>
           <List>
             {Platform.OS === 'web' && <Logo />}
-            {routes.map((route, index) => {
+            {state.routes.map((route, index) => {
               const isFocused = index === state.index;
 
               return (
@@ -49,4 +49,18 @@ export const Navigation = ({ state, navigation }) => {
       </SafeAreaView>
     </Main>
   );
+};
+
+Navigation.propTypes = {
+  state: PropTypes.shape({
+    index: PropTypes.number.isRequired,
+    routes: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+  }).isRequired,
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+  }).isRequired,
 };
