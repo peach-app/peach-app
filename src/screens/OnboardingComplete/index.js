@@ -15,7 +15,7 @@ import {
 
 import COMPLETE_ONBOARDING from './graphql/complete-onboarding';
 
-const OnboardingComplete = () => {
+export const OnboardingComplete = () => {
   const [completeOnboarding, { loading }] = useMutation(COMPLETE_ONBOARDING, {
     refetchQueries: ['getCurrentUser'],
   });
@@ -47,5 +47,3 @@ const OnboardingComplete = () => {
     </SafeAreaView>
   );
 };
-
-export default OnboardingComplete;

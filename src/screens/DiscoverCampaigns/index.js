@@ -17,7 +17,7 @@ import {
 } from '../../components';
 import GET_DISCOVER_CAMPAIGNS from './graphql/get-discover-campaigns';
 
-const DiscoverCampaigns = () => {
+export const DiscoverCampaigns = () => {
   const { data, loading, networkStatus, refetch, fetchMore } = useQuery(
     GET_DISCOVER_CAMPAIGNS,
     {
@@ -92,5 +92,3 @@ const DiscoverCampaigns = () => {
     </SafeAreaView>
   );
 };
-
-export default DiscoverCampaigns;

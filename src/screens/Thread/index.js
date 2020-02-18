@@ -4,6 +4,7 @@ import { KeyboardAvoidingView } from 'react-native';
 import getOr from 'lodash/fp/getOr';
 import get from 'lodash/fp/get';
 import startCase from 'lodash/startCase';
+import { useRoute } from '@react-navigation/native';
 
 import { Composer, Wrapper, TextInput, Send, Icon } from './styles';
 import {
@@ -17,9 +18,11 @@ import {
 import SEND_MESSAGE from './graphql/send-message';
 import GET_THREAD from './graphql/get-thread';
 
-const Thread = ({ navigation }) => {
+export const Thread = () => {
   const [text, setText] = useState('');
-  const id = navigation.getParam('id');
+  const {
+    params: { id },
+  } = useRoute();
   const { data, fetchMore, startPolling, stopPolling } = useQuery(GET_THREAD, {
     variables: {
       id,
@@ -97,7 +100,6 @@ const Thread = ({ navigation }) => {
           <Wrapper>
             <TextInput
               multiline
-              autoFocus
               placeholder="Type a message..."
               value={text}
               onChangeText={setText}
@@ -110,5 +112,3 @@ const Thread = ({ navigation }) => {
     </SafeAreaView>
   );
 };
-
-export default Thread;

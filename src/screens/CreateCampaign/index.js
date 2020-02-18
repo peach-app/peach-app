@@ -2,11 +2,9 @@ import React from 'react';
 
 import { SafeAreaView, StatusBar, Header } from '../../components';
 
-const CreateCampaign = () => (
+export const CreateCampaign = () => (
   <SafeAreaView>
     <StatusBar />
     <Header title="Create Campaign" />
   </SafeAreaView>
 );
-
-export default CreateCampaign;

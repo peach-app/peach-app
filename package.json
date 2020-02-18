@@ -13,6 +13,10 @@
   "dependencies": {
     "@apollo/react-hooks": "^3.1.1",
     "@expo/vector-icons": "^10.0.0",
+    "@react-native-community/masked-view": "0.1.5",
+    "@react-navigation/bottom-tabs": "^5.0.3",
+    "@react-navigation/native": "^5.0.3",
+    "@react-navigation/native-stack": "^5.0.3",
     "apollo-cache-inmemory": "^1.6.3",
     "apollo-client": "^2.6.4",
     "apollo-link": "^1.2.13",
@@ -22,6 +26,7 @@
     "dinero.js": "^1.6.0",
     "expo": "^36.0.0",
     "expo-font": "~8.0.0",
+    "faunadb": "^2.11.1",
     "formik": "^2.0.6",
     "graphql": "^14.5.8",
     "graphql-anywhere": "^4.2.4",
@@ -36,10 +41,9 @@
     "react-native-appearance": "~0.3.1",
     "react-native-gesture-handler": "~1.5.0",
     "react-native-reanimated": "~1.4.0",
+    "react-native-safe-area-context": "0.6.0",
+    "react-native-screens": "2.0.0-alpha.12",
     "react-native-web": "^0.11.7",
-    "react-navigation": "^4.0.10",
-    "react-navigation-stack": "^1.10.3",
-    "react-navigation-tabs": "^2.7.0",
     "styled-components": "^4.4.0-reactnativewebfix",
     "yup": "^0.27.0"
   },
@@ -53,9 +57,8 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-react": "^7.16.0",
-    "faunadb": "^2.8.1",
-    "prettier": "^1.18.2",
-    "npm-run-all": "^4.1.5"
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.18.2"
   },
   "private": true
 }

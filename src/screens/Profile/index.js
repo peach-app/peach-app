@@ -3,6 +3,7 @@ import { ScrollView } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 import startCase from 'lodash/startCase';
+import { useRoute } from '@react-navigation/native';
 
 import { USER_TYPE } from '../../consts';
 import {
@@ -19,9 +20,11 @@ import { useUser } from '../../contexts/User';
 
 import GET_USER from './graphql/get-user';
 
-const Profile = ({ navigation }) => {
+export const Profile = () => {
   const { user } = useUser();
-  const id = navigation.getParam('id');
+  const {
+    params: { id },
+  } = useRoute();
   const { data } = useQuery(GET_USER, {
     variables: {
       id,
@@ -61,5 +64,3 @@ const Profile = ({ navigation }) => {
     </SafeAreaView>
   );
 };
-
-export default Profile;

@@ -1,9 +1,4 @@
 import styled from 'styled-components/native';
-import { SafeAreaView } from '../../components';
-
-export const Main = styled(SafeAreaView)`
-  background-color: ${props => props.theme.brandSecondary};
-`;
 
 export const Content = styled.View`
   flex: 1;

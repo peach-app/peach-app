@@ -1,21 +1,20 @@
-import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
+import React from 'react';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import OnboardingWelcome from '../screens/OnboardingWelcome';
-import OnboardingPaymentDetails from '../screens/OnboardingPaymentDetails';
-import OnboardingSocial from '../screens/OnboardingSocial';
-import OnboardingComplete from '../screens/OnboardingComplete';
+import {
+  OnboardingWelcome,
+  OnboardingPaymentDetails,
+  OnboardingSocial,
+  OnboardingComplete,
+} from '../screens';
 
-const OnboardingNavigator = createStackNavigator(
-  {
-    Welcome: OnboardingWelcome,
-    PaymentDetails: OnboardingPaymentDetails,
-    Social: OnboardingSocial,
-    Complete: OnboardingComplete,
-  },
-  {
-    headerMode: 'none',
-  }
+const Stack = createNativeStackNavigator();
+
+export const OnboardingNavigator = () => (
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="Welcome" component={OnboardingWelcome} />
+    <Stack.Screen name="PaymentDetails" component={OnboardingPaymentDetails} />
+    <Stack.Screen name="Social" component={OnboardingSocial} />
+    <Stack.Screen name="Complete" component={OnboardingComplete} />
+  </Stack.Navigator>
 );
-
-export default createAppContainer(OnboardingNavigator);
