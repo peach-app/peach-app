@@ -1,8 +1,9 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 
-import { Main, Content, Image } from './styles';
+import { Content, Image } from './styles';
 import {
+  SafeAreaView,
   StatusBar,
   Title,
   Text,
@@ -17,7 +18,7 @@ export const OnboardingWelcome = () => {
   const navigation = useNavigation();
 
   return (
-    <Main>
+    <SafeAreaView>
       <StatusBar />
 
       <Content>
@@ -45,6 +46,6 @@ export const OnboardingWelcome = () => {
       </Content>
 
       <Image source={OnboardingBanner} />
-    </Main>
+    </SafeAreaView>
   );
 };
