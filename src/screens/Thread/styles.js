@@ -43,3 +43,7 @@ export const Icon = styled(Ionicons).attrs({
 })`
   color: ${props => props.theme.brand};
 `;
+
+export const Spacer = styled.View`
+  height: ${props => props.theme.spacing}px;
+`;

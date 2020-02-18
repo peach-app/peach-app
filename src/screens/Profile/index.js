@@ -13,8 +13,8 @@ import {
   ProfileHeader,
   Text,
   Grid,
-  Actions,
   Button,
+  Foot,
 } from '../../components';
 import { useUser } from '../../contexts/User';
 
@@ -50,17 +50,14 @@ export const Profile = () => {
                 <Text isCenter>{bio}</Text>
               </Grid.Item>
             )}
-
-            {isBrand && (
-              <Grid.Item size={12}>
-                <Actions>
-                  <Button title="Request work" fixedWidth />
-                </Actions>
-              </Grid.Item>
-            )}
           </Grid>
         </Container>
       </ScrollView>
+      {isBrand && (
+        <Foot>
+          <Button title="Request work" fixedWidth />
+        </Foot>
+      )}
     </SafeAreaView>
   );
 };

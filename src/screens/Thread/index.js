@@ -1,12 +1,13 @@
 import React, { useState, useMemo } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { KeyboardAvoidingView } from 'react-native';
+import debounce from 'lodash/debounce';
 import getOr from 'lodash/fp/getOr';
 import get from 'lodash/fp/get';
 import startCase from 'lodash/startCase';
 import { useRoute } from '@react-navigation/native';
 
-import { Composer, Wrapper, TextInput, Send, Icon } from './styles';
+import { Composer, Wrapper, TextInput, Send, Icon, Spacer } from './styles';
 import {
   SafeAreaView,
   Header,
@@ -52,20 +53,25 @@ export const Thread = () => {
       .join(', ');
   }, [data]);
 
+  const debounceStartPolling = debounce(startPolling);
+
+  const onScroll = e => {
+    const { y } = e.nativeEvent.contentOffset;
+
+    stopPolling();
+
+    if (y <= 0) {
+      debounceStartPolling(3000);
+    }
+  };
+
   return (
     <SafeAreaView>
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
         <Header title={startCase(title)} />
         <FlatList
-          onScroll={e => {
-            const { y } = e.nativeEvent.contentOffset;
-
-            stopPolling();
-
-            if (y <= 0) {
-              startPolling(3000);
-            }
-          }}
+          ListFooterComponent={<Spacer />}
+          onScroll={onScroll}
           inverted
           keyExtractor={item => item._id}
           data={getOr([], 'findThreadById.messages.data', data)}

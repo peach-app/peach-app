@@ -5,7 +5,6 @@ import get from 'lodash/fp/get';
 import getOr from 'lodash/fp/getOr';
 import { useRoute, useNavigation } from '@react-navigation/native';
 
-import { Foot } from './styles';
 import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from '../../consts';
 import {
   Text,
@@ -22,6 +21,7 @@ import {
   Grid,
   NoResultText,
   FlatList,
+  Foot,
 } from '../../components';
 
 import { useUser } from '../../contexts/User';
