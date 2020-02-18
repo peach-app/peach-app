@@ -1,6 +1,4 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { Navigation } from 'components';
 import {
@@ -18,7 +16,9 @@ import {
   Apply,
 } from 'screens';
 
-const CampaignStack = createNativeStackNavigator();
+import { createStackNavigator, createBottomTabNavigator } from './components';
+
+const CampaignStack = createStackNavigator();
 
 const CampaignNavigator = () => (
   <CampaignStack.Navigator screenOptions={{ headerShown: false }}>
@@ -27,7 +27,7 @@ const CampaignNavigator = () => (
   </CampaignStack.Navigator>
 );
 
-const DiscoverStack = createNativeStackNavigator();
+const DiscoverStack = createStackNavigator();
 
 const DiscoverNavigator = () => (
   <DiscoverStack.Navigator screenOptions={{ headerShown: false }}>
@@ -36,7 +36,7 @@ const DiscoverNavigator = () => (
   </DiscoverStack.Navigator>
 );
 
-const InboxStack = createNativeStackNavigator();
+const InboxStack = createStackNavigator();
 
 const InboxNavigator = () => (
   <InboxStack.Navigator screenOptions={{ headerShown: false }}>
@@ -45,7 +45,7 @@ const InboxNavigator = () => (
   </InboxStack.Navigator>
 );
 
-const AccountStack = createNativeStackNavigator();
+const AccountStack = createStackNavigator();
 
 const AccountNavigator = () => (
   <AccountStack.Navigator screenOptions={{ headerShown: false }}>
@@ -66,7 +66,7 @@ const TabNavigator = () => (
   </Tab.Navigator>
 );
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 export const AuthedNavigator = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>

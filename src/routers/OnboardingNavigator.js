@@ -1,5 +1,4 @@
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import {
   OnboardingWelcome,
@@ -8,7 +7,9 @@ import {
   OnboardingComplete,
 } from 'screens';
 
-const Stack = createNativeStackNavigator();
+import { createStackNavigator } from './components';
+
+const Stack = createStackNavigator();
 
 export const OnboardingNavigator = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
