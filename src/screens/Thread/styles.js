@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 import { Ionicons } from '@expo/vector-icons';
 import { Platform } from 'react-native';
 
-import { Container } from '../../components';
+import { Container } from 'components';
 
 export const Composer = styled.View`
   border-color: ${props => props.theme.greyLight};

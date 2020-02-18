@@ -2,7 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { Navigation } from '../components';
+import { Navigation } from 'components';
 import {
   Campaign,
   Campaigns,
@@ -16,7 +16,7 @@ import {
   CreateCampaign,
   Profile,
   Apply,
-} from '../screens';
+} from 'screens';
 
 const CampaignStack = createNativeStackNavigator();
 

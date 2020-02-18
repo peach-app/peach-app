@@ -10,9 +10,10 @@ import {
   Container,
   NavLink,
   ProfileHeader,
-} from '../../components';
+} from 'components';
+import { useAuth } from 'contexts/Auth';
+
 import GET_USER from './graphql/get-user';
-import { useAuth } from '../../contexts/Auth';
 
 export const Account = () => {
   const navigation = useNavigation();

@@ -5,7 +5,7 @@ import getOr from 'lodash/fp/getOr';
 import debounce from 'lodash/debounce';
 
 import { Main } from './styles';
-import { NETWORK_STATUS } from '../../consts';
+import { NETWORK_STATUS } from 'consts';
 import {
   SafeAreaView,
   FlatList,
@@ -14,7 +14,7 @@ import {
   TextInput,
   NoResultText,
   Header,
-} from '../../components';
+} from 'components';
 
 import SEARCH_INFLUENCERS from './graphql/search-influencers';
 

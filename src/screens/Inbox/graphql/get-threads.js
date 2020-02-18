@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-import { ThreadCardFragment } from '../../../components';
+import { ThreadCardFragment } from 'components';
 
 export default gql`
   ${ThreadCardFragment}

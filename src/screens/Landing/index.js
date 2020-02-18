@@ -3,7 +3,7 @@ import { SafeAreaView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import { ImageBackground, Main, Content, Actions } from './styles';
-import { StatusBar, Button, Container, Grid } from '../../components';
+import { StatusBar, Button, Container, Grid } from 'components';
 
 export const Landing = () => {
   const navigation = useNavigation();

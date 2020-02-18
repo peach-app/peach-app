@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useQuery } from '@apollo/react-hooks';
 import getOr from 'lodash/fp/getOr';
 
-import { NETWORK_STATUS } from '../../consts';
+import { NETWORK_STATUS } from 'consts';
 import {
   SafeAreaView,
   Intro,
@@ -13,7 +13,7 @@ import {
   UserCard,
   FlatList,
   Tabs,
-} from '../../components';
+} from 'components';
 
 import GET_DISCOVER_USERS from './graphql/get-discover-users';
 

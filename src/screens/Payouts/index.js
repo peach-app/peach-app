@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { SafeAreaView, StatusBar, Header } from '../../components';
+import { SafeAreaView, StatusBar, Header } from 'components';
 
 export const Payouts = () => (
   <SafeAreaView>

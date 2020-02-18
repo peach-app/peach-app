@@ -10,7 +10,7 @@ import {
   Container,
   Grid,
   Button,
-} from '../../components';
+} from 'components';
 
 import OnboardingBanner from '../../assets/onboarding.png';
 

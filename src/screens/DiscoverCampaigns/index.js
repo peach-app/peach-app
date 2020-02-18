@@ -4,8 +4,6 @@ import { useQuery } from '@apollo/react-hooks';
 import getOr from 'lodash/fp/getOr';
 import get from 'lodash/fp/get';
 
-import formatRefs from '../../helpers/formatRefs';
-import { NETWORK_STATUS } from '../../consts';
 import {
   SafeAreaView,
   StatusBar,
@@ -14,7 +12,10 @@ import {
   Intro,
   CampaignCard,
   NoResultText,
-} from '../../components';
+} from 'components';
+import { formatRefs } from 'helpers';
+
+import { NETWORK_STATUS } from 'consts';
 import GET_DISCOVER_CAMPAIGNS from './graphql/get-discover-campaigns';
 
 export const DiscoverCampaigns = () => {

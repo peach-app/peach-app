@@ -6,7 +6,7 @@ import {
   OnboardingPaymentDetails,
   OnboardingSocial,
   OnboardingComplete,
-} from '../screens';
+} from 'screens';
 
 const Stack = createNativeStackNavigator();
 

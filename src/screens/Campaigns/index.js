@@ -5,8 +5,6 @@ import getOr from 'lodash/fp/getOr';
 import get from 'lodash/fp/get';
 import { useNavigation } from '@react-navigation/native';
 
-import formatRefs from '../../helpers/formatRefs';
-import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from '../../consts';
 import {
   SafeAreaView,
   FlatList,
@@ -18,8 +16,11 @@ import {
   CampaignCard,
   NoResultText,
   Branch,
-} from '../../components';
-import { useUser } from '../../contexts/User';
+} from 'components';
+import { formatRefs } from 'helpers';
+import { useUser } from 'contexts/User';
+
+import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from 'consts';
 
 import GET_CAMPAIGNS from './graphql/get-campaigns';
 

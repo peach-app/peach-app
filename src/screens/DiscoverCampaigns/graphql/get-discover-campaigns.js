@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-import { CampaignCardFragment } from '../../../components';
+import { CampaignCardFragment } from 'components';
 
 export default gql`
   ${CampaignCardFragment}

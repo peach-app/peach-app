@@ -5,7 +5,6 @@ import get from 'lodash/fp/get';
 import startCase from 'lodash/startCase';
 import { useRoute } from '@react-navigation/native';
 
-import { USER_TYPE } from '../../consts';
 import {
   SafeAreaView,
   Header,
@@ -15,9 +14,10 @@ import {
   Grid,
   Button,
   Foot,
-} from '../../components';
-import { useUser } from '../../contexts/User';
+} from 'components';
+import { useUser } from 'contexts/User';
 
+import { USER_TYPE } from 'consts';
 import GET_USER from './graphql/get-user';
 
 export const Profile = () => {

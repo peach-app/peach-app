@@ -7,9 +7,10 @@ import * as Font from 'expo-font';
 import get from 'lodash/fp/get';
 import { NavigationContainer } from '@react-navigation/native';
 
-import { Splash } from './components';
-import { Provider as AuthProvider, useAuth } from './contexts/Auth';
-import { Provider as UserProvider, useUser } from './contexts/User';
+import { Splash } from 'components';
+import { Provider as AuthProvider, useAuth } from 'contexts/Auth';
+import { Provider as UserProvider, useUser } from 'contexts/User';
+
 import ThemeProvider from './theme-provider';
 import client from './apollo-client';
 
