@@ -13,6 +13,7 @@ module.exports = function(api) {
             helpers: './src/helpers',
             contexts: './src/contexts',
             consts: './src/consts',
+            routers: './src/routers',
           },
         },
       ],

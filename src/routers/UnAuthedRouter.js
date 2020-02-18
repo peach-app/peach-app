@@ -1,9 +1,10 @@
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { Landing, Login, Register } from 'screens';
 
-const Stack = createNativeStackNavigator();
+import { createStackNavigator } from './components';
+
+const Stack = createStackNavigator();
 
 export const UnAuthedNavigator = () => (
   <Stack.Navigator
