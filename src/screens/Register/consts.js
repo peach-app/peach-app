@@ -1,4 +1,4 @@
-import { USER_TYPE } from '../../consts';
+import { USER_TYPE } from 'consts';
 
 export const USER_TYPE_TABS = Object.values(USER_TYPE);
 

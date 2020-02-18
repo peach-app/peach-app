@@ -14,7 +14,7 @@ import {
   Button,
   Intro,
   Text,
-} from '../../components';
+} from 'components';
 
 export const OnboardingPaymentDetails = () => {
   const navigation = useNavigation();

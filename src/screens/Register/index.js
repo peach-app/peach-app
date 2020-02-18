@@ -5,8 +5,6 @@ import * as Yup from 'yup';
 import { useMutation } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 
-import { USER_TYPE_TABS, FORM_INPUTS, FORM_ERROR_MESSAGES } from './consts';
-import { useAuth } from '../../contexts/Auth';
 import {
   SafeAreaView,
   StatusBar,
@@ -20,8 +18,10 @@ import {
   Actions,
   Button,
   BackButton,
-} from '../../components';
+} from 'components';
+import { useAuth } from 'contexts/Auth';
 
+import { USER_TYPE_TABS, FORM_INPUTS, FORM_ERROR_MESSAGES } from './consts';
 import REGISTER from './graphql/register';
 
 const validationSchema = Yup.object().shape({

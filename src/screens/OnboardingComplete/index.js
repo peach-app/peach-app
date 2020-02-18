@@ -11,7 +11,7 @@ import {
   Title,
   Intro,
   Grid,
-} from '../../components';
+} from 'components';
 
 import COMPLETE_ONBOARDING from './graphql/complete-onboarding';
 

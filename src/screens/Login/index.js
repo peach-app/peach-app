@@ -17,8 +17,9 @@ import {
   TextInput,
   Text,
   BackButton,
-} from '../../components';
-import { useAuth } from '../../contexts/Auth';
+} from 'components';
+import { useAuth } from 'contexts/Auth';
+
 import LOGIN from './graphql/login';
 
 const validationSchema = Yup.object().shape({

@@ -17,7 +17,7 @@ import {
   Actions,
   Button,
   Text,
-} from '../../components';
+} from 'components';
 
 import GET_USER from './graphql/get-user';
 import SAVE_USER from './graphql/save-user';

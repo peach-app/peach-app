@@ -7,7 +7,8 @@ import { useNavigation } from '@react-navigation/native';
 import { useMutation } from '@apollo/react-hooks';
 import startCase from 'lodash/startCase';
 
-import { BOOKING_STATE } from '../../consts';
+import { BOOKING_STATE } from 'consts';
+
 import { Grid } from '../Grid';
 import { SkeletonText } from '../Skeletons';
 import { Loading } from '../Loading';

@@ -12,7 +12,7 @@ import {
   Button,
   Intro,
   TextInput,
-} from '../../components';
+} from 'components';
 
 export const OnboardingSocial = () => {
   const navigation = useNavigation();

@@ -5,7 +5,6 @@ import get from 'lodash/fp/get';
 import getOr from 'lodash/fp/getOr';
 import { useRoute, useNavigation } from '@react-navigation/native';
 
-import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from '../../consts';
 import {
   Text,
   Header,
@@ -22,9 +21,9 @@ import {
   NoResultText,
   FlatList,
   Foot,
-} from '../../components';
-
-import { useUser } from '../../contexts/User';
+} from 'components';
+import { useUser } from 'contexts/User';
+import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from 'consts';
 
 import GET_CAMPAIGN from './graphql/get-campaign';
 

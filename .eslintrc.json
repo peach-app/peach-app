@@ -25,5 +25,10 @@
         "ignoreRegExpLiterals": true
       }
     ]
+  },
+  "settings": {
+    "import/resolver": {
+      "babel-module": {}
+    }
   }
 }

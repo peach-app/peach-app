@@ -1,8 +1,9 @@
 import React from 'react';
 import get from 'lodash/fp/get';
 
-import { USER_TYPE } from '../../consts';
-import { useUser } from '../../contexts/User';
+import { useUser } from 'contexts/User';
+
+import { USER_TYPE } from 'consts';
 
 import { DiscoverCampaigns } from '../DiscoverCampaigns';
 import { DiscoverInfluencers } from '../DiscoverInfluencers';

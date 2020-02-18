@@ -14,7 +14,7 @@ import {
   TextInput,
   Actions,
   Grid,
-} from '../../components';
+} from 'components';
 
 import APPLY_TO_CAMPAIGN from './graphql/apply-to-campaign';
 

@@ -14,7 +14,7 @@ import {
   Loading,
   FlatList,
   MessageBubble,
-} from '../../components';
+} from 'components';
 
 import SEND_MESSAGE from './graphql/send-message';
 import GET_THREAD from './graphql/get-thread';
