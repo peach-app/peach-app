@@ -39,7 +39,7 @@ Influencer + Brand Collaboration
 
 ## Production Deploy
 
-`npm run deploy:prod`
+`npm run deploy`
 
 ## URLS
 
