@@ -1,12 +1,20 @@
-import React from 'react';
-import { Image } from 'react-native';
+import { Platform } from 'react-native';
+import styled from 'styled-components/native';
 
 import splash from '../../assets/splash.png';
 
-export const Splash = () => (
-  <Image
-    source={splash}
-    resizeMode="contain"
-    style={{ width: '100%', flex: 1 }}
-  />
-);
+export const Splash = styled.Image.attrs({
+  resizeMode: 'contain',
+  source: splash,
+})`
+  flex: 1;
+  ${Platform.select({
+    web: `
+        width: 600px;
+        max-width: 100%;
+        margin-horizontal: auto;
+      `,
+    ios: `width: 100%;`,
+    android: `width: 100%`,
+  })}
+`;
