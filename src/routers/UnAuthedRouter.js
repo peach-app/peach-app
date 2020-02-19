@@ -11,6 +11,9 @@ export const UnAuthedNavigator = () => (
     initialRouteName="Landing"
     screenOptions={{
       headerShown: false,
+      cardStyle: {
+        backgroundColor: 'white',
+      },
     }}
   >
     <Stack.Screen name="Landing" component={Landing} />

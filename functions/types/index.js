@@ -124,6 +124,7 @@ module.exports = gql`
   }
 
   enum BookingState {
+    ALL
     ACCEPTED
     DECLINED
     COMPLETE
