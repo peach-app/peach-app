@@ -34,7 +34,7 @@ export const OnboardingComplete = () => {
             <Grid.Item size={12}>
               <Actions>
                 <Button
-                  title="Start Browsing"
+                  title="Start Influencing"
                   fixedWidth
                   isLoading={loading}
                   onPress={() => completeOnboarding()}

@@ -1,4 +1,4 @@
-const transporter = require('../../helpers/mailTransporter');
+const sendMail = require('../../helpers/sendMail');
 
 const registrationEmail = ({ name }) => `
 Hi ${name},
@@ -36,21 +36,11 @@ module.exports = async (root, args, { client, q }) => {
     )
   );
 
-  transporter.sendMail(
-    {
-      from: 'peachapp.io@gmail.com',
-      to: email,
-      subject: 'Welcome to Peach!',
-      text: registrationEmail({ name }),
-    },
-    (error, info) => {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log('Email sent: ' + info.response);
-      }
-    }
-  );
+  await sendMail({
+    to: email,
+    subject: 'Welcome to Peach!',
+    text: registrationEmail({ name }),
+  });
 
   return result;
 };
