@@ -113,7 +113,7 @@ module.exports = async () => {
           },
         },
         {
-          resource: q.Index('booking_by_campaign_state'),
+          resource: q.Index('booking_by_state'),
           actions: {
             read: true,
           },
