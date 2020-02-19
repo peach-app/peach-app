@@ -11,10 +11,12 @@ module.exports = async (root, args, { client, q, DocumentDataWithId }) => {
   return client.query(
     q.If(
       q.Exists(
-        q.Match(
-          q.Index('booking_by_campaign_user'),
-          q.Ref(q.Collection('Campaign'), id),
-          q.Identity()
+        q.Intersection(
+          q.Match(q.Index('booking_by_user'), q.Identity()),
+          q.Match(
+            q.Index('booking_by_campaign'),
+            q.Ref(q.Collection('Campaign'), id)
+          )
         )
       ),
       q.Abort('User already applied to campaign.'),

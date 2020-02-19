@@ -173,12 +173,6 @@ module.exports = async () => {
           },
         },
         {
-          resource: q.Index('booking_by_campaign_user'),
-          actions: {
-            read: true,
-          },
-        },
-        {
           resource: q.Index('user_name_by_type'),
           actions: {
             read: true,
