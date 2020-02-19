@@ -34,7 +34,7 @@ export const Campaigns = () => {
   const activeTab = useMemo(
     () =>
       (isBrand
-        ? [BOOKING_STATE.ALL, BOOKING_STATE.APPLIED]
+        ? [undefined, BOOKING_STATE.APPLIED] // undefined shows all bookings
         : [
             BOOKING_STATE.ACCEPTED,
             BOOKING_STATE.APPLIED,
@@ -125,7 +125,7 @@ export const Campaigns = () => {
                   left={`You don't have any campaigns yet.\nPress "+" to get started.`}
                   right={`You haven't ${
                     activeTab === BOOKING_STATE.APPLIED ? '' : 'been '
-                  }${activeTab.toLowerCase()} onto any campaigns yet.\nVisit "Discover" to start applying.`}
+                  }${activeTab?.toLowerCase()} onto any campaigns yet.\nVisit "Discover" to start applying.`}
                 />
               </NoResultText>
             )}

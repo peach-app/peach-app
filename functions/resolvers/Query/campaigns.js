@@ -1,4 +1,4 @@
-const { USER_TYPE, BOOKING_STATE } = require('../../consts');
+const { USER_TYPE } = require('../../consts');
 
 module.exports = async (
   root,
@@ -20,12 +20,12 @@ module.exports = async (
 
           // brand
           q.If(
-            state === BOOKING_STATE.ALL,
-            q.Match(q.Index('campaign_by_user'), q.Identity()),
+            Boolean(state),
             q.Intersection(
               q.Match(q.Index('campaign_by_user'), q.Identity()),
               q.Match(q.Index('booking_campaign_by_state'), state)
-            )
+            ),
+            q.Match(q.Index('campaign_by_user'), q.Identity())
           ),
 
           // influencer

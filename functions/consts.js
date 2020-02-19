@@ -4,7 +4,6 @@ const USER_TYPE = {
 };
 
 const BOOKING_STATE = {
-  ALL: 'ALL',
   ACCEPTED: 'ACCEPTED',
   DECLINED: 'DECLINED',
   COMPLETE: 'COMPLETE',
