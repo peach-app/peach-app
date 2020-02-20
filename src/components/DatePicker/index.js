@@ -1,26 +1,27 @@
-/* eslint-disable react/require-default-props */
 import React from 'react';
 import PropTypes from 'prop-types';
-import DatePicker from 'react-native-datepicker';
+import DatePickerBase from 'react-native-datepicker';
 import moment from 'moment';
-import { withTheme } from 'styled-components/native';
-import Label from '../Label';
+
+import { useTheme } from '../../theme-provider';
+import { Label } from '../Label';
 
 const DATE_FORMAT = 'YYYY-MM-DD';
 
-const DatePickerComponent = ({
+export const DatePicker = ({
   label,
-  theme,
   placeholder,
   mode,
   error,
   onChange,
   date,
 }) => {
+  const theme = useTheme();
+
   return (
     <>
       {label && <Label>{label}</Label>}
-      <DatePicker
+      <DatePickerBase
         date={date}
         mode={mode}
         placeholder={placeholder}
@@ -38,7 +39,7 @@ const DatePickerComponent = ({
             paddingVertical: 0,
             paddingHorizontal: theme.spacing,
             minHeight: 38,
-            fontFamily: theme.fontFamily,
+            fontFamily: theme.fontFamily.regular,
           },
           btnTextConfirm: {
             color: theme.brand,
@@ -59,21 +60,17 @@ const DatePickerComponent = ({
   );
 };
 
-DatePickerComponent.defaultProps = {
+DatePicker.defaultProps = {
   placeholder: 'Select date',
   mode: 'date',
   label: 'Date',
 };
 
-DatePickerComponent.propTypes = {
+DatePicker.propTypes = {
   label: PropTypes.string,
-  // eslint-disable-next-line react/forbid-prop-types
-  theme: PropTypes.object.isRequired,
   placeholder: PropTypes.string,
   mode: PropTypes.string,
-  error: PropTypes.string,
-  onChange: PropTypes.func,
-  date: PropTypes.string,
+  error: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  date: PropTypes.string.isRequired,
 };
-
-export default withTheme(DatePickerComponent);

@@ -6,7 +6,7 @@ const AuthContext = React.createContext();
 
 const getStoredToken = async setIsLoggedIn => {
   const token = await AsyncStorage.getItem('token');
-  setIsLoggedIn(!!token);
+  setIsLoggedIn(Boolean(token));
 };
 
 export const Provider = ({ children }) => {
@@ -28,7 +28,7 @@ export const Provider = ({ children }) => {
     } else {
       await AsyncStorage.removeItem('token');
     }
-    setIsLoggedIn(!!token);
+    setIsLoggedIn(Boolean(token));
   };
 
   return (

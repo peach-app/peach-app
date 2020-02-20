@@ -3,34 +3,34 @@ import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 import get from 'lodash/fp/get';
 import Dinero from 'dinero.js';
-import { withNavigation } from 'react-navigation';
+import { useNavigation } from '@react-navigation/native';
 import { useMutation } from '@apollo/react-hooks';
 import startCase from 'lodash/startCase';
 
-import { BOOKING_STATE } from '../../consts';
-import { Grid, GridItem } from '../../components/Grid';
-import { SkeletonText } from '../../components/Skeletons';
-import Button from '../../components/Button';
-import Avatar from '../../components/Avatar';
-import Text from '../../components/Text';
+import { BOOKING_STATE } from 'consts';
+
+import { Grid } from '../Grid';
+import { SkeletonText } from '../Skeletons';
+import { Loading } from '../Loading';
+import { IconButton } from '../IconButton';
+import { Avatar } from '../Avatar';
+import { Text } from '../Text';
 import UPDATE_BOOKING_STATE from './graphql/update-booking-state';
 
-const Booking = ({ _id, cost, state, user, isLoading, navigation }) => {
-  const [updateBookingState, { loading: updating }] = useMutation(
-    UPDATE_BOOKING_STATE,
-    {
-      refetchQueries: ['getCampaign'],
-      variables: {
-        id: _id,
-      },
-    }
-  );
+export const Booking = ({ _id, cost, state, user, isLoading }) => {
+  const navigation = useNavigation();
+  const [updateBookingState, { loading }] = useMutation(UPDATE_BOOKING_STATE, {
+    refetchQueries: ['getCampaign'],
+    variables: {
+      id: _id,
+    },
+  });
 
   return (
-    <Grid>
-      <GridItem size={12}>
+    <Grid align="center">
+      <Grid.Item flex={1}>
         <Grid noWrap align="center">
-          <GridItem>
+          <Grid.Item>
             <Avatar
               size={50}
               onPress={() =>
@@ -40,8 +40,8 @@ const Booking = ({ _id, cost, state, user, isLoading, navigation }) => {
               source={{ uri: get('avatar.url', user) }}
               fallback={get('name', user)}
             />
-          </GridItem>
-          <GridItem flex={1}>
+          </Grid.Item>
+          <Grid.Item flex={1}>
             <Text numberOfLines={1}>
               <SkeletonText
                 isLoading={isLoading}
@@ -55,44 +55,45 @@ const Booking = ({ _id, cost, state, user, isLoading, navigation }) => {
                 Rate: {Dinero({ amount: cost, currency: 'GBP' }).toFormat()}
               </SkeletonText>
             </Text>
-          </GridItem>
+          </Grid.Item>
         </Grid>
-      </GridItem>
+      </Grid.Item>
 
-      {state === BOOKING_STATE.APPLIED && (
-        <GridItem size={12}>
-          <Grid>
-            <GridItem flex={1}>
-              <Button
-                title="Accept"
-                isSmall
-                isLoading={updating}
-                onPress={() => {
-                  updateBookingState({
-                    variables: {
-                      state: BOOKING_STATE.ACCEPTED,
-                    },
-                  });
-                }}
-              />
-            </GridItem>
-            <GridItem flex={1}>
-              <Button
-                title="Decline"
-                isShaded
-                isSmall
-                isLoading={updating}
-                onPress={() => {
-                  updateBookingState({
-                    variables: {
-                      state: BOOKING_STATE.DECLINED,
-                    },
-                  });
-                }}
-              />
-            </GridItem>
-          </Grid>
-        </GridItem>
+      {loading && (
+        <Grid.Item>
+          <Loading />
+        </Grid.Item>
+      )}
+
+      {state === BOOKING_STATE.APPLIED && !loading && (
+        <>
+          <Grid.Item width={48}>
+            <IconButton
+              name="ios-checkmark-circle-outline"
+              size={32}
+              onPress={() => {
+                updateBookingState({
+                  variables: {
+                    state: BOOKING_STATE.ACCEPTED,
+                  },
+                });
+              }}
+            />
+          </Grid.Item>
+          <Grid.Item width={48}>
+            <IconButton
+              name="ios-close-circle-outline"
+              size={32}
+              onPress={() => {
+                updateBookingState({
+                  variables: {
+                    state: BOOKING_STATE.DECLINED,
+                  },
+                });
+              }}
+            />
+          </Grid.Item>
+        </>
       )}
     </Grid>
   );
@@ -114,9 +115,6 @@ Booking.propTypes = {
   user: PropTypes.shape({
     name: PropTypes.string.isRequired,
   }),
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
 export const BookingFragment = gql`
@@ -133,5 +131,3 @@ export const BookingFragment = gql`
     }
   }
 `;
-
-export default withNavigation(Booking);

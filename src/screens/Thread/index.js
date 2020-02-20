@@ -1,23 +1,30 @@
 import React, { useState, useMemo } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { KeyboardAvoidingView } from 'react-native';
+import debounce from 'lodash/debounce';
 import getOr from 'lodash/fp/getOr';
+import get from 'lodash/fp/get';
 import startCase from 'lodash/startCase';
+import { useRoute } from '@react-navigation/native';
 
-import { Composer, Wrapper, TextInput, Send, Icon } from './styles';
-import SafeAreaView from '../../components/SafeAreaView';
-import Header from '../../components/Header';
-import Loading from '../../components/Loading';
-import { FlatList } from '../../components/FlatList';
-import MessageBubble from '../../components/MessageBubble';
+import { Composer, Wrapper, TextInput, Send, Icon, Spacer } from './styles';
+import {
+  SafeAreaView,
+  Header,
+  Loading,
+  FlatList,
+  MessageBubble,
+} from 'components';
 
 import SEND_MESSAGE from './graphql/send-message';
 import GET_THREAD from './graphql/get-thread';
 
-const Thread = ({ navigation }) => {
+export const Thread = () => {
   const [text, setText] = useState('');
-  const id = navigation.getParam('id');
-  const { data } = useQuery(GET_THREAD, {
+  const {
+    params: { id },
+  } = useRoute();
+  const { data, fetchMore, startPolling, stopPolling } = useQuery(GET_THREAD, {
     variables: {
       id,
     },
@@ -46,22 +53,59 @@ const Thread = ({ navigation }) => {
       .join(', ');
   }, [data]);
 
+  const debounceStartPolling = debounce(startPolling);
+
+  const onScroll = e => {
+    const { y } = e.nativeEvent.contentOffset;
+
+    stopPolling();
+
+    if (y <= 0) {
+      debounceStartPolling(3000);
+    }
+  };
+
   return (
     <SafeAreaView>
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
         <Header title={startCase(title)} />
         <FlatList
+          ListFooterComponent={<Spacer />}
+          onScroll={onScroll}
           inverted
           keyExtractor={item => item._id}
           data={getOr([], 'findThreadById.messages.data', data)}
           renderItem={({ item }) => <MessageBubble {...item} />}
+          onEndReached={() => {
+            const after = get('findThreadById.messages.after', data);
+
+            if (!after || loading) return;
+
+            fetchMore({
+              variables: {
+                id,
+                after,
+              },
+              updateQuery: (cache, { fetchMoreResult }) => ({
+                findThreadById: {
+                  ...fetchMoreResult.findThreadById,
+                  messages: {
+                    ...fetchMoreResult.findThreadById.messages,
+                    data: [
+                      ...cache.findThreadById.messages.data,
+                      ...fetchMoreResult.findThreadById.messages.data,
+                    ],
+                  },
+                },
+              }),
+            });
+          }}
         />
 
         <Composer>
           <Wrapper>
             <TextInput
               multiline
-              autoFocus
               placeholder="Type a message..."
               value={text}
               onChangeText={setText}
@@ -74,5 +118,3 @@ const Thread = ({ navigation }) => {
     </SafeAreaView>
   );
 };
-
-export default Thread;

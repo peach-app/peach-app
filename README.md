@@ -31,7 +31,7 @@ Influencer + Brand Collaboration
 
 ## Run Development
 
-1. Run expo: `npm start`
+1. Run expo: `expo start`
 
 2. Open a new tab
 
@@ -39,7 +39,7 @@ Influencer + Brand Collaboration
 
 ## Production Deploy
 
-`npm run deploy:prod`
+`npm run deploy`
 
 ## URLS
 

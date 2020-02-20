@@ -1,7 +1,7 @@
 const theme = {
   background: '#FEFEFE',
   foreground: '#000',
-  brand: '#FF7F76',
+  brand: '#fc516a',
   black: '#000',
   white: '#fff',
   greyDark: '#aaa',
@@ -16,7 +16,10 @@ const theme = {
   spacingLarge: 32,
   spacingXLarge: 48,
   inputBorderWidth: 1,
-  fontFamily: 'futura-book'
+  fontFamily: {
+    regular: 'futura-book',
+    bold: 'futura-bold',
+  },
 };
 
 export const darkModeOverrides = {

@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import { Ionicons } from '@expo/vector-icons';
 
-import Text from '../../components/Text';
+import { Text } from '../Text';
 
 export const Main = styled.TouchableOpacity`
   padding-vertical: ${props => props.theme.spacing}px;

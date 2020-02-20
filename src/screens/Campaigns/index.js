@@ -1,46 +1,57 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useMemo } from 'react';
 import { RefreshControl } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import getOr from 'lodash/fp/getOr';
 import get from 'lodash/fp/get';
-import head from 'lodash/fp/head';
+import { useNavigation } from '@react-navigation/native';
 
-import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from '../../consts';
-import SafeAreaView from '../../components/SafeAreaView';
-import { FlatList, FlatListItem } from '../../components/FlatList';
-import Title from '../../components/Title';
-import Intro from '../../components/Intro';
-import Tabs from '../../components/Tabs';
-import IconButton from '../../components/IconButton';
-import { Grid, GridItem } from '../../components/Grid';
-import CampaignCard from '../../components/CampaignCard';
-import NoResultText from '../../components/NoResultText';
-import { useUser } from '../../contexts/User';
+import {
+  SafeAreaView,
+  FlatList,
+  Title,
+  Intro,
+  Tabs,
+  IconButton,
+  Grid,
+  CampaignCard,
+  NoResultText,
+  Branch,
+} from 'components';
+import { formatRefs } from 'helpers';
+import { useUser } from 'contexts/User';
+
+import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from 'consts';
 
 import GET_CAMPAIGNS from './graphql/get-campaigns';
 
-const TAB_INDEX_BOOKING_STATE = [
-  BOOKING_STATE.ACCEPTED,
-  BOOKING_STATE.APPLIED,
-  BOOKING_STATE.REQUESTED,
-];
-
-const Campaigns = ({ navigation }) => {
-  const [activeTab, setTab] = useState(0);
+export const Campaigns = () => {
+  const navigation = useNavigation();
+  const [activeTabIndex, setTabIndex] = useState(0);
   const { user } = useUser();
+  const userType = get('user.type', user);
+  const isBrand = userType === USER_TYPE.BRAND;
+
+  const activeTab = useMemo(
+    () =>
+      (isBrand
+        ? [undefined, BOOKING_STATE.APPLIED] // undefined shows all bookings
+        : [
+            BOOKING_STATE.ACCEPTED,
+            BOOKING_STATE.APPLIED,
+            BOOKING_STATE.REQUESTED,
+          ])[activeTabIndex],
+    [activeTabIndex, isBrand]
+  );
+
   const { data, loading, networkStatus, refetch, fetchMore } = useQuery(
     GET_CAMPAIGNS,
     {
       notifyOnNetworkStatusChange: true,
       variables: {
-        state: TAB_INDEX_BOOKING_STATE[activeTab],
+        state: activeTab,
       },
     }
   );
-  const userType = get('user.type', user);
-  const isBrand = userType === USER_TYPE.BRAND;
-  const isInfluencer = userType === USER_TYPE.INFLUENCER;
 
   const fetching = loading && networkStatus === NETWORK_STATUS.FETCHING;
   const campaigns = getOr([], 'campaigns.data', data);
@@ -55,9 +66,9 @@ const Campaigns = ({ navigation }) => {
           />
         }
         onEndReached={() => {
-          const after = get('id', head(get('campaigns.after', data)));
+          const after = formatRefs(get('campaigns.after', data));
 
-          if (!after || loading) return;
+          if (after.length <= 0 || loading) return;
 
           fetchMore({
             variables: {
@@ -76,65 +87,65 @@ const Campaigns = ({ navigation }) => {
         }}
         ListHeaderComponent={
           <>
-            <FlatListItem>
+            <FlatList.Item>
               <Intro>
                 <Grid align="flex-end">
-                  <GridItem flex={1}>
+                  <Grid.Item flex={1}>
                     <Title>Campaigns</Title>
-                  </GridItem>
+                  </Grid.Item>
                   {isBrand && (
-                    <GridItem>
+                    <Grid.Item>
                       <IconButton
                         size={30}
                         name="ios-add-circle"
                         onPress={() => navigation.navigate('CreateCampaign')}
                       />
-                    </GridItem>
+                    </Grid.Item>
                   )}
                 </Grid>
               </Intro>
-            </FlatListItem>
+            </FlatList.Item>
 
-            <FlatListItem>
+            <FlatList.Item>
               <Tabs
-                activeTabIndex={activeTab}
-                onTabPress={index => setTab(index)}
+                activeTabIndex={activeTabIndex}
+                onTabPress={index => setTabIndex(index)}
                 tabs={
-                  isInfluencer
-                    ? ['Open', 'Applied', 'Requested']
-                    : ['All', 'Applications']
+                  isBrand
+                    ? ['All', 'Applications']
+                    : ['Open', 'Applied', 'Requested']
                 }
               />
-            </FlatListItem>
+            </FlatList.Item>
 
             {!fetching && campaigns.length <= 0 && (
-              <NoResultText>No active campaigns at this time.</NoResultText>
+              <NoResultText isPara>
+                <Branch
+                  test={isBrand}
+                  left={`You don't have any campaigns yet.\nPress "+" to get started.`}
+                  right={`You haven't ${
+                    activeTab === BOOKING_STATE.APPLIED ? '' : 'been '
+                  }${activeTab?.toLowerCase()} onto any campaigns yet.\nVisit "Discover" to start applying.`}
+                />
+              </NoResultText>
             )}
 
             {fetching &&
               Array.from(Array(3)).map((_, key) => (
-                <FlatListItem key={key}>
+                <FlatList.Item key={key}>
                   <CampaignCard isLoading />
-                </FlatListItem>
+                </FlatList.Item>
               ))}
           </>
         }
         keyExtractor={item => item._id}
         data={campaigns}
         renderItem={({ item }) => (
-          <FlatListItem>
+          <FlatList.Item>
             <CampaignCard {...item} />
-          </FlatListItem>
+          </FlatList.Item>
         )}
       />
     </SafeAreaView>
   );
 };
-
-Campaigns.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
-};
-
-export default Campaigns;

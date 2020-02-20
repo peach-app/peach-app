@@ -1,12 +1,14 @@
 import React from 'react';
-import { withNavigation } from 'react-navigation';
+import { useNavigation } from '@react-navigation/native';
 
 import { Main, Icon } from './styles';
 
-const BackButton = ({ navigation }) => (
-  <Main onPress={() => navigation.goBack()}>
-    <Icon />
-  </Main>
-);
+export const BackButton = () => {
+  const navigation = useNavigation();
 
-export default withNavigation(BackButton);
+  return (
+    <Main onPress={() => navigation.goBack()}>
+      <Icon />
+    </Main>
+  );
+};

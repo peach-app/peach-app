@@ -1,43 +1,40 @@
 import React, { useState } from 'react';
 import { ScrollView, KeyboardAvoidingView } from 'react-native';
-import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import { useMutation } from '@apollo/react-hooks';
 
-import { CAMPAIGN_TYPE, MODAL_TYPES } from '../../consts';
+import {
+  SafeAreaView,
+  StatusBar,
+  Header,
+  Grid,
+  TextInput,
+  Actions,
+  Button,
+  Container,
+  Intro,
+  Tabs,
+  DatePicker,
+} from 'components';
+import { CAMPAIGN_TYPE } from 'consts';
+
 import { validationSchema, FORM_INITIAL_VALUES } from './consts';
-import SafeAreaView from '../../components/SafeAreaView';
-import StatusBar from '../../components/StatusBar';
-import Header from '../../components/Header';
-import { Grid, GridItem } from '../../components/Grid';
-import TextInput from '../../components/TextInput';
-import Actions from '../../components/Actions';
-import Button from '../../components/Button';
-import Container from '../../components/Container';
-import Intro from '../../components/Intro';
-import Tabs from '../../components/Tabs';
-import DatePicker from '../../components/DatePicker';
-import { useModal } from '../../contexts/Modal';
 
 import CREATE_CAMPAIGN_MUTATION from './graphql/create-campaign';
 
-const CreateCampaign = ({ navigation }) => {
+export const CreateCampaign = () => {
   const [activeTab, setTab] = useState(0);
 
-  const { openModal } = useModal();
-
   const [createCampaign, { loading }] = useMutation(CREATE_CAMPAIGN_MUTATION, {
-    // TO DO, HOW ARE WE GOING TO HANDLE ERRORS?
-    // ERROR BOUNDARY?
-    onError: err => console.log('errro', err),
     refetchQueries: ['getCampaigns'],
-    onCompleted: () =>
-      openModal({
-        type: MODAL_TYPES.CAMPAIGN_CREATION,
-        props: {
-          onButtonClick: () => navigation.goBack(),
-        },
-      }),
+    // onCompleted: () => {
+    //   openModal({
+    //     type: MODAL_TYPES.CAMPAIGN_CREATION,
+    //     props: {
+    //       onButtonClick: () => navigation.goBack(),
+    //     },
+    //   });
+    // },
   });
 
   const formik = useFormik({
@@ -66,7 +63,7 @@ const CreateCampaign = ({ navigation }) => {
         <ScrollView>
           <Container>
             <Grid>
-              <GridItem size={12}>
+              <Grid.Item size={12}>
                 <Intro>
                   <Tabs
                     activeTabIndex={activeTab}
@@ -74,8 +71,8 @@ const CreateCampaign = ({ navigation }) => {
                     tabs={Object.values(CAMPAIGN_TYPE)}
                   />
                 </Intro>
-              </GridItem>
-              <GridItem size={12}>
+              </Grid.Item>
+              <Grid.Item size={12}>
                 <TextInput
                   label="Campaign name"
                   name="name"
@@ -83,8 +80,8 @@ const CreateCampaign = ({ navigation }) => {
                   error={formik.errors.name}
                   onChangeText={formik.handleChange('name')}
                 />
-              </GridItem>
-              <GridItem size={12}>
+              </Grid.Item>
+              <Grid.Item size={12}>
                 <TextInput
                   label="Description"
                   name="description"
@@ -92,9 +89,9 @@ const CreateCampaign = ({ navigation }) => {
                   error={formik.errors.description}
                   onChangeText={formik.handleChange('description')}
                 />
-              </GridItem>
+              </Grid.Item>
 
-              <GridItem size={12}>
+              <Grid.Item size={12}>
                 <TextInput
                   label="Budget"
                   name="budget"
@@ -102,8 +99,8 @@ const CreateCampaign = ({ navigation }) => {
                   error={formik.errors.budget}
                   onChangeText={formik.handleChange('budget')}
                 />
-              </GridItem>
-              <GridItem size={12}>
+              </Grid.Item>
+              <Grid.Item size={12}>
                 <DatePicker
                   name="dueDate"
                   label="Due date"
@@ -113,8 +110,8 @@ const CreateCampaign = ({ navigation }) => {
                   onChange={formik.handleChange('dueDate')}
                   date={formik.values.dueDate}
                 />
-              </GridItem>
-              <GridItem size={12}>
+              </Grid.Item>
+              <Grid.Item size={12}>
                 <Actions>
                   <Button
                     isLoading={loading}
@@ -123,7 +120,7 @@ const CreateCampaign = ({ navigation }) => {
                     fixedWidth
                   />
                 </Actions>
-              </GridItem>
+              </Grid.Item>
             </Grid>
           </Container>
         </ScrollView>
@@ -131,11 +128,3 @@ const CreateCampaign = ({ navigation }) => {
     </SafeAreaView>
   );
 };
-
-CreateCampaign.propTypes = {
-  navigation: PropTypes.shape({
-    goBack: PropTypes.func.isRequired,
-  }).isRequired,
-};
-
-export default CreateCampaign;

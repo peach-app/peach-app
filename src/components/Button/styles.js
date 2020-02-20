@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components/native';
 
-import Text from '../../components/Text';
+import { Text } from '../Text';
 
 export const ActivityIndicator = styled.ActivityIndicator.attrs(props => ({
   color: props.theme.white,
@@ -45,7 +45,7 @@ export const Title = styled(Text)`
   color: ${props =>
     props.isGhost ? props.theme.foreground : props.theme.white};
   text-align: center;
-  font-family: futura-bold;
+  font-family: ${props => props.theme.fontFamily.bold};
   ${props => props.isLoading && `opacity: 0;`}
 `;
 

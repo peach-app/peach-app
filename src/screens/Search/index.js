@@ -1,31 +1,39 @@
 import React, { useMemo } from 'react';
 import { KeyboardAvoidingView } from 'react-native';
-import { useLazyQuery } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/react-hooks';
 import getOr from 'lodash/fp/getOr';
 import debounce from 'lodash/debounce';
 
 import { Main } from './styles';
-import { NETWORK_STATUS } from '../../consts';
-import SafeAreaView from '../../components/SafeAreaView';
-import { FlatList, FlatListItem } from '../../components/FlatList';
-import UserCard from '../../components/UserCard';
-import Container from '../../components/Container';
-import TextInput from '../../components/TextInput';
-import NoResultText from '../../components/NoResultText';
-import Header from '../../components/Header';
+import { NETWORK_STATUS } from 'consts';
+import {
+  SafeAreaView,
+  FlatList,
+  UserCard,
+  Container,
+  TextInput,
+  NoResultText,
+  Header,
+} from 'components';
 
 import SEARCH_INFLUENCERS from './graphql/search-influencers';
 
-const Search = () => {
-  const [searchInfluencers, { data, loading, networkStatus }] = useLazyQuery(
+export const Search = () => {
+  const { data, loading, networkStatus, refetch } = useQuery(
     SEARCH_INFLUENCERS,
     {
+      variables: {
+        query: '',
+      },
       notifyOnNetworkStatusChange: true,
     }
   );
 
-  const search = useMemo(() => debounce(searchInfluencers, 500), []);
-  const fetching = loading && networkStatus === NETWORK_STATUS.FETCHING;
+  const search = useMemo(() => debounce(refetch, 500), []);
+  const fetching =
+    loading &&
+    (networkStatus === NETWORK_STATUS.FETCHING ||
+      networkStatus === NETWORK_STATUS.SET_VARIABLES);
   const influencers = getOr([], 'searchUsers.data', data);
 
   return (
@@ -36,14 +44,11 @@ const Search = () => {
           <Main>
             <TextInput
               placeholder="Search for influencers..."
-              autoFocus
               clearButtonMode="while-editing"
               autoCapitalize="none"
               onChangeText={query => {
                 search({
-                  variables: {
-                    query,
-                  },
+                  query,
                 });
               }}
             />
@@ -54,30 +59,28 @@ const Search = () => {
           ListHeaderComponent={
             <>
               {!fetching && influencers.length <= 0 && (
-                <FlatListItem>
+                <FlatList.Item>
                   <NoResultText>0 influencers found.</NoResultText>
-                </FlatListItem>
+                </FlatList.Item>
               )}
 
               {fetching &&
                 Array.from(Array(3)).map((_, key) => (
-                  <FlatListItem key={key}>
+                  <FlatList.Item key={key}>
                     <UserCard isLoading />
-                  </FlatListItem>
+                  </FlatList.Item>
                 ))}
             </>
           }
           keyExtractor={item => item._id}
-          data={influencers}
+          data={!fetching && influencers}
           renderItem={({ item }) => (
-            <FlatListItem>
+            <FlatList.Item>
               <UserCard {...item} />
-            </FlatListItem>
+            </FlatList.Item>
           )}
         />
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };
-
-export default Search;

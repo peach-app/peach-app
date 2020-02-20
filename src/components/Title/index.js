@@ -1,11 +1,9 @@
 import styled from 'styled-components/native';
 
-import Text from "../Text";
+import { Text } from '../Text';
 
-const Title = styled(Text)`
-  font-size: 36px;
-  font-family: futura-bold;
+export const Title = styled(Text)`
+  font-size: 38px;
+  font-family: ${props => props.theme.fontFamily.bold};
   ${({ isCentered }) => isCentered && `text-align: center;`}
 `;
-
-export default Title;

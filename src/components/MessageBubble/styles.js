@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import * as Animatable from 'react-native-animatable';
 
-import BaseText from '../../components/Text';
+import { Text as BaseText } from '../Text';
 
 export const Main = styled(Animatable.View).attrs({
   animation: 'fadeInUp',

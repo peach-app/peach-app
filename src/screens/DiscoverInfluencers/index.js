@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
-import { withNavigation } from 'react-navigation';
+import { useNavigation } from '@react-navigation/native';
 import { useQuery } from '@apollo/react-hooks';
 import getOr from 'lodash/fp/getOr';
 
-import { NETWORK_STATUS } from '../../consts';
-import SafeAreaView from '../../components/SafeAreaView';
-import Intro from '../../components/Intro';
-import Title from '../../components/Title';
-import { Grid, GridItem } from '../../components/Grid';
-import IconButton from '../../components/IconButton';
-import UserCard from '../../components/UserCard';
-import { FlatList, FlatListItem } from '../../components/FlatList';
-import Tabs from '../../components/Tabs';
+import { NETWORK_STATUS } from 'consts';
+import {
+  SafeAreaView,
+  Intro,
+  Title,
+  Grid,
+  IconButton,
+  UserCard,
+  FlatList,
+  Tabs,
+} from 'components';
 
 import GET_DISCOVER_USERS from './graphql/get-discover-users';
 
-const DiscoverInfluencers = ({ navigation }) => {
+export const DiscoverInfluencers = () => {
+  const navigation = useNavigation();
   const [activeTab, setTab] = useState(0);
   const { data, loading, networkStatus } = useQuery(GET_DISCOVER_USERS, {
     notifyOnNetworkStatusChange: true,
@@ -28,56 +31,48 @@ const DiscoverInfluencers = ({ navigation }) => {
       <FlatList
         ListHeaderComponent={
           <>
-            <FlatListItem>
+            <FlatList.Item>
               <Intro>
                 <Grid align="flex-end">
-                  <GridItem flex={1}>
+                  <Grid.Item flex={1}>
                     <Title>Discover</Title>
-                  </GridItem>
+                  </Grid.Item>
 
-                  <GridItem>
+                  <Grid.Item>
                     <IconButton
                       size={30}
                       name="ios-search"
                       onPress={() => navigation.navigate('Search')}
                     />
-                  </GridItem>
+                  </Grid.Item>
                 </Grid>
               </Intro>
-            </FlatListItem>
+            </FlatList.Item>
 
-            <FlatListItem>
+            <FlatList.Item>
               <Tabs
-                tabs={[
-                  'Popular',
-                  'Hard Workers',
-                  'Newbies',
-                  'Artists',
-                  'Promoters',
-                ]}
+                tabs={['Popular Influencers']}
                 activeTabIndex={activeTab}
                 onTabPress={index => setTab(index)}
               />
-            </FlatListItem>
+            </FlatList.Item>
 
             {fetching &&
               Array.from(Array(3)).map((_, key) => (
-                <FlatListItem key={key}>
+                <FlatList.Item key={key}>
                   <UserCard isLoading />
-                </FlatListItem>
+                </FlatList.Item>
               ))}
           </>
         }
         keyExtractor={item => item._id}
         data={getOr([], 'discover.popularUsers.data', data)}
         renderItem={({ item }) => (
-          <FlatListItem>
+          <FlatList.Item>
             <UserCard {...item} />
-          </FlatListItem>
+          </FlatList.Item>
         )}
       />
     </SafeAreaView>
   );
 };
-
-export default withNavigation(DiscoverInfluencers);

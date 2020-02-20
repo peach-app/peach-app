@@ -1,41 +1,45 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import { withNavigation } from 'react-navigation';
+import { useNavigation } from '@react-navigation/native';
 import gql from 'graphql-tag';
 import get from 'lodash/fp/get';
 import startCase from 'lodash/startCase';
 import PropTypes from 'prop-types';
 
 import { Bio } from './styles';
-import { Grid, GridItem } from '../../components/Grid';
-import Avatar from '../../components/Avatar';
-import Text from '../../components/Text';
-import { SkeletonText } from '../../components/Skeletons';
+import { Grid } from '../Grid';
+import { Avatar } from '../Avatar';
+import { Text } from '../Text';
+import { SkeletonText } from '../Skeletons';
 
-const UserCard = ({ navigation, isLoading, _id, name, bio, avatar, size }) => (
-  <TouchableOpacity
-    onPress={() => !isLoading && navigation.navigate('Profile', { id: _id })}
-  >
-    <Grid noWrap align="center">
-      <GridItem>
-        <Avatar
-          size={size || 50}
-          isLoading={isLoading}
-          source={{ uri: get('url', avatar) }}
-          fallback={name}
-        />
-      </GridItem>
-      <GridItem flex={1}>
-        <Text numberOfLines={1}>
-          <SkeletonText loadingText="Loading User" isLoading={isLoading}>
-            {startCase(name)}
-          </SkeletonText>
-        </Text>
-        {bio && <Bio numberOfLines={2}>{bio}</Bio>}
-      </GridItem>
-    </Grid>
-  </TouchableOpacity>
-);
+export const UserCard = ({ isLoading, _id, name, bio, avatar, size }) => {
+  const navigation = useNavigation();
+
+  return (
+    <TouchableOpacity
+      onPress={() => !isLoading && navigation.navigate('Profile', { id: _id })}
+    >
+      <Grid noWrap align="center">
+        <Grid.Item>
+          <Avatar
+            size={size}
+            isLoading={isLoading}
+            source={{ uri: get('url', avatar) }}
+            fallback={name}
+          />
+        </Grid.Item>
+        <Grid.Item flex={1}>
+          <Text numberOfLines={1}>
+            <SkeletonText loadingText="Loading User" isLoading={isLoading}>
+              {startCase(name)}
+            </SkeletonText>
+          </Text>
+          {bio && <Bio numberOfLines={2}>{bio}</Bio>}
+        </Grid.Item>
+      </Grid>
+    </TouchableOpacity>
+  );
+};
 
 UserCard.defaultProps = {
   _id: null,
@@ -43,6 +47,7 @@ UserCard.defaultProps = {
   name: '',
   bio: null,
   avatar: null,
+  size: 50
 };
 
 UserCard.propTypes = {
@@ -50,12 +55,10 @@ UserCard.propTypes = {
   _id: PropTypes.string,
   name: PropTypes.string,
   bio: PropTypes.string,
+  size: PropTypes.number,
   avatar: PropTypes.shape({
     url: PropTypes.string.isRequired,
   }),
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
 export const UserCardFragment = gql`
@@ -68,5 +71,3 @@ export const UserCardFragment = gql`
     }
   }
 `;
-
-export default withNavigation(UserCard);

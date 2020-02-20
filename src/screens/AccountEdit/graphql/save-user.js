@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  mutation($name: String) {
-    updateUser(name: $name)
+  mutation($user: UserInput) {
+    updateUser(user: $user)
   }
 `;

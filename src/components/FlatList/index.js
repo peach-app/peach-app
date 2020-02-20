@@ -9,6 +9,8 @@ export const FlatList = styled.FlatList.attrs(props => ({
   },
 }))``;
 
-export const FlatListItem = styled.View`
+const FlatListItem = styled.View`
   padding-bottom: ${props => props.theme.spacing}px;
 `;
+
+FlatList.Item = FlatListItem;

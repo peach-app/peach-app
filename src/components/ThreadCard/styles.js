@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import { Ionicons } from '@expo/vector-icons';
 
-import BaseText from '../../components/Text';
+import { Text as BaseText } from '../Text';
 
 export const Icon = styled(Ionicons).attrs(props => ({
   color: props.theme.foreground,

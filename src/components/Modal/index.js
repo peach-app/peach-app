@@ -1,7 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
 import Modal from 'react-native-modal';
-import { withTheme } from 'styled-components/native';
+import styled, { withTheme } from 'styled-components/native';
 
 const ModalWrapper = styled.View`
 background-color: ${({ theme }) => theme.background}

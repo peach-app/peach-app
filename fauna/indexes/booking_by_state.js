@@ -2,12 +2,17 @@ const { client, q } = require('../helpers/db');
 const { makeIndex } = require('../helpers/updateOrCreate');
 
 module.exports = async () => {
-  console.log('Creating "all_booking" index');
+  console.log('Creating "booking_by_state" index');
 
   await client.query(
     makeIndex({
-      name: 'all_booking',
+      name: 'booking_by_state',
       source: q.Collection('Booking'),
+      terms: [
+        {
+          field: ['data', 'state'],
+        },
+      ],
     })
   );
 };

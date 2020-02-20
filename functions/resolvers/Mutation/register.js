@@ -1,8 +1,22 @@
+const sendMail = require('../../helpers/sendMail');
+
+const registrationEmail = ({ name }) => `
+Hi ${name},
+
+Thank you for registering to use Peach.
+
+If you have any questions feel free to email us at peachapp.io@gmail.com.
+
+Thanks,
+The Peach Team
+https://peachapp.io
+`;
+
 module.exports = async (root, args, { client, q }) => {
   const { name, password, type } = args;
   const email = args.email.toLowerCase();
 
-  return client.query(
+  const result = await client.query(
     q.If(
       q.Exists(q.Match(q.Index('user_by_email'), email)),
       q.Abort('A user with this email address already exists.'),
@@ -21,4 +35,12 @@ module.exports = async (root, args, { client, q }) => {
       )
     )
   );
+
+  await sendMail({
+    to: email,
+    subject: 'Welcome to Peach!',
+    text: registrationEmail({ name }),
+  });
+
+  return result;
 };

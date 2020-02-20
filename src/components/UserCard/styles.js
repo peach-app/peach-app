@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 
-import Text from '../../components/Text';
+import { Text } from '../Text';
 
 export const Bio = styled(Text)`
   color: ${props => props.theme.greyDark};
