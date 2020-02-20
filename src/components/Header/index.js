@@ -10,7 +10,7 @@ export const Header = ({ title }) => (
       <Action>
         <BackButton />
       </Action>
-      {!!title && <MainTitle numberOfLines={1}>{title}</MainTitle>}
+      {Boolean(title) && <MainTitle numberOfLines={1}>{title}</MainTitle>}
     </Wrapper>
   </Main>
 );

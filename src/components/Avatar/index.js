@@ -11,7 +11,7 @@ export const Avatar = ({ size, source, fallback, isLoading, onPress }) => (
   <SkeletonCircle isLoading={isLoading} size={size}>
     <Main size={size} as={onPress && TouchableOpacity} onPress={onPress}>
       <Branch
-        test={!!get('uri', source)}
+        test={Boolean(get('uri', source))}
         left={<Image source={source} />}
         right={
           <Initial size={size}>
