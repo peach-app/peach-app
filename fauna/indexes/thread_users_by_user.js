@@ -16,6 +16,7 @@ module.exports = async () => {
       values: [
         {
           field: ['data', 'threadID'],
+          reverse: true,
         },
       ],
     })
