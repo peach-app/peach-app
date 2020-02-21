@@ -21,7 +21,7 @@ export const TextInput = styled.TextInput.attrs(props => ({
   flex: 1;
   max-height: 200px;
   margin-right: ${props => props.theme.spacing}px;
-  font-family: futura-book;
+  font-family: ${props => props.theme.fontFamily.bold};
   color: ${props => props.theme.foreground};
   padding-vertical: ${props => props.theme.spacingSmall}px;
   ${Platform.select({

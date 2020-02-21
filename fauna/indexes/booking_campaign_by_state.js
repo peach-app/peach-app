@@ -16,6 +16,7 @@ module.exports = async () => {
       values: [
         {
           field: ['data', 'campaign'],
+          reverse: true,
         },
       ],
     })

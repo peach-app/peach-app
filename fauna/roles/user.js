@@ -1,3 +1,4 @@
+const { USER_TYPE } = require('../consts');
 const { client, q } = require('../helpers/db');
 const { makeRole } = require('../helpers/updateOrCreate');
 
@@ -51,6 +52,15 @@ module.exports = async () => {
                 q.Equals(
                   q.Select(['data', 'user'], q.Var('campaign')),
                   q.Identity()
+                )
+              )
+            ),
+            create: q.Query(
+              q.Lambda(
+                ['ref'],
+                q.Equals(
+                  q.Select(['data', 'type'], q.Get(q.Identity())),
+                  USER_TYPE.BRAND
                 )
               )
             ),

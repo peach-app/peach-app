@@ -12,7 +12,7 @@ import { Avatar } from '../Avatar';
 import { Text } from '../Text';
 import { SkeletonText } from '../Skeletons';
 
-export const UserCard = ({ isLoading, _id, name, bio, avatar }) => {
+export const UserCard = ({ isLoading, _id, name, bio, avatar, size }) => {
   const navigation = useNavigation();
 
   return (
@@ -22,7 +22,7 @@ export const UserCard = ({ isLoading, _id, name, bio, avatar }) => {
       <Grid noWrap align="center">
         <Grid.Item>
           <Avatar
-            size={50}
+            size={size}
             isLoading={isLoading}
             source={{ uri: get('url', avatar) }}
             fallback={name}
@@ -47,6 +47,7 @@ UserCard.defaultProps = {
   name: '',
   bio: null,
   avatar: null,
+  size: 50
 };
 
 UserCard.propTypes = {
@@ -54,6 +55,7 @@ UserCard.propTypes = {
   _id: PropTypes.string,
   name: PropTypes.string,
   bio: PropTypes.string,
+  size: PropTypes.number,
   avatar: PropTypes.shape({
     url: PropTypes.string.isRequired,
   }),

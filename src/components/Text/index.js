@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 import PropTypes from 'prop-types';
 
 export const Text = styled.Text`
-  font-family: futura-book;
+  font-family: ${props => props.theme.fontFamily.regular};
   color: ${props => props.theme.foreground};
   ${props => props.isCenter && `text-align: center;`}
   ${props => props.isPara && `line-height: 22px;`}

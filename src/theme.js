@@ -15,6 +15,11 @@ const theme = {
   spacingMedium: 24,
   spacingLarge: 32,
   spacingXLarge: 48,
+  inputBorderWidth: 1,
+  fontFamily: {
+    regular: 'futura-book',
+    bold: 'futura-bold',
+  },
 };
 
 export const darkModeOverrides = {
