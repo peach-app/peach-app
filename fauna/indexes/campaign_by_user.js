@@ -13,6 +13,12 @@ module.exports = async () => {
           field: ['data', 'user'],
         },
       ],
+      values: [
+        {
+          field: ['ref'],
+          reverse: true,
+        },
+      ],
     })
   );
 };
