@@ -117,6 +117,12 @@ module.exports = async () => {
 
         // INDEXES
         {
+          resource: q.Index('all_campaign'),
+          actions: {
+            read: true,
+          },
+        },
+        {
           resource: q.Index('booking_by_campaign'),
           actions: {
             read: true,
@@ -166,12 +172,6 @@ module.exports = async () => {
         },
         {
           resource: q.Index('message_by_thread'),
-          actions: {
-            read: true,
-          },
-        },
-        {
-          resource: q.Index('message_ts_thread_by_thread'),
           actions: {
             read: true,
           },

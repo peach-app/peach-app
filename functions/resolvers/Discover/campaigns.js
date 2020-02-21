@@ -7,7 +7,7 @@ module.exports = async (
 
   return client.query(
     q.Map(
-      q.Paginate(q.Documents(q.Collection('Campaign')), {
+      q.Paginate(q.Match(q.Index('all_campaign')), {
         size,
         ...(after && { after: formatRefs(after) }),
         ...(before && { before: formatRefs(before) }),
