@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ScrollView, KeyboardAvoidingView } from 'react-native';
 import { useFormik } from 'formik';
 import { useMutation } from '@apollo/react-hooks';
+import { useNavigation } from '@react-navigation/native';
 
 import {
   SafeAreaView,
@@ -24,17 +25,19 @@ import CREATE_CAMPAIGN_MUTATION from './graphql/create-campaign';
 
 export const CreateCampaign = () => {
   const [activeTab, setTab] = useState(0);
+  const navigation = useNavigation();
 
   const [createCampaign, { loading }] = useMutation(CREATE_CAMPAIGN_MUTATION, {
     refetchQueries: ['getCampaigns'],
-    // onCompleted: () => {
-    //   openModal({
-    //     type: MODAL_TYPES.CAMPAIGN_CREATION,
-    //     props: {
-    //       onButtonClick: () => navigation.goBack(),
-    //     },
-    //   });
-    // },
+    onCompleted: () => {
+      navigation.goBack();
+      //   openModal({
+      //     type: MODAL_TYPES.CAMPAIGN_CREATION,
+      //     props: {
+      //       onButtonClick: () => navigation.goBack(),
+      //     },
+      //   });
+    },
   });
 
   const formik = useFormik({
