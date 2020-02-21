@@ -47,6 +47,7 @@ export const Campaigns = () => {
     GET_CAMPAIGNS,
     {
       notifyOnNetworkStatusChange: true,
+      fetchPolicy: 'cache-and-network',
       variables: {
         state: activeTab,
       },
