@@ -8,7 +8,7 @@ import { Button } from '../Button';
 import { Actions } from '../Actions';
 import { TextInput } from '../TextInput';
 
-export const DatePicker = ({ label, error, value, ...props }) => {
+export const DatePicker = ({ label, error, value, onChange, ...props }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -31,7 +31,13 @@ export const DatePicker = ({ label, error, value, ...props }) => {
       >
         <Main>
           <Content>
-            <DateTimePicker value={value} {...props} />
+            <DateTimePicker
+              value={value}
+              onChange={(_, selectedDate) => {
+                onChange(selectedDate);
+              }}
+              {...props}
+            />
             <Actions>
               <Button title="Done" onPress={() => setOpen(false)} fixedWidth />
             </Actions>

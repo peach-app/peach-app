@@ -110,9 +110,9 @@ export const CreateCampaign = () => {
                 <DatePicker
                   label="Due date"
                   error={formik.errors.dueDate}
-                  onChange={(_, selectedDate) =>
-                    formik.setFieldValue('dueDate', selectedDate)
-                  }
+                  onChange={selectedDate => {
+                    formik.setFieldValue('dueDate', selectedDate);
+                  }}
                   value={formik.values.dueDate}
                 />
               </Grid.Item>
