@@ -15,7 +15,7 @@ export const DatePicker = ({ label, error, value, ...props }) => {
     <>
       <Touchable onPress={() => setOpen(true)}>
         <TextInput
-          value={value?.toLocaleDateString()}
+          value={value.toLocaleDateString()}
           editable={false}
           label={label}
           error={error}
@@ -50,4 +50,5 @@ DatePicker.defaultProps = {
 DatePicker.propTypes = {
   label: PropTypes.string,
   error: PropTypes.string,
+  value: PropTypes.any.isRequired,
 };

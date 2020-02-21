@@ -25,5 +25,5 @@ export const Content = styled(Animatable.View).attrs({
 })`
   background: ${props => props.theme.background};
   margin-top: auto;
-  padding-bottom: 40px;
+  padding-bottom: ${props => props.theme.spacingXLarge}px;
 `;

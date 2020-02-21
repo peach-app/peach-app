@@ -45,11 +45,13 @@ export const CreateCampaign = () => {
     onSubmit: ({ name, description, budget, dueDate }) => {
       createCampaign({
         variables: {
-          name,
-          description,
-          dueDate,
-          private: activeTab === 1,
-          budget,
+          campaign: {
+            name,
+            description,
+            dueDate,
+            private: activeTab === 1,
+            budget,
+          },
         },
       });
     },
@@ -76,7 +78,7 @@ export const CreateCampaign = () => {
                 <TextInput
                   label="Campaign name"
                   name="name"
-                  placeholder="e.g Soft Tea campaign"
+                  placeholder="e.g Soft Tea promoters"
                   error={formik.errors.name}
                   onChangeText={formik.handleChange('name')}
                 />
@@ -85,6 +87,7 @@ export const CreateCampaign = () => {
                 <TextInput
                   label="Description"
                   name="description"
+                  multiline
                   placeholder="Picture at home drinking tea"
                   error={formik.errors.description}
                   onChangeText={formik.handleChange('description')}
@@ -95,7 +98,7 @@ export const CreateCampaign = () => {
                 <TextInput
                   label="Budget"
                   name="budget"
-                  placeholder="£150"
+                  placeholder="£150.00"
                   error={formik.errors.budget}
                   onChangeText={formik.handleChange('budget')}
                 />
@@ -103,7 +106,6 @@ export const CreateCampaign = () => {
               <Grid.Item size={12}>
                 <DatePicker
                   label="Due date"
-                  placeholder="The action date"
                   error={formik.errors.dueDate}
                   onChange={(_, selectedDate) =>
                     formik.setFieldValue('dueDate', selectedDate)

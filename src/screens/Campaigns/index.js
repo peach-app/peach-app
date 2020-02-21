@@ -125,7 +125,8 @@ export const Campaigns = () => {
                   left={`You don't have any campaigns yet.\nPress "+" to get started.`}
                   right={`You haven't ${
                     activeTab === BOOKING_STATE.APPLIED ? '' : 'been '
-                  }${activeTab?.toLowerCase()} onto any campaigns yet.\nVisit "Discover" to start applying.`}
+                  }${activeTab &&
+                    activeTab.toLowerCase()} onto any campaigns yet.\nVisit "Discover" to start applying.`}
                 />
               </NoResultText>
             )}
