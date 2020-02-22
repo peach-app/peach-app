@@ -28,7 +28,7 @@ module.exports = gql`
       email: String!
       password: String!
       type: UserType!
-      idempotency_key: String!
+      idempotencyKey: String!
     ): Auth
     sendMessage(threadId: ID!, text: String!): Message
     createCampaign(campaign: CampaignInput): Campaign

@@ -1,6 +1,7 @@
 const { UserInputError } = require('apollo-server-lambda');
 const sendMail = require('../../helpers/sendMail');
 const stripe = require('../../helpers/stripe');
+const { USER_TYPE } = require('../../consts');
 
 const registrationEmail = ({ name }) => `
 Hi ${name},
@@ -15,8 +16,9 @@ https://peachapp.io
 `;
 
 module.exports = async (root, args, { client, q }) => {
-  const { name, password, type, idempotency_key } = args;
+  const { name, password, type, idempotencyKey } = args;
   const email = args.email.toLowerCase();
+  const isBrand = type === USER_TYPE.BRAND;
 
   const existingUser = await client.query(
     q.Exists(q.Match(q.Index('user_by_email'), email))
@@ -30,11 +32,10 @@ module.exports = async (root, args, { client, q }) => {
     {
       email,
       type: 'custom',
-      country: 'GB',
       requested_capabilities: ['transfers', 'card_payments'],
     },
     {
-      idempotency_key,
+      idempotencyKey,
     }
   );
 

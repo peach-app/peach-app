@@ -68,7 +68,7 @@ export const Register = () => {
           email,
           password,
           type: USER_TYPE_TABS[activeTab],
-          idempotency_key: uuid(),
+          idempotencyKey: uuid(),
         },
       });
     },

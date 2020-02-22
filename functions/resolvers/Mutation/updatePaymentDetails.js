@@ -7,9 +7,9 @@ module.exports = async (root, args, { client, q }) => {
     q.Select(['data'], q.Get(q.Identity()))
   );
 
-  await stripe.customers.createSource(stripeID, {
-    source: cardToken,
-  });
+  // await stripe.customers.createSource(stripeID, {
+  //   source: cardToken,
+  // });
 
   return true;
 };
