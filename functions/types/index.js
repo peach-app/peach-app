@@ -35,6 +35,7 @@ module.exports = gql`
     applyToCampaign(id: ID!, cost: Int!): Booking
     updateBookingState(id: ID!, state: BookingState!): Boolean
     updateUser(user: UserInput): Boolean
+    updatePaymentDetails(cardToken: String!): Boolean
     completeOnboarding: Boolean
   }
 

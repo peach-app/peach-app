@@ -11,7 +11,7 @@ export * from './Inbox';
 export * from './Landing';
 export * from './Login';
 export * from './OnboardingComplete';
-export * from './OnboardingPaymentDetails';
+export * from './PaymentDetails';
 export * from './OnboardingSocial';
 export * from './OnboardingWelcome';
 export * from './Payouts';
