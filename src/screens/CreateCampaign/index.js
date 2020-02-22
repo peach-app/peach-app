@@ -101,6 +101,7 @@ export const CreateCampaign = () => {
                 <TextInput
                   label="Budget"
                   name="budget"
+                  keyboardType="decimal-pad"
                   placeholder="£150.00"
                   error={formik.errors.budget}
                   onChangeText={formik.handleChange('budget')}

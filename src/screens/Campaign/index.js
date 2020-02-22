@@ -25,6 +25,7 @@ import {
 import { useUser } from 'contexts/User';
 import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from 'consts';
 
+import { Sub } from './styles';
 import GET_CAMPAIGN from './graphql/get-campaign';
 
 const TAB_INDEX_BOOKING_STATE = [
@@ -123,6 +124,20 @@ export const Campaign = () => {
                       >
                         {getOr('', 'findCampaignById.description', campaign)}
                       </SkeletonText>
+                    </Text>
+                  </Grid.Item>
+
+                  <Grid.Item size={6}>
+                    <Sub>Budget:</Sub>
+                    <Text>{get('findCampaignById.budget', campaign)}</Text>
+                  </Grid.Item>
+
+                  <Grid.Item size={6}>
+                    <Sub>Completion Date:</Sub>
+                    <Text>
+                      {new Date(
+                        get('findCampaignById.dueDate', campaign)
+                      ).toLocaleDateString()}
                     </Text>
                   </Grid.Item>
                 </Grid>

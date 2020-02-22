@@ -58,6 +58,7 @@ export const Apply = () => {
             <Grid.Item size={12}>
               <TextInput
                 label="Pay Rate (GBP)"
+                keyboardType="decimal-pad"
                 error={formik.errors.cost}
                 onChangeText={formik.handleChange('cost')}
                 onBlur={formik.handleBlur('cost')}

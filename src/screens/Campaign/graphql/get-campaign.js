@@ -14,6 +14,8 @@ export default gql`
     findCampaignById(id: $id) {
       name
       description
+      dueDate
+      budget
       user {
         _id
         name
