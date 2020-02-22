@@ -127,13 +127,13 @@ export const Campaign = () => {
                     </Text>
                   </Grid.Item>
 
-                  <Grid.Item size={6}>
-                    <Sub>Budget:</Sub>
+                  <Grid.Item size={12}>
+                    <Sub>Budget</Sub>
                     <Text>{get('findCampaignById.budget', campaign)}</Text>
                   </Grid.Item>
 
-                  <Grid.Item size={6}>
-                    <Sub>Completion Date:</Sub>
+                  <Grid.Item size={12}>
+                    <Sub>Completion Date</Sub>
                     <Text>
                       {new Date(
                         get('findCampaignById.dueDate', campaign)
