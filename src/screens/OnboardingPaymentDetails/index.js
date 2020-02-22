@@ -43,7 +43,8 @@ export const OnboardingPaymentDetails = () => {
 
               <Grid.Item size={12}>
                 <TextInput
-                  label="Account number"
+                  label="Card Number"
+                  placeholder="1234 5678 4242 4242"
                   error={formik.errors.cardNum}
                   onChangeText={formik.handleChange('cardNum')}
                   onBlur={formik.handleBlur('cardNum')}
@@ -52,7 +53,18 @@ export const OnboardingPaymentDetails = () => {
 
               <Grid.Item size={12}>
                 <TextInput
-                  label="Sort code"
+                  label="Expiry"
+                  placeholder="MM/YY"
+                  error={formik.errors.cardNum}
+                  onChangeText={formik.handleChange('cardNum')}
+                  onBlur={formik.handleBlur('cardNum')}
+                />
+              </Grid.Item>
+
+              <Grid.Item size={12}>
+                <TextInput
+                  label="CVC"
+                  placeholder="522"
                   error={formik.errors.cardNum}
                   onChangeText={formik.handleChange('cardNum')}
                   onBlur={formik.handleBlur('cardNum')}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useMutation } from '@apollo/react-hooks';
+import get from 'lodash/fp/get';
 
-import { Content } from './styles';
 import {
   SafeAreaView,
   StatusBar,
@@ -12,10 +12,16 @@ import {
   Intro,
   Grid,
 } from 'components';
+import { useUser } from 'contexts/User';
+import { USER_TYPE } from 'consts';
 
+import { Content } from './styles';
 import COMPLETE_ONBOARDING from './graphql/complete-onboarding';
 
 export const OnboardingComplete = () => {
+  const { user } = useUser();
+  const type = get('user.type', user);
+
   const [completeOnboarding, { loading }] = useMutation(COMPLETE_ONBOARDING, {
     refetchQueries: ['getCurrentUser'],
   });
@@ -34,7 +40,9 @@ export const OnboardingComplete = () => {
             <Grid.Item size={12}>
               <Actions>
                 <Button
-                  title="Start Influencing"
+                  title={`Start ${
+                    type === USER_TYPE.BRAND ? 'Browsing' : 'Influencing'
+                  }`}
                   fixedWidth
                   isLoading={loading}
                   onPress={() => completeOnboarding()}

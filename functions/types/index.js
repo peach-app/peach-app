@@ -122,6 +122,7 @@ module.exports = gql`
     budget: Float
     bookings(state: BookingState): BookingPage
     userBooking: Booking
+    dueDate: String
   }
 
   enum BookingState {
