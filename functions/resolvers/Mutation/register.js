@@ -1,4 +1,6 @@
+const { UserInputError } = require('apollo-server-lambda');
 const sendMail = require('../../helpers/sendMail');
+const stripe = require('../../helpers/stripe');
 
 const registrationEmail = ({ name }) => `
 Hi ${name},
@@ -13,8 +15,28 @@ https://peachapp.io
 `;
 
 module.exports = async (root, args, { client, q }) => {
-  const { name, password, type } = args;
+  const { name, password, type, idempotency_key } = args;
   const email = args.email.toLowerCase();
+
+  const existingUser = await client.query(
+    q.Exists(q.Match(q.Index('user_by_email'), email))
+  );
+
+  if (existingUser) {
+    throw new UserInputError('A user with this email address already exists.');
+  }
+
+  const account = await stripe.accounts.create(
+    {
+      email,
+      type: 'custom',
+      country: 'GB',
+      requested_capabilities: ['transfers', 'card_payments'],
+    },
+    {
+      idempotency_key,
+    }
+  );
 
   const result = await client.query(
     q.If(
@@ -26,6 +48,7 @@ module.exports = async (root, args, { client, q }) => {
             name,
             email,
             type,
+            stripeID: account.id,
           },
           credentials: { password },
         }),

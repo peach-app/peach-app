@@ -4,6 +4,8 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
+import getOr from 'lodash/fp/getOr';
+import uuid from 'uuid/v4';
 
 import {
   SafeAreaView,
@@ -66,6 +68,7 @@ export const Register = () => {
           email,
           password,
           type: USER_TYPE_TABS[activeTab],
+          idempotency_key: uuid(),
         },
       });
     },
@@ -112,9 +115,11 @@ export const Register = () => {
 
               {error && (
                 <Grid.Item size={12}>
-                  <Text isCenter>
-                    An error occurred, please try again later.
-                  </Text>
+                  {getOr([], 'graphQLErrors', error).map(({ message }, i) => (
+                    <Text isCenter key={i}>
+                      {message}
+                    </Text>
+                  ))}
                 </Grid.Item>
               )}
 
