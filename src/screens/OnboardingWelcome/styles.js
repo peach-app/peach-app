@@ -8,6 +8,7 @@ export const Content = styled.View`
 
 export const Image = styled.Image`
   width: 100%;
-  height: 200px;
+  flex: 0.8;
   resize-mode: contain;
+  margin-horizontal: auto;
 `;
