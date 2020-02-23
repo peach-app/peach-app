@@ -23,9 +23,8 @@ import UPDATE_PAYMENT_DETAILS from './graphql/update-payment-details';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required(),
-  number: Yup.string().required(),
-  exp: Yup.string().required(),
-  cvc: Yup.string().required(),
+  account: Yup.string().required(),
+  sort: Yup.string().required(),
 });
 
 export const PaymentDetails = () => {
@@ -42,26 +41,26 @@ export const PaymentDetails = () => {
   const formik = useFormik({
     initialValues: {
       name: '',
-      number: '',
-      exp: '',
-      cvc: '',
+      account: '',
+      sort: '',
     },
     validationSchema,
-    onSubmit: async ({ name, number, exp, cvc }) => {
-      const [exp_month, exp_year] = exp.split('/');
-      const card = await stripe.createToken({
-        card: {
-          name,
-          number,
-          exp_month,
-          exp_year,
-          cvc,
+    onSubmit: async ({ name, account, sort }) => {
+      const token = await stripe.createToken({
+        bank_account: {
+          country: 'GB',
+          currency: 'gbp',
+          account_holder_name: name,
+          account_number: account,
+          routing_number: sort,
         },
       });
 
+      if (!token.id) return;
+
       updatePaymentDetails({
         variables: {
-          cardToken: card.id,
+          token: token.id,
         },
       });
     },
@@ -86,7 +85,7 @@ export const PaymentDetails = () => {
 
               <Grid.Item size={12}>
                 <TextInput
-                  label="Name on card"
+                  label="Account Name"
                   placeholder="e.g John Smith"
                   error={formik.errors.name}
                   onChangeText={formik.handleChange('name')}
@@ -96,47 +95,31 @@ export const PaymentDetails = () => {
 
               <Grid.Item size={12}>
                 <TextInput
-                  label="Card Number"
-                  placeholder="e.g 1234 5678 4242 4242"
-                  error={formik.errors.number}
-                  onChangeText={formik.handleChange('number')}
-                  onBlur={formik.handleBlur('number')}
+                  label="Account Number"
+                  placeholder="e.g 12345678"
+                  error={formik.errors.account}
+                  onChangeText={formik.handleChange('account')}
+                  onBlur={formik.handleBlur('account')}
                 />
               </Grid.Item>
 
               <Grid.Item size={12}>
                 <TextInput
-                  label="Expiry"
-                  placeholder="MM/YY"
-                  error={formik.errors.exp}
-                  onChangeText={formik.handleChange('exp')}
-                  onBlur={formik.handleBlur('exp')}
-                />
-              </Grid.Item>
-
-              <Grid.Item size={12}>
-                <TextInput
-                  label="CVC"
-                  placeholder="e.g 522"
-                  error={formik.errors.cvc}
-                  onChangeText={formik.handleChange('cvc')}
-                  onBlur={formik.handleBlur('cvc')}
+                  label="Sort Code"
+                  placeholder="e.g 01-02-03"
+                  error={formik.errors.sort}
+                  onChangeText={formik.handleChange('sort')}
+                  onBlur={formik.handleBlur('sort')}
                 />
               </Grid.Item>
 
               <Grid.Item size={12}>
                 <Actions>
                   <Button
-                    title={formik.isValid ? 'Next' : 'Skip'}
+                    title="Next"
                     fixedWidth
                     isLoading={loading}
-                    onPress={() => {
-                      if (formik.isValid) {
-                        formik.handleSubmit();
-                        return;
-                      }
-                      navigation.navigate('Social');
-                    }}
+                    onPress={formik.handleSubmit}
                   />
                 </Actions>
               </Grid.Item>
