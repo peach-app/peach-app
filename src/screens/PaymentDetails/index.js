@@ -41,18 +41,18 @@ export const PaymentDetails = () => {
   const formik = useFormik({
     initialValues: {
       name: '',
-      account: '',
       sort: '',
+      account: '',
     },
     validationSchema,
-    onSubmit: async ({ name, account, sort }) => {
+    onSubmit: async ({ name, sort, account }) => {
       const token = await stripe.createToken({
         bank_account: {
           country: 'GB',
           currency: 'gbp',
           account_holder_name: name,
+          routing_number: sort.replace(/-/g, ''),
           account_number: account,
-          routing_number: sort,
         },
       });
 
@@ -95,21 +95,21 @@ export const PaymentDetails = () => {
 
               <Grid.Item size={12}>
                 <TextInput
-                  label="Account Number"
-                  placeholder="e.g 12345678"
-                  error={formik.errors.account}
-                  onChangeText={formik.handleChange('account')}
-                  onBlur={formik.handleBlur('account')}
-                />
-              </Grid.Item>
-
-              <Grid.Item size={12}>
-                <TextInput
                   label="Sort Code"
                   placeholder="e.g 01-02-03"
                   error={formik.errors.sort}
                   onChangeText={formik.handleChange('sort')}
                   onBlur={formik.handleBlur('sort')}
+                />
+              </Grid.Item>
+
+              <Grid.Item size={12}>
+                <TextInput
+                  label="Account Number"
+                  placeholder="e.g 12345678"
+                  error={formik.errors.account}
+                  onChangeText={formik.handleChange('account')}
+                  onBlur={formik.handleBlur('account')}
                 />
               </Grid.Item>
 

@@ -9,6 +9,7 @@ module.exports = async (root, args, { client, q }) => {
 
   await stripe.accounts.createExternalAccount(stripeID, {
     external_account: token,
+    default_for_currency: true,
   });
 
   return true;
