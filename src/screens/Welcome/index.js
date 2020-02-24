@@ -1,7 +1,6 @@
 import React from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { useMutation } from '@apollo/react-hooks';
 
-import { Content, Image } from './styles';
 import {
   SafeAreaView,
   StatusBar,
@@ -12,10 +11,14 @@ import {
   Button,
 } from 'components';
 
+import { Content, Image } from './styles';
 import OnboardingBanner from '../../assets/onboarding.png';
+import COMPLETE_ONBOARDING from './graphql/complete-onboarding';
 
-export const OnboardingWelcome = () => {
-  const navigation = useNavigation();
+export const Welcome = () => {
+  const [completeOnboarding, { loading }] = useMutation(COMPLETE_ONBOARDING, {
+    refetchQueries: ['getCurrentUser'],
+  });
 
   return (
     <SafeAreaView>
@@ -30,13 +33,14 @@ export const OnboardingWelcome = () => {
             <Grid.Item size={12}>
               <Text isPara>
                 {
-                  'We need a few more details from you \nbefore you can start using the Peach app.'
+                  'Thank you for signing up to use Peach. \nWe hope you enjoy the experience.'
                 }
               </Text>
             </Grid.Item>
             <Grid.Item size={12}>
               <Button
-                onPress={() => navigation.navigate('PaymentDetails')}
+                onPress={() => completeOnboarding()}
+                isLoading={loading}
                 title="Begin"
                 fixedWidth
               />

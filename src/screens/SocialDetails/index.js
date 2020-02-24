@@ -14,7 +14,7 @@ import {
   TextInput,
 } from 'components';
 
-export const OnboardingSocial = () => {
+export const SocialDetails = () => {
   const navigation = useNavigation();
 
   return (
