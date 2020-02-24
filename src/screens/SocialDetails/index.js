@@ -1,6 +1,5 @@
 import React from 'react';
 import { ScrollView, KeyboardAvoidingView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
 import {
   SafeAreaView,
@@ -15,8 +14,6 @@ import {
 } from 'components';
 
 export const SocialDetails = () => {
-  const navigation = useNavigation();
-
   return (
     <SafeAreaView>
       <StatusBar />
@@ -26,6 +23,9 @@ export const SocialDetails = () => {
           <Container>
             <Intro />
             <Grid>
+              <Grid.Item size={12}>
+                <TextInput label="Personal Website" />
+              </Grid.Item>
               <Grid.Item size={12}>
                 <TextInput label="Instagram (URL or Username)" />
               </Grid.Item>
@@ -43,11 +43,7 @@ export const SocialDetails = () => {
               </Grid.Item>
               <Grid.Item size={12}>
                 <Actions>
-                  <Button
-                    title="Save"
-                    fixedWidth
-                    onPress={() => navigation.navigate('Complete')}
-                  />
+                  <Button title="Save" fixedWidth />
                 </Actions>
               </Grid.Item>
             </Grid>

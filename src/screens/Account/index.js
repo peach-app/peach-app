@@ -12,12 +12,15 @@ import {
   ProfileHeader,
 } from 'components';
 import { useAuth } from 'contexts/Auth';
+import { useUser } from 'contexts/User';
+import { USER_TYPE } from 'consts';
 
 import GET_USER from './graphql/get-user';
 
 export const Account = () => {
   const navigation = useNavigation();
   const { setToken } = useAuth();
+  const { user } = useUser();
   const { client, data, loading } = useQuery(GET_USER);
 
   return (
@@ -31,11 +34,13 @@ export const Account = () => {
             iconProps={{ name: 'ios-arrow-forward' }}
             onPress={() => navigation.navigate('AccountEdit')}
           />
-          <NavLink
-            title="Social Accounts"
-            iconProps={{ name: 'ios-arrow-forward' }}
-            onPress={() => navigation.navigate('SocialDetails')}
-          />
+          {get('user.type', user) === USER_TYPE.INFLUENCER && (
+            <NavLink
+              title="Social Accounts"
+              iconProps={{ name: 'ios-arrow-forward' }}
+              onPress={() => navigation.navigate('SocialDetails')}
+            />
+          )}
           <NavLink
             title="Payment Details"
             iconProps={{ name: 'ios-arrow-forward' }}
