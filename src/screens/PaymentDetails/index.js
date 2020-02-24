@@ -15,7 +15,6 @@ import {
   Actions,
   Button,
   Intro,
-  Text,
 } from 'components';
 
 import { stripe } from '../../stripe';
@@ -70,19 +69,11 @@ export const PaymentDetails = () => {
     <SafeAreaView>
       <StatusBar />
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
-        <Header title="Bank Account Details" />
+        <Header title="Payment Details" />
         <ScrollView>
           <Container>
             <Intro />
             <Grid>
-              <Grid.Item size={12}>
-                <Text isPara>
-                  {
-                    'Enter your account details to speed up campaign \napplication approvals.'
-                  }
-                </Text>
-              </Grid.Item>
-
               <Grid.Item size={12}>
                 <TextInput
                   label="Account Name"
@@ -116,7 +107,7 @@ export const PaymentDetails = () => {
               <Grid.Item size={12}>
                 <Actions>
                   <Button
-                    title="Next"
+                    title="Save"
                     fixedWidth
                     isLoading={loading}
                     onPress={formik.handleSubmit}

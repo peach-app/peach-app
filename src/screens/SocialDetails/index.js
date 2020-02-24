@@ -44,7 +44,7 @@ export const SocialDetails = () => {
               <Grid.Item size={12}>
                 <Actions>
                   <Button
-                    title="Skip"
+                    title="Save"
                     fixedWidth
                     onPress={() => navigation.navigate('Complete')}
                   />

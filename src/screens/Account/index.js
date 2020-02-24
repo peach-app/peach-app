@@ -27,9 +27,19 @@ export const Account = () => {
           <StatusBar />
           <ProfileHeader isLoading={loading} {...get('user', data)} />
           <NavLink
-            title="Account"
+            title="Profile Details"
             iconProps={{ name: 'ios-arrow-forward' }}
             onPress={() => navigation.navigate('AccountEdit')}
+          />
+          <NavLink
+            title="Social Accounts"
+            iconProps={{ name: 'ios-arrow-forward' }}
+            onPress={() => navigation.navigate('SocialDetails')}
+          />
+          <NavLink
+            title="Payment Details"
+            iconProps={{ name: 'ios-arrow-forward' }}
+            onPress={() => navigation.navigate('PaymentDetails')}
           />
           <NavLink
             title="Payout History"
