@@ -28,7 +28,7 @@ export const AccountDetailsBanner = () => {
       <Main>
         <SafeAreaView>
           <Container>
-            <Grid>
+            <Grid align="center">
               <Grid.Item flex={1}>
                 <Copy>
                   Visit "Account Details" to finish your account setup and start
