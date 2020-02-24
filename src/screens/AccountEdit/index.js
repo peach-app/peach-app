@@ -67,7 +67,7 @@ export const AccountEdit = () => {
           <Grid>
             <Grid.Item size={12}>
               <TextInput
-                label="Name"
+                label="Profile Name"
                 autoCapitalize="none"
                 value={formik.values.name}
                 error={formik.errors.name}
