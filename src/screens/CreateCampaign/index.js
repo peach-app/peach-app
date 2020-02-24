@@ -6,7 +6,19 @@ import { useMutation } from '@apollo/react-hooks';
 import { CAMPAIGN_TYPE, MODAL_TYPES } from '../../consts';
 import { validationSchema, FORM_INITIAL_VALUES } from './consts';
 import { useModal } from '../../contexts/Modal';
-import { SafeAreaView, StatusBar, Header, TextInput, Actions, Button, Container, Intro, Tabs, DatePicker, Grid } from '../../components';
+import {
+  SafeAreaView,
+  StatusBar,
+  Header,
+  TextInput,
+  Actions,
+  Button,
+  Container,
+  Intro,
+  Tabs,
+  DatePicker,
+  Grid,
+} from '../../components';
 
 import CREATE_CAMPAIGN_MUTATION from './graphql/create-campaign';
 
@@ -20,12 +32,13 @@ const CreateCampaign = ({ navigation }) => {
     // ERROR BOUNDARY?
     onError: err => console.log('errro', err),
     refetchQueries: ['getCampaigns'],
-    onCompleted: ({createCampaign: { _id: campaignId }}) =>
+    onCompleted: ({ createCampaign: { _id: campaignId } }) =>
       openModal({
         type: MODAL_TYPES.CAMPAIGN_CREATION,
         props: {
           onFinish: () => navigation.goBack(),
-          onRequestInfluencers: () =>  navigation.navigate('RequestInfluencers', { campaignId })
+          onRequestInfluencers: () =>
+            navigation.navigate('RequestInfluencers', { campaignId }),
         },
       }),
   });
@@ -38,11 +51,13 @@ const CreateCampaign = ({ navigation }) => {
     onSubmit: ({ name, description, budget, dueDate }) => {
       createCampaign({
         variables: {
-          name,
-          description,
-          dueDate,
-          private: activeTab === 1,
-          budget,
+          campaign: {
+            name,
+            description,
+            dueDate,
+            private: activeTab === 1,
+            budget,
+          },
         },
       });
     },
@@ -125,6 +140,7 @@ const CreateCampaign = ({ navigation }) => {
 CreateCampaign.propTypes = {
   navigation: PropTypes.shape({
     goBack: PropTypes.func.isRequired,
+    navigate: PropTypes.func.isRequired,
   }).isRequired,
 };
 
