@@ -28,12 +28,14 @@ module.exports = gql`
       email: String!
       password: String!
       type: UserType!
+      idempotencyKey: String!
     ): Auth
     sendMessage(threadId: ID!, text: String!): Message
     createCampaign(campaign: CampaignInput): Campaign
     applyToCampaign(id: ID!, cost: Int!): Booking
     updateBookingState(id: ID!, state: BookingState!): Boolean
     updateUser(user: UserInput): Boolean
+    updatePaymentDetails(token: String!): Boolean
     completeOnboarding: Boolean
   }
 

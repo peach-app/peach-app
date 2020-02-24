@@ -1,4 +1,6 @@
+const { UserInputError } = require('apollo-server-lambda');
 const sendMail = require('../../helpers/sendMail');
+const stripe = require('../../helpers/stripe');
 
 const registrationEmail = ({ name }) => `
 Hi ${name},
@@ -13,26 +15,42 @@ https://peachapp.io
 `;
 
 module.exports = async (root, args, { client, q }) => {
-  const { name, password, type } = args;
+  const { name, password, type, idempotencyKey } = args;
   const email = args.email.toLowerCase();
 
+  const existingUser = await client.query(
+    q.Exists(q.Match(q.Index('user_by_email'), email))
+  );
+
+  if (existingUser) {
+    throw new UserInputError('A user with this email address already exists.');
+  }
+
+  const account = await stripe.accounts.create(
+    {
+      email,
+      type: 'custom',
+      requested_capabilities: ['transfers', 'card_payments'],
+    },
+    {
+      idempotencyKey,
+    }
+  );
+
   const result = await client.query(
-    q.If(
-      q.Exists(q.Match(q.Index('user_by_email'), email)),
-      q.Abort('A user with this email address already exists.'),
-      q.Do(
-        q.Create(q.Collection('User'), {
-          data: {
-            name,
-            email,
-            type,
-          },
-          credentials: { password },
-        }),
-        q.Login(q.Match(q.Index('user_by_email'), email), {
-          password,
-        })
-      )
+    q.Do(
+      q.Create(q.Collection('User'), {
+        data: {
+          name,
+          email,
+          type,
+          stripeID: account.id,
+        },
+        credentials: { password },
+      }),
+      q.Login(q.Match(q.Index('user_by_email'), email), {
+        password,
+      })
     )
   );
 

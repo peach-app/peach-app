@@ -60,54 +60,60 @@ export const AccountEdit = () => {
 
   return (
     <SafeAreaView>
-      <Header title="Account" />
+      <Header title="Profile Details" />
       <ScrollView>
         <Container>
-          <Intro>
-            <Grid>
+          <Intro />
+          <Grid>
+            <Grid.Item size={12}>
+              <TextInput
+                label="Profile name"
+                autoCapitalize="none"
+                value={formik.values.name}
+                error={formik.errors.name}
+                onChangeText={formik.handleChange('name')}
+                onBlur={formik.handleBlur('name')}
+              />
+            </Grid.Item>
+
+            <Grid.Item size={12}>
+              <TextInput
+                label="Website address"
+                placeholder="e.g https://j.parre.co"
+              />
+            </Grid.Item>
+
+            <Grid.Item size={12}>
+              <TextInput
+                label="Bio"
+                multiline
+                autoCapitalize="none"
+                value={formik.values.bio}
+                error={formik.errors.bio}
+                onChangeText={formik.handleChange('bio')}
+                onBlur={formik.handleBlur('bio')}
+              />
+            </Grid.Item>
+
+            {error && (
               <Grid.Item size={12}>
-                <TextInput
-                  label="Name"
-                  autoCapitalize="none"
-                  value={formik.values.name}
-                  error={formik.errors.name}
-                  onChangeText={formik.handleChange('name')}
-                  onBlur={formik.handleBlur('name')}
+                <Text isCenter>
+                  Unable to save changes, please try again later.
+                </Text>
+              </Grid.Item>
+            )}
+
+            <Grid.Item size={12}>
+              <Actions>
+                <Button
+                  isLoading={loading}
+                  onPress={formik.handleSubmit}
+                  title="Save"
+                  fixedWidth
                 />
-              </Grid.Item>
-
-              <Grid.Item size={12}>
-                <TextInput
-                  label="Bio"
-                  multiline
-                  autoCapitalize="none"
-                  value={formik.values.bio}
-                  error={formik.errors.bio}
-                  onChangeText={formik.handleChange('bio')}
-                  onBlur={formik.handleBlur('bio')}
-                />
-              </Grid.Item>
-
-              {error && (
-                <Grid.Item size={12}>
-                  <Text isCenter>
-                    Unable to save changes, please try again later.
-                  </Text>
-                </Grid.Item>
-              )}
-
-              <Grid.Item size={12}>
-                <Actions>
-                  <Button
-                    isLoading={loading}
-                    onPress={formik.handleSubmit}
-                    title="Save Changes"
-                    fixedWidth
-                  />
-                </Actions>
-              </Grid.Item>
-            </Grid>
-          </Intro>
+              </Actions>
+            </Grid.Item>
+          </Grid>
         </Container>
       </ScrollView>
     </SafeAreaView>
