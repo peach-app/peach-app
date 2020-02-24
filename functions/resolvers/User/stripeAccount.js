@@ -1,8 +1,5 @@
 const stripe = require('../../helpers/stripe');
 
-module.exports = async (root, args) => {
-  const result = await stripe.accounts.retrieve(root.stripeID);
-
-  console.log(result);
-  return result;
+module.exports = (root, args) => {
+  return stripe.accounts.retrieve(root.stripeID);
 };
