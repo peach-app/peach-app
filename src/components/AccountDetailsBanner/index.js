@@ -31,8 +31,7 @@ export const AccountDetailsBanner = () => {
             <Grid align="center">
               <Grid.Item flex={1}>
                 <Copy>
-                  Visit "Account Details" to finish your account setup and start
-                  receiving payouts.
+                  Visit "Account Details" to finish your account setup.
                 </Copy>
               </Grid.Item>
               <Grid.Item width={48}>

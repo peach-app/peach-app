@@ -25,6 +25,7 @@
     "apollo-link-context": "^1.0.19",
     "apollo-link-http": "^1.5.16",
     "apollo-server-lambda": "^2.9.9",
+    "date-fns": "^2.9.0",
     "dinero.js": "^1.6.0",
     "expo": "^36.0.0",
     "expo-font": "~8.0.0",

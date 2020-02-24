@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 
 import { Text } from '../Text';
 
-export const Touchable = styled.TouchableOpacity`
+export const Touchable = styled.TouchableWithoutFeedback`
   background: ${props => props.theme.background};
 `;
 
@@ -13,5 +13,4 @@ export const Main = styled.View`
 
 export const Copy = styled(Text)`
   color: ${props => props.theme.white};
-  width: 80%;
 `;

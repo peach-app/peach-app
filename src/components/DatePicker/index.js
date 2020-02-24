@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Modal } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import FormatDate from 'date-fns/format';
 
 import { Touchable, Spacer, Main, Content } from './styles';
 import { Button } from '../Button';
@@ -15,7 +16,7 @@ export const DatePicker = ({ label, error, value, onChange, ...props }) => {
     <>
       <Touchable onPress={() => setOpen(true)}>
         <TextInput
-          value={value.toLocaleDateString()}
+          value={FormatDate(value, 'dd/MM/yyyy')}
           editable={false}
           label={label}
           error={error}

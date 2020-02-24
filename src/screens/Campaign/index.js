@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 import getOr from 'lodash/fp/getOr';
 import Dinero from 'dinero.js';
+import FormatDate from 'date-fns/format';
 import { useRoute, useNavigation } from '@react-navigation/native';
 
 import {
@@ -141,9 +142,12 @@ export const Campaign = () => {
                   <Grid.Item size={6}>
                     <Label>Completion Date</Label>
                     <Text>
-                      {new Date(
-                        get('findCampaignById.dueDate', campaign)
-                      ).toLocaleDateString()}
+                      {FormatDate(
+                        new Date(
+                          getOr('2020', 'findCampaignById.dueDate', campaign)
+                        ),
+                        'dd/MM/yyyy'
+                      )}
                     </Text>
                   </Grid.Item>
                 </Grid>

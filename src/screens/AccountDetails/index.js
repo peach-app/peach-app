@@ -2,6 +2,7 @@ import React from 'react';
 import { ScrollView, KeyboardAvoidingView } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
+import DateSub from 'date-fns/sub';
 
 import {
   SafeAreaView,
@@ -59,7 +60,10 @@ export const AccountDetails = () => {
               </Grid.Item>
 
               <Grid.Item size={12}>
-                <DatePicker label="Date of birth" value={new Date('2000')} />
+                <DatePicker
+                  label="Date of birth"
+                  value={DateSub(new Date(), { years: 18 })}
+                />
               </Grid.Item>
 
               <Grid.Item size={12}>
