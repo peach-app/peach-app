@@ -34,8 +34,8 @@ export const AccountDetailsBanner = () => {
                   Visit "Account Details" to finish your account setup.
                 </Copy>
               </Grid.Item>
-              <Grid.Item width={48}>
-                <Ionicons name="ios-arrow-dropright" size={28} color="white" />
+              <Grid.Item>
+                <Ionicons name="ios-arrow-dropright" size={22} color="white" />
               </Grid.Item>
             </Grid>
           </Container>
