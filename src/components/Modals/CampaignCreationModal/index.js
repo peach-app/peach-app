@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Title, SubTitle, Modal, Icon, Grid, Actions, Button } from '../../'
-
+import { Title, SubTitle, Modal, Icon, Grid, Actions, Button } from '../..';
 
 const IconWrapper = styled.View`
   display: flex;
@@ -10,15 +10,14 @@ const IconWrapper = styled.View`
   width: 100%;
 `;
 
-export default ({ onClose, onFinish, onRequestInfluencers }) => {
-
- const onActionTaken = action => {
-   //refactor
-   // useEffect clean up with onClose does not work for somereason
-   // need to investigate
-   action();
-   onClose();
- }
+const CampaignCreationModal = ({ onClose, onFinish, onRequestInfluencers }) => {
+  const onActionTaken = action => {
+    // refactor
+    // useEffect clean up with onClose does not work for some reason
+    // need to investigate
+    action();
+    onClose();
+  };
 
   return (
     <Modal isOpen onClose={onClose}>
@@ -39,29 +38,34 @@ export default ({ onClose, onFinish, onRequestInfluencers }) => {
           </SubTitle>
         </Grid.Item>
         <Grid.Item size={12}>
-              <Actions>
-                <Button
-                  fixedWidth
-                  title="Request Influencers"
-                  onPress={() => onActionTaken(onRequestInfluencers)}
-                />
-              </Actions>
-            </Grid.Item>
-            <Grid.Item size={12}>
-          <SubTitle isCentered>
-            or
-          </SubTitle>
+          <Actions>
+            <Button
+              fixedWidth
+              title="Request Influencers"
+              onPress={() => onActionTaken(onRequestInfluencers)}
+            />
+          </Actions>
         </Grid.Item>
-            <Grid.Item size={12}>
-              <Actions>
-                <Button
-                  fixedWidth
-                  title="Finish"
-                  onPress={() => onActionTaken(onFinish)}
-                />
-              </Actions>
-            </Grid.Item>
+        <Grid.Item size={12}>
+          <SubTitle isCentered>or</SubTitle>
+        </Grid.Item>
+        <Grid.Item size={12}>
+          <Actions>
+            <Button
+              fixedWidth
+              title="Finish"
+              onPress={() => onActionTaken(onFinish)}
+            />
+          </Actions>
+        </Grid.Item>
       </Grid>
     </Modal>
   );
 };
+
+CampaignCreationModal.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  onFinish: PropTypes.func.isRequired,
+  onRequestInfluencers: PropTypes.func.isRequired,
+};
+export default CampaignCreationModal;
