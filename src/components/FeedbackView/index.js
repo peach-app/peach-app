@@ -9,6 +9,7 @@ const IconWrapper = styled.View`
   justify-content: center;
   width: 100%;
 `;
+
 const FeedbackView = ({
   title,
   subTitle,
@@ -28,22 +29,28 @@ const FeedbackView = ({
     <Grid.Item size={12}>
       <SubTitle isCentered>{subTitle}</SubTitle>
     </Grid.Item>
-    <Grid.Item size={12}>
-      <Actions>
-        <Button
-          fixedWidth
-          title={actionButtonLabel}
-          onPress={onActionButtonPressed}
-        />
-      </Actions>
-    </Grid.Item>
+    {actionButtonLabel && (
+      <Grid.Item size={12}>
+        <Actions>
+          <Button
+            fixedWidth
+            title={actionButtonLabel}
+            onPress={onActionButtonPressed}
+          />
+        </Actions>
+      </Grid.Item>
+    )}
   </>
 );
+
+FeedbackView.defaultProps = {
+  actionButtonLabel: null,
+};
 
 FeedbackView.propTypes = {
   title: PropTypes.string.isRequired,
   subTitle: PropTypes.string.isRequired,
-  actionButtonLabel: PropTypes.string.isRequired,
+  actionButtonLabel: PropTypes.string,
   onActionButtonPressed: PropTypes.func.isRequired,
 };
 export default FeedbackView;
