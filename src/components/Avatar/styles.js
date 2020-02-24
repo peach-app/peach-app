@@ -22,6 +22,7 @@ export const Initial = styled(Title)`
 
 export const List = styled.View`
   flex-direction: row;
+  ${({ isCentered }) => isCentered && `justify-content: center;`}
   padding-right: ${props => props.theme.spacing}px;
 `;
 
