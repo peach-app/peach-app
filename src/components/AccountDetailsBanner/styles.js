@@ -1,5 +1,4 @@
 import styled from 'styled-components/native';
-import * as Animatable from 'react-native-animatable';
 
 import { Text } from '../Text';
 
@@ -7,10 +6,7 @@ export const Touchable = styled.TouchableOpacity`
   background: ${props => props.theme.background};
 `;
 
-export const Main = styled(Animatable.View).attrs({
-  animation: 'slideInDown',
-  duration: 300,
-})`
+export const Main = styled.View`
   padding-vertical: ${props => props.theme.spacingSmall}px;
   background: ${props => props.theme.brand};
 `;
