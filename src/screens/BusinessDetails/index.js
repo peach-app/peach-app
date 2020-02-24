@@ -24,15 +24,15 @@ export const BusinessDetails = () => (
           <Intro />
           <Grid>
             <Grid.Item size={12}>
-              <TextInput label="Legal Name" />
+              <TextInput label="Legal name" />
             </Grid.Item>
 
             <Grid.Item size={12}>
-              <TextInput label="Companies House Registration Number (CRN)" />
+              <TextInput label="Companies house registration number (CRN)" />
             </Grid.Item>
 
             <Grid.Item size={12}>
-              <TextInput label="Telephone Number" />
+              <TextInput label="Telephone number" />
             </Grid.Item>
 
             <Grid.Item size={12}>

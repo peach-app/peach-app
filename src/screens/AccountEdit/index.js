@@ -67,7 +67,7 @@ export const AccountEdit = () => {
           <Grid>
             <Grid.Item size={12}>
               <TextInput
-                label="Profile Name"
+                label="Profile name"
                 autoCapitalize="none"
                 value={formik.values.name}
                 error={formik.errors.name}
@@ -78,7 +78,7 @@ export const AccountEdit = () => {
 
             <Grid.Item size={12}>
               <TextInput
-                label="Website Address"
+                label="Website address"
                 placeholder="e.g https://j.parre.co"
               />
             </Grid.Item>

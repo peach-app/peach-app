@@ -21,9 +21,9 @@ import { stripe } from '../../stripe';
 import UPDATE_PAYMENT_DETAILS from './graphql/update-payment-details';
 
 const validationSchema = Yup.object().shape({
-  name: Yup.string().required('Account Holder Name is required'),
-  account: Yup.string().required('Account Number is required'),
-  sort: Yup.string().required('Sort Code is required'),
+  name: Yup.string().required('Account holder name is required'),
+  account: Yup.string().required('Account number is required'),
+  sort: Yup.string().required('Sort code is required'),
 });
 
 export const PaymentDetails = () => {
@@ -74,7 +74,7 @@ export const PaymentDetails = () => {
             <Grid>
               <Grid.Item size={12}>
                 <TextInput
-                  label="Account Holder Name"
+                  label="Account holder name"
                   placeholder="e.g John Smith"
                   error={formik.errors.name}
                   onChangeText={formik.handleChange('name')}
@@ -84,7 +84,7 @@ export const PaymentDetails = () => {
 
               <Grid.Item size={12}>
                 <TextInput
-                  label="Sort Code"
+                  label="Sort code"
                   placeholder="e.g 01-02-03"
                   error={formik.errors.sort}
                   onChangeText={formik.handleChange('sort')}
@@ -94,7 +94,7 @@ export const PaymentDetails = () => {
 
               <Grid.Item size={12}>
                 <TextInput
-                  label="Account Number"
+                  label="Account number"
                   placeholder="e.g 12345678"
                   error={formik.errors.account}
                   onChangeText={formik.handleChange('account')}
