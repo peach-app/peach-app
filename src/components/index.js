@@ -34,3 +34,4 @@ export * from './Foot';
 export * from './Label';
 export * from './Modal';
 export * from './Subtitle';
+export * from './Card';
