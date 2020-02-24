@@ -35,7 +35,6 @@ module.exports = gql`
     applyToCampaign(id: ID!, cost: Int!): Booking
     updateBookingState(id: ID!, state: BookingState!): Boolean
     updateUser(user: UserInput): Boolean
-    updatePaymentDetails(token: String!): Boolean
     completeOnboarding: Boolean
   }
 
@@ -105,6 +104,14 @@ module.exports = gql`
 
     # Inbox thread listing
     threads: ThreadPage
+
+    stripeAccount: StripeAccount
+  }
+
+  type StripeAccount {
+    id: String!
+    charges_enabled: Boolean
+    transfers_enabled: Boolean
   }
 
   type CampaignPage {

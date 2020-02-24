@@ -1,9 +1,7 @@
 import React from 'react';
-import { useFormik } from 'formik';
 import { ScrollView, KeyboardAvoidingView } from 'react-native';
-import * as Yup from 'yup';
-import { useNavigation } from '@react-navigation/native';
-import { useMutation } from '@apollo/react-hooks';
+import { useQuery } from '@apollo/react-hooks';
+import get from 'lodash/fp/get';
 
 import {
   SafeAreaView,
@@ -12,56 +10,24 @@ import {
   Container,
   Grid,
   TextInput,
+  DatePicker,
   Actions,
   Button,
   Intro,
+  Branch,
+  Text,
 } from 'components';
+import { useUser } from 'contexts/User';
+import { USER_TYPE } from 'consts';
 
-import { stripe } from '../../stripe';
-import UPDATE_PAYMENT_DETAILS from './graphql/update-payment-details';
-
-const validationSchema = Yup.object().shape({
-  name: Yup.string().required('Account holder name is required'),
-  account: Yup.string().required('Account number is required'),
-  sort: Yup.string().required('Sort code is required'),
-});
+import GET_USER from './graphql/get-user';
 
 export const AccountDetails = () => {
-  const navigation = useNavigation();
-  const [updatePaymentDetails, { loading }] = useMutation(
-    UPDATE_PAYMENT_DETAILS,
-    {
-      onCompleted: () => navigation.goBack(),
-    }
-  );
+  const { user } = useUser();
+  const { data } = useQuery(GET_USER);
+  const isBrand = get('user.type', user) === USER_TYPE.BRAND;
 
-  const formik = useFormik({
-    initialValues: {
-      name: '',
-      sort: '',
-      account: '',
-    },
-    validationSchema,
-    onSubmit: async ({ name, sort, account }) => {
-      const token = await stripe.createToken({
-        bank_account: {
-          country: 'GB',
-          currency: 'gbp',
-          account_holder_name: name,
-          routing_number: sort.replace(/-/g, ''),
-          account_number: account,
-        },
-      });
-
-      if (!token.id) return;
-
-      updatePaymentDetails({
-        variables: {
-          token: token.id,
-        },
-      });
-    },
-  });
+  console.log(data);
 
   return (
     <SafeAreaView>
@@ -70,46 +36,51 @@ export const AccountDetails = () => {
         <Header title="Account Details" />
         <ScrollView>
           <Container>
-            <Intro />
             <Grid>
               <Grid.Item size={12}>
-                <TextInput
-                  label="Account holder name"
-                  placeholder="e.g John Smith"
-                  error={formik.errors.name}
-                  onChangeText={formik.handleChange('name')}
-                  onBlur={formik.handleBlur('name')}
-                />
+                <Intro>
+                  <Text>
+                    <Branch
+                      test={isBrand}
+                      left="The following account details are required for you to make payments to influencers."
+                      right="The following account details are required for you to
+                    recieve payouts from brands."
+                    />
+                  </Text>
+                </Intro>
+              </Grid.Item>
+
+              <Grid.Item size={6}>
+                <TextInput label="First name" />
+              </Grid.Item>
+
+              <Grid.Item size={6}>
+                <TextInput label="Last name" />
               </Grid.Item>
 
               <Grid.Item size={12}>
-                <TextInput
-                  label="Sort code"
-                  placeholder="e.g 01-02-03"
-                  error={formik.errors.sort}
-                  onChangeText={formik.handleChange('sort')}
-                  onBlur={formik.handleBlur('sort')}
-                />
+                <DatePicker label="Date of birth" value={new Date('2000')} />
               </Grid.Item>
 
               <Grid.Item size={12}>
-                <TextInput
-                  label="Account number"
-                  placeholder="e.g 12345678"
-                  error={formik.errors.account}
-                  onChangeText={formik.handleChange('account')}
-                  onBlur={formik.handleBlur('account')}
-                />
+                <TextInput label="Telephone number" />
+              </Grid.Item>
+
+              <Grid.Item size={12}>
+                <TextInput label="Address line 1" />
+              </Grid.Item>
+
+              <Grid.Item size={6}>
+                <TextInput label="Town/City" />
+              </Grid.Item>
+
+              <Grid.Item size={6}>
+                <TextInput label="Postcode" />
               </Grid.Item>
 
               <Grid.Item size={12}>
                 <Actions>
-                  <Button
-                    title="Save"
-                    fixedWidth
-                    isLoading={loading}
-                    onPress={formik.handleSubmit}
-                  />
+                  <Button title="Save" fixedWidth />
                 </Actions>
               </Grid.Item>
             </Grid>
