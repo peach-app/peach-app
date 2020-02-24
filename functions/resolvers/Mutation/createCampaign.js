@@ -1,10 +1,10 @@
-module.exports = async (_, args, { client, q, DocumentDataWithId }) => {
+module.exports = async (_, { campaign }, { client, q, DocumentDataWithId }) => {
   return client.query(
     q.Let(
       {
         campaign: q.Create(q.Collection('Campaign'), {
           data: {
-            ...args,
+            ...campaign,
             user: q.Identity(),
           },
         }),
