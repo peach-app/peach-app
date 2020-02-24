@@ -34,8 +34,8 @@ module.exports = gql`
     applyToCampaign(id: ID!, cost: Int!): Booking
     updateBookingState(id: ID!, state: BookingState!): Boolean
     updateUser(user: UserInput): Boolean
-    completeOnboarding: Boolean,
-    requestInfluencers(user: [UserInput], id: ID!): Booking 
+    completeOnboarding: Boolean
+    requestInfluencers(requestedInfluencers: [ID!], campaignId: ID!): Boolean
   }
 
   # Fauna references #
@@ -81,6 +81,7 @@ module.exports = gql`
   }
 
   input UserInput {
+    _id: ID!
     name: String
     bio: String
   }
