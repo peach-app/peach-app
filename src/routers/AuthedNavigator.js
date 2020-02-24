@@ -13,6 +13,7 @@ import {
   Payouts,
   SocialDetails,
   PaymentDetails,
+  BusinessDetails,
   CreateCampaign,
   Profile,
   Apply,
@@ -55,6 +56,7 @@ const AccountNavigator = () => (
     <AccountStack.Screen name="AccountEdit" component={AccountEdit} />
     <AccountStack.Screen name="Payouts" component={Payouts} />
     <AccountStack.Screen name="SocialDetails" component={SocialDetails} />
+    <AccountStack.Screen name="BusinessDetails" component={BusinessDetails} />
     <AccountStack.Screen name="PaymentDetails" component={PaymentDetails} />
   </AccountStack.Navigator>
 );

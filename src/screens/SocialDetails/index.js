@@ -24,9 +24,6 @@ export const SocialDetails = () => {
             <Intro />
             <Grid>
               <Grid.Item size={12}>
-                <TextInput label="Personal Website" />
-              </Grid.Item>
-              <Grid.Item size={12}>
                 <TextInput label="Instagram (URL or Username)" />
               </Grid.Item>
               <Grid.Item size={12}>

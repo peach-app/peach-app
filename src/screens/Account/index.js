@@ -34,7 +34,13 @@ export const Account = () => {
             iconProps={{ name: 'ios-arrow-forward' }}
             onPress={() => navigation.navigate('AccountEdit')}
           />
-          {get('user.type', user) === USER_TYPE.INFLUENCER && (
+          {get('user.type', user) === USER_TYPE.BRAND ? (
+            <NavLink
+              title="Business Details"
+              iconProps={{ name: 'ios-arrow-forward' }}
+              onPress={() => navigation.navigate('BusinessDetails')}
+            />
+          ) : (
             <NavLink
               title="Social Accounts"
               iconProps={{ name: 'ios-arrow-forward' }}

@@ -12,6 +12,7 @@ export * from './Landing';
 export * from './Login';
 export * from './PaymentDetails';
 export * from './SocialDetails';
+export * from './BusinessDetails';
 export * from './Welcome';
 export * from './Payouts';
 export * from './Profile';

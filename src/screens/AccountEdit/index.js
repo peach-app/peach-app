@@ -60,7 +60,7 @@ export const AccountEdit = () => {
 
   return (
     <SafeAreaView>
-      <Header title="Account" />
+      <Header title="Profile Details" />
       <ScrollView>
         <Container>
           <Intro />
@@ -73,6 +73,13 @@ export const AccountEdit = () => {
                 error={formik.errors.name}
                 onChangeText={formik.handleChange('name')}
                 onBlur={formik.handleBlur('name')}
+              />
+            </Grid.Item>
+
+            <Grid.Item size={12}>
+              <TextInput
+                label="Website Address"
+                placeholder="e.g https://j.parre.co"
               />
             </Grid.Item>
 
