@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Grid, Icon, Title, Button, SubTitle, Actions } from '..';
 
@@ -39,4 +40,10 @@ const FeedbackView = ({
   </>
 );
 
+FeedbackView.propTypes = {
+  title: PropTypes.string.isRequired,
+  subTitle: PropTypes.string.isRequired,
+  actionButtonLabel: PropTypes.string.isRequired,
+  onActionButtonPressed: PropTypes.func.isRequired,
+};
 export default FeedbackView;
