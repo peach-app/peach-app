@@ -3,6 +3,7 @@ import { RefreshControl } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 import getOr from 'lodash/fp/getOr';
+import Dinero from 'dinero.js';
 import { useRoute, useNavigation } from '@react-navigation/native';
 
 import {
@@ -21,11 +22,11 @@ import {
   NoResultText,
   FlatList,
   Foot,
+  Label,
 } from 'components';
 import { useUser } from 'contexts/User';
 import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from 'consts';
 
-import { Sub } from './styles';
 import GET_CAMPAIGN from './graphql/get-campaign';
 
 const TAB_INDEX_BOOKING_STATE = [
@@ -127,13 +128,18 @@ export const Campaign = () => {
                     </Text>
                   </Grid.Item>
 
-                  <Grid.Item size={12}>
-                    <Sub>Budget</Sub>
-                    <Text>{get('findCampaignById.budget', campaign)}</Text>
+                  <Grid.Item size={6}>
+                    <Label>Budget</Label>
+                    <Text>
+                      {Dinero({
+                        amount: getOr(0, 'findCampaignById.budget', campaign),
+                        currency: 'GBP',
+                      }).toFormat()}
+                    </Text>
                   </Grid.Item>
 
-                  <Grid.Item size={12}>
-                    <Sub>Completion Date</Sub>
+                  <Grid.Item size={6}>
+                    <Label>Completion Date</Label>
                     <Text>
                       {new Date(
                         get('findCampaignById.dueDate', campaign)
