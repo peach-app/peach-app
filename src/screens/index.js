@@ -1,5 +1,5 @@
 export * from './Account';
-export * from './AccountEdit';
+export * from './EditProfile';
 export * from './Apply';
 export * from './Campaign';
 export * from './Campaigns';
@@ -10,9 +10,8 @@ export * from './DiscoverInfluencers';
 export * from './Inbox';
 export * from './Landing';
 export * from './Login';
-export * from './PaymentDetails';
+export * from './AccountDetails';
 export * from './SocialDetails';
-export * from './BusinessDetails';
 export * from './Welcome';
 export * from './Payouts';
 export * from './Profile';

@@ -30,7 +30,7 @@ module.exports = async (root, args, { client, q }) => {
     {
       email,
       type: 'custom',
-      requested_capabilities: ['transfers', 'card_payments'],
+      requested_capabilities: ['transfers'],
     },
     {
       idempotencyKey,

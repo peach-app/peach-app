@@ -1,5 +1,5 @@
 import stripeClient from 'stripe-client';
 
 export const stripe = stripeClient(
-  'sk_test_fLR4esermKbaWhkQVqno91Ec005feQPBGi'
+  'pk_test_1N9AOYZFpC5gIU4DI9Rnd2DV009ew3jAaR'
 );

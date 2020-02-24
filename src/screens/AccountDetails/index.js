@@ -26,7 +26,7 @@ const validationSchema = Yup.object().shape({
   sort: Yup.string().required('Sort code is required'),
 });
 
-export const PaymentDetails = () => {
+export const AccountDetails = () => {
   const navigation = useNavigation();
   const [updatePaymentDetails, { loading }] = useMutation(
     UPDATE_PAYMENT_DETAILS,
@@ -67,7 +67,7 @@ export const PaymentDetails = () => {
     <SafeAreaView>
       <StatusBar />
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
-        <Header title="Payment Details" />
+        <Header title="Account Details" />
         <ScrollView>
           <Container>
             <Intro />

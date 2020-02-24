@@ -26,7 +26,7 @@ const validationSchema = Yup.object().shape({
   name: Yup.string().required('Your name is required'),
 });
 
-export const AccountEdit = () => {
+export const EditProfile = () => {
   const navigation = useNavigation();
   const [save, { loading, error }] = useMutation(SAVE_USER, {
     refetchQueries: ['getUser'],
@@ -60,7 +60,7 @@ export const AccountEdit = () => {
 
   return (
     <SafeAreaView>
-      <Header title="Profile Details" />
+      <Header title="Edit Profile" />
       <ScrollView>
         <Container>
           <Intro />

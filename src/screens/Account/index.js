@@ -30,17 +30,11 @@ export const Account = () => {
           <StatusBar />
           <ProfileHeader isLoading={loading} {...get('user', data)} />
           <NavLink
-            title="Profile Details"
+            title="Edit Profile"
             iconProps={{ name: 'ios-arrow-forward' }}
-            onPress={() => navigation.navigate('AccountEdit')}
+            onPress={() => navigation.navigate('EditProfile')}
           />
-          {get('user.type', user) === USER_TYPE.BRAND ? (
-            <NavLink
-              title="Business Details"
-              iconProps={{ name: 'ios-arrow-forward' }}
-              onPress={() => navigation.navigate('BusinessDetails')}
-            />
-          ) : (
+          {get('user.type', user) === USER_TYPE.INFLUENCER && (
             <NavLink
               title="Social Accounts"
               iconProps={{ name: 'ios-arrow-forward' }}
@@ -48,9 +42,9 @@ export const Account = () => {
             />
           )}
           <NavLink
-            title="Payment Details"
+            title="Account Details"
             iconProps={{ name: 'ios-arrow-forward' }}
-            onPress={() => navigation.navigate('PaymentDetails')}
+            onPress={() => navigation.navigate('AccountDetails')}
           />
           <NavLink
             title="Payout History"

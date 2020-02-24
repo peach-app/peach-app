@@ -9,11 +9,10 @@ import {
   Discover,
   Search,
   Account,
-  AccountEdit,
+  EditProfile,
   Payouts,
   SocialDetails,
-  PaymentDetails,
-  BusinessDetails,
+  AccountDetails,
   CreateCampaign,
   Profile,
   Apply,
@@ -53,11 +52,10 @@ const AccountStack = createStackNavigator();
 const AccountNavigator = () => (
   <AccountStack.Navigator screenOptions={{ headerShown: false }}>
     <AccountStack.Screen name="Account" component={Account} />
-    <AccountStack.Screen name="AccountEdit" component={AccountEdit} />
+    <AccountStack.Screen name="EditProfile" component={EditProfile} />
     <AccountStack.Screen name="Payouts" component={Payouts} />
     <AccountStack.Screen name="SocialDetails" component={SocialDetails} />
-    <AccountStack.Screen name="BusinessDetails" component={BusinessDetails} />
-    <AccountStack.Screen name="PaymentDetails" component={PaymentDetails} />
+    <AccountStack.Screen name="AccountDetails" component={AccountDetails} />
   </AccountStack.Navigator>
 );
 
