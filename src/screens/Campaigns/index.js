@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import {
   SafeAreaView,
   FlatList,
+  AccountDetailsBanner,
   Title,
   Intro,
   Tabs,
@@ -58,96 +59,101 @@ export const Campaigns = () => {
   const campaigns = getOr([], 'campaigns.data', data);
 
   return (
-    <SafeAreaView>
-      <FlatList
-        refreshControl={
-          <RefreshControl
-            refreshing={loading && networkStatus === NETWORK_STATUS.REFETCHING}
-            onRefresh={refetch}
-          />
-        }
-        onEndReached={() => {
-          const after = formatRefs(get('campaigns.after', data));
+    <>
+      <AccountDetailsBanner />
+      <SafeAreaView>
+        <FlatList
+          refreshControl={
+            <RefreshControl
+              refreshing={
+                loading && networkStatus === NETWORK_STATUS.REFETCHING
+              }
+              onRefresh={refetch}
+            />
+          }
+          onEndReached={() => {
+            const after = formatRefs(get('campaigns.after', data));
 
-          if (after.length <= 0 || loading) return;
+            if (after.length <= 0 || loading) return;
 
-          fetchMore({
-            variables: {
-              after,
-            },
-            updateQuery: (cache, { fetchMoreResult }) => ({
-              campaigns: {
-                ...fetchMoreResult.campaigns,
-                data: [
-                  ...cache.campaigns.data,
-                  ...fetchMoreResult.campaigns.data,
-                ],
+            fetchMore({
+              variables: {
+                after,
               },
-            }),
-          });
-        }}
-        ListHeaderComponent={
-          <>
-            <FlatList.Item>
-              <Intro>
-                <Grid align="flex-end">
-                  <Grid.Item flex={1}>
-                    <Title>Campaigns</Title>
-                  </Grid.Item>
-                  {isBrand && (
-                    <Grid.Item>
-                      <IconButton
-                        size={30}
-                        name="ios-add-circle"
-                        onPress={() => navigation.navigate('CreateCampaign')}
-                      />
+              updateQuery: (cache, { fetchMoreResult }) => ({
+                campaigns: {
+                  ...fetchMoreResult.campaigns,
+                  data: [
+                    ...cache.campaigns.data,
+                    ...fetchMoreResult.campaigns.data,
+                  ],
+                },
+              }),
+            });
+          }}
+          ListHeaderComponent={
+            <>
+              <FlatList.Item>
+                <Intro>
+                  <Grid align="flex-end">
+                    <Grid.Item flex={1}>
+                      <Title>Campaigns</Title>
                     </Grid.Item>
-                  )}
-                </Grid>
-              </Intro>
-            </FlatList.Item>
+                    {isBrand && (
+                      <Grid.Item>
+                        <IconButton
+                          size={30}
+                          name="ios-add-circle"
+                          onPress={() => navigation.navigate('CreateCampaign')}
+                        />
+                      </Grid.Item>
+                    )}
+                  </Grid>
+                </Intro>
+              </FlatList.Item>
 
-            <FlatList.Item>
-              <Tabs
-                activeTabIndex={activeTabIndex}
-                onTabPress={index => setTabIndex(index)}
-                tabs={
-                  isBrand
-                    ? ['All', 'Applications']
-                    : ['Open', 'Applied', 'Requested']
-                }
-              />
-            </FlatList.Item>
-
-            {!fetching && campaigns.length <= 0 && (
-              <NoResultText isPara>
-                <Branch
-                  test={isBrand}
-                  left={`You don't have any campaigns yet.\nPress "+" to get started.`}
-                  right={`You haven't ${
-                    activeTab === BOOKING_STATE.APPLIED ? '' : 'been '
-                  }${activeTab &&
-                    activeTab.toLowerCase()} onto any campaigns yet.\nVisit "Discover" to start applying.`}
+              <FlatList.Item>
+                <Tabs
+                  activeTabIndex={activeTabIndex}
+                  onTabPress={index => setTabIndex(index)}
+                  tabs={
+                    isBrand
+                      ? ['All', 'Applications']
+                      : ['Open', 'Applied', 'Requested']
+                  }
                 />
-              </NoResultText>
-            )}
+              </FlatList.Item>
 
-            {fetching &&
-              Array.from(Array(3)).map((_, key) => (
-                <FlatList.Item key={key}>
-                  <CampaignCard isLoading />
-                </FlatList.Item>
-              ))}
-          </>
-        }
-        keyExtractor={item => item._id}
-        data={campaigns}
-        renderItem={({ item }) => (
-          <FlatList.Item>
-            <CampaignCard {...item} />
-          </FlatList.Item>
-        )}
-      />
-    </SafeAreaView>
+              {!fetching && campaigns.length <= 0 && (
+                <NoResultText isPara>
+                  <Branch
+                    test={isBrand}
+                    left={`You don't have any campaigns yet.\nPress "+" to get started.`}
+                    right={`You haven't ${
+                      activeTab === BOOKING_STATE.APPLIED ? '' : 'been '
+                    }${activeTab &&
+                      activeTab.toLowerCase()} onto any campaigns yet.\nVisit "Discover" to start applying.`}
+                  />
+                </NoResultText>
+              )}
+
+              {fetching &&
+                Array.from(Array(3)).map((_, key) => (
+                  <FlatList.Item key={key}>
+                    <CampaignCard isLoading />
+                  </FlatList.Item>
+                ))}
+            </>
+          }
+          keyExtractor={item => item._id}
+          data={campaigns}
+          renderItem={({ item }) => (
+            <FlatList.Item>
+              <CampaignCard {...item} />
+            </FlatList.Item>
+          )}
+        />
+      </SafeAreaView>
+    </>
   );
 };

@@ -7,5 +7,4 @@ module.exports = {
   updateBookingState: require('./updateBookingState'),
   updateUser: require('./updateUser'),
   completeOnboarding: require('./completeOnboarding'),
-  updatePaymentDetails: require('./updatePaymentDetails'),
 };

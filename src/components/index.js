@@ -1,4 +1,5 @@
 export * from './Actions';
+export * from './AccountDetailsBanner';
 export * from './Avatar';
 export * from './BackButton';
 export * from './Booking';
