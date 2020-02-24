@@ -1,14 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { Title, SubTitle, Modal, Icon, Grid, Actions, Button } from '../..';
 
-const IconWrapper = styled.View`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-`;
+import { SubTitle, Modal, Actions, Button, Grid } from '../..';
+import FeedbackView from '../../FeedbackView';
 
 const CampaignCreationModal = ({ onClose, onFinish, onRequestInfluencers }) => {
   const onActionTaken = action => {
@@ -22,21 +16,11 @@ const CampaignCreationModal = ({ onClose, onFinish, onRequestInfluencers }) => {
   return (
     <Modal isOpen onClose={onClose}>
       <Grid justify="center" align="center">
-        <Grid.Item size={12}>
-          {/* Better icon or SVG here. */}
-          <IconWrapper>
-            <Icon size={100} name="ios-checkmark" />
-          </IconWrapper>
-        </Grid.Item>
-        <Grid.Item size={12}>
-          <Title isCentered>Campaign created successfully!</Title>
-        </Grid.Item>
-        <Grid.Item size={12}>
-          <SubTitle isCentered>
-            All influencers on our platform will be able to discover and apply
-            for your campaign. If you want someone specific you can:
-          </SubTitle>
-        </Grid.Item>
+        <FeedbackView
+          title="Campaign created successfully!"
+          subTitle="All influencers on our platform will be able to discover and apply
+            for your campaign. If you want someone specific you can:"
+        />
         <Grid.Item size={12}>
           <Actions>
             <Button
