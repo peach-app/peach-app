@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { KeyboardAvoidingView, ScrollView } from 'react-native';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -62,61 +62,63 @@ export const EditProfile = () => {
   return (
     <SafeAreaView>
       <Header title="Edit Profile" />
-      <ScrollView>
-        <Container>
-          <Intro />
-          <Grid>
-            <Grid.Item size={12}>
-              <TextInput
-                label="Profile name"
-                autoCapitalize="none"
-                value={formik.values.name}
-                error={formik.errors.name}
-                onChangeText={formik.handleChange('name')}
-                onBlur={formik.handleBlur('name')}
-              />
-            </Grid.Item>
-
-            <Grid.Item size={12}>
-              <TextInput
-                label="Website address"
-                placeholder="e.g https://j.parre.co"
-              />
-            </Grid.Item>
-
-            <Grid.Item size={12}>
-              <TextInput
-                label="Bio"
-                multiline
-                autoCapitalize="none"
-                value={formik.values.bio}
-                error={formik.errors.bio}
-                onChangeText={formik.handleChange('bio')}
-                onBlur={formik.handleBlur('bio')}
-              />
-            </Grid.Item>
-
-            {error && (
+      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+        <ScrollView>
+          <Container>
+            <Intro />
+            <Grid>
               <Grid.Item size={12}>
-                <Text isCenter>
-                  Unable to save changes, please try again later.
-                </Text>
-              </Grid.Item>
-            )}
-
-            <Grid.Item size={12}>
-              <Actions>
-                <Button
-                  isLoading={loading}
-                  onPress={formik.handleSubmit}
-                  title="Save"
-                  fixedWidth
+                <TextInput
+                  label="Profile name"
+                  autoCapitalize="none"
+                  value={formik.values.name}
+                  error={formik.errors.name}
+                  onChangeText={formik.handleChange('name')}
+                  onBlur={formik.handleBlur('name')}
                 />
-              </Actions>
-            </Grid.Item>
-          </Grid>
-        </Container>
-      </ScrollView>
+              </Grid.Item>
+
+              <Grid.Item size={12}>
+                <TextInput
+                  label="Website address"
+                  placeholder="e.g https://j.parre.co"
+                />
+              </Grid.Item>
+
+              <Grid.Item size={12}>
+                <TextInput
+                  label="Bio"
+                  multiline
+                  autoCapitalize="none"
+                  value={formik.values.bio}
+                  error={formik.errors.bio}
+                  onChangeText={formik.handleChange('bio')}
+                  onBlur={formik.handleBlur('bio')}
+                />
+              </Grid.Item>
+
+              {error && (
+                <Grid.Item size={12}>
+                  <Text isCenter>
+                    Unable to save changes, please try again later.
+                  </Text>
+                </Grid.Item>
+              )}
+
+              <Grid.Item size={12}>
+                <Actions>
+                  <Button
+                    isLoading={loading}
+                    onPress={formik.handleSubmit}
+                    title="Save"
+                    fixedWidth
+                  />
+                </Actions>
+              </Grid.Item>
+            </Grid>
+          </Container>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };

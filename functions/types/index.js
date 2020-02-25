@@ -36,6 +36,7 @@ module.exports = gql`
     updateBookingState(id: ID!, state: BookingState!): Boolean
     updateUser(user: UserInput): Boolean
     completeOnboarding: Boolean
+    createBillingMethod(token: String!): Boolean
   }
 
   # Fauna references #
