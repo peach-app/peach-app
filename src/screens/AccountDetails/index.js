@@ -1,54 +1,56 @@
 import React from 'react';
-import { ScrollView, KeyboardAvoidingView } from 'react-native';
-import { useQuery } from '@apollo/react-hooks';
-import get from 'lodash/fp/get';
+import { ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import {
   SafeAreaView,
   Header,
   StatusBar,
   Container,
-  Grid,
   Intro,
   Text,
+  NavLink,
+  Grid,
 } from 'components';
 
-import { PersonalDetails, BusinessDetails } from './components';
-import GET_USER from './graphql/get-user';
-
 export const AccountDetails = () => {
-  const { data } = useQuery(GET_USER);
-
-  console.log(data);
+  const navigation = useNavigation();
 
   return (
     <SafeAreaView>
       <StatusBar />
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
-        <Header title="Account Details" />
-        <ScrollView>
-          <Container>
-            <Grid>
-              <Grid.Item size={12}>
-                <Intro>
-                  <Text>
-                    The following account details are required to make payments
-                    and recieve payouts from our payments provider Stripe.
-                  </Text>
-                </Intro>
-              </Grid.Item>
+      <Header title="Account Details" />
+      <ScrollView>
+        <Container>
+          <Grid>
+            <Grid.Item size={12}>
+              <Intro>
+                <Text>
+                  Account details are required for making payments and recieving
+                  payouts from our payments provider Stripe.
+                </Text>
+              </Intro>
+            </Grid.Item>
 
-              <Grid.Item size={12}>
-                <PersonalDetails />
-              </Grid.Item>
-
-              <Grid.Item size={12}>
-                <BusinessDetails />
-              </Grid.Item>
-            </Grid>
-          </Container>
-        </ScrollView>
-      </KeyboardAvoidingView>
+            <Grid.Item size={12}>
+              <NavLink
+                title="Personal Details"
+                iconProps={{ name: 'ios-arrow-forward' }}
+                onPress={() => navigation.navigate('PersonalDetails')}
+              />
+              <NavLink
+                title="Business Details"
+                iconProps={{ name: 'ios-arrow-forward' }}
+                onPress={() => navigation.navigate('BusinessDetails')}
+              />
+              <NavLink
+                title="Payment Details"
+                iconProps={{ name: 'ios-arrow-forward' }}
+              />
+            </Grid.Item>
+          </Grid>
+        </Container>
+      </ScrollView>
     </SafeAreaView>
   );
 };

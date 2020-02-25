@@ -18,3 +18,5 @@ export * from './Profile';
 export * from './Register';
 export * from './Search';
 export * from './Thread';
+export * from './PersonalDetails';
+export * from './BusinessDetails';

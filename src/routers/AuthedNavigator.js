@@ -16,6 +16,8 @@ import {
   CreateCampaign,
   Profile,
   Apply,
+  PersonalDetails,
+  BusinessDetails,
 } from 'screens';
 
 import { createStackNavigator, createBottomTabNavigator } from './components';
@@ -70,5 +72,7 @@ export const AuthedNavigator = () => (
     <Stack.Screen name="Payouts" component={Payouts} />
     <Stack.Screen name="SocialDetails" component={SocialDetails} />
     <Stack.Screen name="AccountDetails" component={AccountDetails} />
+    <Stack.Screen name="PersonalDetails" component={PersonalDetails} />
+    <Stack.Screen name="BusinessDetails" component={BusinessDetails} />
   </Stack.Navigator>
 );
