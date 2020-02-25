@@ -17,7 +17,6 @@ import {
   Profile,
   Apply,
   PersonalDetails,
-  BusinessDetails,
   BillingDetails,
 } from 'screens';
 
@@ -74,7 +73,6 @@ export const AuthedNavigator = () => (
     <Stack.Screen name="SocialDetails" component={SocialDetails} />
     <Stack.Screen name="AccountDetails" component={AccountDetails} />
     <Stack.Screen name="PersonalDetails" component={PersonalDetails} />
-    <Stack.Screen name="BusinessDetails" component={BusinessDetails} />
     <Stack.Screen name="BillingDetails" component={BillingDetails} />
   </Stack.Navigator>
 );

@@ -42,10 +42,6 @@ export const PersonalDetails = () => (
             </Grid.Item>
 
             <Grid.Item size={12}>
-              <TextInput label="Telephone number" />
-            </Grid.Item>
-
-            <Grid.Item size={12}>
               <TextInput label="Address" placeholder="Address line 1" />
             </Grid.Item>
 
@@ -58,7 +54,7 @@ export const PersonalDetails = () => (
             </Grid.Item>
 
             <Grid.Item size={6}>
-              <TextInput label="Postcode" />
+              <TextInput label="Postal code" />
             </Grid.Item>
 
             <Grid.Item size={12}>

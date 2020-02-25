@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import get from 'lodash/fp/get';
 
 import {
   SafeAreaView,
@@ -12,9 +13,12 @@ import {
   NavLink,
   Grid,
 } from 'components';
+import { useUser } from 'contexts/User';
+import { USER_TYPE } from 'consts';
 
 export const AccountDetails = () => {
   const navigation = useNavigation();
+  const { user } = useUser();
 
   return (
     <SafeAreaView>
@@ -38,11 +42,12 @@ export const AccountDetails = () => {
                 iconProps={{ name: 'ios-arrow-forward' }}
                 onPress={() => navigation.navigate('PersonalDetails')}
               />
-              <NavLink
-                title="Business"
-                iconProps={{ name: 'ios-arrow-forward' }}
-                onPress={() => navigation.navigate('BusinessDetails')}
-              />
+              {get('user.type', user) === USER_TYPE.INFLUENCER && (
+                <NavLink
+                  title="ID verification documents"
+                  iconProps={{ name: 'ios-arrow-forward' }}
+                />
+              )}
               <NavLink
                 title="Billing"
                 iconProps={{ name: 'ios-arrow-forward' }}

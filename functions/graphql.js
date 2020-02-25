@@ -19,6 +19,7 @@ const server = new ApolloServer({
     return {
       DocumentDataWithId,
       formatRefs,
+      clientIp: event.headers['client-ip'],
       client,
       q,
     };
