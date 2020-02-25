@@ -6,6 +6,7 @@ export default gql`
       _id
       email
       stripeAccount {
+        id
         individual {
           id
           first_name
