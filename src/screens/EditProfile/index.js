@@ -69,7 +69,7 @@ export const EditProfile = () => {
             <Grid>
               <Grid.Item size={12}>
                 <TextInput
-                  label="Profile name"
+                  label="Display name"
                   autoCapitalize="none"
                   value={formik.values.name}
                   error={formik.errors.name}

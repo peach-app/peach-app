@@ -99,10 +99,10 @@ export const CreateCampaign = () => {
 
               <Grid.Item size={12}>
                 <TextInput
-                  label="Budget"
+                  label="Budget (GBP)"
                   name="budget"
                   keyboardType="decimal-pad"
-                  placeholder="£150.00"
+                  placeholder="150.00"
                   error={formik.errors.budget}
                   onChangeText={formik.handleChange('budget')}
                 />

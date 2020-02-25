@@ -105,7 +105,7 @@ export const Register = () => {
 
               <Grid.Item size={12}>
                 <TextInput
-                  label="Display Name"
+                  label="Display name"
                   autoCapitalize="none"
                   error={formik.errors.name}
                   onChangeText={formik.handleChange('name')}
@@ -115,7 +115,7 @@ export const Register = () => {
 
               <Grid.Item size={12}>
                 <TextInput
-                  label="Email Address"
+                  label="Email address"
                   keyboardType="email-address"
                   autoCapitalize="none"
                   error={formik.errors.email}
@@ -136,7 +136,7 @@ export const Register = () => {
 
               <Grid.Item size={12}>
                 <TextInput
-                  label="Confirm Password"
+                  label="Confirm password"
                   secureTextEntry={true}
                   error={formik.errors.confirmPassword}
                   onChangeText={formik.handleChange('confirmPassword')}

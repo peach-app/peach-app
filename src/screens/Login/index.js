@@ -79,7 +79,7 @@ export const Login = () => {
                 <TextInput
                   keyboardType="email-address"
                   autoCapitalize="none"
-                  label="Email Address"
+                  label="Email address"
                   error={formik.errors.email}
                   onChangeText={formik.handleChange('email')}
                   onBlur={formik.handleBlur('email')}
