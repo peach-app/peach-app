@@ -26,6 +26,9 @@ const ConfirmRequestedInfluencersModal = ({
   }
 
   const onSubmitRequest = () => {
+    console.log("LETS SEE", requestedInfluencers.map(
+      influencer => influencer._id
+    ))
     requestInfluencers({
       variables: {
         requestedInfluencers: requestedInfluencers.map(

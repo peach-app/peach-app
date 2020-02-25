@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { default as ImportedDatePicker } from 'react-native-datepicker';
 import moment from 'moment';
 import { withTheme } from 'styled-components/native';
-import Label from '../Label';
+import { Label } from 'components';
 
 const DATE_FORMAT = 'YYYY-MM-DD';
 

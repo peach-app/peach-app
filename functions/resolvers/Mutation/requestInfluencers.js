@@ -6,6 +6,7 @@ module.exports = async (
   { requestedInfluencers, campaignId },
   { client, q }
 ) => {
+  console.log("SSSSSS", requestedInfluencers)
   await client.query(
     q.Map(
       requestedInfluencers,

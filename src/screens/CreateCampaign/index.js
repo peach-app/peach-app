@@ -18,16 +18,17 @@ import {
   Tabs,
   DatePicker,
 } from 'components';
-import { CAMPAIGN_TYPE } from 'consts';
+import { CAMPAIGN_TYPE, MODAL_TYPES } from 'consts';
+import { useModal } from '../../contexts/Modal';
 
 import { validationSchema, FORM_INITIAL_VALUES } from './consts';
 
 import CREATE_CAMPAIGN_MUTATION from './graphql/create-campaign';
 
 export const CreateCampaign = () => {
+  const { openModal } = useModal();
   const [activeTab, setTab] = useState(0);
   const navigation = useNavigation();
-
   const [createCampaign, { loading }] = useMutation(CREATE_CAMPAIGN_MUTATION, {
     refetchQueries: ['getCampaigns'],
     onCompleted: ({ createCampaign: { _id: campaignId } }) =>
@@ -111,10 +112,8 @@ export const CreateCampaign = () => {
                 <DatePicker
                   label="Due date"
                   error={formik.errors.dueDate}
-                  onChange={(_, selectedDate) =>
-                    formik.setFieldValue('dueDate', selectedDate)
-                  }
-                  value={formik.values.dueDate}
+                  onChange={formik.handleChange('dueDate')}
+                  date={formik.values.dueDate}
                 />
               </Grid.Item>
               <Grid.Item size={12}>
