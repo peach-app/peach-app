@@ -9,17 +9,27 @@ import { Button } from '../Button';
 import { Actions } from '../Actions';
 import { TextInput } from '../TextInput';
 
-export const DatePicker = ({ label, error, value, onChange, ...props }) => {
+const today = new Date();
+
+export const DatePicker = ({
+  label,
+  error,
+  value,
+  onChange,
+  placeholder,
+  ...props
+}) => {
   const [open, setOpen] = useState(false);
 
   return (
     <>
       <Touchable onPress={() => setOpen(true)}>
         <TextInput
-          value={FormatDate(value, 'dd/MM/yyyy')}
+          value={value ? FormatDate(value, 'dd/MM/yyyy') : ''}
           editable={false}
           label={label}
           error={error}
+          placeholder={placeholder}
         />
         <Spacer />
       </Touchable>
@@ -33,7 +43,7 @@ export const DatePicker = ({ label, error, value, onChange, ...props }) => {
         <Main>
           <Content>
             <DateTimePicker
-              value={value}
+              value={value || today}
               onChange={(_, selectedDate) => {
                 onChange(selectedDate);
               }}
@@ -52,10 +62,13 @@ export const DatePicker = ({ label, error, value, onChange, ...props }) => {
 DatePicker.defaultProps = {
   label: null,
   error: null,
+  value: null,
+  placeholder: 'Select a date',
 };
 
 DatePicker.propTypes = {
   label: PropTypes.string,
   error: PropTypes.string,
-  value: PropTypes.any.isRequired,
+  value: PropTypes.any,
+  placeholder: PropTypes.string,
 };

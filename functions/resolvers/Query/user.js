@@ -1,3 +1,3 @@
-module.exports = async (root, args, { client, q, DocumentDataWithId }) => {
+module.exports = (root, args, { client, q, DocumentDataWithId }) => {
   return client.query(DocumentDataWithId(q.Get(q.Identity())));
 };

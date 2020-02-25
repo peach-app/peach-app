@@ -83,6 +83,14 @@ module.exports = gql`
   input UserInput {
     name: String
     bio: String
+    firstName: String
+    lastName: String
+    email: String
+    dob: String
+    addressLine1: String
+    addressLine2: String
+    city: String
+    postalCode: String
   }
 
   type User {

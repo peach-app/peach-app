@@ -1,7 +1,6 @@
 const { UserInputError } = require('apollo-server-lambda');
 const sendMail = require('../../helpers/sendMail');
 const stripe = require('../../helpers/stripe');
-const { USER_TYPE } = require('../../consts');
 
 const registrationEmail = ({ name }) => `
 Hi ${name},
@@ -31,7 +30,7 @@ module.exports = async (root, args, { client, q, clientIp }) => {
     {
       email,
       type: 'custom',
-      requested_capabilities: type === USER_TYPE.BRAND ? [] : ['transfers'],
+      requested_capabilities: ['transfers'],
       business_type: 'individual',
       tos_acceptance: {
         date: Math.floor(Date.now() / 1000),
