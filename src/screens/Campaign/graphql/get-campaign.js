@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-import { BookingFragment } from '../../../components';
+import { BookingFragment } from 'components';
 
 export default gql`
   ${BookingFragment}

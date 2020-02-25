@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { TouchableOpacity } from 'react-native';
-
 import { Main, Wrapper, Action, MainTitle, RightAction } from './styles';
 import { BackButton } from '../BackButton';
-import { Text } from '../';
 
 export const Header = ({ title, rightActionLabel, onRightActionPressed }) => (
   <Main>
@@ -12,12 +10,11 @@ export const Header = ({ title, rightActionLabel, onRightActionPressed }) => (
       <Action>
         <BackButton />
       </Action>
-      {!!title && <MainTitle numberOfLines={1}>{title}</MainTitle>}
+      {Boolean(title) && <MainTitle numberOfLines={1}>{title}</MainTitle>}
       <Action isRight onPress={onRightActionPressed} as={TouchableOpacity}>
         <RightAction>{rightActionLabel}</RightAction>
       </Action>
     </Wrapper>
-    
   </Main>
 );
 

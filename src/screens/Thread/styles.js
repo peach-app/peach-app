@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 import { Ionicons } from '@expo/vector-icons';
 import { Platform } from 'react-native';
 
-import { Container } from '../../components';
+import { Container } from 'components';
 
 export const Composer = styled.View`
   border-color: ${props => props.theme.greyLight};
@@ -21,7 +21,7 @@ export const TextInput = styled.TextInput.attrs(props => ({
   flex: 1;
   max-height: 200px;
   margin-right: ${props => props.theme.spacing}px;
-  font-family: futura-book;
+  font-family: ${props => props.theme.fontFamily.bold};
   color: ${props => props.theme.foreground};
   padding-vertical: ${props => props.theme.spacingSmall}px;
   ${Platform.select({
@@ -42,4 +42,8 @@ export const Icon = styled(Ionicons).attrs({
   name: 'ios-send',
 })`
   color: ${props => props.theme.brand};
+`;
+
+export const Spacer = styled.View`
+  height: ${props => props.theme.spacing}px;
 `;

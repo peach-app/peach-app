@@ -3,8 +3,8 @@ import { ScrollView } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 import startCase from 'lodash/startCase';
+import { useRoute } from '@react-navigation/native';
 
-import { USER_TYPE } from '../../consts';
 import {
   SafeAreaView,
   Header,
@@ -12,16 +12,19 @@ import {
   ProfileHeader,
   Text,
   Grid,
-  Actions,
   Button,
-} from '../../components';
-import { useUser } from '../../contexts/User';
+  Foot,
+} from 'components';
+import { useUser } from 'contexts/User';
 
+import { USER_TYPE } from 'consts';
 import GET_USER from './graphql/get-user';
 
-const Profile = ({ navigation }) => {
+export const Profile = () => {
   const { user } = useUser();
-  const id = navigation.getParam('id');
+  const {
+    params: { id },
+  } = useRoute();
   const { data } = useQuery(GET_USER, {
     variables: {
       id,
@@ -47,19 +50,14 @@ const Profile = ({ navigation }) => {
                 <Text isCenter>{bio}</Text>
               </Grid.Item>
             )}
-
-            {isBrand && (
-              <Grid.Item size={12}>
-                <Actions>
-                  <Button title="Request work" fixedWidth />
-                </Actions>
-              </Grid.Item>
-            )}
           </Grid>
         </Container>
       </ScrollView>
+      {isBrand && (
+        <Foot>
+          <Button title="Request work" fixedWidth />
+        </Foot>
+      )}
     </SafeAreaView>
   );
 };
-
-export default Profile;

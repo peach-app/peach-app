@@ -2,6 +2,7 @@ import React from 'react';
 import { ScrollView } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
+import { useNavigation } from '@react-navigation/native';
 
 import {
   SafeAreaView,
@@ -9,11 +10,13 @@ import {
   Container,
   NavLink,
   ProfileHeader,
-} from '../../components';
-import GET_USER from './graphql/get-user';
-import { useAuth } from '../../contexts/Auth';
+} from 'components';
+import { useAuth } from 'contexts/Auth';
 
-const Account = ({ navigation }) => {
+import GET_USER from './graphql/get-user';
+
+export const Account = () => {
+  const navigation = useNavigation();
   const { setToken } = useAuth();
   const { client, data, loading } = useQuery(GET_USER);
 
@@ -45,5 +48,3 @@ const Account = ({ navigation }) => {
     </SafeAreaView>
   );
 };
-
-export default Account;

@@ -1,19 +1,23 @@
-import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
+import React from 'react';
 
-import Landing from '../screens/Landing';
-import Login from '../screens/Login';
-import Register from '../screens/Register';
+import { Landing, Login, Register } from 'screens';
 
-const UnAuthedNavigator = createStackNavigator(
-  {
-    Landing,
-    Login,
-    Register,
-  },
-  {
-    headerMode: 'none',
-  }
+import { createStackNavigator } from './components';
+
+const Stack = createStackNavigator();
+
+export const UnAuthedNavigator = () => (
+  <Stack.Navigator
+    initialRouteName="Landing"
+    screenOptions={{
+      headerShown: false,
+      cardStyle: {
+        backgroundColor: 'white',
+      },
+    }}
+  >
+    <Stack.Screen name="Landing" component={Landing} />
+    <Stack.Screen name="Login" component={Login} />
+    <Stack.Screen name="Register" component={Register} />
+  </Stack.Navigator>
 );
-
-export default createAppContainer(UnAuthedNavigator);

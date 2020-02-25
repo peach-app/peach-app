@@ -3,11 +3,12 @@ import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 import get from 'lodash/fp/get';
 import Dinero from 'dinero.js';
-import { withNavigation } from 'react-navigation';
+import { useNavigation } from '@react-navigation/native';
 import { useMutation } from '@apollo/react-hooks';
 import startCase from 'lodash/startCase';
 
-import { BOOKING_STATE } from '../../consts';
+import { BOOKING_STATE } from 'consts';
+
 import { Grid } from '../Grid';
 import { SkeletonText } from '../Skeletons';
 import { Loading } from '../Loading';
@@ -16,7 +17,8 @@ import { Avatar } from '../Avatar';
 import { Text } from '../Text';
 import UPDATE_BOOKING_STATE from './graphql/update-booking-state';
 
-const BookingMain = ({ _id, cost, state, user, isLoading, navigation }) => {
+export const Booking = ({ _id, cost, state, user, isLoading }) => {
+  const navigation = useNavigation();
   const [updateBookingState, { loading }] = useMutation(UPDATE_BOOKING_STATE, {
     refetchQueries: ['getCampaign'],
     variables: {
@@ -97,7 +99,7 @@ const BookingMain = ({ _id, cost, state, user, isLoading, navigation }) => {
   );
 };
 
-BookingMain.defaultProps = {
+Booking.defaultProps = {
   isLoading: false,
   _id: null,
   cost: 0,
@@ -105,7 +107,7 @@ BookingMain.defaultProps = {
   state: '',
 };
 
-BookingMain.propTypes = {
+Booking.propTypes = {
   isLoading: PropTypes.bool,
   _id: PropTypes.string,
   cost: PropTypes.number,
@@ -113,9 +115,6 @@ BookingMain.propTypes = {
   user: PropTypes.shape({
     name: PropTypes.string.isRequired,
   }),
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
 };
 
 export const BookingFragment = gql`
@@ -132,5 +131,3 @@ export const BookingFragment = gql`
     }
   }
 `;
-
-export const Booking = withNavigation(BookingMain);

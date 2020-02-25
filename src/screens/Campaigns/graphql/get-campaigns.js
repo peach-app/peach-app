@@ -1,11 +1,11 @@
 import gql from 'graphql-tag';
 
-import { CampaignCardFragment } from '../../../components';
+import { CampaignCardFragment } from 'components';
 
 export default gql`
   ${CampaignCardFragment}
 
-  query getCampaigns($state: BookingState!, $after: [RefInput]) {
+  query getCampaigns($state: BookingState, $after: [RefInput]) {
     campaigns(state: $state, size: 20, after: $after) {
       data {
         _id

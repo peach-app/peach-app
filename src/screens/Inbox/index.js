@@ -4,8 +4,6 @@ import getOr from 'lodash/fp/getOr';
 import get from 'lodash/fp/get';
 import { useQuery } from '@apollo/react-hooks';
 
-import { useUser } from '../../contexts/User';
-import { NETWORK_STATUS, USER_TYPE } from '../../consts';
 import {
   SafeAreaView,
   StatusBar,
@@ -15,10 +13,13 @@ import {
   ThreadCard,
   NoResultText,
   Branch,
-} from '../../components';
+} from 'components';
+import { useUser } from 'contexts/User';
+
+import { NETWORK_STATUS, USER_TYPE } from 'consts';
 import GET_THREADS from './graphql/get-threads';
 
-const Inbox = () => {
+export const Inbox = () => {
   const { user } = useUser();
   const userType = get('user.type', user);
 
@@ -79,5 +80,3 @@ const Inbox = () => {
     </SafeAreaView>
   );
 };
-
-export default Inbox;

@@ -92,6 +92,7 @@ module.exports = async () => {
           resource: q.Collection('User'),
           actions: {
             read: true,
+            write: true,
           },
         },
         {
@@ -129,25 +130,13 @@ module.exports = async () => {
 
         // INDEXES
         {
-          resource: q.Index('all_campaign'),
-          actions: {
-            read: true,
-          },
-        },
-        {
-          resource: q.Index('all_thread_users'),
-          actions: {
-            read: true,
-          },
-        },
-        {
           resource: q.Index('booking_by_campaign'),
           actions: {
             read: true,
           },
         },
         {
-          resource: q.Index('booking_by_campaign_state'),
+          resource: q.Index('booking_by_state'),
           actions: {
             read: true,
           },
@@ -160,6 +149,12 @@ module.exports = async () => {
         },
         {
           resource: q.Index('booking_campaign_by_user_state'),
+          actions: {
+            read: true,
+          },
+        },
+        {
+          resource: q.Index('booking_campaign_by_state'),
           actions: {
             read: true,
           },
@@ -196,12 +191,6 @@ module.exports = async () => {
         },
         {
           resource: q.Index('thread_users_by_user'),
-          actions: {
-            read: true,
-          },
-        },
-        {
-          resource: q.Index('booking_by_campaign_user'),
           actions: {
             read: true,
           },

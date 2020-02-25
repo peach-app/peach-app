@@ -1,22 +1,27 @@
-/* eslint-disable react/require-default-props */
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { default as ImportedDatePicker } from 'react-native-datepicker';
 import moment from 'moment';
 import { withTheme } from 'styled-components/native';
+import { Modal } from 'react-native';
 import Label from '../Label';
 
-const DATE_FORMAT = 'YYYY-MM-DD';
+import { Main, Content } from './styles';
+import { Button } from '../Button';
+import { Actions } from '../Actions';
 
-const DatePickerComponent = ({
+export const DatePickerComponent = ({
   label,
-  theme,
-  placeholder,
-  mode,
   error,
-  onChange,
+  value,
   date,
+  mode,
+  placeholder,
+  theme,
+  onChange,
 }) => {
+  const [open, setOpen] = useState(false);
+
   return (
     <>
       {label && <Label>{label}</Label>}
@@ -53,26 +58,34 @@ const DatePickerComponent = ({
         onDateChange={onChange}
       />
 
-      {error && <Label error>{error}</Label>}
+      <Modal
+        visible={open}
+        presentationStyle="overFullScreen"
+        transparent
+        animationType="fade"
+      >
+        <Main>
+          <Content>
+            <DateTimePicker value={value} {...props} />
+            <Actions>
+              <Button title="Done" onPress={() => setOpen(false)} fixedWidth />
+            </Actions>
+          </Content>
+        </Main>
+      </Modal>
     </>
   );
 };
 
 DatePickerComponent.defaultProps = {
-  placeholder: 'Select date',
-  mode: 'date',
-  label: 'Date',
+  label: null,
+  error: null,
 };
 
 DatePickerComponent.propTypes = {
   label: PropTypes.string,
-  // eslint-disable-next-line react/forbid-prop-types
-  theme: PropTypes.object.isRequired,
-  placeholder: PropTypes.string,
-  mode: PropTypes.string,
   error: PropTypes.string,
-  onChange: PropTypes.func,
-  date: PropTypes.string,
+  value: PropTypes.any.isRequired,
 };
 
-export const DatePicker =  withTheme(DatePickerComponent);
+export const DatePicker = withTheme(DatePickerComponent);

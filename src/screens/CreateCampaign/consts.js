@@ -14,5 +14,5 @@ export const FORM_INITIAL_VALUES = {
   name: '',
   description: '',
   budget: '',
-  dueDate: '',
+  dueDate: new Date(),
 };

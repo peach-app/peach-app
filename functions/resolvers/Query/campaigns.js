@@ -7,17 +7,26 @@ module.exports = async (
 ) => {
   const { state, size = 30, after, before } = args;
 
+  const isBrand = q.Equals(
+    q.Select(['data', 'type'], q.Get(q.Identity())),
+    USER_TYPE.BRAND
+  );
+
   return client.query(
     q.Map(
       q.Paginate(
         q.If(
-          q.Equals(
-            q.Select(['data', 'type'], q.Get(q.Identity())),
-            USER_TYPE.BRAND
-          ),
+          isBrand,
 
           // brand
-          q.Match(q.Index('campaign_by_user'), q.Identity()),
+          q.If(
+            Boolean(state),
+            q.Intersection(
+              q.Match(q.Index('campaign_by_user'), q.Identity()),
+              q.Match(q.Index('booking_campaign_by_state'), state)
+            ),
+            q.Match(q.Index('campaign_by_user'), q.Identity())
+          ),
 
           // influencer
           q.Match(

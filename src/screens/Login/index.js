@@ -17,8 +17,9 @@ import {
   TextInput,
   Text,
   BackButton,
-} from '../../components';
-import { useAuth } from '../../contexts/Auth';
+} from 'components';
+import { useAuth } from 'contexts/Auth';
+
 import LOGIN from './graphql/login';
 
 const validationSchema = Yup.object().shape({
@@ -28,7 +29,7 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().required('Please enter a password'),
 });
 
-const Login = () => {
+export const Login = () => {
   const { setToken } = useAuth();
   const [login, { loading, error }] = useMutation(LOGIN, {
     onCompleted: data => {
@@ -117,5 +118,3 @@ const Login = () => {
     </SafeAreaView>
   );
 };
-
-export default Login;

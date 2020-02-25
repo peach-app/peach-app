@@ -3,9 +3,8 @@ import { RefreshControl } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 import getOr from 'lodash/fp/getOr';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
-import { Foot } from './styles';
-import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from '../../consts';
 import {
   Text,
   Header,
@@ -21,9 +20,10 @@ import {
   Grid,
   NoResultText,
   FlatList,
-} from '../../components';
-
-import { useUser } from '../../contexts/User';
+  Foot,
+} from 'components';
+import { useUser } from 'contexts/User';
+import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from 'consts';
 
 import GET_CAMPAIGN from './graphql/get-campaign';
 
@@ -34,9 +34,12 @@ const TAB_INDEX_BOOKING_STATE = [
   BOOKING_STATE.REQUESTED,
 ];
 
-const Campaign = ({ navigation }) => {
+export const Campaign = () => {
   const [activeTab, setTab] = useState(0);
-  const id = navigation.getParam('id');
+  const navigation = useNavigation();
+  const {
+    params: { id },
+  } = useRoute();
   const { user } = useUser();
 
   const isBrand = get('user.type', user) === USER_TYPE.BRAND;
@@ -197,5 +200,3 @@ const Campaign = ({ navigation }) => {
     </SafeAreaView>
   );
 };
-
-export default Campaign;

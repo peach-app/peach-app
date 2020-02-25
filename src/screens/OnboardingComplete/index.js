@@ -11,11 +11,11 @@ import {
   Title,
   Intro,
   Grid,
-} from '../../components';
+} from 'components';
 
 import COMPLETE_ONBOARDING from './graphql/complete-onboarding';
 
-const OnboardingComplete = () => {
+export const OnboardingComplete = () => {
   const [completeOnboarding, { loading }] = useMutation(COMPLETE_ONBOARDING, {
     refetchQueries: ['getCurrentUser'],
   });
@@ -34,7 +34,7 @@ const OnboardingComplete = () => {
             <Grid.Item size={12}>
               <Actions>
                 <Button
-                  title="Start Browsing"
+                  title="Start Influencing"
                   fixedWidth
                   isLoading={loading}
                   onPress={() => completeOnboarding()}
@@ -47,5 +47,3 @@ const OnboardingComplete = () => {
     </SafeAreaView>
   );
 };
-
-export default OnboardingComplete;

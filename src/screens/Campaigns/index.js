@@ -1,12 +1,10 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useMemo } from 'react';
 import { RefreshControl } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import getOr from 'lodash/fp/getOr';
 import get from 'lodash/fp/get';
+import { useNavigation } from '@react-navigation/native';
 
-import formatRefs from '../../helpers/formatRefs';
-import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from '../../consts';
 import {
   SafeAreaView,
   FlatList,
@@ -18,32 +16,42 @@ import {
   CampaignCard,
   NoResultText,
   Branch,
-} from '../../components';
-import { useUser } from '../../contexts/User';
+} from 'components';
+import { formatRefs } from 'helpers';
+import { useUser } from 'contexts/User';
+
+import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from 'consts';
 
 import GET_CAMPAIGNS from './graphql/get-campaigns';
 
-const TAB_INDEX_BOOKING_STATE = [
-  BOOKING_STATE.ACCEPTED,
-  BOOKING_STATE.APPLIED,
-  BOOKING_STATE.REQUESTED,
-];
-
-const Campaigns = ({ navigation }) => {
-  const [activeTab, setTab] = useState(0);
+export const Campaigns = () => {
+  const navigation = useNavigation();
+  const [activeTabIndex, setTabIndex] = useState(0);
   const { user } = useUser();
+  const userType = get('user.type', user);
+  const isBrand = userType === USER_TYPE.BRAND;
+
+  const activeTab = useMemo(
+    () =>
+      (isBrand
+        ? [undefined, BOOKING_STATE.APPLIED] // undefined shows all bookings
+        : [
+            BOOKING_STATE.ACCEPTED,
+            BOOKING_STATE.APPLIED,
+            BOOKING_STATE.REQUESTED,
+          ])[activeTabIndex],
+    [activeTabIndex, isBrand]
+  );
+
   const { data, loading, networkStatus, refetch, fetchMore } = useQuery(
     GET_CAMPAIGNS,
     {
       notifyOnNetworkStatusChange: true,
       variables: {
-        state: TAB_INDEX_BOOKING_STATE[activeTab],
+        state: activeTab,
       },
     }
   );
-  const userType = get('user.type', user);
-  const isBrand = userType === USER_TYPE.BRAND;
-  const isInfluencer = userType === USER_TYPE.INFLUENCER;
 
   const fetching = loading && networkStatus === NETWORK_STATUS.FETCHING;
   const campaigns = getOr([], 'campaigns.data', data);
@@ -102,12 +110,12 @@ const Campaigns = ({ navigation }) => {
 
             <FlatList.Item>
               <Tabs
-                activeTabIndex={activeTab}
-                onTabPress={index => setTab(index)}
+                activeTabIndex={activeTabIndex}
+                onTabPress={index => setTabIndex(index)}
                 tabs={
-                  isInfluencer
-                    ? ['Open', 'Applied', 'Requested']
-                    : ['All', 'Applications']
+                  isBrand
+                    ? ['All', 'Applications']
+                    : ['Open', 'Applied', 'Requested']
                 }
               />
             </FlatList.Item>
@@ -118,12 +126,9 @@ const Campaigns = ({ navigation }) => {
                   test={isBrand}
                   left={`You don't have any campaigns yet.\nPress "+" to get started.`}
                   right={`You haven't ${
-                    TAB_INDEX_BOOKING_STATE[activeTab] === BOOKING_STATE.APPLIED
-                      ? ''
-                      : 'been '
-                  }${TAB_INDEX_BOOKING_STATE[
-                    activeTab
-                  ].toLowerCase()} onto any campaigns yet.\nVisit "Browse" to start applying.`}
+                    activeTab === BOOKING_STATE.APPLIED ? '' : 'been '
+                  }${activeTab &&
+                    activeTab.toLowerCase()} onto any campaigns yet.\nVisit "Discover" to start applying.`}
                 />
               </NoResultText>
             )}
@@ -147,11 +152,3 @@ const Campaigns = ({ navigation }) => {
     </SafeAreaView>
   );
 };
-
-Campaigns.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
-};
-
-export default Campaigns;

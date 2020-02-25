@@ -5,6 +5,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import get from 'lodash/fp/get';
 import startCase from 'lodash/startCase';
+import { useNavigation } from '@react-navigation/native';
 
 import {
   SafeAreaView,
@@ -16,7 +17,7 @@ import {
   Actions,
   Button,
   Text,
-} from '../../components';
+} from 'components';
 
 import GET_USER from './graphql/get-user';
 import SAVE_USER from './graphql/save-user';
@@ -25,7 +26,8 @@ const validationSchema = Yup.object().shape({
   name: Yup.string().required('Your name is required'),
 });
 
-const AccountEdit = ({ navigation }) => {
+export const AccountEdit = () => {
+  const navigation = useNavigation();
   const [save, { loading, error }] = useMutation(SAVE_USER, {
     refetchQueries: ['getUser'],
     onCompleted: () => {
@@ -111,5 +113,3 @@ const AccountEdit = ({ navigation }) => {
     </SafeAreaView>
   );
 };
-
-export default AccountEdit;

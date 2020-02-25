@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { ScrollView, KeyboardAvoidingView } from 'react-native';
 import PropTypes from 'prop-types';
+import { ScrollView, KeyboardAvoidingView } from 'react-native';
 import { useFormik } from 'formik';
 import { useMutation } from '@apollo/react-hooks';
-import { CAMPAIGN_TYPE, MODAL_TYPES } from '../../consts';
-import { validationSchema, FORM_INITIAL_VALUES } from './consts';
-import { useModal } from '../../contexts/Modal';
+import { useNavigation } from '@react-navigation/native';
+
 import {
   SafeAreaView,
   StatusBar,
   Header,
+  Grid,
   TextInput,
   Actions,
   Button,
@@ -17,20 +17,18 @@ import {
   Intro,
   Tabs,
   DatePicker,
-  Grid,
-} from '../../components';
+} from 'components';
+import { CAMPAIGN_TYPE } from 'consts';
+
+import { validationSchema, FORM_INITIAL_VALUES } from './consts';
 
 import CREATE_CAMPAIGN_MUTATION from './graphql/create-campaign';
 
-const CreateCampaign = ({ navigation }) => {
+export const CreateCampaign = () => {
   const [activeTab, setTab] = useState(0);
-
-  const { openModal } = useModal();
+  const navigation = useNavigation();
 
   const [createCampaign, { loading }] = useMutation(CREATE_CAMPAIGN_MUTATION, {
-    // TO DO, HOW ARE WE GOING TO HANDLE ERRORS?
-    // ERROR BOUNDARY?
-    onError: err => console.log('errro', err),
     refetchQueries: ['getCampaigns'],
     onCompleted: ({ createCampaign: { _id: campaignId } }) =>
       openModal({
@@ -84,7 +82,7 @@ const CreateCampaign = ({ navigation }) => {
                 <TextInput
                   label="Campaign name"
                   name="name"
-                  placeholder="e.g Soft Tea campaign"
+                  placeholder="e.g Soft Tea promoters"
                   error={formik.errors.name}
                   onChangeText={formik.handleChange('name')}
                 />
@@ -93,6 +91,7 @@ const CreateCampaign = ({ navigation }) => {
                 <TextInput
                   label="Description"
                   name="description"
+                  multiline
                   placeholder="Picture at home drinking tea"
                   error={formik.errors.description}
                   onChangeText={formik.handleChange('description')}
@@ -103,20 +102,19 @@ const CreateCampaign = ({ navigation }) => {
                 <TextInput
                   label="Budget"
                   name="budget"
-                  placeholder="£150"
+                  placeholder="£150.00"
                   error={formik.errors.budget}
                   onChangeText={formik.handleChange('budget')}
                 />
               </Grid.Item>
               <Grid.Item size={12}>
                 <DatePicker
-                  name="dueDate"
                   label="Due date"
-                  withIcon
-                  placeholder="The action date"
                   error={formik.errors.dueDate}
-                  onChange={formik.handleChange('dueDate')}
-                  date={formik.values.dueDate}
+                  onChange={(_, selectedDate) =>
+                    formik.setFieldValue('dueDate', selectedDate)
+                  }
+                  value={formik.values.dueDate}
                 />
               </Grid.Item>
               <Grid.Item size={12}>

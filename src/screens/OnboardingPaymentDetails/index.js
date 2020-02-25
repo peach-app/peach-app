@@ -1,7 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import { ScrollView, KeyboardAvoidingView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import {
   SafeAreaView,
@@ -14,9 +14,10 @@ import {
   Button,
   Intro,
   Text,
-} from '../../components';
+} from 'components';
 
-const OnboardingPaymentDetails = ({ navigation }) => {
+export const OnboardingPaymentDetails = () => {
+  const navigation = useNavigation();
   const formik = useFormik({
     initialValues: {
       cardNum: '',
@@ -74,11 +75,3 @@ const OnboardingPaymentDetails = ({ navigation }) => {
     </SafeAreaView>
   );
 };
-
-OnboardingPaymentDetails.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
-};
-
-export default OnboardingPaymentDetails;

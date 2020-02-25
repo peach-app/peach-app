@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import { SubTitle, Modal, Actions, Button, Grid } from '../..';
+import { Grid,  SubTitle, Modal, Actions, Button , Grid } from 'components';
 import FeedbackView from '../../FeedbackView';
 
 const CampaignCreationModal = ({ onClose, onFinish, onRequestInfluencers }) => {

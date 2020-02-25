@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import  {default as  ImportedModal} from 'react-native-modal';
+import { default as ImportedModal } from 'react-native-modal';
 import { withTheme } from 'styled-components/native';
 
 const ModalWrapper = styled.View`
@@ -31,7 +31,3 @@ const ModalComponent = ({
 );
 
 export const Modal = withTheme(ModalComponent);
-
-
-
-
