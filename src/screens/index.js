@@ -20,3 +20,4 @@ export * from './Search';
 export * from './Thread';
 export * from './PersonalDetails';
 export * from './BillingDetails';
+export * from './NewBilling';

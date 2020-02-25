@@ -1,6 +1,7 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, TouchableOpacity } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
+import { useNavigation } from '@react-navigation/native';
 import get from 'lodash/fp/get';
 import getOr from 'lodash/fp/getOr';
 
@@ -15,9 +16,11 @@ import {
   SkeletonText,
 } from 'components';
 
+import { AddIcon } from './styles';
 import GET_EXTERNAL_ACCOUNTS from './graphql/get-external-accounts';
 
 export const BillingDetails = () => {
+  const navigation = useNavigation();
   const { data, loading } = useQuery(GET_EXTERNAL_ACCOUNTS, {
     fetchPolicy: 'cache-and-network',
   });
@@ -68,6 +71,15 @@ export const BillingDetails = () => {
                 </Card>
               </Grid.Item>
             ))}
+
+            <Grid.Item size={12}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('NewBilling')}
+              >
+                <AddIcon />
+                <Text isCenter>{'Add a new\nCard or Bank Account'}</Text>
+              </TouchableOpacity>
+            </Grid.Item>
           </Grid>
         </Container>
       </ScrollView>

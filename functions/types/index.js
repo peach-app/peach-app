@@ -133,6 +133,7 @@ module.exports = gql`
     last4: String
     routing_number: String
     account_holder_name: String
+    object: String
   }
 
   type StripePerson {
