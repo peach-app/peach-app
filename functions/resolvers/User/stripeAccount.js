@@ -1,9 +1,11 @@
 const stripe = require('../../helpers/stripe');
 
-module.exports = (root, args) => {
+module.exports = async (root, args) => {
   if (!root.stripeID) {
     return undefined;
   }
 
-  return stripe.accounts.retrieve(root.stripeID);
+  const res = await stripe.accounts.retrieve(root.stripeID);
+
+  return res;
 };

@@ -5,6 +5,24 @@ export default gql`
     user {
       _id
       email
+      stripeAccount {
+        individual {
+          id
+          first_name
+          last_name
+          address {
+            city
+            line1
+            line2
+            postal_code
+          }
+          dob {
+            day
+            month
+            year
+          }
+        }
+      }
     }
   }
 `;

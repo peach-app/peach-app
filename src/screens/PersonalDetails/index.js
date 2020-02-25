@@ -1,6 +1,7 @@
 import React from 'react';
 import { KeyboardAvoidingView, ScrollView } from 'react-native';
 import { useMutation, useQuery } from '@apollo/react-hooks';
+import { useNavigation } from '@react-navigation/native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import get from 'lodash/fp/get';
@@ -28,28 +29,35 @@ const validationSchema = Yup.object().shape({
     .required('Please enter an email address'),
   dob: Yup.string().required(),
   addressLine1: Yup.string().required(),
-  addressLine2: Yup.string(),
   city: Yup.string().required(),
   postalCode: Yup.string().required(),
 });
 
 export const PersonalDetails = () => {
+  const navigation = useNavigation();
   const { data } = useQuery(GET_USER);
-  const [updateUser, { loading }] = useMutation(UPDATE_USER);
+  const [updateUser, { loading }] = useMutation(UPDATE_USER, {
+    onCompleted: () => {
+      navigation.goBack();
+    },
+  });
 
   const formik = useFormik({
     validateOnBlur: false,
     validateOnChange: false,
     enableReinitialize: true,
     initialValues: {
-      firstName: '',
-      lastName: '',
+      firstName: get('user.stripeAccount.individual.first_name', data),
+      lastName: get('user.stripeAccount.individual.last_name', data),
       email: get('user.email', data),
       dob: '',
-      addressLine1: '',
-      addressLine2: '',
-      city: '',
-      postalCode: '',
+      addressLine1: get('user.stripeAccount.individual.address.line1', data),
+      addressLine2: get('user.stripeAccount.individual.address.line2', data),
+      city: get('user.stripeAccount.individual.address.city', data),
+      postalCode: get(
+        'user.stripeAccount.individual.address.postal_code',
+        data
+      ),
     },
     validationSchema,
     onSubmit: user => {

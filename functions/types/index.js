@@ -120,6 +120,29 @@ module.exports = gql`
     id: String!
     charges_enabled: Boolean
     transfers_enabled: Boolean
+    individual: StripePerson
+  }
+
+  type StripePerson {
+    id: ID!
+    first_name: String
+    last_name: String
+    address: Address
+    dob: DateOfBirth
+  }
+
+  type Address {
+    city: String
+    country: String
+    line1: String
+    line2: String
+    postal_code: String
+  }
+
+  type DateOfBirth {
+    day: String
+    month: String
+    year: String
   }
 
   type CampaignPage {
