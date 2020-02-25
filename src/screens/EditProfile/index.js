@@ -80,13 +80,6 @@ export const EditProfile = () => {
 
               <Grid.Item size={12}>
                 <TextInput
-                  label="Website address"
-                  placeholder="e.g https://j.parre.co"
-                />
-              </Grid.Item>
-
-              <Grid.Item size={12}>
-                <TextInput
                   label="Bio"
                   multiline
                   autoCapitalize="none"
