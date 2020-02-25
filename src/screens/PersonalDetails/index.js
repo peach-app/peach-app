@@ -5,6 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import get from 'lodash/fp/get';
+import getOr from 'lodash/fp/getOr';
+import parseDate from 'date-fns/parse';
 
 import {
   SafeAreaView,
@@ -44,6 +46,11 @@ export const PersonalDetails = () => {
     },
   });
 
+  const { day, month, year } = getOr(
+    {},
+    'user.stripeAccount.individual.dob',
+    data
+  );
   const formik = useFormik({
     validateOnBlur: false,
     validateOnChange: false,
@@ -52,7 +59,11 @@ export const PersonalDetails = () => {
       firstName: get('user.stripeAccount.individual.first_name', data),
       lastName: get('user.stripeAccount.individual.last_name', data),
       email: get('user.email', data),
-      dob: '',
+      dob:
+        day &&
+        month &&
+        year &&
+        parseDate(`${day}/${month}/${year}`, 'dd/MM/yyyy', new Date()),
       addressLine1: get('user.stripeAccount.individual.address.line1', data),
       addressLine2: get('user.stripeAccount.individual.address.line2', data),
       city: get('user.stripeAccount.individual.address.city', data),
