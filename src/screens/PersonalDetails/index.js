@@ -18,6 +18,7 @@ import {
   DatePicker,
   Actions,
   Button,
+  GraphQLErrors,
 } from 'components';
 
 import GET_USER from './graphql/get-user';
@@ -40,7 +41,7 @@ export const PersonalDetails = () => {
   const { data } = useQuery(GET_USER, {
     fetchPolicy: 'cache-and-network',
   });
-  const [updateUser, { loading }] = useMutation(UPDATE_USER, {
+  const [updateUser, { loading, error }] = useMutation(UPDATE_USER, {
     onCompleted: () => {
       navigation.goBack();
     },
@@ -173,6 +174,12 @@ export const PersonalDetails = () => {
                   onBlur={formik.handleBlur('postalCode')}
                 />
               </Grid.Item>
+
+              {error && (
+                <Grid.Item size={12}>
+                  <GraphQLErrors error={error} />
+                </Grid.Item>
+              )}
 
               <Grid.Item size={12}>
                 <Actions>
