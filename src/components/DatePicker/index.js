@@ -1,27 +1,22 @@
-import React, { useState } from 'react';
+/* eslint-disable react/require-default-props */
+import React from 'react';
 import PropTypes from 'prop-types';
 import { default as ImportedDatePicker } from 'react-native-datepicker';
 import moment from 'moment';
 import { withTheme } from 'styled-components/native';
-import { Modal } from 'react-native';
 import Label from '../Label';
 
-import { Main, Content } from './styles';
-import { Button } from '../Button';
-import { Actions } from '../Actions';
+const DATE_FORMAT = 'YYYY-MM-DD';
 
-export const DatePickerComponent = ({
+const DatePickerComponent = ({
   label,
-  error,
-  value,
-  date,
-  mode,
-  placeholder,
   theme,
+  placeholder,
+  mode,
+  error,
   onChange,
+  date,
 }) => {
-  const [open, setOpen] = useState(false);
-
   return (
     <>
       {label && <Label>{label}</Label>}
@@ -58,34 +53,26 @@ export const DatePickerComponent = ({
         onDateChange={onChange}
       />
 
-      <Modal
-        visible={open}
-        presentationStyle="overFullScreen"
-        transparent
-        animationType="fade"
-      >
-        <Main>
-          <Content>
-            <DateTimePicker value={value} {...props} />
-            <Actions>
-              <Button title="Done" onPress={() => setOpen(false)} fixedWidth />
-            </Actions>
-          </Content>
-        </Main>
-      </Modal>
+      {error && <Label error>{error}</Label>}
     </>
   );
 };
 
 DatePickerComponent.defaultProps = {
-  label: null,
-  error: null,
+  placeholder: 'Select date',
+  mode: 'date',
+  label: 'Date',
 };
 
 DatePickerComponent.propTypes = {
   label: PropTypes.string,
+  // eslint-disable-next-line react/forbid-prop-types
+  theme: PropTypes.object.isRequired,
+  placeholder: PropTypes.string,
+  mode: PropTypes.string,
   error: PropTypes.string,
-  value: PropTypes.any.isRequired,
+  onChange: PropTypes.func,
+  date: PropTypes.string,
 };
 
 export const DatePicker = withTheme(DatePickerComponent);
