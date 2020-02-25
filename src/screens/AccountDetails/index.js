@@ -26,7 +26,7 @@ export const AccountDetails = () => {
             <Grid.Item size={12}>
               <Intro>
                 <Text>
-                  Account details are required for making payments and recieving
+                  This information is required for making payments and recieving
                   payouts from our payments provider Stripe.
                 </Text>
               </Intro>
@@ -34,18 +34,19 @@ export const AccountDetails = () => {
 
             <Grid.Item size={12}>
               <NavLink
-                title="Personal Details"
+                title="Personal"
                 iconProps={{ name: 'ios-arrow-forward' }}
                 onPress={() => navigation.navigate('PersonalDetails')}
               />
               <NavLink
-                title="Business Details"
+                title="Business"
                 iconProps={{ name: 'ios-arrow-forward' }}
                 onPress={() => navigation.navigate('BusinessDetails')}
               />
               <NavLink
-                title="Payment Details"
+                title="Billing"
                 iconProps={{ name: 'ios-arrow-forward' }}
+                onPress={() => navigation.navigate('BillingDetails')}
               />
             </Grid.Item>
           </Grid>

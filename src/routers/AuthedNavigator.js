@@ -18,6 +18,7 @@ import {
   Apply,
   PersonalDetails,
   BusinessDetails,
+  BillingDetails,
 } from 'screens';
 
 import { createStackNavigator, createBottomTabNavigator } from './components';
@@ -74,5 +75,6 @@ export const AuthedNavigator = () => (
     <Stack.Screen name="AccountDetails" component={AccountDetails} />
     <Stack.Screen name="PersonalDetails" component={PersonalDetails} />
     <Stack.Screen name="BusinessDetails" component={BusinessDetails} />
+    <Stack.Screen name="BillingDetails" component={BillingDetails} />
   </Stack.Navigator>
 );

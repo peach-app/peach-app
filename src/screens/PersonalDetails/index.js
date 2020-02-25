@@ -31,6 +31,10 @@ export const PersonalDetails = () => (
             </Grid.Item>
 
             <Grid.Item size={12}>
+              <TextInput label="Email address" />
+            </Grid.Item>
+
+            <Grid.Item size={12}>
               <DatePicker
                 label="Date of birth"
                 value={SubDate(new Date(), { years: 18 })}
@@ -42,7 +46,11 @@ export const PersonalDetails = () => (
             </Grid.Item>
 
             <Grid.Item size={12}>
-              <TextInput label="Address line 1" />
+              <TextInput label="Address" placeholder="Address line 1" />
+            </Grid.Item>
+
+            <Grid.Item size={12}>
+              <TextInput placeholder="Address line 2" />
             </Grid.Item>
 
             <Grid.Item size={6}>

@@ -33,7 +33,15 @@ export const BusinessDetails = () => (
             </Grid.Item>
 
             <Grid.Item size={12}>
-              <TextInput label="Address line 1" />
+              <TextInput label="Company website address" />
+            </Grid.Item>
+
+            <Grid.Item size={12}>
+              <TextInput label="Address" placeholder="Address line 1" />
+            </Grid.Item>
+
+            <Grid.Item size={12}>
+              <TextInput placeholder="Address line 2" />
             </Grid.Item>
 
             <Grid.Item size={6}>
