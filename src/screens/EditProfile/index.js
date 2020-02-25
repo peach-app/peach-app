@@ -29,13 +29,14 @@ const validationSchema = Yup.object().shape({
 export const EditProfile = () => {
   const navigation = useNavigation();
   const [save, { loading, error }] = useMutation(SAVE_USER, {
-    refetchQueries: ['getUser'],
     onCompleted: () => {
       navigation.goBack();
     },
   });
 
-  const { data } = useQuery(GET_USER);
+  const { data } = useQuery(GET_USER, {
+    fetchPolicy: 'cache-and-network',
+  });
 
   const formik = useFormik({
     validateOnBlur: false,

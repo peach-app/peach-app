@@ -121,6 +121,18 @@ module.exports = gql`
     charges_enabled: Boolean
     transfers_enabled: Boolean
     individual: StripePerson
+    external_accounts: ExternalAccountsPage
+  }
+
+  type ExternalAccountsPage {
+    data: [ExternalAccount]
+  }
+
+  type ExternalAccount {
+    id: ID!
+    last4: String
+    routing_number: String
+    account_holder_name: String
   }
 
   type StripePerson {

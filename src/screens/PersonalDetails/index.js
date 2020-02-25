@@ -35,7 +35,9 @@ const validationSchema = Yup.object().shape({
 
 export const PersonalDetails = () => {
   const navigation = useNavigation();
-  const { data } = useQuery(GET_USER);
+  const { data } = useQuery(GET_USER, {
+    fetchPolicy: 'cache-and-network',
+  });
   const [updateUser, { loading }] = useMutation(UPDATE_USER, {
     onCompleted: () => {
       navigation.goBack();
