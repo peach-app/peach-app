@@ -37,7 +37,7 @@ export const NewBilling = () => (
 
             <Grid.Item size={12}>
               <Actions>
-                <Button title="Create" fixedWidth />
+                <Button title="Save" fixedWidth />
               </Actions>
             </Grid.Item>
           </Grid>
