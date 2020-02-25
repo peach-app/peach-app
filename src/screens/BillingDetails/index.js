@@ -2,7 +2,6 @@ import React from 'react';
 import { ScrollView, TouchableOpacity } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import { useNavigation } from '@react-navigation/native';
-import get from 'lodash/fp/get';
 import getOr from 'lodash/fp/getOr';
 
 import {
@@ -32,10 +31,9 @@ export const BillingDetails = () => {
         <Container>
           <Intro />
           <Grid>
-            {getOr(
-              [{ id: 0 }],
-              'user.stripeAccount.external_accounts.data',
-              data
+            {(loading
+              ? [{ id: 0 }]
+              : getOr([], 'user.stripeAccount.external_accounts.data', data)
             ).map(account => (
               <Grid.Item size={12} key={account.id}>
                 <Card>
@@ -46,14 +44,14 @@ export const BillingDetails = () => {
                           isLoading={loading}
                           loadingText="Account holder name"
                         >
-                          {get('account_holder_name', account)}
+                          {getOr('', 'account_holder_name', account)}
                         </SkeletonText>
                       </Text>
                     </Grid.Item>
                     <Grid.Item>
                       <Text>
                         <SkeletonText isLoading={loading} loadingText="01-02-3">
-                          {get('routing_number', account)}
+                          {getOr('', 'routing_number', account)}
                         </SkeletonText>
                       </Text>
                     </Grid.Item>
@@ -63,7 +61,7 @@ export const BillingDetails = () => {
                           isLoading={loading}
                           loadingText="01234567"
                         >
-                          ****{get('last4', account)}
+                          ****{getOr('', 'last4', account)}
                         </SkeletonText>
                       </Text>
                     </Grid.Item>
