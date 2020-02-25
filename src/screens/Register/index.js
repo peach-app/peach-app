@@ -20,6 +20,7 @@ import {
   Actions,
   Button,
   BackButton,
+  GraphQLErrors,
 } from 'components';
 import { useAuth } from 'contexts/Auth';
 
@@ -145,11 +146,7 @@ export const Register = () => {
 
               {error && (
                 <Grid.Item size={12}>
-                  {getOr([], 'graphQLErrors', error).map(({ message }, i) => (
-                    <Text isCenter key={i}>
-                      {message}
-                    </Text>
-                  ))}
+                  <GraphQLErrors error={error} />
                 </Grid.Item>
               )}
 

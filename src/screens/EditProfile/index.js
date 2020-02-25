@@ -16,7 +16,7 @@ import {
   Intro,
   Actions,
   Button,
-  Text,
+  GraphQLErrors,
 } from 'components';
 
 import GET_USER from './graphql/get-user';
@@ -99,9 +99,7 @@ export const EditProfile = () => {
 
               {error && (
                 <Grid.Item size={12}>
-                  <Text isCenter>
-                    Unable to save changes, please try again later.
-                  </Text>
+                  <GraphQLErrors error={error} />
                 </Grid.Item>
               )}
 

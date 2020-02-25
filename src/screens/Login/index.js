@@ -17,6 +17,7 @@ import {
   TextInput,
   Text,
   BackButton,
+  GraphQLErrors,
 } from 'components';
 import { useAuth } from 'contexts/Auth';
 
@@ -97,7 +98,7 @@ export const Login = () => {
 
               {error && (
                 <Grid.Item size={12}>
-                  <Text isCenter>Incorrect Email or Password</Text>
+                  <GraphQLErrors error={error} />
                 </Grid.Item>
               )}
 
