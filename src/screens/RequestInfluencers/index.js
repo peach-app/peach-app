@@ -13,10 +13,10 @@ import RequestedInfluencers from './RequestedInfluencers';
 import { formatInfluencersArray } from './helper';
 import { useModal } from '../../contexts/Modal';
 
-const RequestInfluencers = ({ navigation }) => {
+const RequestInfluencers = ({ navigation, route }) => {
   const { openModal } = useModal();
 
-  const campaignId = get('state.params.campaignId', navigation);
+  const { campaignId } = route.params;
 
   const [requestedInfluencers, setRequestedInfluencers] = useState([]);
 
@@ -61,6 +61,9 @@ const RequestInfluencers = ({ navigation }) => {
 RequestInfluencers.propTypes = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func.isRequired,
+  }).isRequired,
+  route: PropTypes.shape({
+    campaignId: PropTypes.string.isRequired,
   }).isRequired,
 };
 
