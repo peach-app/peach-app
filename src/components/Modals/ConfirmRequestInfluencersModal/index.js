@@ -68,6 +68,7 @@ const ConfirmRequestedInfluencersModal = ({
               <Avatar.List isCentered>
                 {requestedInfluencers.map(influencer => (
                   <Avatar
+                    key={influencer._id}
                     size={60}
                     fallback={influencer.name}
                     source={{ uri: get('avatar.url', influencer) }}

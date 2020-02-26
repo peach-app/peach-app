@@ -57,7 +57,9 @@ RequestInfluencers.propTypes = {
     navigate: PropTypes.func.isRequired,
   }).isRequired,
   route: PropTypes.shape({
-    campaignId: PropTypes.string.isRequired,
+    params: PropTypes.shape({
+      campaignId: PropTypes.string,
+    }),
   }).isRequired,
 };
 

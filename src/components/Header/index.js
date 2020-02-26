@@ -28,6 +28,6 @@ Header.defaultProps = {
 
 Header.propTypes = {
   title: PropTypes.string,
-  rightActionLabel: PropTypes.string,
+  rightActionLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   onRightActionPressed: PropTypes.func,
 };

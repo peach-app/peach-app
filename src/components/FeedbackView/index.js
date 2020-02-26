@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Grid, Icon, Title, Button, SubTitle, Actions } from 'components';
+import { Grid } from '../Grid';
+import { Icon } from '../Icon';
+import { Title } from '../Title';
+import { Button } from '../Button';
+import { SubTitle } from '../Subtitle';
+import { Actions } from '../Actions';
 import { IconWrapper } from './styles';
 
 export const FeedbackView = ({
@@ -38,11 +43,12 @@ export const FeedbackView = ({
 
 FeedbackView.defaultProps = {
   actionButtonLabel: null,
+  onActionButtonPressed: null,
 };
 
 FeedbackView.propTypes = {
   title: PropTypes.string.isRequired,
   subTitle: PropTypes.string.isRequired,
   actionButtonLabel: PropTypes.string,
-  onActionButtonPressed: PropTypes.func.isRequired,
+  onActionButtonPressed: PropTypes.func,
 };

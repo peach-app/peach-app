@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import { default as ImportedDatePicker } from 'react-native-datepicker';
 import moment from 'moment';
 import { withTheme } from 'styled-components/native';
-import { Label } from 'components';
+import { Label } from '../Label';
 
-const DATE_FORMAT = 'YYYY-MM-DD';
+const DATE_FORMAT = 'MMM Do ';
 
 const DatePickerComponent = ({
   label,
@@ -31,6 +31,7 @@ const DatePickerComponent = ({
         customStyles={{
           dateInput: {
             width: undefined,
+
             borderWidth: theme.inputBorderWidth,
             borderColor: error ? theme.error : theme.grey,
             borderRadius: theme.radius,
@@ -52,7 +53,6 @@ const DatePickerComponent = ({
         showIcon={false}
         onDateChange={onChange}
       />
-
       {error && <Label error>{error}</Label>}
     </>
   );
@@ -62,6 +62,7 @@ DatePickerComponent.defaultProps = {
   placeholder: 'Select date',
   mode: 'date',
   label: 'Date',
+  date: null,
 };
 
 DatePickerComponent.propTypes = {

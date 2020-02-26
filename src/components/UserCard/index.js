@@ -5,7 +5,11 @@ import gql from 'graphql-tag';
 import get from 'lodash/fp/get';
 import startCase from 'lodash/startCase';
 import PropTypes from 'prop-types';
-import { Grid, Avatar, Text, SkeletonText } from 'components';
+import { Grid } from '../Grid';
+import { Avatar } from '../Avatar';
+import { Text } from '../Text';
+import { SkeletonText } from '../Skeletons';
+
 import { Bio } from './styles';
 
 export const UserCard = ({ isLoading, _id, name, bio, avatar, size }) => {

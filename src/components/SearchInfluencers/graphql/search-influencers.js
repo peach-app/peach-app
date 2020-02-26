@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 import { USER_TYPE } from 'consts';
-import { UserCardFragment } from 'components';
+import { UserCardFragment } from '../../UserCard';
 
 export default gql`
   ${UserCardFragment}

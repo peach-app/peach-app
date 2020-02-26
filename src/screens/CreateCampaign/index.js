@@ -61,7 +61,6 @@ export const CreateCampaign = () => {
       });
     },
   });
-
   return (
     <SafeAreaView>
       <StatusBar />

@@ -5,22 +5,22 @@ import { useLazyQuery } from '@apollo/react-hooks';
 import getOr from 'lodash/fp/getOr';
 import debounce from 'lodash/debounce';
 import { NETWORK_STATUS, ACTION_COMPONENTS } from 'consts';
+
+import { FlatList } from '../FlatList';
+import { Container } from '../Container';
+import { UserCard } from '../UserCard';
+import { TextInput } from '../TextInput';
+import { NoResultText } from '../NoResultText';
+import { AddRemoveAction } from '../AddRemoveAction';
+import { Grid } from '../Grid';
+
 import { Main } from './styles';
-import {
-  FlatList,
-  Container,
-  UserCard,
-  TextInput,
-  NoResultText,
-  AddRemoveAction,
-  Grid,
-} from '';
 
 import SEARCH_INFLUENCERS from './graphql/search-influencers';
 
 const renderAction = (action, isActioned) => {
   if (action === ACTION_COMPONENTS.ADD_REMOVE) {
-    return <AddRemoveAction isActioned={isActioned} />;
+    return <AddRemoveAction isActioned={Boolean(isActioned)} />;
   }
   return null;
 };
@@ -113,6 +113,6 @@ export const SearchInfluencers = ({
 
 SearchInfluencers.propTypes = {
   onActionPressed: PropTypes.func.isRequired,
-  action: PropTypes.func.isRequired,
+  action: PropTypes.string.isRequired,
   actionedItems: PropTypes.array.isRequired,
 };

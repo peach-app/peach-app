@@ -14,6 +14,7 @@ const RequestedInfluencers = ({ requestedInfluencers }) => (
         <Avatar.List>
           {requestedInfluencers.map(influencer => (
             <Avatar
+              key={influencer._id}
               fallback={influencer.name}
               source={{ uri: get('avatar.url', influencer) }}
             />
