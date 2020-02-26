@@ -11,17 +11,23 @@ export const Header = ({ title, rightActionLabel, onRightActionPressed }) => (
         <BackButton />
       </Action>
       {Boolean(title) && <MainTitle numberOfLines={1}>{title}</MainTitle>}
-      <Action isRight onPress={onRightActionPressed} as={TouchableOpacity}>
-        <RightAction>{rightActionLabel}</RightAction>
-      </Action>
+      {rightActionLabel && (
+        <Action isRight onPress={onRightActionPressed} as={TouchableOpacity}>
+          <RightAction>{rightActionLabel}</RightAction>
+        </Action>
+      )}
     </Wrapper>
   </Main>
 );
 
 Header.defaultProps = {
   title: null,
+  rightActionLabel: null,
+  onRightActionPressed: null,
 };
 
 Header.propTypes = {
   title: PropTypes.string,
+  rightActionLabel: PropTypes.string,
+  onRightActionPressed: PropTypes.func,
 };

@@ -14,23 +14,24 @@ export const Wrapper = styled(Container)`
   justify-content: center;
 `;
 
-// REFACTOR LEFT & RIGHT 
 export const Action = styled.View`
   position: absolute;
   top: 0;
-  ${(props) => props.isRight ? `right: ${props.theme.spacing}px` : `left: ${props.theme.spacing}px` }
+  ${props =>
+    props.isRight
+      ? `right: ${props.theme.spacing}px`
+      : `left: ${props.theme.spacing}px`}
   bottom: 0;
   z-index: 2;
   justify-content: center;
-  `;
-  
-  export const MainTitle = styled(Text)`
+`;
+
+export const MainTitle = styled(Text)`
   text-align: center;
   font-size: 16px;
-  `;
-  
-  // SHOULD BE BIGGER AND BOLD
-  export const RightAction = styled(Text)`
+`;
+
+export const RightAction = styled(Text)`
   color: ${props => props.theme.brand}
-  font-weight: bold;
+  font-family: ${props => props.theme.fontFamily.bold};
   `;

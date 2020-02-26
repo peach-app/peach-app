@@ -1,16 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { Grid, Icon, Title, Button, SubTitle, Actions } from '..';
+import { Grid, Icon, Title, Button, SubTitle, Actions } from 'components';
+import { IconWrapper } from './styles';
 
-const IconWrapper = styled.View`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-`;
-
-const FeedbackView = ({
+export const FeedbackView = ({
   title,
   subTitle,
   actionButtonLabel,
@@ -53,4 +46,3 @@ FeedbackView.propTypes = {
   actionButtonLabel: PropTypes.string,
   onActionButtonPressed: PropTypes.func.isRequired,
 };
-export default FeedbackView;

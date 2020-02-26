@@ -1,7 +1,6 @@
 import React from 'react';
 import { KeyboardAvoidingView } from 'react-native';
-import { SafeAreaView, Header } from 'components';
-import { SearchInfluencers } from '../../components/SearchInfluencers';
+import { SafeAreaView, Header, SearchInfluencers } from 'components';
 
 const Search = () => (
   <SafeAreaView>

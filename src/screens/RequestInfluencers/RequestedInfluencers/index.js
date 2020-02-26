@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import get from 'lodash/fp/get';
-import { Text, Grid, Avatar } from '../../../components';
+import { Text, Grid, Avatar } from 'components';
 import { RequestedInfluencersWrapper } from './styles';
 
 const RequestedInfluencers = ({ requestedInfluencers }) => (

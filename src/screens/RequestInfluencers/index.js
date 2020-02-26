@@ -1,17 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import get from 'lodash/fp/get';
 import { KeyboardAvoidingView } from 'react-native';
-import {
-  SafeAreaView,
-  StatusBar,
-  Header,
-  SearchInfluencers,
-} from '../../components';
-import { ACTION_COMPONENTS, MODAL_TYPES } from '../../consts';
+import { SafeAreaView, StatusBar, Header, SearchInfluencers } from 'components';
+import { useModal } from 'contexts/Modal';
+import { ACTION_COMPONENTS, MODAL_TYPES } from 'consts';
 import RequestedInfluencers from './RequestedInfluencers';
 import { formatInfluencersArray } from './helper';
-import { useModal } from '../../contexts/Modal';
 
 const RequestInfluencers = ({ navigation, route }) => {
   const { openModal } = useModal();

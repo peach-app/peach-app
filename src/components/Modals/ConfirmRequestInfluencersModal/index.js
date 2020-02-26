@@ -2,9 +2,17 @@ import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import { useMutation } from '@apollo/react-hooks';
 import { get } from 'lodash/fp';
+import {
+  Title,
+  SubTitle,
+  Modal,
+  Grid,
+  Button,
+  Avatar,
+  Actions,
+  FeedbackView,
+} from 'components';
 import REQUEST_INFLUENCERS from './graphql';
-import { Title, SubTitle, Modal, Grid, Button, Avatar, Actions } from '../..';
-import FeedbackView from '../../FeedbackView';
 
 const ConfirmRequestedInfluencersModal = ({
   onClose,
@@ -14,23 +22,12 @@ const ConfirmRequestedInfluencersModal = ({
 }) => {
   const [isSuccessScreenVisible, setSuccessScreen] = useState(false);
 
-  const [requestInfluencers, { loading, error }] = useMutation(
-    REQUEST_INFLUENCERS,
-    {
-      onCompleted: () => setSuccessScreen(true),
-    }
-  );
-
-  if (error) {
-    // SET FEEDBACK VIEW WITH ERRORS AND HANDLE RETRY
-  }
+  const [requestInfluencers, { loading }] = useMutation(REQUEST_INFLUENCERS, {
+    refetchQueries: ['getCampaigns'],
+    onCompleted: () => setSuccessScreen(true),
+  });
 
   const onSubmitRequest = () => {
-    console.log(
-      'LETS SEE',
-      requestedInfluencers.map(influencer => influencer._id),
-      campaignId
-    );
     requestInfluencers({
       variables: {
         requestedInfluencers: requestedInfluencers.map(
@@ -43,7 +40,7 @@ const ConfirmRequestedInfluencersModal = ({
 
   const handleFeedbackActionButtonPressed = useCallback(() => {
     onClose();
-    // ADD REFRESH PARAM
+
     navigation.navigate('Campaigns');
   }, []);
 

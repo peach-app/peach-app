@@ -38,3 +38,4 @@ export * from './Modal';
 export * from './Subtitle';
 export * from './Card';
 export * from './GraphQLErrors';
+export * from './FeedbackView';

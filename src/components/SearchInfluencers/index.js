@@ -1,10 +1,11 @@
 import React, { useMemo, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { TouchableOpacity } from 'react-native';
 import { useLazyQuery } from '@apollo/react-hooks';
 import getOr from 'lodash/fp/getOr';
 import debounce from 'lodash/debounce';
+import { NETWORK_STATUS, ACTION_COMPONENTS } from 'consts';
 import { Main } from './styles';
-import { NETWORK_STATUS, ACTION_COMPONENTS } from '../../consts';
 import {
   FlatList,
   Container,
@@ -13,7 +14,7 @@ import {
   NoResultText,
   AddRemoveAction,
   Grid,
-} from '..';
+} from '';
 
 import SEARCH_INFLUENCERS from './graphql/search-influencers';
 
@@ -96,7 +97,7 @@ export const SearchInfluencers = ({
                     {renderAction(
                       action,
                       actionedItems.find(
-                        actionedItems => actionedItems._id === item._id
+                        actionedItem => actionedItem._id === item._id
                       )
                     )}
                   </TouchableOpacity>
@@ -108,4 +109,10 @@ export const SearchInfluencers = ({
       />
     </>
   );
+};
+
+SearchInfluencers.propTypes = {
+  onActionPressed: PropTypes.func.isRequired,
+  action: PropTypes.func.isRequired,
+  actionedItems: PropTypes.array.isRequired,
 };

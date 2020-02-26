@@ -5,8 +5,8 @@ import gql from 'graphql-tag';
 import get from 'lodash/fp/get';
 import startCase from 'lodash/startCase';
 import PropTypes from 'prop-types';
+import { Grid, Avatar, Text, SkeletonText } from 'components';
 import { Bio } from './styles';
-import { Grid, Avatar, Text, SkeletonText } from '..';
 
 export const UserCard = ({ isLoading, _id, name, bio, avatar, size }) => {
   const navigation = useNavigation();
