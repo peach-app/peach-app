@@ -20,7 +20,7 @@ console.log({ FAUNADB_SECRET });
     await require('./collections/Booking')();
 
     // Indexes
-    await require('./indexes/message_ts_thread_by_thread')();
+    await require('./indexes/all_campaign')();
     await require('./indexes/message_by_thread')();
     await require('./indexes/booking_by_campaign')();
     await require('./indexes/booking_by_state')();

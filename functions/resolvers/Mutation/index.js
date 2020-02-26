@@ -8,4 +8,5 @@ module.exports = {
   updateUser: require('./updateUser'),
   completeOnboarding: require('./completeOnboarding'),
   requestInfluencers: require('./requestInfluencers'),
+  createBillingMethod: require('./createBillingMethod'),
 };

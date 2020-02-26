@@ -21,7 +21,7 @@ export const TextInput = styled.TextInput.attrs(props => ({
   flex: 1;
   max-height: 200px;
   margin-right: ${props => props.theme.spacing}px;
-  font-family: ${props => props.theme.fontFamily.bold};
+  font-family: ${props => props.theme.fontFamily.regular};
   color: ${props => props.theme.foreground};
   padding-vertical: ${props => props.theme.spacingSmall}px;
   ${Platform.select({

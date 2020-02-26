@@ -1,7 +1,74 @@
+const FormatDate = require('date-fns/format');
+const omitBy = require('lodash/omitBy');
+const isNil = require('lodash/isNil');
+const stripe = require('../../helpers/stripe');
+
 module.exports = async (root, args, { client, q }) => {
+  const {
+    name,
+    email,
+    bio,
+    firstName,
+    lastName,
+    dob,
+    addressLine1,
+    addressLine2,
+    city,
+    postalCode,
+  } = args.user;
+
+  const { stripeID } = await client.query(
+    q.Select(['data'], q.Get(q.Identity()))
+  );
+
+  const [day, month, year] = dob
+    ? FormatDate(new Date(dob), 'dd/MM/yyyy').split('/')
+    : [];
+
+  await stripe.accounts.update(
+    stripeID,
+    omitBy(
+      {
+        email,
+        individual: omitBy(
+          {
+            first_name: firstName,
+            last_name: lastName,
+            address: omitBy(
+              {
+                city,
+                line1: addressLine1,
+                line2: addressLine2,
+                postal_code: postalCode,
+              },
+              isNil
+            ),
+            dob: omitBy(
+              {
+                day,
+                month,
+                year,
+              },
+              isNil
+            ),
+          },
+          isNil
+        ),
+      },
+      isNil
+    )
+  );
+
   await client.query(
     q.Update(q.Identity(), {
-      data: args.user,
+      data: omitBy(
+        {
+          name,
+          email,
+          bio,
+        },
+        isNil
+      ),
     })
   );
 

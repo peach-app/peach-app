@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { KeyboardAvoidingView, ScrollView } from 'react-native';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -16,7 +16,7 @@ import {
   Intro,
   Actions,
   Button,
-  Text,
+  GraphQLErrors,
 } from 'components';
 
 import GET_USER from './graphql/get-user';
@@ -26,16 +26,17 @@ const validationSchema = Yup.object().shape({
   name: Yup.string().required('Your name is required'),
 });
 
-export const AccountEdit = () => {
+export const EditProfile = () => {
   const navigation = useNavigation();
   const [save, { loading, error }] = useMutation(SAVE_USER, {
-    refetchQueries: ['getUser'],
     onCompleted: () => {
       navigation.goBack();
     },
   });
 
-  const { data } = useQuery(GET_USER);
+  const { data } = useQuery(GET_USER, {
+    fetchPolicy: 'cache-and-network',
+  });
 
   const formik = useFormik({
     validateOnBlur: false,
@@ -60,14 +61,15 @@ export const AccountEdit = () => {
 
   return (
     <SafeAreaView>
-      <Header title="Account" />
-      <ScrollView>
-        <Container>
-          <Intro>
+      <Header title="Edit Profile" />
+      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+        <ScrollView>
+          <Container>
+            <Intro />
             <Grid>
               <Grid.Item size={12}>
                 <TextInput
-                  label="Name"
+                  label="Display name"
                   autoCapitalize="none"
                   value={formik.values.name}
                   error={formik.errors.name}
@@ -90,9 +92,7 @@ export const AccountEdit = () => {
 
               {error && (
                 <Grid.Item size={12}>
-                  <Text isCenter>
-                    Unable to save changes, please try again later.
-                  </Text>
+                  <GraphQLErrors error={error} />
                 </Grid.Item>
               )}
 
@@ -101,15 +101,15 @@ export const AccountEdit = () => {
                   <Button
                     isLoading={loading}
                     onPress={formik.handleSubmit}
-                    title="Save Changes"
+                    title="Save"
                     fixedWidth
                   />
                 </Actions>
               </Grid.Item>
             </Grid>
-          </Intro>
-        </Container>
-      </ScrollView>
+          </Container>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 };

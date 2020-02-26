@@ -4,6 +4,8 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
+import getOr from 'lodash/fp/getOr';
+import uuid from 'uuid/v4';
 
 import {
   SafeAreaView,
@@ -18,10 +20,11 @@ import {
   Actions,
   Button,
   BackButton,
+  GraphQLErrors,
 } from 'components';
 import { useAuth } from 'contexts/Auth';
 
-import { USER_TYPE_TABS, FORM_INPUTS, FORM_ERROR_MESSAGES } from './consts';
+import { USER_TYPE_TABS, FORM_ERROR_MESSAGES } from './consts';
 import REGISTER from './graphql/register';
 
 const validationSchema = Yup.object().shape({
@@ -66,6 +69,7 @@ export const Register = () => {
           email,
           password,
           type: USER_TYPE_TABS[activeTab],
+          idempotencyKey: uuid(),
         },
       });
     },
@@ -99,22 +103,50 @@ export const Register = () => {
                 />
               </Grid.Item>
 
-              {FORM_INPUTS.map(input => (
-                <Grid.Item key={input.name} size={12}>
-                  <TextInput
-                    {...input}
-                    error={formik.errors[input.name]}
-                    onChangeText={formik.handleChange(input.name)}
-                    onBlur={formik.handleBlur(input.name)}
-                  />
-                </Grid.Item>
-              ))}
+              <Grid.Item size={12}>
+                <TextInput
+                  label="Display name"
+                  autoCapitalize="none"
+                  error={formik.errors.name}
+                  onChangeText={formik.handleChange('name')}
+                  onBlur={formik.handleBlur('name')}
+                />
+              </Grid.Item>
+
+              <Grid.Item size={12}>
+                <TextInput
+                  label="Email address"
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  error={formik.errors.email}
+                  onChangeText={formik.handleChange('email')}
+                  onBlur={formik.handleBlur('email')}
+                />
+              </Grid.Item>
+
+              <Grid.Item size={12}>
+                <TextInput
+                  label="Password"
+                  secureTextEntry={true}
+                  error={formik.errors.password}
+                  onChangeText={formik.handleChange('password')}
+                  onBlur={formik.handleBlur('password')}
+                />
+              </Grid.Item>
+
+              <Grid.Item size={12}>
+                <TextInput
+                  label="Confirm password"
+                  secureTextEntry={true}
+                  error={formik.errors.confirmPassword}
+                  onChangeText={formik.handleChange('confirmPassword')}
+                  onBlur={formik.handleBlur('confirmPassword')}
+                />
+              </Grid.Item>
 
               {error && (
                 <Grid.Item size={12}>
-                  <Text isCenter>
-                    An error occurred, please try again later.
-                  </Text>
+                  <GraphQLErrors error={error} />
                 </Grid.Item>
               )}
 

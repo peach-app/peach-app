@@ -17,6 +17,7 @@ import {
   TextInput,
   Text,
   BackButton,
+  GraphQLErrors,
 } from 'components';
 import { useAuth } from 'contexts/Auth';
 
@@ -78,7 +79,7 @@ export const Login = () => {
                 <TextInput
                   keyboardType="email-address"
                   autoCapitalize="none"
-                  label="Email Address"
+                  label="Email address"
                   error={formik.errors.email}
                   onChangeText={formik.handleChange('email')}
                   onBlur={formik.handleBlur('email')}
@@ -97,7 +98,7 @@ export const Login = () => {
 
               {error && (
                 <Grid.Item size={12}>
-                  <Text isCenter>Incorrect Email or Password</Text>
+                  <GraphQLErrors error={error} />
                 </Grid.Item>
               )}
 

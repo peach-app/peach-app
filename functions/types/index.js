@@ -28,6 +28,7 @@ module.exports = gql`
       email: String!
       password: String!
       type: UserType!
+      idempotencyKey: String!
     ): Auth
     sendMessage(threadId: ID!, text: String!): Message
     createCampaign(campaign: CampaignInput): Campaign
@@ -36,6 +37,7 @@ module.exports = gql`
     updateUser(user: UserInput): Boolean
     completeOnboarding: Boolean
     requestInfluencers(requestedInfluencers: [ID!], campaignId: ID!): Boolean
+    createBillingMethod(token: String!): Boolean
   }
 
   # Fauna references #
@@ -84,6 +86,14 @@ module.exports = gql`
     _id: ID!
     name: String
     bio: String
+    firstName: String
+    lastName: String
+    email: String
+    dob: String
+    addressLine1: String
+    addressLine2: String
+    city: String
+    postalCode: String
   }
 
   type User {
@@ -105,6 +115,50 @@ module.exports = gql`
 
     # Inbox thread listing
     threads: ThreadPage
+
+    stripeAccount: StripeAccount
+  }
+
+  type StripeAccount {
+    id: String!
+    charges_enabled: Boolean
+    transfers_enabled: Boolean
+    individual: StripePerson
+    external_accounts: ExternalAccountsPage
+  }
+
+  type ExternalAccountsPage {
+    data: [ExternalAccount]
+  }
+
+  type ExternalAccount {
+    id: ID!
+    last4: String
+    routing_number: String
+    account_holder_name: String
+    object: String
+  }
+
+  type StripePerson {
+    id: ID!
+    first_name: String
+    last_name: String
+    address: Address
+    dob: DateOfBirth
+  }
+
+  type Address {
+    city: String
+    country: String
+    line1: String
+    line2: String
+    postal_code: String
+  }
+
+  type DateOfBirth {
+    day: String
+    month: String
+    year: String
   }
 
   type CampaignPage {
@@ -124,6 +178,7 @@ module.exports = gql`
     budget: Float
     bookings(state: BookingState): BookingPage
     userBooking: Booking
+    dueDate: String
   }
 
   enum BookingState {

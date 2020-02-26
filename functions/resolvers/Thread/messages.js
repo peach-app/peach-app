@@ -5,12 +5,12 @@ module.exports = async (root, args, { client, q, DocumentDataWithId }) => {
 
   const res = await client.query(
     q.Map(
-      q.Paginate(q.Match(q.Index('message_ts_thread_by_thread'), root.ref), {
+      q.Paginate(q.Match(q.Index('message_by_thread'), root.ref), {
         size,
         ...(after && { after }),
         ...(before && { before }),
       }),
-      q.Lambda(['ts', 'ref'], DocumentDataWithId(q.Get(q.Var('ref'))))
+      q.Lambda(['ref'], DocumentDataWithId(q.Get(q.Var('ref'))))
     )
   );
 

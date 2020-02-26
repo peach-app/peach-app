@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  query getUser {
+  query getEditUser {
     user {
       _id
       name

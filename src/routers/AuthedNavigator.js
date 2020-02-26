@@ -8,11 +8,16 @@ import {
   Discover,
   Search,
   Account,
-  AccountEdit,
+  EditProfile,
   Payouts,
+  SocialDetails,
+  AccountDetails,
   CreateCampaign,
   Profile,
   Apply,
+  PersonalDetails,
+  BillingDetails,
+  NewBilling,
 } from 'screens';
 import RequestInfluencers from '../screens/RequestInfluencers';
 
@@ -49,16 +54,6 @@ const InboxNavigator = () => (
   </InboxStack.Navigator>
 );
 
-const AccountStack = createStackNavigator();
-
-const AccountNavigator = () => (
-  <AccountStack.Navigator screenOptions={{ headerShown: false }}>
-    <AccountStack.Screen name="Account" component={Account} />
-    <AccountStack.Screen name="AccountEdit" component={AccountEdit} />
-    <AccountStack.Screen name="Payouts" component={Payouts} />
-  </AccountStack.Navigator>
-);
-
 const Tab = createBottomTabNavigator();
 
 const TabNavigator = () => (
@@ -66,7 +61,7 @@ const TabNavigator = () => (
     <Tab.Screen name="Campaigns" component={CampaignNavigator} />
     <Tab.Screen name="Discover" component={DiscoverNavigator} />
     <Tab.Screen name="Inbox" component={InboxNavigator} />
-    <Tab.Screen name="Account" component={AccountNavigator} />
+    <Tab.Screen name="Account" component={Account} />
   </Tab.Navigator>
 );
 
@@ -78,5 +73,12 @@ export const AuthedNavigator = () => (
     <Stack.Screen name="Campaign" component={Campaign} />
     <Stack.Screen name="Apply" component={Apply} />
     <Stack.Screen name="Profile" component={Profile} />
+    <Stack.Screen name="EditProfile" component={EditProfile} />
+    <Stack.Screen name="Payouts" component={Payouts} />
+    <Stack.Screen name="SocialDetails" component={SocialDetails} />
+    <Stack.Screen name="AccountDetails" component={AccountDetails} />
+    <Stack.Screen name="PersonalDetails" component={PersonalDetails} />
+    <Stack.Screen name="BillingDetails" component={BillingDetails} />
+    <Stack.Screen name="NewBilling" component={NewBilling} />
   </Stack.Navigator>
 );

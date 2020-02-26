@@ -12,11 +12,9 @@ import { useAuth } from 'contexts/Auth';
 import { Provider as UserProvider, useUser } from 'contexts/User';
 import { Provider as AuthProvider } from 'contexts/Auth';
 import { Provider as ModalProvider } from './contexts/Modal';
-import {
-  UnAuthedNavigator,
-  OnboardingNavigator,
-  AuthedNavigator,
-} from 'routers';
+import { Welcome } from 'screens';
+import { UnAuthedNavigator, AuthedNavigator } from 'routers';
+
 
 import ThemeProvider from './theme-provider';
 import client from './apollo-client';
@@ -29,7 +27,7 @@ const AuthedApp = () => {
   }
 
   if (!get('user.onboarded', user)) {
-    return <OnboardingNavigator />;
+    return <Welcome />;
   }
 
   return <AuthedNavigator />;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { View } from 'react-native';
 import PropTypes from 'prop-types';
 import styled from 'styled-components/native';
 
@@ -17,11 +18,11 @@ const Input = styled.TextInput`
 `;
 
 export const TextInput = ({ label, error, ...props }) => (
-  <>
+  <View>
     {label && <Label>{label}</Label>}
     <Input hasError={error} {...props} />
     {error && <Label isError>{error}</Label>}
-  </>
+  </View>
 );
 
 TextInput.defaultProps = {
