@@ -83,7 +83,6 @@ module.exports = gql`
   }
 
   input UserInput {
-    _id: ID!
     name: String
     bio: String
     firstName: String
@@ -204,7 +203,7 @@ module.exports = gql`
     _id: ID!
     campaign: Campaign!
     user: User!
-    cost: Int!
+    cost: Int
     state: BookingState!
   }
 

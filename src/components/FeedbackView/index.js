@@ -18,7 +18,7 @@ export const FeedbackView = ({
     <Grid.Item size={12}>
       {/* Better icon or SVG here. */}
       <IconWrapper>
-        <Icon size={100} name="ios-checkmark" />
+        <Icon size={100} name="ios-checkmark-circle-outline" />
       </IconWrapper>
     </Grid.Item>
     <Grid.Item size={12}>

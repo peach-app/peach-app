@@ -4,6 +4,7 @@ import { TouchableOpacity } from 'react-native';
 import { useLazyQuery } from '@apollo/react-hooks';
 import getOr from 'lodash/fp/getOr';
 import debounce from 'lodash/debounce';
+
 import { NETWORK_STATUS, ACTION_COMPONENTS } from 'consts';
 
 import { FlatList } from '../FlatList';
@@ -15,7 +16,6 @@ import { AddRemoveAction } from '../AddRemoveAction';
 import { Grid } from '../Grid';
 
 import { Main } from './styles';
-
 import SEARCH_INFLUENCERS from './graphql/search-influencers';
 
 const renderAction = (action, isActioned) => {
@@ -52,7 +52,6 @@ export const SearchInfluencers = ({
         <Main>
           <TextInput
             placeholder="Search for influencers..."
-            autoFocus
             clearButtonMode="while-editing"
             autoCapitalize="none"
             onChangeText={query => {
@@ -91,8 +90,8 @@ export const SearchInfluencers = ({
               <Grid.Item flex={1}>
                 <UserCard {...item} />
               </Grid.Item>
-              <Grid.Item>
-                {action && (
+              {action && (
+                <Grid.Item>
                   <TouchableOpacity onPress={() => onActionPressed(item)}>
                     {renderAction(
                       action,
@@ -101,8 +100,8 @@ export const SearchInfluencers = ({
                       )
                     )}
                   </TouchableOpacity>
-                )}
-              </Grid.Item>
+                </Grid.Item>
+              )}
             </Grid>
           </FlatList.Item>
         )}
@@ -111,8 +110,14 @@ export const SearchInfluencers = ({
   );
 };
 
+SearchInfluencers.defaultProps = {
+  onActionPressed: null,
+  action: null,
+  actionedItems: null,
+};
+
 SearchInfluencers.propTypes = {
-  onActionPressed: PropTypes.func.isRequired,
-  action: PropTypes.string.isRequired,
-  actionedItems: PropTypes.array.isRequired,
+  onActionPressed: PropTypes.func,
+  action: PropTypes.string,
+  actionedItems: PropTypes.array,
 };

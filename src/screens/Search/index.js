@@ -2,7 +2,7 @@ import React from 'react';
 import { KeyboardAvoidingView } from 'react-native';
 import { SafeAreaView, Header, SearchInfluencers } from 'components';
 
-const Search = () => (
+export const Search = () => (
   <SafeAreaView>
     <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
       <Header title="Search" />
@@ -10,5 +10,3 @@ const Search = () => (
     </KeyboardAvoidingView>
   </SafeAreaView>
 );
-
-export default Search;

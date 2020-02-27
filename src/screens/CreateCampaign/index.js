@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { ScrollView, KeyboardAvoidingView } from 'react-native';
 import { useFormik } from 'formik';
 import { useMutation } from '@apollo/react-hooks';
@@ -112,8 +111,10 @@ export const CreateCampaign = () => {
                 <DatePicker
                   label="Due date"
                   error={formik.errors.dueDate}
-                  onChange={formik.handleChange('dueDate')}
-                  date={formik.values.dueDate}
+                  onChange={selectedDate => {
+                    formik.setFieldValue('dueDate', selectedDate);
+                  }}
+                  value={formik.values.dueDate}
                 />
               </Grid.Item>
               <Grid.Item size={12}>
@@ -133,12 +134,3 @@ export const CreateCampaign = () => {
     </SafeAreaView>
   );
 };
-
-CreateCampaign.propTypes = {
-  navigation: PropTypes.shape({
-    goBack: PropTypes.func.isRequired,
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
-};
-
-export default CreateCampaign;

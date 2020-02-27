@@ -1,79 +1,74 @@
-/* eslint-disable react/require-default-props */
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { default as ImportedDatePicker } from 'react-native-datepicker';
-import moment from 'moment';
-import { withTheme } from 'styled-components/native';
-import { Label } from '../Label';
+import { Modal } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import FormatDate from 'date-fns/format';
 
-const DATE_FORMAT = 'MMM Do ';
+import { Touchable, Spacer, Main, Content } from './styles';
+import { Button } from '../Button';
+import { Actions } from '../Actions';
+import { TextInput } from '../TextInput';
 
-const DatePickerComponent = ({
+const today = new Date();
+
+export const DatePicker = ({
   label,
-  theme,
-  placeholder,
-  mode,
   error,
+  value,
   onChange,
-  date,
+  placeholder,
+  ...props
 }) => {
+  const [open, setOpen] = useState(false);
+
   return (
     <>
-      {label && <Label>{label}</Label>}
-      <ImportedDatePicker
-        date={date}
-        mode={mode}
-        placeholder={placeholder}
-        format={DATE_FORMAT}
-        minDate={moment().format(DATE_FORMAT)}
-        confirmBtnText="Confirm"
-        cancelBtnText="Cancel"
-        customStyles={{
-          dateInput: {
-            width: undefined,
+      <Touchable onPress={() => setOpen(true)}>
+        <TextInput
+          value={value ? FormatDate(value, 'dd/MM/yyyy') : ''}
+          editable={false}
+          label={label}
+          error={error}
+          placeholder={placeholder}
+        />
+        <Spacer />
+      </Touchable>
 
-            borderWidth: theme.inputBorderWidth,
-            borderColor: error ? theme.error : theme.grey,
-            borderRadius: theme.radius,
-            paddingVertical: 0,
-            paddingHorizontal: theme.spacing,
-            minHeight: 38,
-            fontFamily: theme.fontFamily,
-          },
-          btnTextConfirm: {
-            color: theme.brand,
-            fontWeight: 'bold',
-          },
-          btnTextCancel: {
-            color: theme.brand,
-            fontWeight: 'bold',
-          },
-          datePickerCon: { backgroundColor: theme.background },
-        }}
-        showIcon={false}
-        onDateChange={onChange}
-      />
-      {error && <Label error>{error}</Label>}
+      <Modal
+        visible={open}
+        presentationStyle="overFullScreen"
+        transparent
+        animationType="fade"
+      >
+        <Main>
+          <Content>
+            <DateTimePicker
+              value={value || today}
+              onChange={(_, selectedDate) => {
+                onChange(selectedDate);
+              }}
+              {...props}
+            />
+            <Actions>
+              <Button title="Done" onPress={() => setOpen(false)} fixedWidth />
+            </Actions>
+          </Content>
+        </Main>
+      </Modal>
     </>
   );
 };
 
-DatePickerComponent.defaultProps = {
-  placeholder: 'Select date',
-  mode: 'date',
-  label: 'Date',
-  date: null,
+DatePicker.defaultProps = {
+  label: null,
+  error: null,
+  value: null,
+  placeholder: 'Select a date',
 };
 
-DatePickerComponent.propTypes = {
+DatePicker.propTypes = {
   label: PropTypes.string,
-  // eslint-disable-next-line react/forbid-prop-types
-  theme: PropTypes.object.isRequired,
-  placeholder: PropTypes.string,
-  mode: PropTypes.string,
   error: PropTypes.string,
-  onChange: PropTypes.func,
-  date: PropTypes.string,
+  value: PropTypes.any,
+  placeholder: PropTypes.string,
 };
-
-export const DatePicker = withTheme(DatePickerComponent);

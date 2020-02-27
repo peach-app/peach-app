@@ -51,7 +51,7 @@ const ConfirmRequestedInfluencersModal = ({
           <FeedbackView
             title="Influecers successfully requested!"
             subTitle="They will be notified about your interest"
-            actionButtonLabel="Go back"
+            actionButtonLabel="Done"
             onActionButtonPressed={handleFeedbackActionButtonPressed}
           />
         ) : (
