@@ -1,6 +1,4 @@
-module.exports = async (_, args, { client, q, DocumentDataWithId }) => {
-  const { campaign } = args;
-
+module.exports = async (_, { campaign }, { client, q, DocumentDataWithId }) => {
   return client.query(
     q.Let(
       {

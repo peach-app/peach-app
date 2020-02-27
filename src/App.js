@@ -7,11 +7,14 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import styled from 'styled-components/native';
 
 import { Splash } from 'components';
+import RootModal from './components/Modals/RootModal';
 import { useAuth } from 'contexts/Auth';
 import { Provider as UserProvider, useUser } from 'contexts/User';
 import { Provider as AuthProvider } from 'contexts/Auth';
+import { Provider as ModalProvider } from './contexts/Modal';
 import { Welcome } from 'screens';
 import { UnAuthedNavigator, AuthedNavigator } from 'routers';
+
 
 import ThemeProvider from './theme-provider';
 import client from './apollo-client';
@@ -68,9 +71,12 @@ export const App = () => (
     <ApolloProvider client={client}>
       <AppearanceProvider>
         <ThemeProvider>
+          <ModalProvider>
           <Main>
+            <RootModal />
             <AppMain />
           </Main>
+          </ModalProvider>
         </ThemeProvider>
       </AppearanceProvider>
     </ApolloProvider>

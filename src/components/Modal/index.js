@@ -1,6 +1,7 @@
 import React from 'react';
-import Modal from 'react-native-modal';
-import styled, { withTheme } from 'styled-components/native';
+import styled from 'styled-components';
+import { default as ImportedModal } from 'react-native-modal';
+import { withTheme } from 'styled-components/native';
 
 const ModalWrapper = styled.View`
 background-color: ${({ theme }) => theme.background}
@@ -8,7 +9,6 @@ padding-horizontal: 20px;
 padding-vertical: 50px;
 border-radius: 4px;
 borderColor: ${({ theme }) => theme.foreground}
-
 `;
 
 const ModalComponent = ({
@@ -18,7 +18,7 @@ const ModalComponent = ({
   children,
   theme,
 }) => (
-  <Modal
+  <ImportedModal
     isVisible={isOpen}
     animation="slideInUp"
     animationOut="slideOutDown"
@@ -27,7 +27,7 @@ const ModalComponent = ({
     backdropColor={theme.foreground}
   >
     <ModalWrapper>{children}</ModalWrapper>
-  </Modal>
+  </ImportedModal>
 );
 
-export default withTheme(ModalComponent);
+export const Modal = withTheme(ModalComponent);

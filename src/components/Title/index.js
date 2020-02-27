@@ -1,5 +1,4 @@
 import styled from 'styled-components/native';
-
 import { Text } from '../Text';
 
 export const Title = styled(Text)`

@@ -23,8 +23,8 @@ export const Avatar = ({ size, source, fallback, isLoading, onPress }) => (
   </SkeletonCircle>
 );
 
-const AvatarList = ({ children }) => (
-  <List>
+const AvatarList = ({ children, isCentered }) => (
+  <List isCentered={isCentered}>
     {Children.map(children, child => (
       <Item>{child}</Item>
     ))}

@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { Navigation } from 'components';
 import {
   Campaign,
@@ -20,6 +19,7 @@ import {
   BillingDetails,
   NewBilling,
 } from 'screens';
+import RequestInfluencers from '../screens/RequestInfluencers';
 
 import { createStackNavigator, createBottomTabNavigator } from './components';
 
@@ -29,6 +29,10 @@ const CampaignNavigator = () => (
   <CampaignStack.Navigator screenOptions={{ headerShown: false }}>
     <CampaignStack.Screen name="Campaigns" component={Campaigns} />
     <CampaignStack.Screen name="CreateCampaign" component={CreateCampaign} />
+    <CampaignStack.Screen
+      name="RequestInfluencers"
+      component={RequestInfluencers}
+    />
   </CampaignStack.Navigator>
 );
 

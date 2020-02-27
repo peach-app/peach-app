@@ -1,42 +1,60 @@
-import React, { useEffect } from 'react';
-import styled from 'styled-components/native';
+import React from 'react';
+import PropTypes from 'prop-types';
+import {
+  Grid,
+  SubTitle,
+  Modal,
+  Actions,
+  Button,
+  FeedbackView,
+} from 'components';
 
-import { Grid, Title, SubTitle, Modal, Icon } from 'components';
-
-const IconWrapper = styled.View`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-`;
-
-export default ({ onClose, onButtonClick }) => {
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      onClose();
-      onButtonClick();
-    }, 2500);
-    return () => clearTimeout(timer);
-  }, []);
+const CampaignCreationModal = ({ onClose, onFinish, onRequestInfluencers }) => {
+  const onActionTaken = action => {
+    // refactor
+    // useEffect clean up with onClose does not work for some reason
+    // need to investigate
+    action();
+    onClose();
+  };
 
   return (
     <Modal isOpen onClose={onClose}>
       <Grid justify="center" align="center">
+        <FeedbackView
+          title="Campaign created successfully!"
+          subTitle="All influencers on our platform will be able to discover and apply
+            for your campaign. If you want someone specific you can:"
+        />
         <Grid.Item size={12}>
-          <IconWrapper>
-            <Icon size={100} name="ios-checkmark" />
-          </IconWrapper>
+          <Actions>
+            <Button
+              fixedWidth
+              title="Request Influencers"
+              onPress={() => onActionTaken(onRequestInfluencers)}
+            />
+          </Actions>
         </Grid.Item>
         <Grid.Item size={12}>
-          <Title isCentered>Campaign created successfully!</Title>
+          <SubTitle isCentered>or</SubTitle>
         </Grid.Item>
         <Grid.Item size={12}>
-          <SubTitle isCentered>
-            All influencers on our platform will be able to discover and apply
-            for your campaign
-          </SubTitle>
+          <Actions>
+            <Button
+              fixedWidth
+              title="Finish"
+              onPress={() => onActionTaken(onFinish)}
+            />
+          </Actions>
         </Grid.Item>
       </Grid>
     </Modal>
   );
 };
+
+CampaignCreationModal.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  onFinish: PropTypes.func.isRequired,
+  onRequestInfluencers: PropTypes.func.isRequired,
+};
+export default CampaignCreationModal;

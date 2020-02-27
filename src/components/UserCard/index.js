@@ -5,12 +5,12 @@ import gql from 'graphql-tag';
 import get from 'lodash/fp/get';
 import startCase from 'lodash/startCase';
 import PropTypes from 'prop-types';
-
-import { Bio } from './styles';
 import { Grid } from '../Grid';
 import { Avatar } from '../Avatar';
 import { Text } from '../Text';
 import { SkeletonText } from '../Skeletons';
+
+import { Bio } from './styles';
 
 export const UserCard = ({ isLoading, _id, name, bio, avatar, size }) => {
   const navigation = useNavigation();
@@ -47,7 +47,7 @@ UserCard.defaultProps = {
   name: '',
   bio: null,
   avatar: null,
-  size: 50
+  size: 50,
 };
 
 UserCard.propTypes = {

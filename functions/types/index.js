@@ -36,6 +36,7 @@ module.exports = gql`
     updateBookingState(id: ID!, state: BookingState!): Boolean
     updateUser(user: UserInput): Boolean
     completeOnboarding: Boolean
+    requestInfluencers(requestedInfluencers: [ID!], campaignId: ID!): Boolean
     createBillingMethod(token: String!): Boolean
   }
 
@@ -202,7 +203,7 @@ module.exports = gql`
     _id: ID!
     campaign: Campaign!
     user: User!
-    cost: Int!
+    cost: Int
     state: BookingState!
   }
 

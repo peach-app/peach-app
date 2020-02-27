@@ -17,27 +17,28 @@ import {
   Tabs,
   DatePicker,
 } from 'components';
-import { CAMPAIGN_TYPE } from 'consts';
+import { CAMPAIGN_TYPE, MODAL_TYPES } from 'consts';
+import { useModal } from '../../contexts/Modal';
 
 import { validationSchema, FORM_INITIAL_VALUES } from './consts';
 
 import CREATE_CAMPAIGN_MUTATION from './graphql/create-campaign';
 
 export const CreateCampaign = () => {
+  const { openModal } = useModal();
   const [activeTab, setTab] = useState(0);
   const navigation = useNavigation();
-
   const [createCampaign, { loading }] = useMutation(CREATE_CAMPAIGN_MUTATION, {
     refetchQueries: ['getCampaigns'],
-    onCompleted: () => {
-      navigation.goBack();
-      //   openModal({
-      //     type: MODAL_TYPES.CAMPAIGN_CREATION,
-      //     props: {
-      //       onButtonClick: () => navigation.goBack(),
-      //     },
-      //   });
-    },
+    onCompleted: ({ createCampaign: { _id: campaignId } }) =>
+      openModal({
+        type: MODAL_TYPES.CAMPAIGN_CREATION,
+        props: {
+          onFinish: () => navigation.goBack(),
+          onRequestInfluencers: () =>
+            navigation.navigate('RequestInfluencers', { campaignId }),
+        },
+      }),
   });
 
   const formik = useFormik({
@@ -59,7 +60,6 @@ export const CreateCampaign = () => {
       });
     },
   });
-
   return (
     <SafeAreaView>
       <StatusBar />

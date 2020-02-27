@@ -22,9 +22,22 @@ module.exports = async () => {
             create: q.Query(
               q.Lambda(
                 'booking',
-                q.Equals(
-                  q.Select(['data', 'user'], q.Var('booking')),
-                  q.Identity()
+                q.If(
+                  q.Equals(
+                    q.Select(['data', 'type'], q.Get(q.Identity())),
+                    USER_TYPE.BRAND
+                  ),
+                  q.Equals(
+                    q.Select(
+                      ['data', 'user'],
+                      q.Get(q.Select(['data', 'campaign'], q.Var('booking')))
+                    ),
+                    q.Identity()
+                  ),
+                  q.Equals(
+                    q.Select(['data', 'user'], q.Var('booking')),
+                    q.Identity()
+                  )
                 )
               )
             ),

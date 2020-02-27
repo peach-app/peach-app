@@ -52,6 +52,7 @@ export const Campaign = () => {
   const { data: campaign, loading, networkStatus, refetch } = useQuery(
     GET_CAMPAIGN,
     {
+      fetchPolicy: 'cache-and-network',
       notifyOnNetworkStatusChange: true,
       variables: {
         id,

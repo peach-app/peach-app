@@ -7,5 +7,6 @@ module.exports = {
   updateBookingState: require('./updateBookingState'),
   updateUser: require('./updateUser'),
   completeOnboarding: require('./completeOnboarding'),
+  requestInfluencers: require('./requestInfluencers'),
   createBillingMethod: require('./createBillingMethod'),
 };
