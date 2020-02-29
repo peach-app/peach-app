@@ -39,3 +39,4 @@ export * from './GraphQLErrors';
 export * from './FeedbackView';
 export * from './DatePicker';
 export * from './SearchInfluencers';
+export * from './AvatarUpload';

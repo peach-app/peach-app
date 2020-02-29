@@ -5,8 +5,9 @@ import get from 'lodash/fp/get';
 
 import { Main, Center } from './styles';
 import { Avatar } from '../Avatar';
+import { AvatarUpload } from '../AvatarUpload';
 
-export const ProfileHeader = ({ name, avatar, isLoading }) => (
+export const ProfileHeader = ({ name, avatar, isLoading, isEditable }) => (
   <Main>
     <Center>
       <Avatar
@@ -17,6 +18,7 @@ export const ProfileHeader = ({ name, avatar, isLoading }) => (
           uri: get('url', avatar),
         }}
       />
+      {isEditable && <AvatarUpload />}
     </Center>
   </Main>
 );
@@ -25,6 +27,7 @@ ProfileHeader.defaultProps = {
   isLoading: false,
   name: '',
   avatar: null,
+  isEditable: false,
 };
 
 ProfileHeader.propTypes = {
@@ -33,6 +36,7 @@ ProfileHeader.propTypes = {
   avatar: PropTypes.shape({
     url: PropTypes.string,
   }),
+  isEditable: PropTypes.bool,
 };
 
 export const ProfileHeaderFragment = gql`
