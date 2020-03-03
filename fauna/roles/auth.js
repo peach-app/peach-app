@@ -21,6 +21,14 @@ module.exports = async () => {
             read: true,
           },
         },
+        {
+          resource: q.Collection('EmailVerification'),
+          actions: {
+            read: true,
+            create: true,
+            write: true,
+          },
+        },
       ],
       membership: [],
     })

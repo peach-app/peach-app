@@ -1,9 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import { default as ImportedModal } from 'react-native-modal';
 import { withTheme } from 'styled-components/native';
 
-const ModalWrapper = styled.View`
+export const ModalWrapper = styled.View`
 background-color: ${({ theme }) => theme.background}
 padding-horizontal: 20px;
 padding-vertical: 50px;

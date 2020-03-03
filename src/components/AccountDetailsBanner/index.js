@@ -13,8 +13,8 @@ import GET_USER from './graphql/get-user';
 
 export const AccountDetailsBanner = () => {
   const { data, loading } = useQuery(GET_USER);
+  console.log('data', data);
   const navigation = useNavigation();
-
   if (
     loading ||
     (get('user.stripeAccount.charges_enabled', data) &&

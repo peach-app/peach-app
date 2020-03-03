@@ -7,6 +7,7 @@ export default gql`
     $password: String!
     $type: UserType!
     $idempotencyKey: String!
+    $emailVerificationToken: String!
   ) {
     register(
       name: $name
@@ -14,6 +15,7 @@ export default gql`
       password: $password
       type: $type
       idempotencyKey: $idempotencyKey
+      emailVerificationToken: $emailVerificationToken
     ) {
       secret
     }

@@ -8,7 +8,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const sendMail = ({ to, subject, text }) => {
+const sendMail = ({ to, subject, text, html }) => {
   return new Promise((resolve, reject) => {
     transporter.sendMail(
       {
@@ -16,6 +16,7 @@ const sendMail = ({ to, subject, text }) => {
         to,
         subject,
         text,
+        html,
       },
       (error, info) => {
         if (error) {

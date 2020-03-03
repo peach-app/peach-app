@@ -8,6 +8,9 @@ export default gql`
         charges_enabled
         transfers_enabled
       }
+      emailVerification {
+        hasVerifiedEmail
+      }
     }
   }
 `;

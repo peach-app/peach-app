@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AppLoading } from 'expo';
+import { AppLoading, Linking } from 'expo';
 import * as Font from 'expo-font';
 import get from 'lodash/fp/get';
 import { AppearanceProvider } from 'react-native-appearance';
@@ -7,14 +7,13 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import styled from 'styled-components/native';
 
 import { Splash } from 'components';
-import RootModal from './components/Modals/RootModal';
-import { useAuth } from 'contexts/Auth';
+import { useAuth, Provider as AuthProvider } from 'contexts/Auth';
 import { Provider as UserProvider, useUser } from 'contexts/User';
-import { Provider as AuthProvider } from 'contexts/Auth';
-import { Provider as ModalProvider } from './contexts/Modal';
+
 import { Welcome } from 'screens';
 import { UnAuthedNavigator, AuthedNavigator } from 'routers';
-
+import RootModal from './components/Modals/RootModal';
+import { Provider as ModalProvider } from './contexts/Modal';
 
 import ThemeProvider from './theme-provider';
 import client from './apollo-client';
@@ -72,10 +71,10 @@ export const App = () => (
       <AppearanceProvider>
         <ThemeProvider>
           <ModalProvider>
-          <Main>
-            <RootModal />
-            <AppMain />
-          </Main>
+            <Main>
+              <RootModal />
+              <AppMain />
+            </Main>
           </ModalProvider>
         </ThemeProvider>
       </AppearanceProvider>

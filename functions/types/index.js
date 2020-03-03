@@ -29,6 +29,7 @@ module.exports = gql`
       password: String!
       type: UserType!
       idempotencyKey: String!
+      emailVerificationToken: String!
     ): Auth
     sendMessage(threadId: ID!, text: String!): Message
     createCampaign(campaign: CampaignInput): Campaign
@@ -102,7 +103,7 @@ module.exports = gql`
     avatar: Media
     email: String!
     onboarded: Boolean
-
+    emailVerification: UserEmailVerification
     type: UserType!
 
     # User created Campaigns
@@ -116,6 +117,11 @@ module.exports = gql`
     threads: ThreadPage
 
     stripeAccount: StripeAccount
+  }
+
+  type UserEmailVerification {
+    hasVerifiedEmail: Boolean
+    token: String
   }
 
   type StripeAccount {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Landing, Login, Register } from 'screens';
+import { Landing, Login, Register, VerifyEmail } from 'screens';
 
 import { createStackNavigator } from './components';
 
