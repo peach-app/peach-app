@@ -34,8 +34,12 @@ const registrationEmailHTML = ({ name, verificationUrl }) => `
 <p>https://peachapp.io</p>
 `;
 
-module.exports = async (root, args, { client, q, clientIp }) => {
-  const { name, password, type, idempotencyKey, emailVerificationToken } = args;
+module.exports = async (
+  root,
+  args,
+  { client, q, clientIp, DocumentDataWithId }
+) => {
+  const { name, password, type, idempotencyKey } = args;
 
   const email = args.email.toLowerCase();
 
@@ -63,38 +67,34 @@ module.exports = async (root, args, { client, q, clientIp }) => {
     }
   );
 
-  const result = await client.query(
-    q.Do(
-      q.Create(q.Collection('User'), {
-        data: {
-          name,
-          email,
-          type,
-          stripeID: account.id,
-          emailVerificationToken,
-        },
-        credentials: { password },
-      }),
-      q.Login(q.Match(q.Index('user_by_email'), email), {
-        password,
-      })
+  const emailVerification = await client.query(
+    q.Let(
+      {
+        emailVerification: q.Create(q.Collection('EmailVerification'), {
+          data: {
+            createdAt: 'today',
+          },
+        }),
+      },
+      DocumentDataWithId(q.Var('emailVerification'))
     )
   );
 
-  console.log('RESULT', result);
-
-  const emailVerificationRef = await client.query(
-    q.Create(q.Collection('EmailVerification'), {
+  await client.query(
+    q.Create(q.Collection('User'), {
       data: {
-        emailVerificationToken,
+        name,
+        email,
+        type,
+        stripeID: account.id,
+        emailVerificationToken: emailVerification._id,
       },
+      credentials: { password },
     })
   );
 
-  console.log('hei', emailVerificationRef);
-
-  const envUrl = '192.168.1.118:19006'; // OR dashboard.peachapp.io once we deploy in prod
-  const verificationUrl = `http://${envUrl}/verify-email/${emailVerificationToken}`;
+  const envUrl = '192.168.1.130:19006'; // OR dashboard.peachapp.io once we deploy in prod
+  const verificationUrl = `http://${envUrl}/verify-email/${emailVerification._id}`;
 
   await sendMail({
     to: email,
@@ -109,5 +109,11 @@ module.exports = async (root, args, { client, q, clientIp }) => {
     }),
   });
 
-  return result;
+  const authToken = await client.query(
+    q.Login(q.Match(q.Index('user_by_email'), email), {
+      password,
+    })
+  );
+
+  return authToken;
 };
