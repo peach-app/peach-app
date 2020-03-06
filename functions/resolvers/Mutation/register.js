@@ -72,7 +72,7 @@ module.exports = async (
       {
         emailVerification: q.Create(q.Collection('EmailVerification'), {
           data: {
-            createdAt: 'today',
+            isVerified: false,
           },
         }),
       },
