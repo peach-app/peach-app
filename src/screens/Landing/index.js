@@ -22,7 +22,7 @@ export const Landing = () => {
                     <Button
                       isDark
                       title="Login"
-                      onPress={() => navigation.navigate('VerifyEmail')}
+                      onPress={() => navigation.navigate('Login')}
                     />
                   </Grid.Item>
                   <Grid.Item size={12}>
