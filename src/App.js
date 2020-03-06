@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AppLoading, Linking } from 'expo';
+import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import get from 'lodash/fp/get';
 import { AppearanceProvider } from 'react-native-appearance';
