@@ -9,7 +9,7 @@ export default gql`
         transfers_enabled
       }
       emailVerification {
-        hasVerifiedEmail
+        isVerified
       }
     }
   }
