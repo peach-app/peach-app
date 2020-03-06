@@ -29,7 +29,6 @@ module.exports = gql`
       password: String!
       type: UserType!
       idempotencyKey: String!
-      emailVerificationToken: String!
     ): Auth
     sendMessage(threadId: ID!, text: String!): Message
     createCampaign(campaign: CampaignInput): Campaign
@@ -39,6 +38,7 @@ module.exports = gql`
     completeOnboarding: Boolean
     requestInfluencers(requestedInfluencers: [ID!], campaignId: ID!): Boolean
     createBillingMethod(token: String!): Boolean
+    verifyEmail(emailVerificationToken: String!): Boolean
   }
 
   # Fauna references #
@@ -120,8 +120,7 @@ module.exports = gql`
   }
 
   type UserEmailVerification {
-    hasVerifiedEmail: Boolean
-    token: String
+    isVerified: Boolean
   }
 
   type StripeAccount {
