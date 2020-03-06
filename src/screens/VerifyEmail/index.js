@@ -1,45 +1,69 @@
-import React from 'react';
-import styled from 'styled-components/native';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Title, Loading, Intro } from 'components';
 import * as Device from 'expo-device';
+import { useMutation } from '@apollo/react-hooks';
+import VERIFY_EMAIL from './graphql/verify-email';
+import { Content, Icon } from './styles';
 
-export const Content = styled.View`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  background-color: ${props => props.theme.background};
-  padding: ${props => props.theme.spacing}px;
-`;
+const PC_HARDWARE = 3;
 
-const getDeepLink = () => {
-  if (Device.isDevice) {
+const getDeepLink = async () => {
+  const device = await Device.getDeviceTypeAsync();
+
+  if (device !== PC_HARDWARE) {
     // check if prod:
     // and replace with in expo.scheme file (in app.json) alias
     // peach-app://
     // else local -> replace here
-    return 'exp://192.168.1.118:19000/';
+    return 'exp://192.168.1.130:19000/';
   }
 
   // check if prod:
   // https://dashboard.peachapp.io/
   // else local -> replace here
-  return 'http://192.168.1.118:19006/';
+  return 'http://192.168.1.130:19006/';
+};
+
+const deepLinkBackToApp = async () => {
+  const deepLink = await getDeepLink();
+  window.location.href = deepLink;
 };
 
 export const VerifyEmail = () => {
   const { token } = useParams();
-  if (token) {
-    const deepLink = getDeepLink();
-    window.location.href = deepLink;
-  }
+  const [isEmailVerified, setEmailVerification] = useState(false);
+  const [verifyEmail] = useMutation(VERIFY_EMAIL, {
+    onCompleted: () => setEmailVerification(true),
+  });
+
+  useEffect(() => {
+    if (!isEmailVerified) {
+      if (token) {
+        verifyEmail({
+          variables: {
+            emailVerificationToken: token,
+          },
+        });
+      }
+    } else {
+      const timer = setTimeout(() => {
+        deepLinkBackToApp();
+      }, 1200);
+      return () => clearTimeout(timer);
+    }
+  }, [isEmailVerified]);
 
   return (
     <Content>
-      <Title isCentered>Hold on a sec while we are redirecting you.</Title>
+      <Title isCentered>
+        {isEmailVerified
+          ? 'Email successfully verified!'
+          : 'Verifying your email'}
+      </Title>
       <Intro />
-      <Loading size="large" />
+      {isEmailVerified ? <Icon /> : <Loading size="large" />}
+      <Intro />
     </Content>
   );
 };
