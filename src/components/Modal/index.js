@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import { default as ImportedModal } from 'react-native-modal';
 import { withTheme } from 'styled-components/native';
 
