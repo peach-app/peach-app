@@ -17,8 +17,9 @@ export const ProfileHeader = ({ name, avatar, isLoading, isEditable }) => (
         source={{
           uri: get('url', avatar),
         }}
-      />
-      {isEditable && <AvatarUpload />}
+      >
+        {isEditable && <AvatarUpload />}
+      </Avatar>
     </Center>
   </Main>
 );

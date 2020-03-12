@@ -1,21 +1,20 @@
 import styled from 'styled-components';
 import { Ionicons } from '@expo/vector-icons';
 
-import { Text } from '../Text';
-
 export const Main = styled.TouchableOpacity`
-  padding-vertical: ${props => props.theme.spacingSmall}px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
-`;
-
-export const Copy = styled(Text)`
-  color: ${props => props.theme.foreground};
-  padding-left: ${props => props.theme.spacingSmall}px;
+  justify-content: center;
 `;
 
 export const Icon = styled(Ionicons).attrs(props => ({
   name: 'ios-cloud-upload',
-  size: 25,
-  color: props.theme.foreground,
+  size: 32,
+  color: props.theme.white,
 }))``;

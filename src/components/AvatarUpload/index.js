@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 import { useMutation } from '@apollo/react-hooks';
-import { Alert } from 'react-native';
-import { Main, Copy, Icon } from './styles';
+import { Alert, ActivityIndicator } from 'react-native';
+
+import { Main, Icon } from './styles';
 import UPDATE_USER_AVATAR from './graphql/update-avatar';
-import { Loading } from '../Loading';
 
 const CLOUDINARY_UPLOAD_URL =
   'https://api.cloudinary.com/v1_1/peach-app/image/upload';
@@ -12,9 +12,11 @@ const CLOUDINARY_UPLOAD_URL =
 const CLOUDINARY_PRESET = 'u4mzj2ke';
 
 export const AvatarUpload = () => {
+  const [uploading, setUploading] = useState(false);
   const [updateUserAvatar, { loading }] = useMutation(UPDATE_USER_AVATAR, {
     refetchQueries: ['getUser'],
   });
+
   const handleImageUpload = async () => {
     const permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
 
@@ -50,39 +52,41 @@ export const AvatarUpload = () => {
         upload_preset: CLOUDINARY_PRESET,
       };
 
-      await fetch(CLOUDINARY_UPLOAD_URL, {
+      setUploading(true);
+
+      const res = await fetch(CLOUDINARY_UPLOAD_URL, {
         body: JSON.stringify(data),
         headers: {
           'content-type': 'application/json',
         },
         method: 'POST',
-      })
-        .then(async res => {
-          const resFormatted = await res.json();
+      });
 
-          if (resFormatted.url) {
-            updateUserAvatar({
-              variables: {
-                url: resFormatted.url,
-              },
-            });
-          }
-        })
-        .catch(err => console.log(err));
+      setUploading(false);
+
+      const { url } = await res.json();
+
+      if (url) {
+        updateUserAvatar({
+          variables: {
+            url,
+          },
+        });
+      }
     }
   };
 
-  if (loading) {
+  if (uploading || loading) {
     return (
       <Main>
-        <Loading />
+        <ActivityIndicator color="white" />
       </Main>
     );
   }
+
   return (
     <Main onPress={handleImageUpload}>
       <Icon />
-      <Copy>Upload avatar</Copy>
     </Main>
   );
 };
