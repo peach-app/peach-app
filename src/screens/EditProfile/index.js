@@ -13,10 +13,10 @@ import {
   Container,
   Grid,
   TextInput,
-  Intro,
   Actions,
   Button,
   GraphQLErrors,
+  ProfileHeader,
 } from 'components';
 
 import GET_USER from './graphql/get-user';
@@ -65,7 +65,7 @@ export const EditProfile = () => {
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
         <ScrollView>
           <Container>
-            <Intro />
+            <ProfileHeader {...get('user', data)} isEditable />
             <Grid>
               <Grid.Item size={12}>
                 <TextInput
