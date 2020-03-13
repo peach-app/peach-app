@@ -3,7 +3,6 @@ import { RefreshControl } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 import getOr from 'lodash/fp/getOr';
-import Dinero from 'dinero.js';
 import FormatDate from 'date-fns/format';
 import { useRoute, useNavigation } from '@react-navigation/native';
 
@@ -133,10 +132,10 @@ export const Campaign = () => {
                   <Grid.Item size={6}>
                     <Label>Budget</Label>
                     <Text>
-                      {Dinero({
-                        amount: getOr(0, 'findCampaignById.budget', campaign),
+                      {new Intl.NumberFormat('en-GB', {
+                        style: 'currency',
                         currency: 'GBP',
-                      }).toFormat()}
+                      }).format(getOr(0, 'findCampaignById.budget', campaign))}
                     </Text>
                   </Grid.Item>
 

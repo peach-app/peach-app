@@ -2,7 +2,6 @@ import React from 'react';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 import get from 'lodash/fp/get';
-import Dinero from 'dinero.js';
 import { useNavigation } from '@react-navigation/native';
 import { useMutation } from '@apollo/react-hooks';
 import startCase from 'lodash/startCase';
@@ -50,11 +49,15 @@ export const Booking = ({ _id, cost, state, user, isLoading }) => {
                 {startCase(get('name', user))}
               </SkeletonText>
             </Text>
-            {Boolean(cost) && (
-              <Text>
-                Rate: {Dinero({ amount: cost, currency: 'GBP' }).toFormat()}
-              </Text>
-            )}
+            <Text>
+              <SkeletonText isLoading={isLoading} loadingText="Rate: £0.00">
+                Rate:{' '}
+                {new Intl.NumberFormat('en-GB', {
+                  style: 'currency',
+                  currency: 'GBP',
+                }).format(cost)}
+              </SkeletonText>
+            </Text>
           </Grid.Item>
         </Grid>
       </Grid.Item>
