@@ -12,6 +12,31 @@ module.exports = async (root, args, { client, q }) => {
   );
 
   if (state === BOOKING_STATE.ACCEPTED) {
+    const {
+      data: [hasThread],
+    } = await client.query(
+      q.Any(
+        q.Map(
+          q.Paginate(q.Match(q.Index('thread_users_by_user'), q.Identity())),
+          q.Lambda(
+            'thread',
+            q.Exists(
+              q.Match(
+                q.Index('thread_users_by_thread_user'),
+                q.Var('thread'),
+                q.Select(
+                  ['data', 'user'],
+                  q.Get(q.Ref(q.Collection('Booking'), id))
+                )
+              )
+            )
+          )
+        )
+      )
+    );
+
+    if (hasThread) return true;
+
     await client.query(
       q.Let(
         {
