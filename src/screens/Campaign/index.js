@@ -23,10 +23,10 @@ import {
   FlatList,
   Foot,
   Label,
+  IconButton,
 } from 'components';
 import { useUser } from 'contexts/User';
 import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from 'consts';
-
 import GET_CAMPAIGN from './graphql/get-campaign';
 
 const TAB_INDEX_BOOKING_STATE = [
@@ -73,7 +73,14 @@ export const Campaign = () => {
   return (
     <SafeAreaView>
       <StatusBar />
-      <Header />
+      <Header
+        rightActionLabel="Edit"
+        onRightActionPressed={() =>
+          navigation.navigate('CreateOrUpdateCampaign', {
+            campaign: { ...campaign.findCampaignById, _id: id },
+          })
+        }
+      />
       <FlatList
         refreshControl={
           <RefreshControl
