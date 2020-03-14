@@ -12,7 +12,7 @@ import {
   Payouts,
   SocialDetails,
   AccountDetails,
-  CreateCampaign,
+  CreateOrUpdateCampaign,
   Profile,
   Apply,
   PersonalDetails,
@@ -28,7 +28,10 @@ const CampaignStack = createStackNavigator();
 const CampaignNavigator = () => (
   <CampaignStack.Navigator screenOptions={{ headerShown: false }}>
     <CampaignStack.Screen name="Campaigns" component={Campaigns} />
-    <CampaignStack.Screen name="CreateCampaign" component={CreateCampaign} />
+    <CampaignStack.Screen
+      name="CreateOrUpdateCampaign"
+      component={CreateOrUpdateCampaign}
+    />
     <CampaignStack.Screen
       name="RequestInfluencers"
       component={RequestInfluencers}

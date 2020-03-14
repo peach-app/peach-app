@@ -3,7 +3,7 @@ export * from './EditProfile';
 export * from './Apply';
 export * from './Campaign';
 export * from './Campaigns';
-export * from './CreateCampaign';
+export * from './CreateOrUpdateCampaign';
 export * from './Discover';
 export * from './DiscoverCampaigns';
 export * from './DiscoverInfluencers';
