@@ -196,6 +196,18 @@ export const Campaign = () => {
         )}
       />
 
+      {isBrand && !loading && tabBookingState === BOOKING_STATE.REQUESTED && (
+        <Foot>
+          <Button
+            title="Request more"
+            fixedWidth
+            onPress={() =>
+              navigation.navigate('RequestInfluencers', { campaignId: id })
+            }
+          />
+        </Foot>
+      )}
+
       {isInfluencer && !loading && (
         <Foot>
           {!userBookingState && (
