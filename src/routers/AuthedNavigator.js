@@ -18,6 +18,7 @@ import {
   PersonalDetails,
   BillingDetails,
   NewBilling,
+  RequestInfluencerToCampaigns,
 } from 'screens';
 import RequestInfluencers from '../screens/RequestInfluencers';
 
@@ -73,6 +74,10 @@ export const AuthedNavigator = () => (
     <Stack.Screen name="Campaign" component={Campaign} />
     <Stack.Screen name="Apply" component={Apply} />
     <Stack.Screen name="Profile" component={Profile} />
+    <Stack.Screen
+      name="RequestInfluencerToCampaigns"
+      component={RequestInfluencerToCampaigns}
+    />
     <Stack.Screen name="EditProfile" component={EditProfile} />
     <Stack.Screen name="Payouts" component={Payouts} />
     <Stack.Screen name="SocialDetails" component={SocialDetails} />
