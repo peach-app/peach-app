@@ -65,9 +65,7 @@ export const RequestInfluencerToCampaigns = () => {
   return (
     <SafeAreaView>
       <Header title="Your campaigns" />
-
       <FlatList
-        onEndReachedThreshold={5}
         refreshControl={
           <RefreshControl
             refreshing={loading && networkStatus === NETWORK_STATUS.REFETCHING}
