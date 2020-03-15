@@ -1,22 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import gql from 'graphql-tag';
 import get from 'lodash/fp/get';
 
-import { Icon, MainTitle, Description, User } from './styles';
+import { MainTitle, Description, User } from './styles';
 import { Grid } from '../Grid';
 import { Avatar } from '../Avatar';
 import { SkeletonText } from '../Skeletons';
 
-export const CampaignCard = ({ isLoading, _id, user, name, description }) => {
-  const navigation = useNavigation();
-
+export const CampaignCard = ({
+  isLoading,
+  user,
+  name,
+  description,
+  onCampaignPressed,
+  actionItem,
+}) => {
   return (
-    <TouchableOpacity
-      onPress={() => !isLoading && navigation.navigate('Campaign', { id: _id })}
-    >
+    <TouchableOpacity onPress={() => !isLoading && onCampaignPressed()}>
       <Grid noWrap align="center">
         <Grid.Item>
           <Avatar
@@ -49,11 +51,7 @@ export const CampaignCard = ({ isLoading, _id, user, name, description }) => {
             </SkeletonText>
           </User>
         </Grid.Item>
-        {!isLoading && (
-          <Grid.Item>
-            <Icon name="ios-arrow-forward" />
-          </Grid.Item>
-        )}
+        {!isLoading && actionItem}
       </Grid>
     </TouchableOpacity>
   );
@@ -61,15 +59,17 @@ export const CampaignCard = ({ isLoading, _id, user, name, description }) => {
 
 CampaignCard.defaultProps = {
   isLoading: false,
-  _id: '',
   name: '',
   description: '',
   user: null,
+  onCampaignPressed: null,
+  actionItem: null,
 };
 
 CampaignCard.propTypes = {
+  actionItem: PropTypes.element,
   isLoading: PropTypes.bool,
-  _id: PropTypes.string,
+  onCampaignPressed: PropTypes.func,
   name: PropTypes.string,
   description: PropTypes.string,
   user: PropTypes.shape({
