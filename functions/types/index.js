@@ -39,6 +39,7 @@ module.exports = gql`
     requestInfluencers(requestedInfluencers: [ID!], campaignId: ID!): Boolean
     createBillingMethod(token: String!): Boolean
     updateUserAvatar(url: String!): Boolean
+    requestInfluencerToCampaigns(influencerId: ID!, campaigns: [ID!]): Boolean
   }
 
   # Fauna references #
