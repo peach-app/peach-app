@@ -22,6 +22,7 @@ import { formatRefs } from 'helpers';
 import { useUser } from 'contexts/User';
 
 import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from 'consts';
+import { Icon } from './styles';
 
 import GET_CAMPAIGNS from './graphql/get-campaigns';
 
@@ -43,7 +44,6 @@ export const Campaigns = () => {
           ])[activeTabIndex],
     [activeTabIndex, isBrand]
   );
-
   const { data, loading, networkStatus, refetch, fetchMore } = useQuery(
     GET_CAMPAIGNS,
     {
@@ -149,7 +149,17 @@ export const Campaigns = () => {
           data={campaigns}
           renderItem={({ item }) => (
             <FlatList.Item>
-              <CampaignCard {...item} />
+              <CampaignCard
+                {...item}
+                onCampaignPressed={() =>
+                  navigation.navigate('Campaign', { id: item._id })
+                }
+                actionItem={
+                  <Grid.Item>
+                    <Icon name="ios-arrow-forward" />
+                  </Grid.Item>
+                }
+              />
             </FlatList.Item>
           )}
         />
