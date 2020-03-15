@@ -236,7 +236,7 @@ module.exports = gql`
     _id: ID
     name: String!
     description: String!
-    dueDate: String!
+    dueDate: String
     private: Boolean!
     budget: String!
   }

@@ -59,7 +59,7 @@ export const CreateOrUpdateCampaign = () => {
             ...(existingCampaign && { _id: existingCampaign._id }),
             name,
             description,
-            dueDate,
+            ...(!existingCampaign && { dueDate }),
             private: activeTab === 1,
             budget: budget.toString(),
           },
@@ -118,16 +118,19 @@ export const CreateOrUpdateCampaign = () => {
                   value={formik.values.budget.toString()}
                 />
               </Grid.Item>
-              <Grid.Item size={12}>
-                <DatePicker
-                  label="Due date"
-                  error={formik.errors.dueDate}
-                  onChange={selectedDate => {
-                    formik.setFieldValue('dueDate', selectedDate);
-                  }}
-                  value={formik.values.dueDate}
-                />
-              </Grid.Item>
+              {!existingCampaign && (
+                <Grid.Item size={12}>
+                  <DatePicker
+                    label="Due date"
+                    error={formik.errors.dueDate}
+                    onChange={selectedDate => {
+                      formik.setFieldValue('dueDate', selectedDate);
+                    }}
+                    value={formik.values.dueDate}
+                  />
+                </Grid.Item>
+              )}
+
               <Grid.Item size={12}>
                 <Actions>
                   <Button
