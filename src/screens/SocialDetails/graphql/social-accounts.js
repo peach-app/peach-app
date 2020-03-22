@@ -15,7 +15,7 @@ export const GET_USER_SOCIAL_ACCOUNTS = gql`
         twitter
         facebook
         youTube
-        tickTok
+        tikTok
       }
     }
   }

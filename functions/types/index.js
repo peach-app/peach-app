@@ -102,7 +102,7 @@ module.exports = gql`
     twitter: String
     facebook: String
     youTube: String
-    tickTok: String
+    tikTok: String
   }
 
   type SocialAccounts {
@@ -110,7 +110,7 @@ module.exports = gql`
     twitter: String
     facebook: String
     youTube: String
-    tickTok: String
+    tikTok: String
   }
 
   type User {

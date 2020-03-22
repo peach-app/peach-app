@@ -43,10 +43,10 @@ export const SocialDetails = () => {
       twitter: getOr('', 'user.socialAccounts.twitter', data),
       facebook: getOr('', 'user.socialAccounts.facebook', data),
       youTube: getOr('', 'user.socialAccounts.youTube', data),
-      tickTok: getOr('', 'user.socialAccounts.tickTok', data),
+      tikTok: getOr('', 'user.socialAccounts.tikTok', data),
     },
     validationSchema,
-    onSubmit: ({ instagram, twitter, facebook, youTube, tickTok }) => {
+    onSubmit: ({ instagram, twitter, facebook, youTube, tikTok }) => {
       createOrUpdateSocialAccounts({
         variables: {
           socialAccounts: {
@@ -54,7 +54,7 @@ export const SocialDetails = () => {
             twitter,
             facebook,
             youTube,
-            tickTok,
+            tikTok,
           },
         },
       });
@@ -77,6 +77,7 @@ export const SocialDetails = () => {
               <Grid>
                 <Grid.Item size={12}>
                   <TextInput
+                    autoCapitalize="none"
                     value={formik.values.instagram}
                     label="Instagram (URL or Username)"
                     error={formik.errors.instagram}
@@ -85,6 +86,7 @@ export const SocialDetails = () => {
                 </Grid.Item>
                 <Grid.Item size={12}>
                   <TextInput
+                    autoCapitalize="none"
                     value={formik.values.twitter}
                     label="Twitter (URL or Username)"
                     error={formik.errors.twitter}
@@ -93,6 +95,7 @@ export const SocialDetails = () => {
                 </Grid.Item>
                 <Grid.Item size={12}>
                   <TextInput
+                    autoCapitalize="none"
                     value={formik.values.facebook}
                     label="Facebook (Page URL)"
                     error={formik.errors.facebook}
@@ -101,6 +104,7 @@ export const SocialDetails = () => {
                 </Grid.Item>
                 <Grid.Item size={12}>
                   <TextInput
+                    autoCapitalize="none"
                     value={formik.values.youTube}
                     label="YouTube (Channel URL or Name)"
                     error={formik.errors.youTube}
@@ -109,10 +113,11 @@ export const SocialDetails = () => {
                 </Grid.Item>
                 <Grid.Item size={12}>
                   <TextInput
-                    value={formik.values.tickTok}
-                    label="TickTok (Username)"
-                    error={formik.errors.tickTok}
-                    onChangeText={formik.handleChange('tickTok')}
+                    autoCapitalize="none"
+                    value={formik.values.tikTok}
+                    label="TicTok (Username)"
+                    error={formik.errors.tikTok}
+                    onChangeText={formik.handleChange('tikTok')}
                   />
                 </Grid.Item>
                 <Grid.Item size={12}>

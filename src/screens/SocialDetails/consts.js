@@ -6,5 +6,5 @@ export const validationSchema = Yup.object().shape({
   twitter: Yup.string().required(FORM_ERROR_MESSAGES.REQUIRED_FIELD),
   facebook: Yup.string().required(FORM_ERROR_MESSAGES.REQUIRED_FIELD),
   youTube: Yup.string().required(FORM_ERROR_MESSAGES.REQUIRED_FIELD),
-  tickTok: Yup.string().required(FORM_ERROR_MESSAGES.REQUIRED_FIELD),
+  tikTok: Yup.string().required(FORM_ERROR_MESSAGES.REQUIRED_FIELD),
 });
