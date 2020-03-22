@@ -10,4 +10,5 @@ module.exports = {
   requestInfluencers: require('./requestInfluencers'),
   createBillingMethod: require('./createBillingMethod'),
   updateUserAvatar: require('./updateUserAvatar'),
+  createOrUpdateSocialAccounts: require('./createOrUpdateSocialAccounts'),
 };

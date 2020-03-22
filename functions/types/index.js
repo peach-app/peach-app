@@ -39,6 +39,7 @@ module.exports = gql`
     requestInfluencers(requestedInfluencers: [ID!], campaignId: ID!): Boolean
     createBillingMethod(token: String!): Boolean
     updateUserAvatar(url: String!): Boolean
+    createOrUpdateSocialAccounts(socialAccounts: SocialAccountsInput): Boolean
   }
 
   # Fauna references #
@@ -96,6 +97,22 @@ module.exports = gql`
     postalCode: String
   }
 
+  input SocialAccountsInput {
+    instagram: String
+    twitter: String
+    facebook: String
+    youTube: String
+    tickTok: String
+  }
+
+  type SocialAccounts {
+    instagram: String
+    twitter: String
+    facebook: String
+    youTube: String
+    tickTok: String
+  }
+
   type User {
     _id: ID!
     name: String
@@ -117,6 +134,8 @@ module.exports = gql`
     threads: ThreadPage
 
     stripeAccount: StripeAccount
+
+    socialAccounts: SocialAccounts
   }
 
   type StripeAccount {

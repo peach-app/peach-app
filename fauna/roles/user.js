@@ -127,6 +127,14 @@ module.exports = async () => {
             create: true,
           },
         },
+        {
+          resource: q.Collection('SocialAccounts'),
+          actions: {
+            read: true,
+            create: true,
+            write: true,
+          },
+        },
 
         // INDEXES
         {
@@ -197,6 +205,12 @@ module.exports = async () => {
         },
         {
           resource: q.Index('user_name_by_type'),
+          actions: {
+            read: true,
+          },
+        },
+        {
+          resource: q.Index('social_accounts_by_user'),
           actions: {
             read: true,
           },
