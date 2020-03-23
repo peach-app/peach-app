@@ -21,3 +21,4 @@ export * from './Thread';
 export * from './PersonalDetails';
 export * from './BillingDetails';
 export * from './NewBilling';
+export * from './RequestInfluencers';

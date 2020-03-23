@@ -18,8 +18,8 @@ import {
   PersonalDetails,
   BillingDetails,
   NewBilling,
+  RequestInfluencers,
 } from 'screens';
-import RequestInfluencers from '../screens/RequestInfluencers';
 
 import { createStackNavigator, createBottomTabNavigator } from './components';
 

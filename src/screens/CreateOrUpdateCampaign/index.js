@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { ScrollView, KeyboardAvoidingView } from 'react-native';
 import { useFormik } from 'formik';
-import { useMutation } from '@apollo/react-hooks';
+import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import getOr from 'lodash/fp/getOr';
+import get from 'lodash/fp/get';
+
 import {
   SafeAreaView,
   StatusBar,
@@ -18,30 +19,40 @@ import {
   DatePicker,
 } from 'components';
 import { CAMPAIGN_TYPE, MODAL_TYPES } from 'consts';
+
 import { useModal } from '../../contexts/Modal';
-
 import { validationSchema, FORM_INITIAL_VALUES } from './consts';
-
+import GET_CAMPAIGN from './graphql/get-campaign';
 import CREATE_OR_UPDATE_CAMPAIGN_MUTATION from './graphql/create-or-update-campaign';
 
 export const CreateOrUpdateCampaign = () => {
   const { openModal } = useModal();
   const [activeTab, setTab] = useState(0);
   const navigation = useNavigation();
-  const navigationParams = useRoute();
-  const existingCampaign = getOr(null, 'params.campaign', navigationParams);
-  const [createOrUpdateCampaign, { loading }] = useMutation(
+  const { params } = useRoute();
+
+  const campaignId = get('campaignId', params);
+  const { data } = useQuery(GET_CAMPAIGN, {
+    skip: !campaignId,
+    variables: {
+      id: campaignId,
+    },
+  });
+
+  const campaign = get('findCampaignById', data);
+
+  const [createOrUpdateCampaign, { loading: saving }] = useMutation(
     CREATE_OR_UPDATE_CAMPAIGN_MUTATION,
     {
       refetchQueries: ['getCampaigns', 'getCampaign'],
-      onCompleted: ({ createOrUpdateCampaign: { _id: campaignId } }) =>
+      onCompleted: ({ createOrUpdateCampaign: { _id } }) =>
         openModal({
           type: MODAL_TYPES.CAMPAIGN_CREATION,
           props: {
-            hasBeenEdited: Boolean(existingCampaign),
+            hasBeenEdited: Boolean(campaignId),
             onFinish: () => navigation.goBack(),
             onRequestInfluencers: () =>
-              navigation.navigate('RequestInfluencers', { campaignId }),
+              navigation.navigate('RequestInfluencers', { campaignId: _id }),
           },
         }),
     }
@@ -50,16 +61,16 @@ export const CreateOrUpdateCampaign = () => {
   const formik = useFormik({
     validateOnBlur: false,
     validateOnChange: false,
-    initialValues: existingCampaign || FORM_INITIAL_VALUES,
+    initialValues: campaign || FORM_INITIAL_VALUES,
     validationSchema,
     onSubmit: ({ name, description, budget, dueDate }) => {
       createOrUpdateCampaign({
         variables: {
           campaign: {
-            ...(existingCampaign && { _id: existingCampaign._id }),
+            ...(Boolean(campaignId) && { _id: campaignId }),
             name,
             description,
-            ...(!existingCampaign && { dueDate }),
+            ...(!campaignId && { dueDate }),
             private: activeTab === 1,
             budget: budget.toString(),
           },
@@ -71,20 +82,21 @@ export const CreateOrUpdateCampaign = () => {
   return (
     <SafeAreaView>
       <StatusBar />
-      <Header title={existingCampaign ? 'Edit Campaign' : 'Create Campaign'} />
+      <Header title={campaignId ? 'Edit Campaign' : 'Create Campaign'} />
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
         <ScrollView>
           <Container>
+            <Intro />
             <Grid>
-              <Grid.Item size={12}>
-                <Intro>
+              {!campaignId && (
+                <Grid.Item size={12}>
                   <Tabs
                     activeTabIndex={activeTab}
                     onTabPress={setTab}
                     tabs={Object.values(CAMPAIGN_TYPE)}
                   />
-                </Intro>
-              </Grid.Item>
+                </Grid.Item>
+              )}
               <Grid.Item size={12}>
                 <TextInput
                   label="Campaign name"
@@ -118,7 +130,7 @@ export const CreateOrUpdateCampaign = () => {
                   value={formik.values.budget.toString()}
                 />
               </Grid.Item>
-              {!existingCampaign && (
+              {!campaignId && (
                 <Grid.Item size={12}>
                   <DatePicker
                     label="Due date"
@@ -134,9 +146,9 @@ export const CreateOrUpdateCampaign = () => {
               <Grid.Item size={12}>
                 <Actions>
                   <Button
-                    isLoading={loading}
+                    isLoading={saving}
                     onPress={formik.handleSubmit}
-                    title={existingCampaign ? 'Save' : 'Create'}
+                    title={campaignId ? 'Save' : 'Create'}
                     fixedWidth
                   />
                 </Actions>

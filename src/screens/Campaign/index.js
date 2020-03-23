@@ -77,7 +77,7 @@ export const Campaign = () => {
         rightActionLabel={isBrand && 'Edit'}
         onRightActionPressed={() =>
           navigation.navigate('CreateOrUpdateCampaign', {
-            campaign: { ...campaign.findCampaignById, _id: id },
+            campaignId: id,
           })
         }
       />
