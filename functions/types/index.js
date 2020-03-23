@@ -31,7 +31,7 @@ module.exports = gql`
       idempotencyKey: String!
     ): Auth
     sendMessage(threadId: ID!, text: String!): Message
-    createCampaign(campaign: CampaignInput): Campaign
+    createOrUpdateCampaign(campaign: CampaignInput): Campaign
     applyToCampaign(id: ID!, cost: Int!): Booking
     updateBookingState(id: ID!, state: BookingState!): Boolean
     updateUser(user: UserInput): Boolean
@@ -233,9 +233,10 @@ module.exports = gql`
   }
 
   input CampaignInput {
+    _id: ID
     name: String!
     description: String!
-    dueDate: String!
+    dueDate: String
     private: Boolean!
     budget: String!
   }

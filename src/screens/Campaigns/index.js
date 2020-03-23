@@ -104,7 +104,9 @@ export const Campaigns = () => {
                         <IconButton
                           size={30}
                           name="ios-add-circle"
-                          onPress={() => navigation.navigate('CreateCampaign')}
+                          onPress={() =>
+                            navigation.navigate('CreateOrUpdateCampaign')
+                          }
                         />
                       </Grid.Item>
                     )}

@@ -11,7 +11,7 @@ export const Header = ({ title, rightActionLabel, onRightActionPressed }) => (
         <BackButton />
       </Action>
       {Boolean(title) && <MainTitle numberOfLines={1}>{title}</MainTitle>}
-      {rightActionLabel && (
+      {Boolean(rightActionLabel) && (
         <Action isRight onPress={onRightActionPressed} as={TouchableOpacity}>
           <RightAction>{rightActionLabel}</RightAction>
         </Action>
