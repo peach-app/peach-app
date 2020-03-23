@@ -147,7 +147,7 @@ export const Campaigns = () => {
             </>
           }
           keyExtractor={item => item._id}
-          data={campaigns}
+          data={!fetching && campaigns}
           renderItem={({ item }) => (
             <FlatList.Item>
               <CampaignCard
