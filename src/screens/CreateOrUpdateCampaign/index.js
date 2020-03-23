@@ -33,7 +33,7 @@ export const CreateOrUpdateCampaign = () => {
   const [createOrUpdateCampaign, { loading }] = useMutation(
     CREATE_OR_UPDATE_CAMPAIGN_MUTATION,
     {
-      refetchQueries: ['getCampaigns'],
+      refetchQueries: ['getCampaigns', 'getCampaign'],
       onCompleted: ({ createOrUpdateCampaign: { _id: campaignId } }) =>
         openModal({
           type: MODAL_TYPES.CAMPAIGN_CREATION,
