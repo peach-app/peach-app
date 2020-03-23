@@ -23,7 +23,7 @@ import {
   FlatList,
   Foot,
   Label,
-  IconButton,
+  RequestActions,
 } from 'components';
 import { useUser } from 'contexts/User';
 import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from 'consts';
@@ -216,16 +216,16 @@ export const Campaign = () => {
             <Text>Your application is pending for this campaign.</Text>
           )}
           {userBookingState === BOOKING_STATE.REQUESTED && (
-            <Text>The brand has requested you for this campaign.</Text>
-          )}
-          {userBookingState === BOOKING_STATE.ACCEPTED && (
-            <Text>You've been accepted onto this campaign!</Text>
+            <RequestActions campaignId={id} />
           )}
           {userBookingState === BOOKING_STATE.DECLINED && (
             <Text>Your application for this campaign was unsuccessful.</Text>
           )}
           {userBookingState === BOOKING_STATE.COMPLETE && (
             <Text>Your work here is done</Text>
+          )}
+          {userBookingState === BOOKING_STATE.ACCEPTED && (
+            <Text>You've been accepted onto this campaign!</Text>
           )}
         </Foot>
       )}
