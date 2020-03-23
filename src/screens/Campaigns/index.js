@@ -22,7 +22,6 @@ import { formatRefs } from 'helpers';
 import { useUser } from 'contexts/User';
 
 import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from 'consts';
-import { Icon } from './styles';
 
 import GET_CAMPAIGNS from './graphql/get-campaigns';
 
@@ -153,13 +152,8 @@ export const Campaigns = () => {
             <FlatList.Item>
               <CampaignCard
                 {...item}
-                onCampaignPressed={() =>
+                onPress={() =>
                   navigation.navigate('Campaign', { id: item._id })
-                }
-                actionItem={
-                  <Grid.Item>
-                    <Icon name="ios-arrow-forward" />
-                  </Grid.Item>
                 }
               />
             </FlatList.Item>

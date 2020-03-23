@@ -113,16 +113,16 @@ export const RequestInfluencerToCampaigns = () => {
           <FlatList.Item>
             <CampaignCard
               {...item}
-              onCampaignPressed={() =>
+              onPress={() =>
                 setSelectedCampaigns(
                   formatSelectedCampaigns(selectedCampaigns, item._id)
                 )
               }
-              actionItem={
+              ActionItem={() => (
                 <AddRemoveAction
                   isActioned={selectedCampaigns.includes(item._id)}
                 />
-              }
+              )}
             />
           </FlatList.Item>
         )}
