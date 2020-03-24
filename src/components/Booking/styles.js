@@ -5,4 +5,5 @@ export const Note = styled.View`
   border-radius: ${props => props.theme.radius}px;
   border-color: ${props => props.theme.greyLight};
   border-width: 1px;
+  margin-vertical: ${props => props.theme.spacingSmall}px;
 `;
