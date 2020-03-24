@@ -26,6 +26,7 @@ import {
 } from 'components';
 import { useUser } from 'contexts/User';
 import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from 'consts';
+import { formatToMoneyFromPence } from 'helpers';
 
 import { RequestActions, AcceptedActions } from './components';
 import GET_CAMPAIGN from './graphql/get-campaign';
@@ -142,11 +143,8 @@ export const Campaign = () => {
                     <Label>Budget</Label>
                     <Text>
                       <SkeletonText loadingText="£0.00" isLoading={fetching}>
-                        {new Intl.NumberFormat('en-GB', {
-                          style: 'currency',
-                          currency: 'GBP',
-                        }).format(
-                          getOr(0, 'findCampaignById.budget', campaign)
+                        {formatToMoneyFromPence(
+                          get('findCampaignById.budget', campaign)
                         )}
                       </SkeletonText>
                     </Text>

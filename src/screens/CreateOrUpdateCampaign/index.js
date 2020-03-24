@@ -16,6 +16,7 @@ import {
   Container,
   Intro,
   Tabs,
+  MoneyInput,
   DatePicker,
 } from 'components';
 import { CAMPAIGN_TYPE, MODAL_TYPES } from 'consts';
@@ -70,9 +71,9 @@ export const CreateOrUpdateCampaign = () => {
             ...(Boolean(campaignId) && { _id: campaignId }),
             name,
             description,
+            budget,
             ...(!campaignId && { dueDate }),
             private: activeTab === 1,
-            budget: budget.toString(),
           },
         },
       });
@@ -119,17 +120,6 @@ export const CreateOrUpdateCampaign = () => {
                 />
               </Grid.Item>
 
-              <Grid.Item size={12}>
-                <TextInput
-                  label="Budget (GBP)"
-                  name="budget"
-                  keyboardType="decimal-pad"
-                  placeholder="150.00"
-                  error={formik.errors.budget}
-                  onChangeText={formik.handleChange('budget')}
-                  value={formik.values.budget.toString()}
-                />
-              </Grid.Item>
               {!campaignId && (
                 <Grid.Item size={12}>
                   <DatePicker
@@ -142,6 +132,16 @@ export const CreateOrUpdateCampaign = () => {
                   />
                 </Grid.Item>
               )}
+
+              <Grid.Item size={12}>
+                <MoneyInput
+                  label="Budget (GBP)"
+                  name="budget"
+                  error={formik.errors.budget}
+                  onChange={formik.handleChange('budget')}
+                  value={formik.values.budget.toString()}
+                />
+              </Grid.Item>
 
               <Grid.Item size={12}>
                 <Actions>

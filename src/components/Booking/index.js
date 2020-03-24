@@ -7,6 +7,7 @@ import { useMutation } from '@apollo/react-hooks';
 import startCase from 'lodash/startCase';
 
 import { BOOKING_STATE } from 'consts';
+import { formatToMoneyFromPence } from 'helpers';
 
 import { Note } from './styles';
 import { Grid } from '../Grid';
@@ -53,11 +54,7 @@ export const Booking = ({ _id, cost, state, note, user, isLoading }) => {
               </Text>
               <Text>
                 <SkeletonText isLoading={isLoading} loadingText="Rate: £0.00">
-                  Rate:{' '}
-                  {new Intl.NumberFormat('en-GB', {
-                    style: 'currency',
-                    currency: 'GBP',
-                  }).format(cost)}
+                  Pay Rate: {formatToMoneyFromPence(cost)}
                 </SkeletonText>
               </Text>
             </Grid.Item>

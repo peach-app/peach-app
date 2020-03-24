@@ -11,9 +11,10 @@ import {
   Intro,
   Header,
   Container,
-  TextInput,
+  MoneyInput,
   Actions,
   Grid,
+  Text,
 } from 'components';
 
 import APPLY_TO_CAMPAIGN from './graphql/apply-to-campaign';
@@ -56,11 +57,14 @@ export const Apply = () => {
         <Intro>
           <Grid>
             <Grid.Item size={12}>
-              <TextInput
+              <Text>{`You're about apply to work on a campaign.\nEnter how much you want to be paid below.`}</Text>
+            </Grid.Item>
+            <Grid.Item size={12}>
+              <MoneyInput
                 label="Pay rate (GBP)"
-                keyboardType="decimal-pad"
+                value={formik.values.cost}
                 error={formik.errors.cost}
-                onChangeText={formik.handleChange('cost')}
+                onChange={formik.handleChange('cost')}
                 onBlur={formik.handleBlur('cost')}
               />
             </Grid.Item>
