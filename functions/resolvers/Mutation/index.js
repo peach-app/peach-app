@@ -2,7 +2,7 @@ module.exports = {
   register: require('./register'),
   login: require('./login'),
   sendMessage: require('./sendMessage'),
-  createCampaign: require('./createCampaign'),
+  createOrUpdateCampaign: require('./createOrUpdateCampaign'),
   applyToCampaign: require('./applyToCampaign'),
   updateBookingState: require('./updateBookingState'),
   updateUser: require('./updateUser'),
@@ -10,4 +10,6 @@ module.exports = {
   requestInfluencers: require('./requestInfluencers'),
   createBillingMethod: require('./createBillingMethod'),
   verifyEmail: require('./verifyEmail'),
+  updateUserAvatar: require('./updateUserAvatar'),
+  completeBooking: require('./completeBooking'),
 };

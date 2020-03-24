@@ -25,52 +25,66 @@ module.exports = async (root, args, { client, q }) => {
     ? FormatDate(new Date(dob), 'dd/MM/yyyy').split('/')
     : [];
 
-  await stripe.accounts.update(
-    stripeID,
-    omitBy(
-      {
-        email,
-        individual: omitBy(
+  if (
+    stripeID &&
+    (email ||
+      firstName ||
+      lastName ||
+      dob ||
+      addressLine1 ||
+      addressLine2 ||
+      city ||
+      postalCode)
+  ) {
+    await stripe.accounts.update(
+      stripeID,
+      omitBy(
+        {
+          email,
+          individual: omitBy(
+            {
+              first_name: firstName,
+              last_name: lastName,
+              address: omitBy(
+                {
+                  city,
+                  line1: addressLine1,
+                  line2: addressLine2,
+                  postal_code: postalCode,
+                },
+                isNil
+              ),
+              dob: omitBy(
+                {
+                  day,
+                  month,
+                  year,
+                },
+                isNil
+              ),
+            },
+            isNil
+          ),
+        },
+        isNil
+      )
+    );
+  }
+
+  if (name || email || bio) {
+    await client.query(
+      q.Update(q.Identity(), {
+        data: omitBy(
           {
-            first_name: firstName,
-            last_name: lastName,
-            address: omitBy(
-              {
-                city,
-                line1: addressLine1,
-                line2: addressLine2,
-                postal_code: postalCode,
-              },
-              isNil
-            ),
-            dob: omitBy(
-              {
-                day,
-                month,
-                year,
-              },
-              isNil
-            ),
+            name,
+            email,
+            bio,
           },
           isNil
         ),
-      },
-      isNil
-    )
-  );
-
-  await client.query(
-    q.Update(q.Identity(), {
-      data: omitBy(
-        {
-          name,
-          email,
-          bio,
-        },
-        isNil
-      ),
-    })
-  );
+      })
+    );
+  }
 
   return true;
 };

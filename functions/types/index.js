@@ -31,7 +31,7 @@ module.exports = gql`
       idempotencyKey: String!
     ): Auth
     sendMessage(threadId: ID!, text: String!): Message
-    createCampaign(campaign: CampaignInput): Campaign
+    createOrUpdateCampaign(campaign: CampaignInput): Campaign
     applyToCampaign(id: ID!, cost: Int!): Booking
     updateBookingState(id: ID!, state: BookingState!): Boolean
     updateUser(user: UserInput): Boolean
@@ -39,6 +39,8 @@ module.exports = gql`
     requestInfluencers(requestedInfluencers: [ID!], campaignId: ID!): Boolean
     createBillingMethod(token: String!): Boolean
     verifyEmail(emailVerificationToken: String!): Boolean
+    updateUserAvatar(url: String!): Boolean
+    completeBooking(id: ID!, note: String): Boolean
   }
 
   # Fauna references #
@@ -210,6 +212,7 @@ module.exports = gql`
     user: User!
     cost: Int
     state: BookingState!
+    note: String
   }
 
   type ThreadPage {
@@ -237,9 +240,10 @@ module.exports = gql`
   }
 
   input CampaignInput {
+    _id: ID
     name: String!
     description: String!
-    dueDate: String!
+    dueDate: String
     private: Boolean!
     budget: String!
   }

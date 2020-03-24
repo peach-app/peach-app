@@ -7,7 +7,14 @@ import { Main, Image, Initial, List, Item } from './styles';
 import { SkeletonCircle } from '../Skeletons';
 import { Branch } from '../Branch';
 
-export const Avatar = ({ size, source, fallback, isLoading, onPress }) => (
+export const Avatar = ({
+  size,
+  source,
+  fallback,
+  isLoading,
+  onPress,
+  children,
+}) => (
   <SkeletonCircle isLoading={isLoading} size={size}>
     <Main size={size} as={onPress && TouchableOpacity} onPress={onPress}>
       <Branch
@@ -15,10 +22,16 @@ export const Avatar = ({ size, source, fallback, isLoading, onPress }) => (
         left={<Image source={source} />}
         right={
           <Initial size={size}>
-            {(fallback || '').slice(0, 1).toUpperCase()}
+            {(fallback || '')
+              .split(' ')
+              .map(a => a.slice(0, 1))
+              .slice(0, 2)
+              .join('')
+              .toUpperCase()}
           </Initial>
         }
       />
+      {children}
     </Main>
   </SkeletonCircle>
 );

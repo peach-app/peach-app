@@ -8,17 +8,43 @@ module.exports = async (root, args, { client, q, DocumentDataWithId }) => {
     throw new UserInputError('No pay rate supplied for application');
   }
 
-  return client.query(
-    q.If(
-      q.Exists(
-        q.Intersection(
+  const existingBooking = await client.query(
+    q.Let(
+      {
+        booking: q.Intersection(
           q.Match(q.Index('booking_by_user'), q.Identity()),
           q.Match(
             q.Index('booking_by_campaign'),
             q.Ref(q.Collection('Campaign'), id)
           )
-        )
-      ),
+        ),
+      },
+      q.If(q.Exists(q.Var('booking')), q.Get(q.Var('booking')), null)
+    )
+  );
+
+  if (
+    existingBooking &&
+    existingBooking.data.state === BOOKING_STATE.REQUESTED
+  ) {
+    return client.query(
+      q.Let(
+        {
+          booking: q.Update(existingBooking.ref, {
+            data: {
+              state: BOOKING_STATE.APPLIED,
+              cost,
+            },
+          }),
+        },
+        DocumentDataWithId(q.Var('booking'))
+      )
+    );
+  }
+
+  return client.query(
+    q.If(
+      Boolean(existingBooking),
       q.Abort('User already applied to campaign.'),
       q.Let(
         {

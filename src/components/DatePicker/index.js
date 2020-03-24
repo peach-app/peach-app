@@ -25,7 +25,7 @@ export const DatePicker = ({
     <>
       <Touchable onPress={() => setOpen(true)}>
         <TextInput
-          value={value ? FormatDate(value, 'dd/MM/yyyy') : ''}
+          value={value ? FormatDate(new Date(value), 'dd/MM/yyyy') : ''}
           editable={false}
           label={label}
           error={error}
