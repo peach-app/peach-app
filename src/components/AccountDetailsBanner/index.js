@@ -30,9 +30,7 @@ export const AccountDetailsBanner = () => {
           <Container>
             <Grid align="center">
               <Grid.Item flex={1}>
-                <Copy>
-                  Visit "Account Details" to finish your account setup.
-                </Copy>
+                <Copy>Visit Account Details to finish your account setup.</Copy>
               </Grid.Item>
               <Grid.Item>
                 <Ionicons name="ios-arrow-dropright" size={22} color="white" />
