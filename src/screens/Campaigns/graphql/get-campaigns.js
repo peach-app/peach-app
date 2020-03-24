@@ -5,17 +5,8 @@ import { CampaignCardFragment } from 'components';
 export default gql`
   ${CampaignCardFragment}
 
-  query getCampaigns(
-    $state: BookingState
-    $after: [RefInput]
-    $influencerId: ID
-  ) {
-    campaigns(
-      state: $state
-      size: 20
-      after: $after
-      influencerId: $influencerId
-    ) {
+  query getCampaigns($state: BookingState, $after: [RefInput]) {
+    campaigns(state: $state, size: 20, after: $after) {
       data {
         _id
         ...CampaignCardFragment

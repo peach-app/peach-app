@@ -1,5 +1,17 @@
 const { USER_TYPE } = require('../../consts');
 
+// Another nested if didn't work
+const getCampaignsWithoutState = (influencerId, q) =>
+  influencerId
+    ? q.Difference(
+        q.Match(q.Index('campaign_by_user'), q.Identity()),
+        q.Match(
+          q.Index('booking_campaign_by_user'),
+          q.Ref(q.Collection('User'), influencerId)
+        )
+      )
+    : q.Match(q.Index('campaign_by_user'), q.Identity());
+
 module.exports = async (
   root,
   args,
@@ -12,7 +24,7 @@ module.exports = async (
     USER_TYPE.BRAND
   );
 
-  const campaigns = await client.query(
+  return client.query(
     q.Map(
       q.Paginate(
         q.If(
@@ -25,17 +37,7 @@ module.exports = async (
               q.Match(q.Index('campaign_by_user'), q.Identity()),
               q.Match(q.Index('booking_campaign_by_state'), state)
             ),
-            q.If(
-              Boolean(influencerId),
-              q.Difference(
-                q.Match(q.Index('campaign_by_user'), q.Identity()),
-                q.Match(
-                  q.Index('booking_campaign_by_user'),
-                  q.Ref(q.Collection('User'), influencerId)
-                )
-              ),
-              q.Match(q.Index('campaign_by_user'), q.Identity())
-            )
+            getCampaignsWithoutState(influencerId, q)
           ),
 
           // influencer
@@ -54,7 +56,4 @@ module.exports = async (
       q.Lambda('ref', DocumentDataWithId(q.Get(q.Var('ref'))))
     )
   );
-
-  console.log('campaigns', campaigns);
-  return campaigns;
 };
