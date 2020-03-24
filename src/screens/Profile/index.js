@@ -25,7 +25,7 @@ export const Profile = () => {
   const {
     params: { id },
   } = useRoute();
-  const { data } = useQuery(GET_USER, {
+  const { data, error } = useQuery(GET_USER, {
     variables: {
       id,
     },

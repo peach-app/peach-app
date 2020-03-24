@@ -9,6 +9,9 @@ export default gql`
     findUserByID(id: $id) {
       ...ProfileHeaderFragment
       bio
+      socialAccounts {
+        instagram
+      }
     }
   }
 `;
