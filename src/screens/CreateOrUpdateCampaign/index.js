@@ -71,7 +71,7 @@ export const CreateOrUpdateCampaign = () => {
             ...(Boolean(campaignId) && { _id: campaignId }),
             name,
             description,
-            budget,
+            budget: budget.toString(),
             ...(!campaignId && { dueDate }),
             private: activeTab === 1,
           },
@@ -139,7 +139,7 @@ export const CreateOrUpdateCampaign = () => {
                   name="budget"
                   error={formik.errors.budget}
                   onChange={formik.handleChange('budget')}
-                  value={formik.values.budget.toString()}
+                  value={formik.values.budget}
                 />
               </Grid.Item>
 

@@ -57,9 +57,15 @@ module.exports = async () => {
                       q.Select(['data', 'user'], q.Var('booking')),
                       q.Identity()
                     ),
-                    q.Equals(
-                      q.Select(['data', 'state'], q.Var('booking')),
-                      BOOKING_STATE.COMPLETE
+                    q.Or(
+                      q.Equals(
+                        q.Select(['data', 'state'], q.Var('booking')),
+                        BOOKING_STATE.COMPLETE
+                      ),
+                      q.Equals(
+                        q.Select(['data', 'state'], q.Var('booking')),
+                        BOOKING_STATE.APPLIED
+                      )
                     )
                   )
                 )
