@@ -26,7 +26,9 @@ import {
 } from 'components';
 import { useUser } from 'contexts/User';
 import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from 'consts';
+import { formatToMoneyFromPence } from 'helpers';
 
+import { RequestActions, AcceptedActions } from './components';
 import GET_CAMPAIGN from './graphql/get-campaign';
 
 const TAB_INDEX_BOOKING_STATE = [
@@ -34,6 +36,7 @@ const TAB_INDEX_BOOKING_STATE = [
   BOOKING_STATE.ACCEPTED,
   BOOKING_STATE.DECLINED,
   BOOKING_STATE.REQUESTED,
+  BOOKING_STATE.COMPLETE,
 ];
 
 export const Campaign = () => {
@@ -73,7 +76,14 @@ export const Campaign = () => {
   return (
     <SafeAreaView>
       <StatusBar />
-      <Header />
+      <Header
+        rightActionLabel={isBrand && 'Edit'}
+        onRightActionPressed={() =>
+          navigation.navigate('CreateOrUpdateCampaign', {
+            campaignId: id,
+          })
+        }
+      />
       <FlatList
         refreshControl={
           <RefreshControl
@@ -121,7 +131,7 @@ export const Campaign = () => {
                   <Grid.Item size={12}>
                     <Text isPara>
                       <SkeletonText
-                        loadingText="Campaign description loading..."
+                        loadingText={`Campaign description loading.\nLorem ipsum dolor sit amet...`}
                         isLoading={fetching}
                       >
                         {getOr('', 'findCampaignById.description', campaign)}
@@ -132,22 +142,28 @@ export const Campaign = () => {
                   <Grid.Item size={6}>
                     <Label>Budget</Label>
                     <Text>
-                      {new Intl.NumberFormat('en-GB', {
-                        style: 'currency',
-                        currency: 'GBP',
-                      }).format(getOr(0, 'findCampaignById.budget', campaign))}
+                      <SkeletonText loadingText="£0.00" isLoading={fetching}>
+                        {formatToMoneyFromPence(
+                          get('findCampaignById.budget', campaign)
+                        )}
+                      </SkeletonText>
                     </Text>
                   </Grid.Item>
 
                   <Grid.Item size={6}>
                     <Label>Completion Date</Label>
                     <Text>
-                      {FormatDate(
-                        new Date(
-                          getOr('2020', 'findCampaignById.dueDate', campaign)
-                        ),
-                        'dd/MM/yyyy'
-                      )}
+                      <SkeletonText
+                        loadingText="00/00/0000"
+                        isLoading={fetching}
+                      >
+                        {FormatDate(
+                          new Date(
+                            getOr('2020', 'findCampaignById.dueDate', campaign)
+                          ),
+                          'dd/MM/yyyy'
+                        )}
+                      </SkeletonText>
                     </Text>
                   </Grid.Item>
                 </Grid>
@@ -160,7 +176,13 @@ export const Campaign = () => {
                   <Tabs
                     activeTabIndex={activeTab}
                     onTabPress={index => setTab(index)}
-                    tabs={['Applied', 'Accepted', 'Declined', 'Requested']}
+                    tabs={[
+                      'Applied',
+                      'Accepted',
+                      'Declined',
+                      'Requested',
+                      'Complete',
+                    ]}
                   />
                 </FlatList.Item>
 
@@ -221,16 +243,18 @@ export const Campaign = () => {
             <Text>Your application is pending for this campaign.</Text>
           )}
           {userBookingState === BOOKING_STATE.REQUESTED && (
-            <Text>The brand has requested you for this campaign.</Text>
-          )}
-          {userBookingState === BOOKING_STATE.ACCEPTED && (
-            <Text>You've been accepted onto this campaign!</Text>
+            <RequestActions campaignId={id} />
           )}
           {userBookingState === BOOKING_STATE.DECLINED && (
             <Text>Your application for this campaign was unsuccessful.</Text>
           )}
           {userBookingState === BOOKING_STATE.COMPLETE && (
             <Text>Your work here is done</Text>
+          )}
+          {userBookingState === BOOKING_STATE.ACCEPTED && (
+            <AcceptedActions
+              bookingId={get('findCampaignById.userBooking._id', campaign)}
+            />
           )}
         </Foot>
       )}

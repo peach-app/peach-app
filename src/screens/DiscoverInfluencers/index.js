@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useQuery } from '@apollo/react-hooks';
 import getOr from 'lodash/fp/getOr';
@@ -12,14 +12,12 @@ import {
   IconButton,
   UserCard,
   FlatList,
-  Tabs,
 } from 'components';
 
 import GET_DISCOVER_USERS from './graphql/get-discover-users';
 
 export const DiscoverInfluencers = () => {
   const navigation = useNavigation();
-  const [activeTab, setTab] = useState(0);
   const { data, loading, networkStatus } = useQuery(GET_DISCOVER_USERS, {
     notifyOnNetworkStatusChange: true,
   });
@@ -47,14 +45,6 @@ export const DiscoverInfluencers = () => {
                   </Grid.Item>
                 </Grid>
               </Intro>
-            </FlatList.Item>
-
-            <FlatList.Item>
-              <Tabs
-                tabs={['Popular Influencers']}
-                activeTabIndex={activeTab}
-                onTabPress={index => setTab(index)}
-              />
             </FlatList.Item>
 
             {fetching &&
