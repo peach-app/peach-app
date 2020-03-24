@@ -8,6 +8,7 @@ import startCase from 'lodash/startCase';
 
 import { BOOKING_STATE } from 'consts';
 
+import { Note } from './styles';
 import { Grid } from '../Grid';
 import { SkeletonText } from '../Skeletons';
 import { Loading } from '../Loading';
@@ -26,80 +27,87 @@ export const Booking = ({ _id, cost, state, note, user, isLoading }) => {
   });
 
   return (
-    <Grid align="center">
-      <Grid.Item flex={1}>
-        <Grid noWrap align="center">
-          <Grid.Item>
-            <Avatar
-              size={50}
-              onPress={() =>
-                navigation.navigate('Profile', { id: get('_id', user) })
-              }
-              isLoading={isLoading}
-              source={{ uri: get('avatar.url', user) }}
-              fallback={get('name', user)}
-            />
-          </Grid.Item>
-          <Grid.Item flex={1}>
-            <Text numberOfLines={1}>
-              <SkeletonText
+    <>
+      <Grid align="center">
+        <Grid.Item flex={1}>
+          <Grid noWrap align="center">
+            <Grid.Item>
+              <Avatar
+                size={50}
+                onPress={() =>
+                  navigation.navigate('Profile', { id: get('_id', user) })
+                }
                 isLoading={isLoading}
-                loadingText="Booking user name loading"
-              >
-                {startCase(get('name', user))}
-              </SkeletonText>
-            </Text>
-            <Text>
-              <SkeletonText isLoading={isLoading} loadingText="Rate: £0.00">
-                Rate:{' '}
-                {new Intl.NumberFormat('en-GB', {
-                  style: 'currency',
-                  currency: 'GBP',
-                }).format(cost)}
-              </SkeletonText>
-            </Text>
-            {Boolean(note) && <Text>{note}</Text>}
-          </Grid.Item>
-        </Grid>
-      </Grid.Item>
-
-      {loading && (
-        <Grid.Item>
-          <Loading />
+                source={{ uri: get('avatar.url', user) }}
+                fallback={get('name', user)}
+              />
+            </Grid.Item>
+            <Grid.Item flex={1}>
+              <Text numberOfLines={1}>
+                <SkeletonText
+                  isLoading={isLoading}
+                  loadingText="Booking user name loading"
+                >
+                  {startCase(get('name', user))}
+                </SkeletonText>
+              </Text>
+              <Text>
+                <SkeletonText isLoading={isLoading} loadingText="Rate: £0.00">
+                  Rate:{' '}
+                  {new Intl.NumberFormat('en-GB', {
+                    style: 'currency',
+                    currency: 'GBP',
+                  }).format(cost)}
+                </SkeletonText>
+              </Text>
+            </Grid.Item>
+          </Grid>
         </Grid.Item>
-      )}
 
-      {state === BOOKING_STATE.APPLIED && !loading && (
-        <>
-          <Grid.Item width={48}>
-            <IconButton
-              name="ios-checkmark-circle-outline"
-              size={32}
-              onPress={() => {
-                updateBookingState({
-                  variables: {
-                    state: BOOKING_STATE.ACCEPTED,
-                  },
-                });
-              }}
-            />
+        {loading && (
+          <Grid.Item>
+            <Loading />
           </Grid.Item>
-          <Grid.Item width={48}>
-            <IconButton
-              name="ios-close-circle-outline"
-              size={32}
-              onPress={() => {
-                updateBookingState({
-                  variables: {
-                    state: BOOKING_STATE.DECLINED,
-                  },
-                });
-              }}
-            />
-          </Grid.Item>
-        </>
+        )}
+
+        {state === BOOKING_STATE.APPLIED && !loading && (
+          <>
+            <Grid.Item width={48}>
+              <IconButton
+                name="ios-checkmark-circle-outline"
+                size={32}
+                onPress={() => {
+                  updateBookingState({
+                    variables: {
+                      state: BOOKING_STATE.ACCEPTED,
+                    },
+                  });
+                }}
+              />
+            </Grid.Item>
+            <Grid.Item width={48}>
+              <IconButton
+                name="ios-close-circle-outline"
+                size={32}
+                onPress={() => {
+                  updateBookingState({
+                    variables: {
+                      state: BOOKING_STATE.DECLINED,
+                    },
+                  });
+                }}
+              />
+            </Grid.Item>
+          </>
+        )}
+      </Grid>
+
+      {Boolean(note) && (
+        <Note>
+          <Text>{note}</Text>
+        </Note>
       )}
-    </Grid>
+    </>
   );
 };
 

@@ -1,0 +1,8 @@
+import styled from 'styled-components/native';
+
+export const Note = styled.View`
+  padding: ${props => props.theme.spacingSmall}px;
+  border-radius: ${props => props.theme.radius}px;
+  border-color: ${props => props.theme.greyLight};
+  border-width: 1px;
+`;
