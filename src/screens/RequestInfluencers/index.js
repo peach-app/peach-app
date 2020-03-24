@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { KeyboardAvoidingView } from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
+
+import { ACTION_COMPONENTS, MODAL_TYPES } from 'consts';
 import { SafeAreaView, StatusBar, Header, SearchInfluencers } from 'components';
 import { useModal } from 'contexts/Modal';
-import { ACTION_COMPONENTS, MODAL_TYPES } from 'consts';
+
 import RequestedInfluencers from './RequestedInfluencers';
 import { formatInfluencersArray } from './helper';
 
-const RequestInfluencers = ({ navigation, route }) => {
+export const RequestInfluencers = () => {
+  const navigation = useNavigation();
+  const {
+    params: { campaignId },
+  } = useRoute();
   const { openModal } = useModal();
-
-  const { campaignId } = route.params;
 
   const [requestedInfluencers, setRequestedInfluencers] = useState([]);
 
@@ -51,16 +55,3 @@ const RequestInfluencers = ({ navigation, route }) => {
     </SafeAreaView>
   );
 };
-
-RequestInfluencers.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
-  }).isRequired,
-  route: PropTypes.shape({
-    params: PropTypes.shape({
-      campaignId: PropTypes.string,
-    }),
-  }).isRequired,
-};
-
-export default RequestInfluencers;

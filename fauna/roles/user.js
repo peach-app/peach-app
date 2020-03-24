@@ -1,4 +1,4 @@
-const { USER_TYPE } = require('../consts');
+const { USER_TYPE, BOOKING_STATE } = require('../consts');
 const { client, q } = require('../helpers/db');
 const { makeRole } = require('../helpers/updateOrCreate');
 
@@ -44,12 +44,30 @@ module.exports = async () => {
             write: q.Query(
               q.Lambda(
                 ['newData', 'booking'],
-                q.Equals(
-                  q.Select(
-                    ['data', 'user'],
-                    q.Get(q.Select(['data', 'campaign'], q.Var('booking')))
+                q.Or(
+                  q.Equals(
+                    q.Select(
+                      ['data', 'user'],
+                      q.Get(q.Select(['data', 'campaign'], q.Var('booking')))
+                    ),
+                    q.Identity()
                   ),
-                  q.Identity()
+                  q.And(
+                    q.Equals(
+                      q.Select(['data', 'user'], q.Var('booking')),
+                      q.Identity()
+                    ),
+                    q.Or(
+                      q.Equals(
+                        q.Select(['data', 'state'], q.Var('booking')),
+                        BOOKING_STATE.COMPLETE
+                      ),
+                      q.Equals(
+                        q.Select(['data', 'state'], q.Var('booking')),
+                        BOOKING_STATE.APPLIED
+                      )
+                    )
+                  )
                 )
               )
             ),
@@ -132,6 +150,12 @@ module.exports = async () => {
           actions: {
             read: true,
             create: true,
+          },
+        },
+        {
+          resource: q.Collection('EmailVerification'),
+          actions: {
+            read: true,
             write: true,
           },
         },
@@ -139,6 +163,12 @@ module.exports = async () => {
         // INDEXES
         {
           resource: q.Index('all_campaign'),
+          actions: {
+            read: true,
+          },
+        },
+        {
+          resource: q.Index('all_campaign_by_private'),
           actions: {
             read: true,
           },

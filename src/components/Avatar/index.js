@@ -22,7 +22,12 @@ export const Avatar = ({
         left={<Image source={source} />}
         right={
           <Initial size={size}>
-            {(fallback || '').slice(0, 1).toUpperCase()}
+            {(fallback || '')
+              .split(' ')
+              .map(a => a.slice(0, 1))
+              .slice(0, 2)
+              .join('')
+              .toUpperCase()}
           </Initial>
         }
       />

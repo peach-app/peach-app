@@ -24,6 +24,7 @@ export default gql`
         }
       }
       userBooking {
+        _id
         state
       }
       bookings(state: $bookingsState) @include(if: $isBrand) {

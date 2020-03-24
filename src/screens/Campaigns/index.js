@@ -20,13 +20,14 @@ import {
 } from 'components';
 import { formatRefs } from 'helpers';
 import { useUser } from 'contexts/User';
-
 import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from 'consts';
 
+import { INFLUENCER_NO_BOOKING } from './consts';
 import GET_CAMPAIGNS from './graphql/get-campaigns';
 
 export const Campaigns = () => {
   const navigation = useNavigation();
+
   const [activeTabIndex, setTabIndex] = useState(0);
   const { user } = useUser();
   const userType = get('user.type', user);
@@ -40,6 +41,7 @@ export const Campaigns = () => {
             BOOKING_STATE.ACCEPTED,
             BOOKING_STATE.APPLIED,
             BOOKING_STATE.REQUESTED,
+            BOOKING_STATE.COMPLETE,
           ])[activeTabIndex],
     [activeTabIndex, isBrand]
   );
@@ -55,7 +57,10 @@ export const Campaigns = () => {
     }
   );
 
-  const fetching = loading && networkStatus === NETWORK_STATUS.FETCHING;
+  const fetching =
+    loading &&
+    (networkStatus === NETWORK_STATUS.FETCHING ||
+      networkStatus === NETWORK_STATUS.SET_VARIABLES);
   const campaigns = getOr([], 'campaigns.data', data);
 
   return (
@@ -104,7 +109,9 @@ export const Campaigns = () => {
                         <IconButton
                           size={30}
                           name="ios-add-circle"
-                          onPress={() => navigation.navigate('CreateCampaign')}
+                          onPress={() =>
+                            navigation.navigate('CreateOrUpdateCampaign')
+                          }
                         />
                       </Grid.Item>
                     )}
@@ -119,7 +126,7 @@ export const Campaigns = () => {
                   tabs={
                     isBrand
                       ? ['All', 'Applications']
-                      : ['Open', 'Applied', 'Requested']
+                      : ['Open', 'Applied', 'Requested', 'Complete']
                   }
                 />
               </FlatList.Item>
@@ -129,10 +136,7 @@ export const Campaigns = () => {
                   <Branch
                     test={isBrand}
                     left={`You don't have any campaigns yet.\nPress "+" to get started.`}
-                    right={`You haven't ${
-                      activeTab === BOOKING_STATE.APPLIED ? '' : 'been '
-                    }${activeTab &&
-                      activeTab.toLowerCase()} onto any campaigns yet.\nVisit "Discover" to start applying.`}
+                    right={`${INFLUENCER_NO_BOOKING[activeTab]} \n Visit discover to start applying.`}
                   />
                 </NoResultText>
               )}
@@ -146,7 +150,7 @@ export const Campaigns = () => {
             </>
           }
           keyExtractor={item => item._id}
-          data={campaigns}
+          data={!fetching && campaigns}
           renderItem={({ item }) => (
             <FlatList.Item>
               <CampaignCard {...item} />
