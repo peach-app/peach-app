@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useNavigation } from '@react-navigation/native';
 
 import { Grid, Text, Button } from 'components';
 
-export const AcceptedActions = () => {
+export const AcceptedActions = ({ bookingId }) => {
   const navigation = useNavigation();
 
   return (
@@ -18,10 +19,14 @@ export const AcceptedActions = () => {
           title="I'm all done"
           fixedWidth
           onPress={() => {
-            navigation.navigate('BookingCompletion');
+            navigation.navigate('BookingCompletion', { bookingId });
           }}
         />
       </Grid.Item>
     </Grid>
   );
+};
+
+AcceptedActions.propTypes = {
+  bookingId: PropTypes.string.isRequired,
 };

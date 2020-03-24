@@ -241,7 +241,11 @@ export const Campaign = () => {
           {userBookingState === BOOKING_STATE.COMPLETE && (
             <Text>Your work here is done</Text>
           )}
-          {userBookingState === BOOKING_STATE.ACCEPTED && <AcceptedActions />}
+          {userBookingState === BOOKING_STATE.ACCEPTED && (
+            <AcceptedActions
+              bookingId={get('findCampaignById.userBooking._id', campaign)}
+            />
+          )}
         </Foot>
       )}
     </SafeAreaView>

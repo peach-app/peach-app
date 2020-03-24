@@ -39,6 +39,7 @@ module.exports = gql`
     requestInfluencers(requestedInfluencers: [ID!], campaignId: ID!): Boolean
     createBillingMethod(token: String!): Boolean
     updateUserAvatar(url: String!): Boolean
+    completeBooking(id: ID!, note: String): Boolean
   }
 
   # Fauna references #
@@ -206,6 +207,7 @@ module.exports = gql`
     user: User!
     cost: Int
     state: BookingState!
+    note: String
   }
 
   type ThreadPage {
