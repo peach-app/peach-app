@@ -25,11 +25,15 @@ export const Profile = () => {
   const {
     params: { id },
   } = useRoute();
-  const { data } = useQuery(GET_USER, {
+  const { data, error } = useQuery(GET_USER, {
     variables: {
       id,
     },
   });
+
+  console.log('ERORRR', error);
+
+  console.log('data', data);
 
   const name = get('findUserByID.name', data);
   const bio = get('findUserByID.bio', data);

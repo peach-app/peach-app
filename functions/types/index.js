@@ -40,6 +40,7 @@ module.exports = gql`
     createBillingMethod(token: String!): Boolean
     verifyEmail(emailVerificationToken: String!): Boolean
     updateUserAvatar(url: String!): Boolean
+    createOrUpdateSocialAccounts(socialAccounts: SocialAccountsInput): Boolean
     completeBooking(id: ID!, note: String): Boolean
   }
 
@@ -98,6 +99,22 @@ module.exports = gql`
     postalCode: String
   }
 
+  input SocialAccountsInput {
+    instagram: String
+    twitter: String
+    facebook: String
+    youTube: String
+    tikTok: String
+  }
+
+  type SocialAccounts {
+    instagram: String
+    twitter: String
+    facebook: String
+    youTube: String
+    tikTok: String
+  }
+
   type User {
     _id: ID!
     name: String
@@ -119,6 +136,8 @@ module.exports = gql`
     threads: ThreadPage
 
     stripeAccount: StripeAccount
+
+    socialAccounts: SocialAccounts
   }
 
   type UserEmailVerification {
