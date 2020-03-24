@@ -19,6 +19,7 @@ import {
   BillingDetails,
   NewBilling,
   RequestInfluencers,
+  BookingCompletion,
 } from 'screens';
 
 import { createStackNavigator, createBottomTabNavigator } from './components';
@@ -71,6 +72,7 @@ export const AuthedNavigator = () => (
       component={CreateOrUpdateCampaign}
     />
     <Stack.Screen name="RequestInfluencers" component={RequestInfluencers} />
+    <Stack.Screen name="BookingCompletion" component={BookingCompletion} />
     <Stack.Screen name="Apply" component={Apply} />
     <Stack.Screen name="Profile" component={Profile} />
     <Stack.Screen name="EditProfile" component={EditProfile} />

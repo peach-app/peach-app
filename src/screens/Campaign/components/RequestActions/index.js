@@ -2,9 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 
-import { Grid } from '../Grid';
-import { Text } from '../Text';
-import { Button } from '../Button';
+import { Grid, Text, Button } from 'components';
 
 export const RequestActions = ({ campaignId }) => {
   const navigation = useNavigation();
