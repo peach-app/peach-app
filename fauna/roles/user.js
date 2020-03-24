@@ -154,6 +154,12 @@ module.exports = async () => {
           },
         },
         {
+          resource: q.Index('all_campaign_by_private'),
+          actions: {
+            read: true,
+          },
+        },
+        {
           resource: q.Index('booking_by_campaign'),
           actions: {
             read: true,

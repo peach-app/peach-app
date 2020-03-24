@@ -73,7 +73,7 @@ export const CreateOrUpdateCampaign = () => {
             description,
             budget: budget.toString(),
             ...(!campaignId && { dueDate }),
-            private: activeTab === 1,
+            private: activeTab === 0,
           },
         },
       });
