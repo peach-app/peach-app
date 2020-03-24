@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { RefreshControl } from 'react-native';
 import getOr from 'lodash/fp/getOr';
 import get from 'lodash/fp/get';
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import { useRoute, useNavigation } from '@react-navigation/native';
+
+import { formatRefs } from 'helpers';
 import {
   SafeAreaView,
   SubTitle,
@@ -13,12 +17,10 @@ import {
   AddRemoveAction,
   Header,
 } from 'components';
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import { formatRefs } from 'helpers';
-import { useRoute, useNavigation } from '@react-navigation/native';
 import { useModal } from 'contexts/Modal';
 import { NETWORK_STATUS, MODAL_TYPES } from 'consts';
-import GET_CAMPAIGNS from '../Campaigns/graphql/get-campaigns';
+
+import GET_CAMPAIGNS from './graphql/get-campaigns';
 import REQUEST_INFLUENCER_TO_CAMPAIGNS from './graphql/request-influencer-to-campaigns';
 import { formatSelectedCampaigns } from './helper';
 
@@ -111,21 +113,21 @@ export const RequestInfluencerToCampaigns = () => {
           </>
         }
         keyExtractor={item => item._id}
-        data={campaigns}
+        data={!fetching && campaigns}
         renderItem={({ item }) => (
           <FlatList.Item>
             <CampaignCard
               {...item}
-              onCampaignPressed={() =>
+              onPress={() =>
                 setSelectedCampaigns(
                   formatSelectedCampaigns(selectedCampaigns, item._id)
                 )
               }
-              actionItem={
+              ActionItem={() => (
                 <AddRemoveAction
                   isActioned={selectedCampaigns.includes(item._id)}
                 />
-              }
+              )}
             />
           </FlatList.Item>
         )}

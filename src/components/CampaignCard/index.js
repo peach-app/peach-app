@@ -4,7 +4,7 @@ import { TouchableOpacity } from 'react-native';
 import gql from 'graphql-tag';
 import get from 'lodash/fp/get';
 
-import { MainTitle, Description, User } from './styles';
+import { MainTitle, Description, User, ArrowIcon } from './styles';
 import { Grid } from '../Grid';
 import { Avatar } from '../Avatar';
 import { SkeletonText } from '../Skeletons';
@@ -14,11 +14,11 @@ export const CampaignCard = ({
   user,
   name,
   description,
-  onCampaignPressed,
-  actionItem,
+  onPress,
+  ActionItem,
 }) => {
   return (
-    <TouchableOpacity onPress={() => !isLoading && onCampaignPressed()}>
+    <TouchableOpacity onPress={() => !isLoading && onPress()}>
       <Grid noWrap align="center">
         <Grid.Item>
           <Avatar
@@ -51,25 +51,31 @@ export const CampaignCard = ({
             </SkeletonText>
           </User>
         </Grid.Item>
-        {!isLoading && actionItem}
+        {!isLoading && Boolean(ActionItem) && (
+          <Grid.Item>
+            <ActionItem />
+          </Grid.Item>
+        )}
       </Grid>
     </TouchableOpacity>
   );
 };
+
+CampaignCard.Arrow = ArrowIcon;
 
 CampaignCard.defaultProps = {
   isLoading: false,
   name: '',
   description: '',
   user: null,
-  onCampaignPressed: null,
-  actionItem: null,
+  onPress: null,
+  ActionItem: ArrowIcon,
 };
 
 CampaignCard.propTypes = {
-  actionItem: PropTypes.element,
+  ActionItem: PropTypes.any,
   isLoading: PropTypes.bool,
-  onCampaignPressed: PropTypes.func,
+  onPress: PropTypes.func,
   name: PropTypes.string,
   description: PropTypes.string,
   user: PropTypes.shape({

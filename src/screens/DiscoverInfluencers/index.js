@@ -56,7 +56,7 @@ export const DiscoverInfluencers = () => {
           </>
         }
         keyExtractor={item => item._id}
-        data={getOr([], 'discover.popularUsers.data', data)}
+        data={!fetching && getOr([], 'discover.popularUsers.data', data)}
         renderItem={({ item }) => (
           <FlatList.Item>
             <UserCard {...item} />
