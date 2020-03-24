@@ -5,14 +5,14 @@ module.exports = async (
   args,
   { client, q, DocumentDataWithId, formatRefs }
 ) => {
-  const { state, size = 30, after, before } = args;
+  const { state, size = 30, after, before, influencerId } = args;
 
   const isBrand = q.Equals(
     q.Select(['data', 'type'], q.Get(q.Identity())),
     USER_TYPE.BRAND
   );
 
-  return client.query(
+  const campaigns = await client.query(
     q.Map(
       q.Paginate(
         q.If(
@@ -25,7 +25,17 @@ module.exports = async (
               q.Match(q.Index('campaign_by_user'), q.Identity()),
               q.Match(q.Index('booking_campaign_by_state'), state)
             ),
-            q.Match(q.Index('campaign_by_user'), q.Identity())
+            q.If(
+              Boolean(influencerId),
+              q.Difference(
+                q.Match(q.Index('campaign_by_user'), q.Identity()),
+                q.Match(
+                  q.Index('booking_campaign_by_user'),
+                  q.Ref(q.Collection('User'), influencerId)
+                )
+              ),
+              q.Match(q.Index('campaign_by_user'), q.Identity())
+            )
           ),
 
           // influencer
@@ -44,4 +54,7 @@ module.exports = async (
       q.Lambda('ref', DocumentDataWithId(q.Get(q.Var('ref'))))
     )
   );
+
+  console.log('campaigns', campaigns);
+  return campaigns;
 };

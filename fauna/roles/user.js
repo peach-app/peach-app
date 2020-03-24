@@ -232,6 +232,12 @@ module.exports = async () => {
             read: true,
           },
         },
+        {
+          resource: q.Index('booking_campaign_by_user'),
+          actions: {
+            read: true,
+          },
+        },
       ],
     })
   );
