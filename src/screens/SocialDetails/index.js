@@ -17,14 +17,16 @@ import {
   TextInput,
   Loading,
 } from 'components';
-import { validationSchema } from './consts';
+
 import {
   CREATE_OR_UPDATE_SOCIAL_ACCOUNTS,
   GET_USER_SOCIAL_ACCOUNTS,
 } from './graphql/social-accounts';
 
 export const SocialDetails = () => {
-  const { data, loading } = useQuery(GET_USER_SOCIAL_ACCOUNTS);
+  const { data, loading } = useQuery(GET_USER_SOCIAL_ACCOUNTS, {
+    fetchPolicy: 'cache-and-network',
+  });
   const navigation = useNavigation();
 
   const [createOrUpdateSocialAccounts, { loading: isSubmitting }] = useMutation(
@@ -45,7 +47,6 @@ export const SocialDetails = () => {
       youTube: getOr('', 'user.socialAccounts.youTube', data),
       tikTok: getOr('', 'user.socialAccounts.tikTok', data),
     },
-    validationSchema,
     onSubmit: ({ instagram, twitter, facebook, youTube, tikTok }) => {
       createOrUpdateSocialAccounts({
         variables: {
@@ -60,6 +61,7 @@ export const SocialDetails = () => {
       });
     },
   });
+
   return (
     <SafeAreaView>
       <StatusBar />

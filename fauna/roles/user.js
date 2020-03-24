@@ -146,13 +146,6 @@ module.exports = async () => {
           },
         },
         {
-          resource: q.Collection('SocialAccounts'),
-          actions: {
-            read: true,
-            create: true,
-          },
-        },
-        {
           resource: q.Collection('EmailVerification'),
           actions: {
             read: true,
@@ -235,12 +228,6 @@ module.exports = async () => {
         },
         {
           resource: q.Index('user_name_by_type'),
-          actions: {
-            read: true,
-          },
-        },
-        {
-          resource: q.Index('social_accounts_by_user'),
           actions: {
             read: true,
           },
