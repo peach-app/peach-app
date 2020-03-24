@@ -4,7 +4,6 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
-import getOr from 'lodash/fp/getOr';
 import uuid from 'uuid/v4';
 
 import {
@@ -127,7 +126,7 @@ export const Register = () => {
               <Grid.Item size={12}>
                 <TextInput
                   label="Password"
-                  secureTextEntry={true}
+                  secureTextEntry
                   error={formik.errors.password}
                   onChangeText={formik.handleChange('password')}
                   onBlur={formik.handleBlur('password')}
@@ -137,7 +136,7 @@ export const Register = () => {
               <Grid.Item size={12}>
                 <TextInput
                   label="Confirm password"
-                  secureTextEntry={true}
+                  secureTextEntry
                   error={formik.errors.confirmPassword}
                   onChangeText={formik.handleChange('confirmPassword')}
                   onBlur={formik.handleBlur('confirmPassword')}

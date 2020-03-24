@@ -38,6 +38,7 @@ module.exports = gql`
     completeOnboarding: Boolean
     requestInfluencers(requestedInfluencers: [ID!], campaignId: ID!): Boolean
     createBillingMethod(token: String!): Boolean
+    verifyEmail(emailVerificationToken: String!): Boolean
     updateUserAvatar(url: String!): Boolean
     completeBooking(id: ID!, note: String): Boolean
   }
@@ -104,7 +105,7 @@ module.exports = gql`
     avatar: Media
     email: String!
     onboarded: Boolean
-
+    emailVerification: UserEmailVerification
     type: UserType!
 
     # User created Campaigns
@@ -118,6 +119,10 @@ module.exports = gql`
     threads: ThreadPage
 
     stripeAccount: StripeAccount
+  }
+
+  type UserEmailVerification {
+    isVerified: Boolean
   }
 
   type StripeAccount {

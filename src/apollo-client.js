@@ -7,7 +7,7 @@ import { AsyncStorage, Platform } from 'react-native';
 const cache = new InMemoryCache();
 
 const uri = {
-  development: 'http://localhost:8888/.netlify/functions/graphql',
+  development: 'http://192.168.1.130:8888/.netlify/functions/graphql',
   production: Platform.select({
     web: '/.netlify/functions/graphql',
     ios: 'https://dashboard.peachapp.io/.netlify/functions/graphql',
@@ -27,7 +27,7 @@ const authLink = setContext(async (_, { headers }) => {
       ...headers,
       Authorization: token
         ? `Bearer ${token}`
-        : 'Bearer fnADdrl55iACAOcrhbuVMnLTitIXrA7On8_h1BdQ',
+        : 'Bearer fnADljiFUtACAjiuoc0favM4ODjnkH6TiyfXnMg6',
     },
   };
 });

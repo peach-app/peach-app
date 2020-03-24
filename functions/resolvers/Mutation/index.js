@@ -9,6 +9,7 @@ module.exports = {
   completeOnboarding: require('./completeOnboarding'),
   requestInfluencers: require('./requestInfluencers'),
   createBillingMethod: require('./createBillingMethod'),
+  verifyEmail: require('./verifyEmail'),
   updateUserAvatar: require('./updateUserAvatar'),
   completeBooking: require('./completeBooking'),
 };

@@ -145,6 +145,13 @@ module.exports = async () => {
             create: true,
           },
         },
+        {
+          resource: q.Collection('EmailVerification'),
+          actions: {
+            read: true,
+            write: true,
+          },
+        },
 
         // INDEXES
         {

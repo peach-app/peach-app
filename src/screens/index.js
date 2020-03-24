@@ -21,5 +21,6 @@ export * from './Thread';
 export * from './PersonalDetails';
 export * from './BillingDetails';
 export * from './NewBilling';
+export * from './VerifyEmail';
 export * from './RequestInfluencers';
 export * from './BookingCompletion';

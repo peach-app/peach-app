@@ -27,6 +27,7 @@ import GET_CAMPAIGNS from './graphql/get-campaigns';
 
 export const Campaigns = () => {
   const navigation = useNavigation();
+
   const [activeTabIndex, setTabIndex] = useState(0);
   const { user } = useUser();
   const userType = get('user.type', user);
