@@ -12,6 +12,7 @@ module.exports = gql`
       size: Int
       after: [RefInput]
       before: [RefInput]
+      influencerId: ID
     ): CampaignPage
 
     findCampaignById(id: ID): Campaign

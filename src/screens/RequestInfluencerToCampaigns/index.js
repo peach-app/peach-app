@@ -35,6 +35,9 @@ export const RequestInfluencerToCampaigns = () => {
     {
       notifyOnNetworkStatusChange: true,
       fetchPolicy: 'cache-and-network',
+      variables: {
+        influencerId,
+      },
     }
   );
   const fetching = loading && networkStatus === NETWORK_STATUS.FETCHING;
