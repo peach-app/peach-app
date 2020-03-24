@@ -12,8 +12,6 @@ import { Grid } from '../Grid';
 import { Avatar } from '../Avatar';
 import { SkeletonText } from '../Skeletons';
 
-const fakeAvatars = [{ _id: 0 }, { _id: 1 }];
-
 export const ThreadCard = ({ isLoading, _id, users, latestMessage }) => {
   const navigation = useNavigation();
 
@@ -24,7 +22,7 @@ export const ThreadCard = ({ isLoading, _id, users, latestMessage }) => {
       <Grid noWrap align="center">
         <Grid.Item>
           <Avatar.List>
-            {(isLoading ? fakeAvatars : getOr([], 'data', users)).map(user => (
+            {(isLoading ? [{ _id: 0 }] : getOr([], 'data', users)).map(user => (
               <Avatar
                 key={user._id}
                 isLoading={isLoading}
@@ -39,9 +37,14 @@ export const ThreadCard = ({ isLoading, _id, users, latestMessage }) => {
         </Grid.Item>
         <Grid.Item flex={1}>
           <Users numberOfLines={1}>
-            {getOr([], 'data', users)
-              .map(user => startCase(user.name))
-              .join(', ')}
+            <SkeletonText
+              isLoading={isLoading}
+              loadingText="John Smith, Josh p"
+            >
+              {getOr([], 'data', users)
+                .map(user => startCase(user.name))
+                .join(', ')}
+            </SkeletonText>
           </Users>
           <Text numberOfLines={2}>
             <SkeletonText
