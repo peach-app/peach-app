@@ -37,7 +37,6 @@ console.log({ FAUNADB_SECRET });
     await require('./indexes/user_name_by_type')();
 
     // Roles
-    await require('./roles/auth')();
     await require('./roles/user')();
 
     // End

@@ -1,6 +1,6 @@
 const { BOOKING_STATE } = require('../../consts');
 
-module.exports = async (root, args, { client, q }) => {
+module.exports = async (root, args, { client, q, activeUserRef }) => {
   const { id, state } = args;
 
   await client.query(
@@ -17,7 +17,7 @@ module.exports = async (root, args, { client, q }) => {
     } = await client.query(
       q.Any(
         q.Map(
-          q.Paginate(q.Match(q.Index('thread_users_by_user'), q.Identity())),
+          q.Paginate(q.Match(q.Index('thread_users_by_user'), activeUserRef)),
           q.Lambda(
             'thread',
             q.Exists(
@@ -46,7 +46,7 @@ module.exports = async (root, args, { client, q }) => {
           q.Create(q.Collection('thread_users'), {
             data: {
               threadID: q.Select(['ref'], q.Var('thread')),
-              userID: q.Identity(),
+              userID: activeUserRef,
             },
           }),
           q.Create(q.Collection('thread_users'), {
