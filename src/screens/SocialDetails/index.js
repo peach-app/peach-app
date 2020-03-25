@@ -16,7 +16,6 @@ import {
   Button,
   Intro,
   TextInput,
-  Loading,
 } from 'components';
 
 import {
@@ -29,7 +28,7 @@ export const SocialDetails = ({
   onRightActionPressed,
   onComplete,
 }) => {
-  const { data, loading } = useQuery(GET_USER_SOCIAL_ACCOUNTS, {
+  const { data } = useQuery(GET_USER_SOCIAL_ACCOUNTS, {
     fetchPolicy: 'cache-and-network',
   });
   const navigation = useNavigation();
@@ -83,69 +82,64 @@ export const SocialDetails = ({
         <ScrollView>
           <Container>
             <Intro />
-            {loading ? (
-              <Grid.Item>
-                <Loading />
+
+            <Grid>
+              <Grid.Item size={12}>
+                <TextInput
+                  autoCapitalize="none"
+                  value={formik.values.instagram}
+                  label="Instagram (URL or Username)"
+                  error={formik.errors.instagram}
+                  onChangeText={formik.handleChange('instagram')}
+                />
               </Grid.Item>
-            ) : (
-              <Grid>
-                <Grid.Item size={12}>
-                  <TextInput
-                    autoCapitalize="none"
-                    value={formik.values.instagram}
-                    label="Instagram (URL or Username)"
-                    error={formik.errors.instagram}
-                    onChangeText={formik.handleChange('instagram')}
+              <Grid.Item size={12}>
+                <TextInput
+                  autoCapitalize="none"
+                  value={formik.values.twitter}
+                  label="Twitter (URL or Username)"
+                  error={formik.errors.twitter}
+                  onChangeText={formik.handleChange('twitter')}
+                />
+              </Grid.Item>
+              <Grid.Item size={12}>
+                <TextInput
+                  autoCapitalize="none"
+                  value={formik.values.facebook}
+                  label="Facebook (Page URL)"
+                  error={formik.errors.facebook}
+                  onChangeText={formik.handleChange('facebook')}
+                />
+              </Grid.Item>
+              <Grid.Item size={12}>
+                <TextInput
+                  autoCapitalize="none"
+                  value={formik.values.youTube}
+                  label="YouTube (Channel URL or Name)"
+                  error={formik.errors.youTube}
+                  onChangeText={formik.handleChange('youTube')}
+                />
+              </Grid.Item>
+              <Grid.Item size={12}>
+                <TextInput
+                  autoCapitalize="none"
+                  value={formik.values.tikTok}
+                  label="TicTok (Username)"
+                  error={formik.errors.tikTok}
+                  onChangeText={formik.handleChange('tikTok')}
+                />
+              </Grid.Item>
+              <Grid.Item size={12}>
+                <Actions>
+                  <Button
+                    isLoading={isSubmitting}
+                    title="Save"
+                    fixedWidth
+                    onPress={formik.handleSubmit}
                   />
-                </Grid.Item>
-                <Grid.Item size={12}>
-                  <TextInput
-                    autoCapitalize="none"
-                    value={formik.values.twitter}
-                    label="Twitter (URL or Username)"
-                    error={formik.errors.twitter}
-                    onChangeText={formik.handleChange('twitter')}
-                  />
-                </Grid.Item>
-                <Grid.Item size={12}>
-                  <TextInput
-                    autoCapitalize="none"
-                    value={formik.values.facebook}
-                    label="Facebook (Page URL)"
-                    error={formik.errors.facebook}
-                    onChangeText={formik.handleChange('facebook')}
-                  />
-                </Grid.Item>
-                <Grid.Item size={12}>
-                  <TextInput
-                    autoCapitalize="none"
-                    value={formik.values.youTube}
-                    label="YouTube (Channel URL or Name)"
-                    error={formik.errors.youTube}
-                    onChangeText={formik.handleChange('youTube')}
-                  />
-                </Grid.Item>
-                <Grid.Item size={12}>
-                  <TextInput
-                    autoCapitalize="none"
-                    value={formik.values.tikTok}
-                    label="TicTok (Username)"
-                    error={formik.errors.tikTok}
-                    onChangeText={formik.handleChange('tikTok')}
-                  />
-                </Grid.Item>
-                <Grid.Item size={12}>
-                  <Actions>
-                    <Button
-                      isLoading={isSubmitting}
-                      title="Save"
-                      fixedWidth
-                      onPress={formik.handleSubmit}
-                    />
-                  </Actions>
-                </Grid.Item>
-              </Grid>
-            )}
+                </Actions>
+              </Grid.Item>
+            </Grid>
           </Container>
         </ScrollView>
       </KeyboardAvoidingView>
