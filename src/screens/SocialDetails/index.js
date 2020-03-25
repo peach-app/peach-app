@@ -88,7 +88,7 @@ export const SocialDetails = ({
                 <TextInput
                   autoCapitalize="none"
                   value={formik.values.instagram}
-                  label="Instagram (URL or Username)"
+                  label="Instagram (Username)"
                   error={formik.errors.instagram}
                   onChangeText={formik.handleChange('instagram')}
                 />
@@ -97,7 +97,7 @@ export const SocialDetails = ({
                 <TextInput
                   autoCapitalize="none"
                   value={formik.values.twitter}
-                  label="Twitter (URL or Username)"
+                  label="Twitter (Username)"
                   error={formik.errors.twitter}
                   onChangeText={formik.handleChange('twitter')}
                 />
@@ -115,7 +115,7 @@ export const SocialDetails = ({
                 <TextInput
                   autoCapitalize="none"
                   value={formik.values.youTube}
-                  label="YouTube (Channel URL or Name)"
+                  label="YouTube (Channel URL)"
                   error={formik.errors.youTube}
                   onChangeText={formik.handleChange('youTube')}
                 />
