@@ -17,7 +17,7 @@ export const Payouts = () => (
     <Header title="Payout History" />
     <FlatList
       data={Array.from(Array(15))}
-      keyExtractor={(_, i) => i}
+      keyExtractor={(_, i) => i.toString()}
       ListHeaderComponent={<Intro />}
       renderItem={({ index }) => (
         <FlatList.Item>

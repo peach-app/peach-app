@@ -3,7 +3,7 @@ const omitBy = require('lodash/omitBy');
 const isNil = require('lodash/isNil');
 const stripe = require('../../helpers/stripe');
 
-module.exports = async (root, args, { client, q }) => {
+module.exports = async (root, args, { client, q, activeUserRef }) => {
   const {
     name,
     email,
@@ -18,7 +18,7 @@ module.exports = async (root, args, { client, q }) => {
   } = args.user;
 
   const { stripeID } = await client.query(
-    q.Select(['data'], q.Get(q.Identity()))
+    q.Select(['data'], q.Get(activeUserRef))
   );
 
   const [day, month, year] = dob
@@ -73,7 +73,7 @@ module.exports = async (root, args, { client, q }) => {
 
   if (name || email || bio) {
     await client.query(
-      q.Update(q.Identity(), {
+      q.Update(activeUserRef, {
         data: omitBy(
           {
             name,

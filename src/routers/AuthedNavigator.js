@@ -21,6 +21,7 @@ import {
   RequestInfluencerToCampaigns,
   RequestInfluencers,
   BookingCompletion,
+  AccountDocuments,
 } from 'screens';
 
 import { createStackNavigator, createBottomTabNavigator } from './components';
@@ -84,6 +85,7 @@ export const AuthedNavigator = () => (
     <Stack.Screen name="Payouts" component={Payouts} />
     <Stack.Screen name="SocialDetails" component={SocialDetails} />
     <Stack.Screen name="AccountDetails" component={AccountDetails} />
+    <Stack.Screen name="AccountDocuments" component={AccountDocuments} />
     <Stack.Screen name="PersonalDetails" component={PersonalDetails} />
     <Stack.Screen name="BillingDetails" component={BillingDetails} />
     <Stack.Screen name="NewBilling" component={NewBilling} />

@@ -1,4 +1,8 @@
-module.exports = async (root, args, { client, q, DocumentDataWithId }) => {
+module.exports = async (
+  root,
+  args,
+  { client, q, DocumentDataWithId, activeUserRef }
+) => {
   const emailVerification = await client.query(
     q.Let(
       {
@@ -6,7 +10,7 @@ module.exports = async (root, args, { client, q, DocumentDataWithId }) => {
           q.Collection('EmailVerification'),
           q.Select(
             ['emailVerificationToken'],
-            DocumentDataWithId(q.Get(q.Identity()))
+            DocumentDataWithId(q.Get(activeUserRef))
           )
         ),
       },

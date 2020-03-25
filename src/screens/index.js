@@ -25,3 +25,5 @@ export * from './RequestInfluencerToCampaigns';
 export * from './VerifyEmail';
 export * from './RequestInfluencers';
 export * from './BookingCompletion';
+export * from './CompleteOnboarding';
+export * from './AccountDocuments';

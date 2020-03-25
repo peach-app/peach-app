@@ -1,6 +1,6 @@
-module.exports = async (root, args, { client, q }) => {
+module.exports = async (root, args, { client, q, activeUserRef }) => {
   await client.query(
-    q.Update(q.Identity(), {
+    q.Update(activeUserRef, {
       data: {
         onboarded: true,
       },

@@ -1,9 +1,13 @@
-module.exports = async (root, args, { client, q, DocumentDataWithId }) => {
+module.exports = async (
+  root,
+  args,
+  { client, q, DocumentDataWithId, activeUserRef }
+) => {
   return client.query(
     q.Let(
       {
         match: q.Intersection(
-          q.Match(q.Index('booking_by_user'), q.Identity()),
+          q.Match(q.Index('booking_by_user'), activeUserRef),
           q.Match(q.Index('booking_by_campaign'), root.ref)
         ),
       },

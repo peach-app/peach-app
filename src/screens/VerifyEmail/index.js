@@ -16,13 +16,13 @@ const getDeepLink = async () => {
     // and replace with in expo.scheme file (in app.json) alias
     // peach-app://
     // else local -> replace here
-    return 'exp://192.168.1.130:19000/';
+    return 'peach-app://';
   }
 
   // check if prod:
   // https://dashboard.peachapp.io/
   // else local -> replace here
-  return 'http://192.168.1.130:19006/';
+  return 'https://dashboard.peachapp.io/';
 };
 
 const deepLinkBackToApp = async () => {

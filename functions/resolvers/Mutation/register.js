@@ -93,8 +93,7 @@ module.exports = async (
     })
   );
 
-  const envUrl = '192.168.1.130:19006'; // OR dashboard.peachapp.io once we deploy in prod
-  const verificationUrl = `http://${envUrl}/verify-email/${emailVerification._id}`;
+  const verificationUrl = `https://dashboard.peachapp.io/verify-email/${emailVerification._id}`;
 
   await sendMail({
     to: email,

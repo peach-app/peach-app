@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { KeyboardAvoidingView, ScrollView } from 'react-native';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useNavigation } from '@react-navigation/native';
@@ -36,13 +37,18 @@ const validationSchema = Yup.object().shape({
   postalCode: Yup.string().required(),
 });
 
-export const PersonalDetails = () => {
+export const PersonalDetails = ({
+  rightActionLabel,
+  onRightActionPressed,
+  onComplete,
+}) => {
   const navigation = useNavigation();
   const { data } = useQuery(GET_USER, {
     fetchPolicy: 'cache-and-network',
   });
   const [updateUser, { loading, error }] = useMutation(UPDATE_USER, {
     onCompleted: () => {
+      if (onComplete) return onComplete();
       navigation.goBack();
     },
   });
@@ -86,7 +92,11 @@ export const PersonalDetails = () => {
   return (
     <SafeAreaView>
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
-        <Header title="Personal Details" />
+        <Header
+          title="Personal Details"
+          rightActionLabel={rightActionLabel}
+          onRightActionPressed={onRightActionPressed}
+        />
         <ScrollView>
           <Container>
             <Intro />
@@ -197,4 +207,16 @@ export const PersonalDetails = () => {
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
+};
+
+PersonalDetails.defaultProps = {
+  rightActionLabel: null,
+  onRightActionPressed: null,
+  onComplete: null,
+};
+
+PersonalDetails.propTypes = {
+  rightActionLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  onRightActionPressed: PropTypes.func,
+  onComplete: PropTypes.func,
 };

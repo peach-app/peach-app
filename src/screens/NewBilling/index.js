@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { ScrollView, KeyboardAvoidingView } from 'react-native';
 import { useFormik } from 'formik';
 import { useMutation } from '@apollo/react-hooks';
@@ -27,13 +28,18 @@ const validationSchema = Yup.object().shape({
   sort: Yup.string().required('Sort code is required'),
 });
 
-export const NewBilling = () => {
+export const NewBilling = ({
+  rightActionLabel,
+  onRightActionPressed,
+  onComplete,
+}) => {
   const navigation = useNavigation();
   const [createBillingMethod, { loading, error }] = useMutation(
     CREATE_BILLING_METHOD,
     {
       refetchQueries: ['getExternalAccount'],
       onCompleted: () => {
+        if (onComplete) return onComplete();
         navigation.goBack();
       },
     }
@@ -72,7 +78,11 @@ export const NewBilling = () => {
 
   return (
     <SafeAreaView>
-      <Header title="New Billing Method" />
+      <Header
+        title="New Billing Method"
+        rightActionLabel={rightActionLabel}
+        onRightActionPressed={onRightActionPressed}
+      />
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
         <ScrollView>
           <Container>
@@ -137,4 +147,16 @@ export const NewBilling = () => {
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
+};
+
+NewBilling.defaultProps = {
+  rightActionLabel: null,
+  onRightActionPressed: null,
+  onComplete: null,
+};
+
+NewBilling.propTypes = {
+  rightActionLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  onRightActionPressed: PropTypes.func,
+  onComplete: PropTypes.func,
 };
