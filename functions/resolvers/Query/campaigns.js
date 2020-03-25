@@ -10,7 +10,7 @@ const getCampaignsWithoutState = (influencerId, q, activeUserRef) =>
           q.Ref(q.Collection('User'), influencerId)
         )
       )
-    : q.Match(q.Index('campaign_by_user'), q.Identity());
+    : q.Match(q.Index('campaign_by_user'), activeUserRef);
 
 module.exports = async (
   root,
