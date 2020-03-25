@@ -27,7 +27,7 @@ export const CompleteOnboarding = () => {
         <Container>
           <Grid justify="center">
             <Grid.Item size={12}>
-              <Title isCenter>Thanks!</Title>
+              <Title isCenter>You're all set!</Title>
             </Grid.Item>
             <Grid.Item>
               <Button

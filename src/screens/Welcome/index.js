@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
+import get from 'lodash/fp/get';
 
 import {
   SafeAreaView,
@@ -10,12 +11,17 @@ import {
   Grid,
   Button,
 } from 'components';
+import { useUser } from 'contexts/User';
+import { USER_TYPE } from 'consts';
 
 import { Content, Image } from './styles';
 import OnboardingBanner from '../../assets/onboarding.png';
 
 export const Welcome = () => {
   const navigation = useNavigation();
+  const { user } = useUser();
+  const userType = get('user.type', user);
+  const isBrand = userType === USER_TYPE.BRAND;
 
   return (
     <SafeAreaView>
@@ -36,7 +42,11 @@ export const Welcome = () => {
             </Grid.Item>
             <Grid.Item size={12}>
               <Button
-                onPress={() => navigation.navigate('SocialDetails')}
+                onPress={() =>
+                  navigation.navigate(
+                    isBrand ? 'PersonalDetails' : 'SocialDetails'
+                  )
+                }
                 title="Begin"
                 fixedWidth
               />
