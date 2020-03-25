@@ -1,22 +1,20 @@
 const { USER_TYPE } = require('../../consts');
 
-module.exports = async (
+module.exports = (
   root,
   args,
   { client, q, DocumentDataWithId, formatRefs, activeUserRef }
 ) => {
   const { state, size = 30, after, before } = args;
 
-  const isBrand = q.Equals(
-    q.Select(['data', 'type'], q.Get(activeUserRef)),
-    USER_TYPE.BRAND
-  );
-
   return client.query(
     q.Map(
       q.Paginate(
         q.If(
-          isBrand,
+          q.Equals(
+            q.Select(['data', 'type'], q.Get(activeUserRef)),
+            USER_TYPE.BRAND
+          ),
 
           // brand
           q.If(

@@ -21,7 +21,7 @@ import UPDATE_BOOKING_STATE from './graphql/update-booking-state';
 export const Booking = ({ _id, cost, state, note, user, isLoading }) => {
   const navigation = useNavigation();
   const [updateBookingState, { loading }] = useMutation(UPDATE_BOOKING_STATE, {
-    refetchQueries: ['getCampaign'],
+    refetchQueries: ['getCampaigns', 'getCampaign'],
     variables: {
       id: _id,
     },
