@@ -24,3 +24,4 @@ export * from './NewBilling';
 export * from './VerifyEmail';
 export * from './RequestInfluencers';
 export * from './BookingCompletion';
+export * from './CompleteOnboarding';

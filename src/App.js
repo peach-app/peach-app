@@ -10,8 +10,11 @@ import { Splash } from 'components';
 import { useAuth, Provider as AuthProvider } from 'contexts/Auth';
 import { Provider as UserProvider, useUser } from 'contexts/User';
 
-import { Welcome } from 'screens';
-import { UnAuthedNavigator, AuthedNavigator } from 'routers';
+import {
+  UnAuthedNavigator,
+  AuthedNavigator,
+  OnboardingNavigator,
+} from 'routers';
 import RootModal from './components/Modals/RootModal';
 import { Provider as ModalProvider } from './contexts/Modal';
 
@@ -26,7 +29,7 @@ const AuthedApp = () => {
   }
 
   if (!get('user.onboarded', user)) {
-    return <Welcome />;
+    return <OnboardingNavigator />;
   }
 
   return <AuthedNavigator />;

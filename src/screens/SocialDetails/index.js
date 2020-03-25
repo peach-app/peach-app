@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import getOr from 'lodash/fp/getOr';
 import { ScrollView, KeyboardAvoidingView } from 'react-native';
 import { useFormik } from 'formik';
@@ -23,7 +24,11 @@ import {
   GET_USER_SOCIAL_ACCOUNTS,
 } from './graphql/social-accounts';
 
-export const SocialDetails = () => {
+export const SocialDetails = ({
+  rightActionLabel,
+  onRightActionPressed,
+  onComplete,
+}) => {
   const { data, loading } = useQuery(GET_USER_SOCIAL_ACCOUNTS, {
     fetchPolicy: 'cache-and-network',
   });
@@ -32,7 +37,10 @@ export const SocialDetails = () => {
   const [createOrUpdateSocialAccounts, { loading: isSubmitting }] = useMutation(
     CREATE_OR_UPDATE_SOCIAL_ACCOUNTS,
     {
-      onCompleted: () => navigation.goBack(),
+      onCompleted: () => {
+        if (onComplete) return onComplete();
+        navigation.goBack();
+      },
     }
   );
 
@@ -66,7 +74,11 @@ export const SocialDetails = () => {
     <SafeAreaView>
       <StatusBar />
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
-        <Header title="Social Accounts" />
+        <Header
+          title="Social Accounts"
+          rightActionLabel={rightActionLabel}
+          onRightActionPressed={onRightActionPressed}
+        />
 
         <ScrollView>
           <Container>
@@ -139,4 +151,16 @@ export const SocialDetails = () => {
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
+};
+
+SocialDetails.defaultProps = {
+  rightActionLabel: null,
+  onRightActionPressed: null,
+  onComplete: null,
+};
+
+SocialDetails.propTypes = {
+  rightActionLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  onRightActionPressed: PropTypes.func,
+  onComplete: PropTypes.func,
 };
