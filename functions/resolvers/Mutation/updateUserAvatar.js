@@ -1,6 +1,6 @@
-module.exports = async (root, { url }, { client, q, DocumentDataWithId }) => {
+module.exports = async (root, { url }, { client, q, activeUserRef }) => {
   await client.query(
-    q.Update(q.Identity(), {
+    q.Update(activeUserRef, {
       data: {
         avatar: { url },
       },

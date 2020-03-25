@@ -21,14 +21,6 @@ Influencer + Brand Collaboration
 
 7. Then run: `npm run deploy:db`
 
-8. Head back to the "Security" tab in fauna
-
-9. Create a new key, with the role set to "auth"
-
-10. Replace the "Authorization" token within ./src/apollo-client.js with the new token
-
-![Auth Token](/docs/assets/auth-token.png)
-
 ## Run Development
 
 1. Run expo: `expo start`
@@ -39,7 +31,7 @@ Influencer + Brand Collaboration
 
 ## Production Deploy
 
-`npm run deploy`
+1. Run: `npm run deploy`
 
 ## URLS
 

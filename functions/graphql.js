@@ -11,12 +11,17 @@ const resolvers = require('./resolvers');
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: ({ event }) => {
-    const [_, secret] = event.headers.authorization.split('Bearer ');
+  context: async ({ event }) => {
+    const { authorization } = event.headers;
+    const [_, secret] = authorization ? authorization.split('Bearer ') : [];
 
-    const client = new faunadb.Client({ secret });
+    const userClient = secret && new faunadb.Client({ secret });
+    const activeUserRef = secret && (await userClient.query(q.Identity()));
+
+    const client = new faunadb.Client({ secret: process.env.FAUNADB_SECRET });
 
     return {
+      activeUserRef,
       DocumentDataWithId,
       formatRefs,
       clientIp: event.headers['client-ip'],

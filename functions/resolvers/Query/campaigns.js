@@ -1,37 +1,35 @@
 const { USER_TYPE } = require('../../consts');
 
-module.exports = async (
+module.exports = (
   root,
   args,
-  { client, q, DocumentDataWithId, formatRefs }
+  { client, q, DocumentDataWithId, formatRefs, activeUserRef }
 ) => {
   const { state, size = 30, after, before } = args;
-
-  const isBrand = q.Equals(
-    q.Select(['data', 'type'], q.Get(q.Identity())),
-    USER_TYPE.BRAND
-  );
 
   return client.query(
     q.Map(
       q.Paginate(
         q.If(
-          isBrand,
+          q.Equals(
+            q.Select(['data', 'type'], q.Get(activeUserRef)),
+            USER_TYPE.BRAND
+          ),
 
           // brand
           q.If(
             Boolean(state),
             q.Intersection(
-              q.Match(q.Index('campaign_by_user'), q.Identity()),
+              q.Match(q.Index('campaign_by_user'), activeUserRef),
               q.Match(q.Index('booking_campaign_by_state'), state)
             ),
-            q.Match(q.Index('campaign_by_user'), q.Identity())
+            q.Match(q.Index('campaign_by_user'), activeUserRef)
           ),
 
           // influencer
           q.Match(
             q.Index('booking_campaign_by_user_state'),
-            q.Identity(),
+            activeUserRef,
             state
           )
         ),
