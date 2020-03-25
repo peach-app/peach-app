@@ -36,6 +36,7 @@ export const AccountDetails = () => {
               <NavLink
                 title="Identity Documents"
                 iconProps={{ name: 'ios-arrow-forward' }}
+                onPress={() => navigation.navigate('AccountDocuments')}
               />
               <NavLink
                 title="Personal Details"
