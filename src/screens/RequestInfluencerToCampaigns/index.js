@@ -49,11 +49,12 @@ export const RequestInfluencerToCampaigns = () => {
     requestInfluencerToCampaigns,
     { loading: isRequestingLoading },
   ] = useMutation(REQUEST_INFLUENCER_TO_CAMPAIGNS, {
+    refetchQueries: ['getCampaign'],
     onCompleted: () =>
       openModal({
         type: MODAL_TYPES.CONFIRM_REQUESTED_INFLUENCER_TO_CAMPAIGNS,
         props: {
-          onNavigateBack: () => navigation.navigate('Discover'),
+          onNavigateBack: () => navigation.goBack(),
         },
       }),
   });
