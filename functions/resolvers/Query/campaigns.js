@@ -1,6 +1,6 @@
 const { USER_TYPE } = require('../../consts');
 
-module.exports = async (
+module.exports = (
   root,
   args,
   { client, q, DocumentDataWithId, formatRefs, activeUserRef }

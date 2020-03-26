@@ -221,7 +221,7 @@ export const Campaign = () => {
       {isBrand && !loading && tabBookingState === BOOKING_STATE.REQUESTED && (
         <Foot>
           <Button
-            title="Request more"
+            title="Request More"
             fixedWidth
             onPress={() =>
               navigation.navigate('RequestInfluencers', { campaignId: id })
