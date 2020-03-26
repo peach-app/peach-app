@@ -12,7 +12,13 @@ module.exports = gql`
       size: Int
       after: [RefInput]
       before: [RefInput]
-      influencerId: ID
+    ): CampaignPage
+
+    findCampaignsWithoutUserBookings(
+      id: ID!
+      size: Int
+      after: [RefInput]
+      before: [RefInput]
     ): CampaignPage
 
     findCampaignById(id: ID): Campaign

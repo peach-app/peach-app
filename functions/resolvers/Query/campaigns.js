@@ -1,23 +1,11 @@
 const { USER_TYPE } = require('../../consts');
 
-// Another nested if didn't work
-const getCampaignsWithoutState = (influencerId, q, activeUserRef) =>
-  influencerId
-    ? q.Difference(
-        q.Match(q.Index('campaign_by_user'), activeUserRef),
-        q.Match(
-          q.Index('booking_campaign_by_user'),
-          q.Ref(q.Collection('User'), influencerId)
-        )
-      )
-    : q.Match(q.Index('campaign_by_user'), activeUserRef);
-
 module.exports = async (
   root,
   args,
   { client, q, DocumentDataWithId, formatRefs, activeUserRef }
 ) => {
-  const { state, size = 30, after, before, influencerId } = args;
+  const { state, size = 30, after, before } = args;
 
   return client.query(
     q.Map(
@@ -35,7 +23,7 @@ module.exports = async (
               q.Match(q.Index('campaign_by_user'), activeUserRef),
               q.Match(q.Index('booking_campaign_by_state'), state)
             ),
-            getCampaignsWithoutState(influencerId, q, activeUserRef)
+            q.Match(q.Index('campaign_by_user'), activeUserRef)
           ),
 
           // influencer

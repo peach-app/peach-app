@@ -20,7 +20,7 @@ import {
 import { useModal } from 'contexts/Modal';
 import { NETWORK_STATUS, MODAL_TYPES } from 'consts';
 
-import GET_CAMPAIGNS from './graphql/get-campaigns';
+import GET_CAMPAIGNS_WITHOUT_BOOKINGS from './graphql/get-campaigns';
 import REQUEST_INFLUENCER_TO_CAMPAIGNS from './graphql/request-influencer-to-campaigns';
 import { formatSelectedCampaigns } from './helper';
 
@@ -33,17 +33,17 @@ export const RequestInfluencerToCampaigns = () => {
   } = useRoute();
 
   const { data, loading, networkStatus, refetch, fetchMore } = useQuery(
-    GET_CAMPAIGNS,
+    GET_CAMPAIGNS_WITHOUT_BOOKINGS,
     {
       notifyOnNetworkStatusChange: true,
       fetchPolicy: 'cache-and-network',
       variables: {
-        influencerId,
+        id: influencerId,
       },
     }
   );
   const fetching = loading && networkStatus === NETWORK_STATUS.FETCHING;
-  const campaigns = getOr([], 'campaigns.data', data);
+  const campaigns = getOr([], 'findCampaignsWithoutUserBookings.data', data);
 
   const [
     requestInfluencerToCampaigns,
@@ -78,7 +78,9 @@ export const RequestInfluencerToCampaigns = () => {
           />
         }
         onEndReached={() => {
-          const after = formatRefs(get('campaigns.after', data));
+          const after = formatRefs(
+            get('findCampaignsWithoutUserBookings.after', data)
+          );
 
           if (after.length <= 0 || loading) return;
 
@@ -87,11 +89,11 @@ export const RequestInfluencerToCampaigns = () => {
               after,
             },
             updateQuery: (cache, { fetchMoreResult }) => ({
-              campaigns: {
+              findCampaignsWithoutUserBookings: {
                 ...fetchMoreResult.campaigns,
                 data: [
-                  ...cache.campaigns.data,
-                  ...fetchMoreResult.campaigns.data,
+                  ...cache.findCampaignsWithoutUserBookings.data,
+                  ...fetchMoreResult.findCampaignsWithoutUserBookings.data,
                 ],
               },
             }),
