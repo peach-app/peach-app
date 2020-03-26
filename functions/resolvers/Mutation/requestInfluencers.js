@@ -1,8 +1,7 @@
-/* eslint-disable no-underscore-dangle */
 const { BOOKING_STATE } = require('../../consts');
 
 module.exports = async (
-  _,
+  root,
   { requestedInfluencers, campaignId },
   { client, q, activeUserRef }
 ) => {
@@ -18,7 +17,23 @@ module.exports = async (
         ),
 
         q.Map(
-          requestedInfluencers,
+          q.Filter(
+            requestedInfluencers,
+            q.Lambda(
+              ['_id'],
+              q.Not(
+                q.Exists(
+                  q.Intersection(
+                    q.Match(
+                      q.Index('booking_by_user'),
+                      q.Ref(q.Collection('User'), q.Var('_id'))
+                    ),
+                    q.Match(q.Index('booking_by_campaign'), q.Var('campaign'))
+                  )
+                )
+              )
+            )
+          ),
           q.Lambda(
             ['_id'],
             q.Create(q.Collection('Booking'), {

@@ -6,7 +6,7 @@ import { ACTION_COMPONENTS, MODAL_TYPES } from 'consts';
 import { SafeAreaView, StatusBar, Header, SearchInfluencers } from 'components';
 import { useModal } from 'contexts/Modal';
 
-import RequestedInfluencers from './RequestedInfluencers';
+import { RequestedInfluencers } from './components';
 import { formatInfluencersArray } from './helper';
 
 export const RequestInfluencers = () => {
@@ -19,6 +19,7 @@ export const RequestInfluencers = () => {
   const [requestedInfluencers, setRequestedInfluencers] = useState([]);
 
   const hasRequestedInfluencers = requestedInfluencers.length > 0;
+
   return (
     <SafeAreaView>
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
@@ -38,6 +39,7 @@ export const RequestInfluencers = () => {
           }
         />
         <StatusBar />
+
         {requestedInfluencers.length > 0 && (
           <RequestedInfluencers requestedInfluencers={requestedInfluencers} />
         )}
