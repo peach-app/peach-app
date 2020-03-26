@@ -3,7 +3,7 @@ import { ScrollView } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 import startCase from 'lodash/startCase';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
 import {
   SafeAreaView,
@@ -32,6 +32,7 @@ export const Profile = () => {
     },
   });
 
+  const navigation = useNavigation();
   const name = get('findUserByID.name', data);
   const bio = get('findUserByID.bio', data);
   const isBrand = get('user.type', user) === USER_TYPE.BRAND;
@@ -56,7 +57,15 @@ export const Profile = () => {
       </ScrollView>
       {isBrand && (
         <Foot>
-          <Button title="Request work" fixedWidth />
+          <Button
+            title="Request work"
+            fixedWidth
+            onPress={() => {
+              navigation.navigate('RequestInfluencerToCampaigns', {
+                influencerId: id,
+              });
+            }}
+          />
         </Foot>
       )}
     </SafeAreaView>

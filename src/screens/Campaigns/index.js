@@ -45,7 +45,6 @@ export const Campaigns = () => {
           ])[activeTabIndex],
     [activeTabIndex, isBrand]
   );
-
   const { data, loading, networkStatus, refetch, fetchMore } = useQuery(
     GET_CAMPAIGNS,
     {
@@ -153,7 +152,12 @@ export const Campaigns = () => {
           data={!fetching && campaigns}
           renderItem={({ item }) => (
             <FlatList.Item>
-              <CampaignCard {...item} />
+              <CampaignCard
+                {...item}
+                onPress={() =>
+                  navigation.navigate('Campaign', { id: item._id })
+                }
+              />
             </FlatList.Item>
           )}
         />

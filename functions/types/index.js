@@ -14,6 +14,13 @@ module.exports = gql`
       before: [RefInput]
     ): CampaignPage
 
+    findCampaignsWithoutUserBookings(
+      id: ID!
+      size: Int
+      after: [RefInput]
+      before: [RefInput]
+    ): CampaignPage
+
     findCampaignById(id: ID): Campaign
     findThreadById(id: ID!): Thread
     findUserByID(id: ID!): User
@@ -40,6 +47,7 @@ module.exports = gql`
     createBillingMethod(token: String!): Boolean
     verifyEmail(emailVerificationToken: String!): Boolean
     updateUserAvatar(url: String!): Boolean
+    requestInfluencerToCampaigns(influencerId: ID!, campaigns: [ID!]): Boolean
     createOrUpdateSocialAccounts(socialAccounts: SocialAccountsInput): Boolean
     completeBooking(id: ID!, note: String): Boolean
   }

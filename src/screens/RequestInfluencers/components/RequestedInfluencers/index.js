@@ -4,7 +4,7 @@ import get from 'lodash/fp/get';
 import { Text, Grid, Avatar } from 'components';
 import { RequestedInfluencersWrapper } from './styles';
 
-const RequestedInfluencers = ({ requestedInfluencers }) => (
+export const RequestedInfluencers = ({ requestedInfluencers }) => (
   <RequestedInfluencersWrapper>
     <Grid>
       <Grid.Item size={12}>
@@ -35,4 +35,3 @@ RequestedInfluencers.propTypes = {
     })
   ).isRequired,
 };
-export default RequestedInfluencers;
