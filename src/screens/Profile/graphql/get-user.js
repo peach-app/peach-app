@@ -12,6 +12,9 @@ export default gql`
       socialAccounts {
         instagram
         twitter
+        facebook
+        youTube
+        tikTok
       }
     }
   }
