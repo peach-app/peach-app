@@ -3,6 +3,7 @@ import { RefreshControl } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import getOr from 'lodash/fp/getOr';
 import get from 'lodash/fp/get';
+import { useNavigation } from '@react-navigation/native';
 
 import {
   SafeAreaView,
@@ -19,6 +20,7 @@ import { NETWORK_STATUS } from 'consts';
 import GET_DISCOVER_CAMPAIGNS from './graphql/get-discover-campaigns';
 
 export const DiscoverCampaigns = () => {
+  const navigation = useNavigation();
   const { data, loading, networkStatus, refetch, fetchMore } = useQuery(
     GET_DISCOVER_CAMPAIGNS,
     {
@@ -83,10 +85,13 @@ export const DiscoverCampaigns = () => {
           </>
         }
         keyExtractor={item => item._id}
-        data={campaigns}
+        data={!fetching && campaigns}
         renderItem={({ item }) => (
           <FlatList.Item>
-            <CampaignCard {...item} />
+            <CampaignCard
+              {...item}
+              onPress={() => navigation.navigate('Campaign', { id: item._id })}
+            />
           </FlatList.Item>
         )}
       />

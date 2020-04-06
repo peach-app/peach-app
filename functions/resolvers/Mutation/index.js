@@ -11,6 +11,7 @@ module.exports = {
   createBillingMethod: require('./createBillingMethod'),
   verifyEmail: require('./verifyEmail'),
   updateUserAvatar: require('./updateUserAvatar'),
+  requestInfluencerToCampaigns: require('./requestInfluencerToCampaigns'),
   createOrUpdateSocialAccounts: require('./createOrUpdateSocialAccounts'),
   completeBooking: require('./completeBooking'),
 };

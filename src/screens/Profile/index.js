@@ -4,6 +4,8 @@ import { useRoute } from '@react-navigation/native';
 import { ScrollView, Dimensions } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
+import startCase from 'lodash/startCase';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
 import omit from 'lodash/omit';
 import {

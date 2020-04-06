@@ -23,7 +23,7 @@ const ConfirmRequestedInfluencersModal = ({
   const [isSuccessScreenVisible, setSuccessScreen] = useState(false);
 
   const [requestInfluencers, { loading }] = useMutation(REQUEST_INFLUENCERS, {
-    refetchQueries: ['getCampaigns'],
+    refetchQueries: ['getCampaign'],
     onCompleted: () => setSuccessScreen(true),
   });
 
@@ -40,8 +40,7 @@ const ConfirmRequestedInfluencersModal = ({
 
   const handleFeedbackActionButtonPressed = useCallback(() => {
     onClose();
-
-    navigation.navigate('Campaigns');
+    navigation.goBack();
   }, []);
 
   return (
@@ -105,7 +104,7 @@ ConfirmRequestedInfluencersModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   campaignId: PropTypes.string.isRequired,
   navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired,
+    goBack: PropTypes.func.isRequired,
   }).isRequired,
 };
 export default ConfirmRequestedInfluencersModal;
