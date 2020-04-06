@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useRoute } from '@react-navigation/native';
 import { ScrollView, Dimensions } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
@@ -48,6 +47,7 @@ const ThemeProvider = styled.View`
 
 export const Profile = () => {
   const { user } = useUser();
+  const navigation = useNavigation();
 
   const {
     params: { id },
@@ -115,7 +115,15 @@ export const Profile = () => {
         {isBrand && (
           <ThemeProvider isFoot>
             <Foot withoutSafeArea>
-              <Button title="Request work" fixedWidth />
+              <Button
+                title="Request work"
+                fixedWidth
+                onPress={() => {
+                  navigation.navigate('RequestInfluencerToCampaigns', {
+                    influencerId: id,
+                  });
+                }}
+              />
             </Foot>
           </ThemeProvider>
         )}
