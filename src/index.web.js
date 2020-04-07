@@ -5,22 +5,32 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { AppearanceProvider } from 'react-native-appearance';
 import { ApolloProvider } from '@apollo/react-hooks';
 import { VerifyEmail } from './screens/VerifyEmail';
+import { PasswordReset } from './screens/PasswordReset';
 import client from './apollo-client';
 import { App } from './App';
 
 import ThemeProvider from './theme-provider';
 
+const ProvidersHOC = ({ children }) => (
+  <ApolloProvider client={client}>
+    <AppearanceProvider>
+      <ThemeProvider>{children}</ThemeProvider>
+    </AppearanceProvider>
+  </ApolloProvider>
+);
+
 export default () => (
   <Router>
     <Switch>
       <Route path="/verify-email/:token">
-        <ApolloProvider client={client}>
-          <AppearanceProvider>
-            <ThemeProvider>
-              <VerifyEmail />
-            </ThemeProvider>
-          </AppearanceProvider>
-        </ApolloProvider>
+        <ProvidersHOC>
+          <VerifyEmail />
+        </ProvidersHOC>
+      </Route>
+      <Route path="/reset-password/:userId">
+        <ProvidersHOC>
+          <PasswordReset />
+        </ProvidersHOC>
       </Route>
       <Route path="/">
         <NavigationContainer>
