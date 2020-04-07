@@ -5,25 +5,7 @@ import * as Device from 'expo-device';
 import { useMutation } from '@apollo/react-hooks';
 import VERIFY_EMAIL from './graphql/verify-email';
 import { Content, Icon } from './styles';
-
-const PC_HARDWARE = 3;
-
-const getDeepLink = async () => {
-  const device = await Device.getDeviceTypeAsync();
-
-  if (device !== PC_HARDWARE) {
-    // check if prod:
-    // and replace with in expo.scheme file (in app.json) alias
-    // peach-app://
-    // else local -> replace here
-    return 'peach-app://';
-  }
-
-  // check if prod:
-  // https://dashboard.peachapp.io/
-  // else local -> replace here
-  return 'https://dashboard.peachapp.io/';
-};
+import getDeepLink from '../../helpers/getDeepLink';
 
 const deepLinkBackToApp = async () => {
   const deepLink = await getDeepLink();
