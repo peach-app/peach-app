@@ -50,6 +50,8 @@ module.exports = gql`
     requestInfluencerToCampaigns(influencerId: ID!, campaigns: [ID!]): Boolean
     createOrUpdateSocialAccounts(socialAccounts: SocialAccountsInput): Boolean
     completeBooking(id: ID!, note: String): Boolean
+    requestPasswordReset(email: String!): Boolean
+    resetPassword(userId: ID!, password: String!): Boolean
   }
 
   # Fauna references #
