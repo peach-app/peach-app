@@ -10,7 +10,7 @@ export default async () => {
     // and replace with in expo.scheme file (in app.json) alias
     // peach-app://
     // else local -> replace here
-    return 'peach-app://';
+    return 'exp://192.168.1.108:19000';
   }
 
   // check if prod:
