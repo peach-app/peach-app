@@ -4,6 +4,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
+import { useNavigation } from '@react-navigation/native';
 
 import {
   SafeAreaView,
@@ -20,6 +21,7 @@ import {
   GraphQLErrors,
 } from 'components';
 import { useAuth } from 'contexts/Auth';
+import { Touchable } from './styles';
 
 import LOGIN from './graphql/login';
 
@@ -37,6 +39,8 @@ export const Login = () => {
       setToken(get('login.secret', data));
     },
   });
+
+  const navigation = useNavigation();
 
   const formik = useFormik({
     validateOnBlur: false,
@@ -101,6 +105,17 @@ export const Login = () => {
                   <GraphQLErrors error={error} />
                 </Grid.Item>
               )}
+              <Grid.Item size={12}>
+                <Touchable>
+                  <Text
+                    isCenter
+                    isUnderlined
+                    onPress={() => navigation.navigate('PasswordResetEmail')}
+                  >
+                    Forgot your password?
+                  </Text>
+                </Touchable>
+              </Grid.Item>
 
               <Grid.Item size={12}>
                 <Actions>

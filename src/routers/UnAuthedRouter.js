@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Landing, Login, Register } from 'screens';
+import { Landing, Login, Register, PasswordResetEmail } from 'screens';
 
 import { createStackNavigator } from './components';
 
@@ -19,5 +19,6 @@ export const UnAuthedNavigator = () => (
     <Stack.Screen name="Landing" component={Landing} />
     <Stack.Screen name="Login" component={Login} />
     <Stack.Screen name="Register" component={Register} />
+    <Stack.Screen name="PasswordResetEmail" component={PasswordResetEmail} />
   </Stack.Navigator>
 );
