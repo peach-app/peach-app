@@ -93,9 +93,9 @@ export const CampaignCardFragment = gql`
     description
     user {
       name
-      # avatar {
-      #   url
-      # }
+      avatar {
+        url
+      }
     }
   }
 `;

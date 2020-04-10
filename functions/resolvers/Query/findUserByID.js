@@ -1,5 +1,4 @@
 module.exports = (root, args, { client, q, DocumentDataWithId }) => {
-  console.log('USERRRR');
   return client.query(
     q.Let(
       {

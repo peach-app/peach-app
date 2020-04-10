@@ -30,7 +30,6 @@ export const DiscoverCampaigns = () => {
 
   const campaigns = getOr([], 'discover.campaigns.data', data);
 
-  console.log('campaigns', campaigns)
   const fetching = loading && networkStatus === NETWORK_STATUS.FETCHING;
 
   return (
