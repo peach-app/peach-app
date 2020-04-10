@@ -1,5 +1,6 @@
 const omit = require('lodash/omit');
 const { USER_TYPE } = require('../../consts');
+const stripe = require('../../helpers/stripe');
 
 module.exports = async (
   _,
@@ -39,6 +40,16 @@ module.exports = async (
       )
     );
   }
+
+  await stripe.paymentIntents.create(
+    {
+      amount: 5000, // Pence for campaign creation cost
+      currency: 'gbp',
+    },
+    {
+      stripeAccount: 'acct_1GQX2eDMO5BqISFg',
+    }
+  );
 
   return client.query(
     DocumentDataWithId(
