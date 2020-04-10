@@ -1,9 +1,21 @@
 import gql from 'graphql-tag';
+import { CampaignCardFragment } from '../../CampaignCard';
 
 export default gql`
-  query getBrandCampaigns($id: ID!) {
-    findCampaignsByBrand(id: $id) {
-      name
+  ${CampaignCardFragment}
+
+  query getBrandCampaigns($id: ID!, $after: [RefInput]) {
+    findCampaignsByBrand(id: $id, after: $after) {
+      data {
+        _id
+        ...CampaignCardFragment
+      }
+      after {
+        id
+        collection {
+          id
+        }
+      }
     }
   }
 `;

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Animated, Dimensions, StyleSheet } from 'react-native';
 import styled from 'styled-components/native';
 import { Title } from '../Title';
+import { Label } from '../Label';
 
 const dim = Dimensions.get('window');
 
@@ -24,7 +25,7 @@ const Container = styled.View`
 
 const Fallback = styled.View`
   display: flex;
-  background-color: ${props => props.theme.background};
+  background-color: ${props => props.theme.brand};
   align-items: center;
   justify-content: center;
   width: ${dim.width}px;
@@ -63,6 +64,7 @@ export const ProgressiveImage = ({ source, fallback }) => {
               .join('')
               .toUpperCase()}
           </Title>
+          <Label>photo not uploaded yet // graphic</Label>
         </Fallback>
       )}
     </Container>

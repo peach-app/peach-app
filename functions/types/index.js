@@ -21,10 +21,16 @@ module.exports = gql`
       before: [RefInput]
     ): CampaignPage
 
+    findCampaignsByBrand(
+      id: ID
+      size: Int
+      after: [RefInput]
+      before: [RefInput]
+    ): CampaignPage
+
     findCampaignById(id: ID): Campaign
     findThreadById(id: ID!): Thread
     findUserByID(id: ID!): User
-    findCampaignsByBrand(id: ID): Campaign
 
     searchUsers(type: UserType!, query: String!): UserPage
   }

@@ -3,7 +3,6 @@ import styled from 'styled-components/native';
 import { ScrollView, Dimensions } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
-import startCase from 'lodash/startCase';
 import { useRoute, useNavigation } from '@react-navigation/native';
 
 import omit from 'lodash/omit';
@@ -34,7 +33,11 @@ const LoaderWrapper = styled.View`
 `;
 
 const Container = styled.View`
-  padding-top: ${Dimensions.get('window').height / 2};
+  ${props =>
+    props.withTopPadding &&
+    `
+  padding-top: ${Dimensions.get('window').height / 2}
+  `}
   padding-horizontal: ${props => props.theme.spacing}px;
   width: 900px;
   max-width: 100%;
@@ -59,11 +62,9 @@ export const Profile = () => {
   const { data, loading } = useQuery(GET_USER, {
     variables: {
       id,
-      // isBrandProfile: !isBrand,
     },
   });
 
-  console.log('DATA', data);
   const name = get('findUserByID.name', data);
   const bio = get('findUserByID.bio', data);
   const socialAccounts = get('findUserByID.socialAccounts', data);
@@ -78,6 +79,30 @@ export const Profile = () => {
         </LoaderWrapper>
       );
     }
+    if (!isBrand) {
+      return (
+        <CampaignsByBrand
+          id={id}
+          headerComponent={
+            <>
+              <Intro />
+              <Header isBorderless />
+              <Container>
+                <Grid>
+                  <Grid.Item size={12}>
+                    <Title>{name}</Title>
+                  </Grid.Item>
+
+                  <Grid.Item size={12}>
+                    <Text isCenter>{bio || 'The bio is provided yet.'}</Text>
+                  </Grid.Item>
+                </Grid>
+              </Container>
+            </>
+          }
+        />
+      );
+    }
     return (
       <>
         <ScrollView>
@@ -90,7 +115,7 @@ export const Profile = () => {
           />
           <Intro />
           <Header isBorderless />
-          <Container>
+          <Container withTopPadding>
             <Grid>
               {socialAccounts && (
                 <Grid.Item size={12}>
@@ -112,7 +137,9 @@ export const Profile = () => {
               </Grid.Item>
 
               <Grid.Item size={12}>
-                <Text isCenter>{bio || 'The bio is provided yet.'}</Text>
+                <Text isCenter>
+                  {bio || 'The influencer has not added their details yet.'}
+                </Text>
               </Grid.Item>
               {!isBrand && (
                 <Grid.Item size={12}>
