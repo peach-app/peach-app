@@ -41,15 +41,20 @@ module.exports = async (
     );
   }
 
-  await stripe.paymentIntents.create(
+  const paymentIntent = await stripe.paymentIntents.create(
     {
       amount: 5000, // Pence for campaign creation cost
       currency: 'gbp',
+      payment_method_types: ['card'],
     },
     {
       stripeAccount: 'acct_1GQX2eDMO5BqISFg',
     }
   );
+
+  // This should be under a new method imo
+  // Used when the client side user confirms the payment and sends card details
+  await stripe.paymentIntents.confirm(paymentIntent.id);
 
   return client.query(
     DocumentDataWithId(
