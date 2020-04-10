@@ -16,11 +16,11 @@ import { Loading } from '../Loading';
 import { IconButton } from '../IconButton';
 import { Avatar } from '../Avatar';
 import { Text } from '../Text';
-import UPDATE_BOOKING_STATE from './graphql/update-booking-state';
+import DECLINE_BOOKING from './graphql/decline-booking';
 
 export const Booking = ({ _id, cost, state, note, user, isLoading }) => {
   const navigation = useNavigation();
-  const [updateBookingState, { loading }] = useMutation(UPDATE_BOOKING_STATE, {
+  const [declineBooking, { loading }] = useMutation(DECLINE_BOOKING, {
     refetchQueries: ['getCampaigns', 'getCampaign'],
     variables: {
       id: _id,
@@ -74,11 +74,7 @@ export const Booking = ({ _id, cost, state, note, user, isLoading }) => {
                 name="ios-checkmark-circle-outline"
                 size={32}
                 onPress={() => {
-                  updateBookingState({
-                    variables: {
-                      state: BOOKING_STATE.ACCEPTED,
-                    },
-                  });
+                  navigation.navigate('AcceptBooking', { id: _id });
                 }}
               />
             </Grid.Item>
@@ -86,13 +82,7 @@ export const Booking = ({ _id, cost, state, note, user, isLoading }) => {
               <IconButton
                 name="ios-close-circle-outline"
                 size={32}
-                onPress={() => {
-                  updateBookingState({
-                    variables: {
-                      state: BOOKING_STATE.DECLINED,
-                    },
-                  });
-                }}
+                onPress={() => declineBooking()}
               />
             </Grid.Item>
           </>
