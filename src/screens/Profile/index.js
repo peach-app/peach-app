@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import { ScrollView, Dimensions } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
@@ -19,6 +19,7 @@ import {
   Intro,
   ProgressiveImage,
   Loading,
+  CampaignsByBrand,
 } from 'components';
 import { useUser } from 'contexts/User';
 import { useModal } from 'contexts/Modal';
@@ -53,14 +54,18 @@ export const Profile = () => {
     params: { id },
   } = useRoute();
 
+  const isBrand = get('user.type', user) === USER_TYPE.BRAND;
+
   const { data, loading } = useQuery(GET_USER, {
     variables: {
       id,
+      // isBrandProfile: !isBrand,
     },
   });
+
+  console.log('DATA', data);
   const name = get('findUserByID.name', data);
   const bio = get('findUserByID.bio', data);
-  const isBrand = get('user.type', user) === USER_TYPE.BRAND;
   const socialAccounts = get('findUserByID.socialAccounts', data);
   const uri = get('findUserByID.avatar.url', data);
   const { openModal } = useModal();
@@ -109,6 +114,11 @@ export const Profile = () => {
               <Grid.Item size={12}>
                 <Text isCenter>{bio || 'The bio is provided yet.'}</Text>
               </Grid.Item>
+              {!isBrand && (
+                <Grid.Item size={12}>
+                  <CampaignsByBrand id={id} />
+                </Grid.Item>
+              )}
             </Grid>
           </Container>
         </ScrollView>

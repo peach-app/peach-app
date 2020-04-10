@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Animated, Dimensions, StyleSheet } from 'react-native';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import { Title } from '../Title';
 
 const dim = Dimensions.get('window');
