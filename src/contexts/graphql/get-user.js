@@ -11,6 +11,13 @@ export default gql`
       type
       onboarded
       ...ProfileHeaderFragment
+      stripeAccount {
+        charges_enabled
+        transfers_enabled
+      }
+      emailVerification {
+        isVerified
+      }
     }
   }
 `;
