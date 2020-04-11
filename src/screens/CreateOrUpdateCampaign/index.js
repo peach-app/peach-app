@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import { ScrollView, KeyboardAvoidingView } from 'react-native';
+import {
+  ScrollView,
+  KeyboardAvoidingView,
+  TouchableOpacity,
+} from 'react-native';
 import { useFormik } from 'formik';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -18,18 +22,45 @@ import {
   Tabs,
   MoneyInput,
   DatePicker,
+  AddBankDetailsPlaceholder,
+  SubTitle,
 } from 'components';
 import { CAMPAIGN_TYPE, MODAL_TYPES } from 'consts';
 
-import { useModal } from '../../contexts/Modal';
+import { useModal } from 'contexts/Modal';
+import { useUser } from 'contexts/User';
 import { validationSchema, FORM_INITIAL_VALUES } from './consts';
 import GET_CAMPAIGN from './graphql/get-campaign';
 import CREATE_OR_UPDATE_CAMPAIGN_MUTATION from './graphql/create-or-update-campaign';
 
 export const CreateOrUpdateCampaign = () => {
+  const {
+    user: { isStripeEnabled },
+  } = useUser();
+
   const { openModal } = useModal();
-  const [activeTab, setTab] = useState(0);
   const navigation = useNavigation();
+
+  if (!isStripeEnabled) {
+    return (
+      <SafeAreaView>
+        <StatusBar />
+        <Grid.Item size={12}>
+          <Header title="Create Campaign" />
+          <Intro />
+          <SubTitle isCentered>
+            You are one step away to be able to start creating campaigns!
+          </SubTitle>
+          <Intro />
+          <AddBankDetailsPlaceholder
+            onPress={() => navigation.navigate('NewBilling')}
+            text=" Tap to setup your Bank Account. "
+          />
+        </Grid.Item>
+      </SafeAreaView>
+    );
+  }
+  const [activeTab, setTab] = useState(0);
   const { params } = useRoute();
 
   const campaignId = get('campaignId', params);
