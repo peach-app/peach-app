@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, TouchableOpacity } from 'react-native';
+import { ScrollView } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import { useNavigation } from '@react-navigation/native';
 import getOr from 'lodash/fp/getOr';
@@ -13,9 +13,9 @@ import {
   Card,
   Text,
   SkeletonText,
+  AddBankDetailsPlaceholder,
 } from 'components';
 
-import { AddIcon } from './styles';
 import GET_EXTERNAL_ACCOUNTS from './graphql/get-external-accounts';
 
 export const BillingDetails = () => {
@@ -71,12 +71,10 @@ export const BillingDetails = () => {
             ))}
 
             <Grid.Item size={12}>
-              <TouchableOpacity
+              <AddBankDetailsPlaceholder
                 onPress={() => navigation.navigate('NewBilling')}
-              >
-                <AddIcon />
-                <Text isCenter>{'Add a new\nCard or Bank Account'}</Text>
-              </TouchableOpacity>
+                text={'Add a new\nCard or Bank Account'}
+              />
             </Grid.Item>
           </Grid>
         </Container>
