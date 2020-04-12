@@ -48,8 +48,8 @@ export const CreateOrUpdateCampaign = () => {
             </SubTitle>
             <Intro />
             <AddBankDetailsPlaceholder
-              onPress={() => navigation.navigate('NewBilling')}
-              text=" Tap to setup your Bank Account. "
+              onPress={() => navigation.navigate('AccountDetails')}
+              text=" Tap to add your details. "
             />
           </Grid.Item>
         </Grid>
