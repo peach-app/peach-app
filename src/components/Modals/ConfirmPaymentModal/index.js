@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import getOr from 'lodash/fp/getOr';
 
-import PropTypes from 'prop-types';
 import {
   Modal,
   Grid,
@@ -67,7 +67,7 @@ const ConfirmPaymentModal = ({ onClose, campaign, onConfirm, isLoading }) => {
 };
 
 ConfirmPaymentModal.propTypes = {
-  onClose: propTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
   campaign: PropTypes.object.isRequired,
   onConfirm: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,

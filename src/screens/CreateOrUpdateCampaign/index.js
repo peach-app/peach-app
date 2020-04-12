@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
-import {
-  ScrollView,
-  KeyboardAvoidingView,
-  TouchableOpacity,
-} from 'react-native';
+import { ScrollView, KeyboardAvoidingView } from 'react-native';
 import { useFormik } from 'formik';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -38,28 +34,31 @@ export const CreateOrUpdateCampaign = () => {
     user: { isStripeEnabled },
   } = useUser();
 
-  const { openModal } = useModal();
   const navigation = useNavigation();
-
   if (!isStripeEnabled) {
     return (
       <SafeAreaView>
         <StatusBar />
-        <Grid.Item size={12}>
-          <Header title="Create Campaign" />
-          <Intro />
-          <SubTitle isCentered>
-            You are one step away to be able to start creating campaigns!
-          </SubTitle>
-          <Intro />
-          <AddBankDetailsPlaceholder
-            onPress={() => navigation.navigate('NewBilling')}
-            text=" Tap to setup your Bank Account. "
-          />
-        </Grid.Item>
+        <Grid>
+          <Grid.Item size={12}>
+            <Header title="Create Campaign" />
+            <Intro />
+            <SubTitle isCentered>
+              {`Almost there!\n Finish setting up your account to start creating campaigns.`}
+            </SubTitle>
+            <Intro />
+            <AddBankDetailsPlaceholder
+              onPress={() => navigation.navigate('NewBilling')}
+              text=" Tap to setup your Bank Account. "
+            />
+          </Grid.Item>
+        </Grid>
       </SafeAreaView>
     );
   }
+
+  const { openModal } = useModal();
+
   const [activeTab, setTab] = useState(0);
   const { params } = useRoute();
 
@@ -90,24 +89,47 @@ export const CreateOrUpdateCampaign = () => {
     }
   );
 
+  const submitCampaign = ({
+    name,
+    description,
+    budget,
+    dueDate,
+    paymentId,
+  }) => {
+    createOrUpdateCampaign({
+      variables: {
+        campaign: {
+          ...(Boolean(campaignId) && { _id: campaignId }),
+          name,
+          description,
+          budget: budget.toString(),
+          ...(!campaignId && { dueDate }),
+          private: activeTab === 0,
+          paymentId,
+        },
+      },
+    });
+  };
+
   const formik = useFormik({
     validateOnBlur: false,
     validateOnChange: false,
     initialValues: campaign || FORM_INITIAL_VALUES,
     validationSchema,
-    onSubmit: ({ name, description, budget, dueDate }) => {
-      createOrUpdateCampaign({
-        variables: {
-          campaign: {
-            ...(Boolean(campaignId) && { _id: campaignId }),
-            name,
-            description,
-            budget: budget.toString(),
-            ...(!campaignId && { dueDate }),
-            private: activeTab === 0,
+    onSubmit: campaignDetails => {
+      if (campaignId) {
+        submitCampaign(campaignDetails);
+      } else {
+        openModal({
+          type: MODAL_TYPES.CONFIRM_PAYMENT,
+          props: {
+            onConfirm: paymentId =>
+              submitCampaign({ ...campaignDetails, paymentId }),
+            campaign: campaignDetails,
+            isLoading: saving,
           },
-        },
-      });
+        });
+      }
     },
   });
 
@@ -173,20 +195,17 @@ export const CreateOrUpdateCampaign = () => {
                   value={formik.values.budget}
                 />
               </Grid.Item>
-
-              <Grid.Item size={12}>
-                <Actions>
-                  <Button
-                    isLoading={saving}
-                    onPress={formik.handleSubmit}
-                    title={campaignId ? 'Save' : 'Create'}
-                    fixedWidth
-                  />
-                </Actions>
-              </Grid.Item>
             </Grid>
           </Container>
         </ScrollView>
+        <Actions>
+          <Button
+            isLoading={saving}
+            onPress={formik.handleSubmit}
+            title={campaignId ? 'Save' : 'Create'}
+            fixedWidth
+          />
+        </Actions>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

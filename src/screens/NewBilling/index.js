@@ -37,7 +37,7 @@ export const NewBilling = ({
   const [createBillingMethod, { loading, error }] = useMutation(
     CREATE_BILLING_METHOD,
     {
-      refetchQueries: ['getExternalAccount'],
+      refetchQueries: ['getExternalAccount, getCurrentUser'],
       onCompleted: () => {
         if (onComplete) return onComplete();
         navigation.goBack();
