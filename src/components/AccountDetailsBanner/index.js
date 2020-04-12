@@ -1,26 +1,17 @@
 import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import PropTypes from 'prop-types';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native';
-import get from 'lodash/fp/get';
 
 import { Grid } from '../Grid';
 import { Container } from '../Container';
 
 import { Touchable, Main, Copy } from './styles';
-import GET_USER from './graphql/get-user';
 
-export const AccountDetailsBanner = () => {
-  const { data, loading } = useQuery(GET_USER);
+export const AccountDetailsBanner = ({ isStripeEnabled, isEmailVerified }) => {
   const navigation = useNavigation();
-
-  const isEmailVerified = get('user.emailVerification.isVerified', data);
-  const isStripeEnabled =
-    get('user.stripeAccount.charges_enabled', data) &&
-    get('user.stripeAccount.transfers_enabled', data);
-
-  if (loading || (isStripeEnabled && isEmailVerified)) {
+  if (isStripeEnabled && isEmailVerified) {
     return null;
   }
 
@@ -51,4 +42,14 @@ export const AccountDetailsBanner = () => {
       </Main>
     </Touchable>
   );
+};
+
+AccountDetailsBanner.defaultProps = {
+  isStripeEnabled: true,
+  isEmailVerified: true,
+};
+
+AccountDetailsBanner.propTypes = {
+  isStripeEnabled: PropTypes.bool,
+  isEmailVerified: PropTypes.bool,
 };

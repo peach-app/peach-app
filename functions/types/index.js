@@ -275,5 +275,6 @@ module.exports = gql`
     dueDate: String
     private: Boolean!
     budget: String!
+    paymentId: String
   }
 `;
