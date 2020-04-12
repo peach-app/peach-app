@@ -11,7 +11,6 @@ import { Touchable, Main, Copy } from './styles';
 
 export const AccountDetailsBanner = ({ isStripeEnabled, isEmailVerified }) => {
   const navigation = useNavigation();
-
   if (isStripeEnabled && isEmailVerified) {
     return null;
   }
@@ -45,7 +44,12 @@ export const AccountDetailsBanner = ({ isStripeEnabled, isEmailVerified }) => {
   );
 };
 
+AccountDetailsBanner.defaultProps = {
+  isStripeEnabled: true,
+  isEmailVerified: true,
+};
+
 AccountDetailsBanner.propTypes = {
-  isStripeEnabled: PropTypes.bool.isRequired,
-  isEmailVerified: PropTypes.bool.isRequired,
+  isStripeEnabled: PropTypes.bool,
+  isEmailVerified: PropTypes.bool,
 };
