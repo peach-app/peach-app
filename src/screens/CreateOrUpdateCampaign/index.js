@@ -18,18 +18,48 @@ import {
   Tabs,
   MoneyInput,
   DatePicker,
+  AddBankDetailsPlaceholder,
+  SubTitle,
 } from 'components';
 import { CAMPAIGN_TYPE, MODAL_TYPES } from 'consts';
 
-import { useModal } from '../../contexts/Modal';
+import { useModal } from 'contexts/Modal';
+import { useUser } from 'contexts/User';
 import { validationSchema, FORM_INITIAL_VALUES } from './consts';
 import GET_CAMPAIGN from './graphql/get-campaign';
 import CREATE_OR_UPDATE_CAMPAIGN_MUTATION from './graphql/create-or-update-campaign';
 
 export const CreateOrUpdateCampaign = () => {
-  const { openModal } = useModal();
-  const [activeTab, setTab] = useState(0);
+  const {
+    user: { isStripeEnabled },
+  } = useUser();
+
   const navigation = useNavigation();
+  if (!isStripeEnabled) {
+    return (
+      <SafeAreaView>
+        <StatusBar />
+        <Grid>
+          <Grid.Item size={12}>
+            <Header title="Create Campaign" />
+            <Intro />
+            <SubTitle isCentered>
+              {`Almost there!\n Finish setting up your account to start creating campaigns.`}
+            </SubTitle>
+            <Intro />
+            <AddBankDetailsPlaceholder
+              onPress={() => navigation.navigate('AccountDetails')}
+              text=" Tap to add your details. "
+            />
+          </Grid.Item>
+        </Grid>
+      </SafeAreaView>
+    );
+  }
+
+  const { openModal } = useModal();
+
+  const [activeTab, setTab] = useState(0);
   const { params } = useRoute();
 
   const campaignId = get('campaignId', params);
@@ -59,24 +89,47 @@ export const CreateOrUpdateCampaign = () => {
     }
   );
 
+  const submitCampaign = ({
+    name,
+    description,
+    budget,
+    dueDate,
+    paymentId,
+  }) => {
+    createOrUpdateCampaign({
+      variables: {
+        campaign: {
+          ...(Boolean(campaignId) && { _id: campaignId }),
+          name,
+          description,
+          budget: budget.toString(),
+          ...(!campaignId && { dueDate }),
+          private: activeTab === 0,
+          paymentId,
+        },
+      },
+    });
+  };
+
   const formik = useFormik({
     validateOnBlur: false,
     validateOnChange: false,
     initialValues: campaign || FORM_INITIAL_VALUES,
     validationSchema,
-    onSubmit: ({ name, description, budget, dueDate }) => {
-      createOrUpdateCampaign({
-        variables: {
-          campaign: {
-            ...(Boolean(campaignId) && { _id: campaignId }),
-            name,
-            description,
-            budget: budget.toString(),
-            ...(!campaignId && { dueDate }),
-            private: activeTab === 0,
+    onSubmit: campaignDetails => {
+      if (campaignId) {
+        submitCampaign(campaignDetails);
+      } else {
+        openModal({
+          type: MODAL_TYPES.CONFIRM_PAYMENT,
+          props: {
+            onConfirm: paymentId =>
+              submitCampaign({ ...campaignDetails, paymentId }),
+            campaign: campaignDetails,
+            isLoading: saving,
           },
-        },
-      });
+        });
+      }
     },
   });
 
@@ -142,20 +195,17 @@ export const CreateOrUpdateCampaign = () => {
                   value={formik.values.budget}
                 />
               </Grid.Item>
-
-              <Grid.Item size={12}>
-                <Actions>
-                  <Button
-                    isLoading={saving}
-                    onPress={formik.handleSubmit}
-                    title={campaignId ? 'Save' : 'Create'}
-                    fixedWidth
-                  />
-                </Actions>
-              </Grid.Item>
             </Grid>
           </Container>
         </ScrollView>
+        <Actions>
+          <Button
+            isLoading={saving}
+            onPress={formik.handleSubmit}
+            title={campaignId ? 'Save' : 'Create'}
+            fixedWidth
+          />
+        </Actions>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

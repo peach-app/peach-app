@@ -13,22 +13,22 @@ export const Discover = () => {
   const { user } = useUser();
   const type = get('user.type', user);
 
+  const renderDiscover = discover => (
+    <>
+      <AccountDetailsBanner
+        isEmailVerified={user.isEmailVerified}
+        isStripeEnabled={user.isStripeEnabled}
+      />
+      {discover}
+    </>
+  );
+
   if (type === USER_TYPE.BRAND) {
-    return (
-      <>
-        <AccountDetailsBanner />
-        <DiscoverInfluencers />
-      </>
-    );
+    return renderDiscover(<DiscoverInfluencers />);
   }
 
   if (type === USER_TYPE.INFLUENCER) {
-    return (
-      <>
-        <AccountDetailsBanner />
-        <DiscoverCampaigns />
-      </>
-    );
+    return renderDiscover(<DiscoverCampaigns />);
   }
 
   return null;

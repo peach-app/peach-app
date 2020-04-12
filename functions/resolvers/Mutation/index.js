@@ -14,4 +14,6 @@ module.exports = {
   requestInfluencerToCampaigns: require('./requestInfluencerToCampaigns'),
   createOrUpdateSocialAccounts: require('./createOrUpdateSocialAccounts'),
   completeBooking: require('./completeBooking'),
+  requestPasswordReset: require('./requestPasswordReset'),
+  resetPassword: require('./resetPassword'),
 };

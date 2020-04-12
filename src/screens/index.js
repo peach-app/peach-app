@@ -27,3 +27,6 @@ export * from './RequestInfluencers';
 export * from './BookingCompletion';
 export * from './CompleteOnboarding';
 export * from './AccountDocuments';
+export * from './PasswordResetEmail';
+export * from './AcceptBooking';
+
