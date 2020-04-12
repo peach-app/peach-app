@@ -6,7 +6,9 @@ export const Foot = styled(Animatable.View).attrs({
   duration: 300,
   delay: 300,
 })`
-  padding-vertical: ${props => props.theme.spacing}px;
+  padding-vertical: ${props =>
+    props.withoutSafeArea ? props.theme.spacingLarge : props.theme.spacing}px;
+
   border-color: ${props => props.theme.greyLight};
   border-top-width: 1px;
   align-items: center;

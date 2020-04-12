@@ -7,4 +7,5 @@ module.exports = {
   findUserByID: require('./findUserByID'),
   discover: require('./discover'),
   searchUsers: require('./searchUsers'),
+  findCampaignsByBrand: require('./findCampaignsByBrand'),
 };
