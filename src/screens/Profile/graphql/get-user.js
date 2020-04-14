@@ -9,6 +9,7 @@ export default gql`
     findUserByID(id: $id) {
       ...ProfileHeaderFragment
       bio
+      type
       socialAccounts {
         instagram
         twitter

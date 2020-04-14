@@ -4,7 +4,7 @@ import { Text } from '../Text';
 import { Container } from '../Container';
 
 export const Main = styled.View`
-  ${props => !props.isBorderless && `border-bottom-width: 1px`};
+  border-bottom-width: 1px;
   height: 55px;
   border-color: ${props => props.theme.greyLight};
 `;

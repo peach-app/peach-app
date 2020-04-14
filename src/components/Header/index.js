@@ -4,13 +4,8 @@ import { TouchableOpacity } from 'react-native';
 import { Main, Wrapper, Action, MainTitle, RightAction } from './styles';
 import { BackButton } from '../BackButton';
 
-export const Header = ({
-  title,
-  rightActionLabel,
-  onRightActionPressed,
-  isBorderless,
-}) => (
-  <Main isBorderless={isBorderless}>
+export const Header = ({ title, rightActionLabel, onRightActionPressed }) => (
+  <Main>
     <Wrapper>
       <Action>
         <BackButton />
@@ -29,12 +24,10 @@ Header.defaultProps = {
   title: null,
   rightActionLabel: null,
   onRightActionPressed: null,
-  isBorderless: false,
 };
 
 Header.propTypes = {
   title: PropTypes.string,
   rightActionLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   onRightActionPressed: PropTypes.func,
-  isBorderless: PropTypes.bool,
 };

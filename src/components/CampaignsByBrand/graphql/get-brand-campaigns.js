@@ -4,17 +4,11 @@ import { CampaignCardFragment } from '../../CampaignCard';
 export default gql`
   ${CampaignCardFragment}
 
-  query getBrandCampaigns($id: ID!, $after: [RefInput]) {
-    findCampaignsByBrand(id: $id, after: $after) {
+  query getBrandCampaigns($id: ID!) {
+    findCampaignsByBrand(id: $id, size: 10) {
       data {
         _id
         ...CampaignCardFragment
-      }
-      after {
-        id
-        collection {
-          id
-        }
       }
     }
   }
