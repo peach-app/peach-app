@@ -33,7 +33,7 @@ export const BillingDetails = () => {
             <Grid.Item size={12}>
               <AddBankDetailsPlaceholder
                 onPress={() => navigation.navigate('NewBilling')}
-                text={'Add a new\nCard or Bank Account'}
+                text={'Add a new\nbilling method'}
               />
             </Grid.Item>
           </Grid>
