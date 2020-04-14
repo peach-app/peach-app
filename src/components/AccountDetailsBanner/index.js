@@ -1,17 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native';
 
+import { useUser } from 'contexts/User';
+
 import { Grid } from '../Grid';
 import { Container } from '../Container';
-
 import { Touchable, Main, Copy } from './styles';
 
-export const AccountDetailsBanner = ({ isStripeEnabled, isEmailVerified }) => {
+export const AccountDetailsBanner = () => {
+  const { user } = useUser();
   const navigation = useNavigation();
-  if (isStripeEnabled && isEmailVerified) {
+
+  if (user.isStripeEnabled && user.isEmailVerified) {
     return null;
   }
 
@@ -22,12 +24,13 @@ export const AccountDetailsBanner = ({ isStripeEnabled, isEmailVerified }) => {
           <Container>
             <Grid align="center">
               <Grid.Item flex={1}>
-                {!isEmailVerified && (
+                {!user.isEmailVerified && (
                   <Copy>
-                    Please verify your email address {!isStripeEnabled && 'and'}
+                    Please verify your email address{' '}
+                    {!user.isStripeEnabled && 'and'}
                   </Copy>
                 )}
-                {!isStripeEnabled && (
+                {!user.isStripeEnabled && (
                   <Copy>
                     Visit Account Details to finish your account setup
                   </Copy>
@@ -42,14 +45,4 @@ export const AccountDetailsBanner = ({ isStripeEnabled, isEmailVerified }) => {
       </Main>
     </Touchable>
   );
-};
-
-AccountDetailsBanner.defaultProps = {
-  isStripeEnabled: true,
-  isEmailVerified: true,
-};
-
-AccountDetailsBanner.propTypes = {
-  isStripeEnabled: PropTypes.bool,
-  isEmailVerified: PropTypes.bool,
 };

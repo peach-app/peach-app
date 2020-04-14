@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-import { ProfileHeaderFragment } from 'components';
+import { ProfileHeaderFragment } from '../../components/ProfileHeader';
 
 export default gql`
   ${ProfileHeaderFragment}

@@ -15,10 +15,7 @@ export const Discover = () => {
 
   const renderDiscover = discover => (
     <>
-      <AccountDetailsBanner
-        isEmailVerified={user.isEmailVerified}
-        isStripeEnabled={user.isStripeEnabled}
-      />
+      <AccountDetailsBanner />
       {discover}
     </>
   );
