@@ -25,7 +25,7 @@ export const Main = styled.TouchableOpacity`
           return props.theme.black;
         }
 
-        if (props.isShaded) {
+        if (props.isShaded || props.disabled) {
           return props.theme.greyDark;
         }
 

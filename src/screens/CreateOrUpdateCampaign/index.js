@@ -35,27 +35,6 @@ export const CreateOrUpdateCampaign = () => {
   } = useUser();
 
   const navigation = useNavigation();
-  if (!isStripeEnabled) {
-    return (
-      <SafeAreaView>
-        <StatusBar />
-        <Grid>
-          <Grid.Item size={12}>
-            <Header title="Create Campaign" />
-            <Intro />
-            <SubTitle isCentered>
-              {`Almost there!\n Finish setting up your account to start creating campaigns.`}
-            </SubTitle>
-            <Intro />
-            <AddBankDetailsPlaceholder
-              onPress={() => navigation.navigate('AccountDetails')}
-              text=" Tap to add your details. "
-            />
-          </Grid.Item>
-        </Grid>
-      </SafeAreaView>
-    );
-  }
 
   const { openModal } = useModal();
 
@@ -89,13 +68,10 @@ export const CreateOrUpdateCampaign = () => {
     }
   );
 
-  const submitCampaign = ({
-    name,
-    description,
-    budget,
-    dueDate,
-    paymentId,
-  }) => {
+  const submitCampaign = (
+    { name, description, budget, dueDate, paymentId },
+    paymentMethod
+  ) => {
     createOrUpdateCampaign({
       variables: {
         campaign: {
@@ -107,6 +83,7 @@ export const CreateOrUpdateCampaign = () => {
           private: activeTab === 0,
           paymentId,
         },
+        paymentMethod,
       },
     });
   };
@@ -119,19 +96,42 @@ export const CreateOrUpdateCampaign = () => {
     onSubmit: campaignDetails => {
       if (campaignId) {
         submitCampaign(campaignDetails);
-      } else {
-        openModal({
-          type: MODAL_TYPES.CONFIRM_PAYMENT,
-          props: {
-            onConfirm: paymentId =>
-              submitCampaign({ ...campaignDetails, paymentId }),
-            campaign: campaignDetails,
-            isLoading: saving,
-          },
-        });
+        return;
       }
+
+      openModal({
+        type: MODAL_TYPES.CONFIRM_PAYMENT,
+        props: {
+          onConfirm: paymentMethod =>
+            submitCampaign(campaignDetails, paymentMethod),
+          cost: 1000,
+          isLoading: saving,
+        },
+      });
     },
   });
+
+  if (!isStripeEnabled) {
+    return (
+      <SafeAreaView>
+        <StatusBar />
+        <Grid>
+          <Grid.Item size={12}>
+            <Header title="Create Campaign" />
+            <Intro />
+            <SubTitle isCentered>
+              {`Almost there!\n Finish setting up your account to start creating campaigns.`}
+            </SubTitle>
+            <Intro />
+            <AddBankDetailsPlaceholder
+              onPress={() => navigation.navigate('AccountDetails')}
+              text=" Tap to add your details. "
+            />
+          </Grid.Item>
+        </Grid>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView>

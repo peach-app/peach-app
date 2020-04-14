@@ -12,8 +12,10 @@ export default gql`
       onboarded
       ...ProfileHeaderFragment
       stripeAccount {
-        charges_enabled
-        transfers_enabled
+        capabilities {
+          card_payments
+          transfers
+        }
       }
       emailVerification {
         isVerified

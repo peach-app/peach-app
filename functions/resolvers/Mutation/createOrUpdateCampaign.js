@@ -4,7 +4,7 @@ const stripe = require('../../helpers/stripe');
 
 module.exports = async (
   _,
-  { campaign },
+  { campaign, paymentMethod },
   { client, q, DocumentDataWithId, activeUserRef }
 ) => {
   const isBrand = await client.query(
@@ -41,20 +41,17 @@ module.exports = async (
     );
   }
 
-  const paymentIntent = await stripe.paymentIntents.create(
+  await stripe.paymentIntents.create(
     {
-      amount: 5000, // Pence for campaign creation cost
+      amount: 1000, // Pence for campaign creation cost
       currency: 'gbp',
-      payment_method_types: ['card'],
+      confirm: true,
+      payment_method: paymentMethod,
     },
     {
       stripeAccount: 'acct_1GQX2eDMO5BqISFg',
     }
   );
-
-  // This should be under a new method imo
-  // Used when the client side user confirms the payment and sends card details
-  await stripe.paymentIntents.confirm(paymentIntent.id);
 
   return client.query(
     DocumentDataWithId(
