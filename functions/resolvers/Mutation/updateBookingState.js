@@ -30,6 +30,10 @@ module.exports = async (root, args, { client, q, activeUserRef }) => {
   // Stop function here if not accepting booking
   if (state !== BOOKING_STATE.ACCEPTED) return true;
 
+  const amount = await client.query(
+    q.Select(['data', 'cost'], q.Get(q.Ref(q.Collection('Booking'), id)))
+  );
+
   const customerId = await client.query(
     q.Select(['data', 'stripeID'], q.Get(activeUserRef))
   );
@@ -50,7 +54,7 @@ module.exports = async (root, args, { client, q, activeUserRef }) => {
   const { id: paymentId } = await getPaymentMethod();
 
   await stripe.paymentIntents.create({
-    amount: 500, // Pence for campaign creation cost
+    amount,
     currency: 'gbp',
     confirm: true,
     payment_method: paymentId,
