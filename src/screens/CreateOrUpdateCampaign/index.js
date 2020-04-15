@@ -97,7 +97,7 @@ export const CreateOrUpdateCampaign = () => {
         props: {
           onConfirm: paymentMethod =>
             submitCampaign(campaignDetails, paymentMethod),
-          cost: 1000,
+          cost: 500,
           isLoading: saving,
         },
       });
