@@ -11,11 +11,14 @@ const Icon = styled(Ionicons).attrs(props => ({
 const Container = styled.View`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   padding-horizontal: ${props => props.theme.spacingLarge};
+  margin-horizontal: -6%;
 `;
 
-const IconWrapper = styled.TouchableOpacity``;
+const IconWrapper = styled.TouchableOpacity`
+  margin-horizontal: 6%;
+`;
 
 const ICON_PROPS = {
   instagram: {
@@ -34,23 +37,23 @@ const ICON_PROPS = {
     icon: 'logo-youtube',
     url: 'https://www.youtube.com/user/{account}/',
   },
-  tikTok: { icon: 'logo-codepen', url: 'https://www.tiktok.com/@{account}?' },
+  tikTok: {
+    icon: 'md-musical-note',
+    url: 'https://www.tiktok.com/@{account}?',
+  },
 };
 
 export const SocialAccounts = ({ socialAccounts, onSocialAccountPressed }) => (
   <Container>
-    {Object.keys(socialAccounts).map(
-      (account, i) =>
-        ICON_PROPS[account] && (
+    {Object.entries(socialAccounts).map(
+      ([account, value]) =>
+        ICON_PROPS[account] &&
+        value !== '' && (
           <IconWrapper
-            // eslint-disable-next-line
-          key={`${i}-${account}`}
+            key={account}
             onPress={() =>
               onSocialAccountPressed(
-                ICON_PROPS[account].url.replace(
-                  '{account}',
-                  socialAccounts[account]
-                )
+                ICON_PROPS[account].url.replace('{account}', value)
               )
             }
           >

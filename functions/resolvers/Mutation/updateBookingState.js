@@ -58,7 +58,7 @@ module.exports = async (root, args, { client, q, activeUserRef }) => {
     currency: 'gbp',
     confirm: true,
     payment_method: paymentId,
-    setup_future_usage: 'on_session',
+    setup_future_usage: 'off_session',
     customer: customerId,
   });
 
