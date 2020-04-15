@@ -5,12 +5,12 @@ import { BillingMethodCardFragment } from '../../BillingMethodCard';
 export default gql`
   ${BillingMethodCardFragment}
 
-  query getPaymentSources {
+  query getPaymentMethods {
     user {
       _id
       stripeAccount {
         id
-        sources {
+        paymentMethods {
           data {
             ...BillingMethodCardFragment
           }

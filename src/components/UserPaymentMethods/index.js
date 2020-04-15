@@ -7,18 +7,18 @@ import getOr from 'lodash/fp/getOr';
 import { Grid } from '../Grid';
 import { BillingMethodCard } from '../BillingMethodCard';
 import { AddBankDetailsPlaceholder } from '../AddBankDetailsPlaceholder';
-import GET_SOURCES from './graphql/get-sources';
+import GET_PAYMENT_METHODS from './graphql/get-payment-methods';
 
-export const PaymentSources = ({
+export const UserPaymentMethods = ({
   onAddNewPress,
   selectedId,
   setSelectedId,
 }) => {
-  const { data, loading } = useQuery(GET_SOURCES, {
+  const { data, loading } = useQuery(GET_PAYMENT_METHODS, {
     fetchPolicy: 'cache-and-network',
   });
 
-  const accounts = getOr([], 'user.stripeAccount.sources.data', data);
+  const accounts = getOr([], 'user.stripeAccount.paymentMethods.data', data);
 
   useEffect(() => {
     if (accounts.length >= 1 && setSelectedId) {
@@ -57,13 +57,13 @@ export const PaymentSources = ({
   );
 };
 
-PaymentSources.defaultProps = {
+UserPaymentMethods.defaultProps = {
   onAddNewPress: null,
   selectedId: null,
   setSelectedId: null,
 };
 
-PaymentSources.propTypes = {
+UserPaymentMethods.propTypes = {
   onAddNewPress: PropTypes.func,
   selectedId: PropTypes.string,
   setSelectedId: PropTypes.func,

@@ -44,7 +44,7 @@ export const NewPaymentMethod = () => {
   const [createPaymentMethod, { loading, error }] = useMutation(
     CREATE_PAYMENT_METHOD,
     {
-      refetchQueries: ['getPaymentSources'],
+      refetchQueries: ['getPaymentMethods'],
       onCompleted: () => {
         navigation.goBack();
       },

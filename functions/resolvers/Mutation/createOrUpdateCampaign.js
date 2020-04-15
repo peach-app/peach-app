@@ -65,7 +65,7 @@ module.exports = async (
     currency: 'gbp',
     confirm: true,
     payment_method: paymentId,
-    setup_future_usage: 'off_session',
+    setup_future_usage: 'on_session',
     customer: customerId,
   });
 

@@ -170,7 +170,7 @@ module.exports = gql`
     id: String!
     individual: StripePerson
     external_accounts: BillingMethodPage
-    sources: BillingMethodPage
+    paymentMethods: BillingMethodPage
     capabilities: StripeCapabilities
   }
 
@@ -189,6 +189,11 @@ module.exports = gql`
     routing_number: String
     account_holder_name: String
     object: String
+    card: StripeCard
+  }
+
+  type StripeCard {
+    last4: String
     brand: String
     funding: String
   }

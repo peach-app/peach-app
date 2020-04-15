@@ -16,7 +16,7 @@ export const BillingMethodCard = ({ isLoading, account, isSelected }) => (
         <Text>
           <SkeletonText isLoading={isLoading} loadingText="Account holder name">
             {get('account_holder_name', account) ||
-              `${get('brand', account)} ${get('funding', account)}`}
+              `${get('card.brand', account)} ${get('card.funding', account)}`}
           </SkeletonText>
         </Text>
       </Grid.Item>
@@ -30,7 +30,7 @@ export const BillingMethodCard = ({ isLoading, account, isSelected }) => (
       <Grid.Item>
         <Text>
           <SkeletonText isLoading={isLoading} loadingText="01234567">
-            ****{getOr('', 'last4', account)}
+            ****{get('last4', account) || get('card.last4', account)}
           </SkeletonText>
         </Text>
       </Grid.Item>
@@ -56,7 +56,10 @@ export const BillingMethodCardFragment = gql`
     last4
     routing_number
     account_holder_name
-    brand
-    funding
+    card {
+      last4
+      brand
+      funding
+    }
   }
 `;

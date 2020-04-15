@@ -8,7 +8,17 @@ module.exports = async root => {
 
   const getStripeAccount = async () => {
     if (root.type === USER_TYPE.BRAND) {
-      return stripe.customers.retrieve(root.stripeID);
+      const customer = await stripe.customers.retrieve(root.stripeID);
+
+      const paymentMethods = await stripe.paymentMethods.list({
+        customer: root.stripeID,
+        type: 'card',
+      });
+
+      return {
+        ...customer,
+        paymentMethods,
+      };
     }
 
     return stripe.accounts.retrieve(root.stripeID);

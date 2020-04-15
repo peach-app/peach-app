@@ -6,7 +6,7 @@ import {
   SafeAreaView,
   StatusBar,
   Header,
-  PaymentSources,
+  UserPaymentMethods,
   Container,
   Intro,
   Grid,
@@ -23,7 +23,7 @@ export const PaymentMethods = () => {
         <Container>
           <Intro />
           <Grid>
-            <PaymentSources
+            <UserPaymentMethods
               onAddNewPress={() => navigation.navigate('NewPaymentMethod')}
             />
           </Grid>

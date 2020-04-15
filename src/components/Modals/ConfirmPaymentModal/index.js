@@ -12,7 +12,7 @@ import {
   Button,
   Text,
   PaymentMethodForm,
-  PaymentSources,
+  UserPaymentMethods,
 } from 'components';
 import { formatToMoneyFromPence } from 'helpers';
 
@@ -90,7 +90,7 @@ const ConfirmPaymentModal = ({ onClose, cost, onConfirm, isLoading }) => {
         </Grid.Item>
 
         {!showForm && (
-          <PaymentSources
+          <UserPaymentMethods
             selectedId={selectedId}
             setSelectedId={setSelectedId}
             onAddNewPress={() => setShowForm(true)}
