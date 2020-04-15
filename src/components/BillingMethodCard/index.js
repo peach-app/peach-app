@@ -9,34 +9,44 @@ import { Card } from '../Card';
 import { Text } from '../Text';
 import { SkeletonText } from '../Skeletons';
 
-export const BillingMethodCard = ({ isLoading, account, isSelected }) => (
-  <Card isSelected={isSelected}>
-    <Grid justify="space-between">
-      <Grid.Item size={12}>
-        <Text>
-          <SkeletonText isLoading={isLoading} loadingText="Account holder name">
-            {get('account_holder_name', account) ||
-              `${get('card.brand', account)} ${get('card.funding', account)}`}
-          </SkeletonText>
-        </Text>
-      </Grid.Item>
-      <Grid.Item>
-        <Text>
-          <SkeletonText isLoading={isLoading} loadingText="01-02-3">
-            {getOr('', 'routing_number', account)}
-          </SkeletonText>
-        </Text>
-      </Grid.Item>
-      <Grid.Item>
-        <Text>
-          <SkeletonText isLoading={isLoading} loadingText="01234567">
-            ****{get('last4', account) || get('card.last4', account)}
-          </SkeletonText>
-        </Text>
-      </Grid.Item>
-    </Grid>
-  </Card>
-);
+export const BillingMethodCard = ({ isLoading, account, isSelected }) => {
+  const isCard = get('card', account);
+
+  return (
+    <Card isSelected={isSelected}>
+      <Grid justify="space-between">
+        <Grid.Item size={!isCard && 12}>
+          <Text>
+            <SkeletonText
+              isLoading={isLoading}
+              loadingText="Account holder name"
+            >
+              {get('account_holder_name', account) ||
+                `${get('card.brand', account)} ${get('card.funding', account)}`}
+            </SkeletonText>
+          </Text>
+        </Grid.Item>
+        {!isCard && (
+          <Grid.Item>
+            <Text>
+              <SkeletonText isLoading={isLoading} loadingText="01-02-3">
+                {getOr('', 'routing_number', account)}
+              </SkeletonText>
+            </Text>
+          </Grid.Item>
+        )}
+        <Grid.Item>
+          <Text>
+            <SkeletonText isLoading={isLoading} loadingText="01234567">
+              {!isCard && '****'}
+              {get('last4', account) || get('card.last4', account)}
+            </SkeletonText>
+          </Text>
+        </Grid.Item>
+      </Grid>
+    </Card>
+  );
+};
 
 BillingMethodCard.defaultProps = {
   isSelected: false,
