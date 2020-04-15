@@ -77,7 +77,7 @@ export const Campaign = () => {
     <SafeAreaView>
       <StatusBar />
       <Header
-        rightActionLabel={isBrand && 'Edit Campaign'}
+        rightActionLabel={isBrand && 'Edit'}
         onRightActionPressed={() =>
           navigation.navigate('CreateOrUpdateCampaign', {
             campaignId: id,

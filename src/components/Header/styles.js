@@ -32,6 +32,6 @@ export const MainTitle = styled(Text)`
 `;
 
 export const RightAction = styled(Text)`
-  color: ${props => props.theme.brand}
-  font-family: ${props => props.theme.fontFamily.bold};
-  `;
+  color: ${props => props.theme.brand};
+  font-size: 16px;
+`;
