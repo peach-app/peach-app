@@ -10,6 +10,7 @@ import {
   Container,
   NavLink,
   ProfileHeader,
+  AccountDetailsBanner,
 } from 'components';
 import { useAuth } from 'contexts/Auth';
 import { useUser } from 'contexts/User';
@@ -24,51 +25,54 @@ export const Account = () => {
   const { client, data, loading } = useQuery(GET_USER);
 
   return (
-    <SafeAreaView>
-      <ScrollView>
-        <Container>
-          <StatusBar />
-          <ProfileHeader isLoading={loading} {...get('user', data)} />
-          <NavLink
-            title="Edit Profile"
-            iconProps={{ name: 'ios-arrow-forward' }}
-            onPress={() => navigation.navigate('EditProfile')}
-          />
-          {get('user.type', user) === USER_TYPE.INFLUENCER && (
-            <>
-              <NavLink
-                title="Social Accounts"
-                iconProps={{ name: 'ios-arrow-forward' }}
-                onPress={() => navigation.navigate('SocialDetails')}
-              />
-              <NavLink
-                title="Account Details"
-                iconProps={{ name: 'ios-arrow-forward' }}
-                onPress={() => navigation.navigate('AccountDetails')}
-              />
-            </>
-          )}
-          {get('user.type', user) === USER_TYPE.BRAND && (
+    <>
+      <AccountDetailsBanner />
+      <SafeAreaView>
+        <ScrollView>
+          <Container>
+            <StatusBar />
+            <ProfileHeader isLoading={loading} {...get('user', data)} />
             <NavLink
-              title="Personal Details"
+              title="Edit Profile"
               iconProps={{ name: 'ios-arrow-forward' }}
-              onPress={() => navigation.navigate('PersonalDetails')}
+              onPress={() => navigation.navigate('EditProfile')}
             />
-          )}
-          <NavLink
-            title="Payout History"
-            iconProps={{ name: 'ios-arrow-forward' }}
-            onPress={() => navigation.navigate('Payouts')}
-          />
-          <NavLink
-            title="Logout"
-            onPress={async () => {
-              await setToken(null);
-              client.resetStore();
-            }}
-          />
-        </Container>
-      </ScrollView>
-    </SafeAreaView>
+            {get('user.type', user) === USER_TYPE.INFLUENCER && (
+              <>
+                <NavLink
+                  title="Social Accounts"
+                  iconProps={{ name: 'ios-arrow-forward' }}
+                  onPress={() => navigation.navigate('SocialDetails')}
+                />
+                <NavLink
+                  title="Account Details"
+                  iconProps={{ name: 'ios-arrow-forward' }}
+                  onPress={() => navigation.navigate('AccountDetails')}
+                />
+              </>
+            )}
+            {get('user.type', user) === USER_TYPE.BRAND && (
+              <NavLink
+                title="Personal Details"
+                iconProps={{ name: 'ios-arrow-forward' }}
+                onPress={() => navigation.navigate('PersonalDetails')}
+              />
+            )}
+            <NavLink
+              title="Payout History"
+              iconProps={{ name: 'ios-arrow-forward' }}
+              onPress={() => navigation.navigate('Payouts')}
+            />
+            <NavLink
+              title="Logout"
+              onPress={async () => {
+                await setToken(null);
+                client.resetStore();
+              }}
+            />
+          </Container>
+        </ScrollView>
+      </SafeAreaView>
+    </>
   );
 };

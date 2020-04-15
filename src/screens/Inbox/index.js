@@ -13,6 +13,7 @@ import {
   ThreadCard,
   NoResultText,
   Branch,
+  AccountDetailsBanner,
 } from 'components';
 import { useUser } from 'contexts/User';
 
@@ -31,52 +32,57 @@ export const Inbox = () => {
   const messages = getOr([], 'user.threads.data', data);
 
   return (
-    <SafeAreaView>
-      <StatusBar />
-      <FlatList
-        refreshControl={
-          <RefreshControl
-            refreshing={loading && networkStatus === NETWORK_STATUS.REFETCHING}
-            onRefresh={refetch}
-          />
-        }
-        keyExtractor={item => item._id}
-        data={messages}
-        ListHeaderComponent={
-          <>
+    <>
+      <AccountDetailsBanner />
+      <SafeAreaView>
+        <StatusBar />
+        <FlatList
+          refreshControl={
+            <RefreshControl
+              refreshing={
+                loading && networkStatus === NETWORK_STATUS.REFETCHING
+              }
+              onRefresh={refetch}
+            />
+          }
+          keyExtractor={item => item._id}
+          data={messages}
+          ListHeaderComponent={
+            <>
+              <FlatList.Item>
+                <Intro>
+                  <Title>Messages</Title>
+                </Intro>
+              </FlatList.Item>
+
+              {!loading && messages.length <= 0 && (
+                <NoResultText isPara>
+                  <Branch
+                    test={userType === USER_TYPE.BRAND}
+                    left={`Threads will appear here when you\naccept an influencer onto a campaign.`}
+                    right={`Threads will appear here when \nyou join your first campaign.`}
+                  />
+                </NoResultText>
+              )}
+
+              {loading && networkStatus === NETWORK_STATUS.FETCHING && (
+                <>
+                  {Array.from(Array(3)).map((_, key) => (
+                    <FlatList.Item key={key}>
+                      <ThreadCard isLoading />
+                    </FlatList.Item>
+                  ))}
+                </>
+              )}
+            </>
+          }
+          renderItem={({ item }) => (
             <FlatList.Item>
-              <Intro>
-                <Title>Messages</Title>
-              </Intro>
+              <ThreadCard {...item} />
             </FlatList.Item>
-
-            {!loading && messages.length <= 0 && (
-              <NoResultText isPara>
-                <Branch
-                  test={userType === USER_TYPE.BRAND}
-                  left={`Threads will appear here when you\naccept an influencer onto a campaign.`}
-                  right={`Threads will appear here when \nyou join your first campaign.`}
-                />
-              </NoResultText>
-            )}
-
-            {loading && networkStatus === NETWORK_STATUS.FETCHING && (
-              <>
-                {Array.from(Array(3)).map((_, key) => (
-                  <FlatList.Item key={key}>
-                    <ThreadCard isLoading />
-                  </FlatList.Item>
-                ))}
-              </>
-            )}
-          </>
-        }
-        renderItem={({ item }) => (
-          <FlatList.Item>
-            <ThreadCard {...item} />
-          </FlatList.Item>
-        )}
-      />
-    </SafeAreaView>
+          )}
+        />
+      </SafeAreaView>
+    </>
   );
 };
