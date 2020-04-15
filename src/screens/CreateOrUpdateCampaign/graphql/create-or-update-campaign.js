@@ -1,8 +1,12 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  mutation($campaign: CampaignInput, $paymentMethod: ID) {
-    createOrUpdateCampaign(campaign: $campaign, paymentMethod: $paymentMethod) {
+  mutation($campaign: CampaignInput, $cardId: ID, $token: String) {
+    createOrUpdateCampaign(
+      campaign: $campaign
+      cardId: $cardId
+      token: $token
+    ) {
       _id
     }
   }

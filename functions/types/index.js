@@ -45,7 +45,11 @@ module.exports = gql`
       idempotencyKey: String!
     ): Auth
     sendMessage(threadId: ID!, text: String!): Message
-    createOrUpdateCampaign(campaign: CampaignInput, paymentMethod: ID): Campaign
+    createOrUpdateCampaign(
+      campaign: CampaignInput
+      cardId: ID
+      token: String
+    ): Campaign
     applyToCampaign(id: ID!, cost: Int!): Booking
     updateBookingState(id: ID!, state: BookingState!): Boolean
     updateUser(user: UserInput): Boolean
@@ -164,7 +168,8 @@ module.exports = gql`
   type StripeAccount {
     id: String!
     individual: StripePerson
-    external_accounts: ExternalAccountsPage
+    external_accounts: BillingMethodPage
+    sources: BillingMethodPage
     capabilities: StripeCapabilities
   }
 
@@ -173,16 +178,18 @@ module.exports = gql`
     transfers: String
   }
 
-  type ExternalAccountsPage {
-    data: [ExternalAccount]
+  type BillingMethodPage {
+    data: [BillingMethod]
   }
 
-  type ExternalAccount {
+  type BillingMethod {
     id: ID!
     last4: String
     routing_number: String
     account_holder_name: String
     object: String
+    brand: String
+    funding: String
   }
 
   type StripePerson {

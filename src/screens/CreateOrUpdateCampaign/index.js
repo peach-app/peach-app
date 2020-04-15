@@ -63,7 +63,7 @@ export const CreateOrUpdateCampaign = () => {
 
   const submitCampaign = (
     { name, description, budget, dueDate, paymentId },
-    paymentMethod
+    { cardId, token }
   ) => {
     createOrUpdateCampaign({
       variables: {
@@ -76,7 +76,8 @@ export const CreateOrUpdateCampaign = () => {
           private: activeTab === 0,
           paymentId,
         },
-        paymentMethod,
+        cardId,
+        token,
       },
     });
   };

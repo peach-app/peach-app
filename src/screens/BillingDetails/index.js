@@ -10,9 +10,7 @@ import {
   Container,
   Intro,
   Grid,
-  Card,
-  Text,
-  SkeletonText,
+  BillingMethodCard,
   AddBankDetailsPlaceholder,
 } from 'components';
 
@@ -36,43 +34,13 @@ export const BillingDetails = () => {
           <Grid>
             {(loading ? [{ id: 0 }] : accounts).map(account => (
               <Grid.Item key={account.id} size={12}>
-                <Card>
-                  <Grid justify="space-between">
-                    <Grid.Item size={12}>
-                      <Text>
-                        <SkeletonText
-                          isLoading={loading}
-                          loadingText="Account holder name"
-                        >
-                          {getOr('', 'account_holder_name', account)}
-                        </SkeletonText>
-                      </Text>
-                    </Grid.Item>
-                    <Grid.Item>
-                      <Text>
-                        <SkeletonText isLoading={loading} loadingText="01-02-3">
-                          {getOr('', 'routing_number', account)}
-                        </SkeletonText>
-                      </Text>
-                    </Grid.Item>
-                    <Grid.Item>
-                      <Text>
-                        <SkeletonText
-                          isLoading={loading}
-                          loadingText="01234567"
-                        >
-                          ****{getOr('', 'last4', account)}
-                        </SkeletonText>
-                      </Text>
-                    </Grid.Item>
-                  </Grid>
-                </Card>
+                <BillingMethodCard isLoading={loading} account={account} />
               </Grid.Item>
             ))}
             <Grid.Item size={12}>
               <AddBankDetailsPlaceholder
                 onPress={() => navigation.navigate('NewBilling')}
-                text={'Add a new\nbilling method'}
+                text={'Add new billing method'}
               />
             </Grid.Item>
           </Grid>

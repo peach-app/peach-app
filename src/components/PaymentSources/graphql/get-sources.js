@@ -1,16 +1,16 @@
 import gql from 'graphql-tag';
 
-import { BillingMethodCardFragment } from 'components';
+import { BillingMethodCardFragment } from '../../BillingMethodCard';
 
 export default gql`
   ${BillingMethodCardFragment}
 
-  query getExternalAccount {
+  {
     user {
       _id
       stripeAccount {
         id
-        external_accounts {
+        sources {
           data {
             ...BillingMethodCardFragment
           }

@@ -11,8 +11,8 @@ import {
   Actions,
   Button,
   Text,
-  AddBankDetailsPlaceholder,
   PaymentMethodForm,
+  PaymentSources,
 } from 'components';
 import { formatToMoneyFromPence } from 'helpers';
 
@@ -36,9 +36,10 @@ const validationSchema = Yup.object().shape({
 
 const ConfirmPaymentModal = ({ onClose, cost, onConfirm, isLoading }) => {
   const [showForm, setShowForm] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
 
   const formik = useFormik({
-    validationSchema,
+    validationSchema: showForm && validationSchema,
     initialValues: {
       number: '',
       expiry: '',
@@ -47,6 +48,13 @@ const ConfirmPaymentModal = ({ onClose, cost, onConfirm, isLoading }) => {
     validateOnChange: false,
     validateOnBlur: false,
     onSubmit: async ({ number, expiry, cvc }) => {
+      if (selectedId) {
+        onConfirm({
+          cardId: selectedId,
+        });
+        return;
+      }
+
       const [expMonth, expYear] = expiry.split('/');
       const { id, error } = await stripe.createToken({
         card: {
@@ -63,7 +71,9 @@ const ConfirmPaymentModal = ({ onClose, cost, onConfirm, isLoading }) => {
         return;
       }
 
-      onConfirm(id);
+      onConfirm({
+        token: id,
+      });
     },
   });
 
@@ -79,16 +89,15 @@ const ConfirmPaymentModal = ({ onClose, cost, onConfirm, isLoading }) => {
           <Title>{formatToMoneyFromPence(cost)}</Title>
         </Grid.Item>
 
-        {showForm && <PaymentMethodForm formik={formik} />}
-
         {!showForm && (
-          <Grid.Item size={12}>
-            <AddBankDetailsPlaceholder
-              text="Add payment method"
-              onPress={() => setShowForm(true)}
-            />
-          </Grid.Item>
+          <PaymentSources
+            selectedId={selectedId}
+            setSelectedId={setSelectedId}
+            onAddNewPress={() => setShowForm(true)}
+          />
         )}
+
+        {showForm && <PaymentMethodForm formik={formik} />}
 
         {formik.errors.generic && (
           <Grid.Item size={12}>
@@ -101,6 +110,7 @@ const ConfirmPaymentModal = ({ onClose, cost, onConfirm, isLoading }) => {
             <Button
               fixedWidth
               title="Confirm"
+              disabled={showForm ? false : !selectedId}
               onPress={formik.handleSubmit}
               isLoading={isLoading}
             />
