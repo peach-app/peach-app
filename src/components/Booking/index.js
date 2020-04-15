@@ -6,8 +6,9 @@ import { useNavigation } from '@react-navigation/native';
 import { useMutation } from '@apollo/react-hooks';
 import startCase from 'lodash/startCase';
 
-import { BOOKING_STATE } from 'consts';
+import { BOOKING_STATE, MODAL_TYPES } from 'consts';
 import { formatToMoneyFromPence } from 'helpers';
+import { useModal } from 'contexts/Modal';
 
 import { Note } from './styles';
 import { Grid } from '../Grid';
@@ -16,14 +17,18 @@ import { Loading } from '../Loading';
 import { IconButton } from '../IconButton';
 import { Avatar } from '../Avatar';
 import { Text } from '../Text';
-import DECLINE_BOOKING from './graphql/decline-booking';
+import UPDATE_BOOKING_STATE from './graphql/update-booking-state';
 
 export const Booking = ({ _id, cost, state, note, user, isLoading }) => {
   const navigation = useNavigation();
-  const [declineBooking, { loading }] = useMutation(DECLINE_BOOKING, {
+  const { openModal, closeModal } = useModal();
+  const [updateBooking, { loading }] = useMutation(UPDATE_BOOKING_STATE, {
     refetchQueries: ['getCampaigns', 'getCampaign'],
     variables: {
       id: _id,
+    },
+    onCompleted: () => {
+      closeModal();
     },
   });
 
@@ -74,7 +79,24 @@ export const Booking = ({ _id, cost, state, note, user, isLoading }) => {
                 name="ios-checkmark-circle-outline"
                 size={32}
                 onPress={() => {
-                  navigation.navigate('AcceptBooking', { id: _id });
+                  openModal({
+                    type: MODAL_TYPES.CONFIRM_PAYMENT,
+                    props: {
+                      description: `Accept ${startCase(
+                        get('name', user)
+                      )} onto your campaign.`,
+                      onConfirm: ({ cardId, token }) => {
+                        updateBooking({
+                          variables: {
+                            state: BOOKING_STATE.ACCEPTED,
+                            cardId,
+                            token,
+                          },
+                        });
+                      },
+                      cost,
+                    },
+                  });
                 }}
               />
             </Grid.Item>
@@ -82,7 +104,13 @@ export const Booking = ({ _id, cost, state, note, user, isLoading }) => {
               <IconButton
                 name="ios-close-circle-outline"
                 size={32}
-                onPress={() => declineBooking()}
+                onPress={() =>
+                  updateBooking({
+                    variables: {
+                      state: BOOKING_STATE.DECLINED,
+                    },
+                  })
+                }
               />
             </Grid.Item>
           </>

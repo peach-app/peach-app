@@ -23,7 +23,6 @@ import {
   RequestInfluencers,
   BookingCompletion,
   AccountDocuments,
-  AcceptBooking,
   PaymentMethods,
 } from 'screens';
 
@@ -94,6 +93,5 @@ export const AuthedNavigator = () => (
     <Stack.Screen name="NewBilling" component={NewBilling} />
     <Stack.Screen name="PaymentMethods" component={PaymentMethods} />
     <Stack.Screen name="NewPaymentMethod" component={NewPaymentMethod} />
-    <Stack.Screen name="AcceptBooking" component={AcceptBooking} />
   </Stack.Navigator>
 );

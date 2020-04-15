@@ -99,7 +99,6 @@ export const CreateOrUpdateCampaign = () => {
           onConfirm: paymentMethod =>
             submitCampaign(campaignDetails, paymentMethod),
           cost: 500,
-          isLoading: saving,
         },
       });
     },

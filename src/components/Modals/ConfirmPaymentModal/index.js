@@ -34,9 +34,10 @@ const validationSchema = Yup.object().shape({
     .required('CVC is required'),
 });
 
-const ConfirmPaymentModal = ({ onClose, cost, onConfirm, isLoading }) => {
+const ConfirmPaymentModal = ({ onClose, cost, onConfirm, description }) => {
   const [showForm, setShowForm] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const formik = useFormik({
     validationSchema: showForm && validationSchema,
@@ -48,6 +49,8 @@ const ConfirmPaymentModal = ({ onClose, cost, onConfirm, isLoading }) => {
     validateOnChange: false,
     validateOnBlur: false,
     onSubmit: async ({ number, expiry, cvc }) => {
+      setLoading(true);
+
       if (selectedId) {
         onConfirm({
           cardId: selectedId,
@@ -66,6 +69,8 @@ const ConfirmPaymentModal = ({ onClose, cost, onConfirm, isLoading }) => {
         },
       });
 
+      setLoading(false);
+
       if (error) {
         formik.setErrors({ generic: error.message });
         return;
@@ -83,6 +88,12 @@ const ConfirmPaymentModal = ({ onClose, cost, onConfirm, isLoading }) => {
         <Grid.Item size={12}>
           <Title>Payment Details</Title>
         </Grid.Item>
+
+        {description && (
+          <Grid.Item size={12}>
+            <Text>{description}</Text>
+          </Grid.Item>
+        )}
 
         <Grid.Item size={12}>
           <SubTitle>Total</SubTitle>
@@ -112,7 +123,7 @@ const ConfirmPaymentModal = ({ onClose, cost, onConfirm, isLoading }) => {
               title="Confirm"
               disabled={showForm ? false : !selectedId}
               onPress={formik.handleSubmit}
-              isLoading={isLoading}
+              isLoading={loading}
             />
           </Actions>
         </Grid.Item>
@@ -121,11 +132,15 @@ const ConfirmPaymentModal = ({ onClose, cost, onConfirm, isLoading }) => {
   );
 };
 
+ConfirmPaymentModal.defaultProps = {
+  description: null,
+};
+
 ConfirmPaymentModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   cost: PropTypes.number.isRequired,
   onConfirm: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool.isRequired,
+  description: PropTypes.string,
 };
 
 export default ConfirmPaymentModal;

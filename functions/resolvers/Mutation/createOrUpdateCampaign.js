@@ -16,6 +16,7 @@ module.exports = async (
   }
 
   if (campaign._id) {
+    // Stop function here if performing an update
     return client.query(
       q.Let(
         {

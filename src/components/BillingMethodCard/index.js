@@ -15,7 +15,7 @@ export const BillingMethodCard = ({ isLoading, account, isSelected }) => {
   return (
     <Card isSelected={isSelected}>
       <Grid justify="space-between">
-        <Grid.Item size={!isCard && 12}>
+        <Grid.Item size={isCard ? 6 : 12}>
           <Text>
             <SkeletonText
               isLoading={isLoading}

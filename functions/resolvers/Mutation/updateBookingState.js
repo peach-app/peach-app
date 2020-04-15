@@ -1,7 +1,8 @@
 const { BOOKING_STATE } = require('../../consts');
+const stripe = require('../../helpers/stripe');
 
 module.exports = async (root, args, { client, q, activeUserRef }) => {
-  const { id, state } = args;
+  const { id, state, cardId, token } = args;
 
   await client.query(
     q.Let(
@@ -26,7 +27,36 @@ module.exports = async (root, args, { client, q, activeUserRef }) => {
     )
   );
 
+  // Stop function here if not accepting booking
   if (state !== BOOKING_STATE.ACCEPTED) return true;
+
+  const customerId = await client.query(
+    q.Select(['data', 'stripeID'], q.Get(activeUserRef))
+  );
+
+  const getPaymentMethod = async () => {
+    if (token) {
+      return stripe.paymentMethods.create({
+        type: 'card',
+        card: {
+          token,
+        },
+      });
+    }
+
+    return { id: cardId };
+  };
+
+  const { id: paymentId } = await getPaymentMethod();
+
+  await stripe.paymentIntents.create({
+    amount: 500, // Pence for campaign creation cost
+    currency: 'gbp',
+    confirm: true,
+    payment_method: paymentId,
+    setup_future_usage: 'on_session',
+    customer: customerId,
+  });
 
   const {
     data: [hasThread],
