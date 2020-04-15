@@ -35,17 +35,26 @@ export const Account = () => {
             onPress={() => navigation.navigate('EditProfile')}
           />
           {get('user.type', user) === USER_TYPE.INFLUENCER && (
+            <>
+              <NavLink
+                title="Social Accounts"
+                iconProps={{ name: 'ios-arrow-forward' }}
+                onPress={() => navigation.navigate('SocialDetails')}
+              />
+              <NavLink
+                title="Account Details"
+                iconProps={{ name: 'ios-arrow-forward' }}
+                onPress={() => navigation.navigate('AccountDetails')}
+              />
+            </>
+          )}
+          {get('user.type', user) === USER_TYPE.BRAND && (
             <NavLink
-              title="Social Accounts"
+              title="Personal Details"
               iconProps={{ name: 'ios-arrow-forward' }}
-              onPress={() => navigation.navigate('SocialDetails')}
+              onPress={() => navigation.navigate('PersonalDetails')}
             />
           )}
-          <NavLink
-            title="Account Details"
-            iconProps={{ name: 'ios-arrow-forward' }}
-            onPress={() => navigation.navigate('AccountDetails')}
-          />
           <NavLink
             title="Payout History"
             iconProps={{ name: 'ios-arrow-forward' }}

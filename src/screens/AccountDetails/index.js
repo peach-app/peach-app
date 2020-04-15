@@ -26,8 +26,8 @@ export const AccountDetails = () => {
             <Grid.Item size={12}>
               <Intro>
                 <Text>
-                  This information is required for making payments and recieving
-                  payouts from our payments provider Stripe.
+                  This information is required for recieving payouts from our
+                  payments provider Stripe.
                 </Text>
               </Intro>
             </Grid.Item>

@@ -9,7 +9,6 @@ export const Main = styled.TouchableOpacity`
 `;
 
 export const Icon = styled(Ionicons).attrs(props => ({
-  name: 'ios-arrow-back',
   size: 22,
   color: props.theme.foreground,
 }))``;

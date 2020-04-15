@@ -1,6 +1,7 @@
 const { UserInputError } = require('apollo-server-lambda');
 const sendMail = require('../../helpers/sendMail');
 const stripe = require('../../helpers/stripe');
+const { USER_TYPE } = require('../../consts');
 
 const registrationEmail = ({ name, verificationUrl }) => `
 Hi ${name},
@@ -51,21 +52,36 @@ module.exports = async (
     throw new UserInputError('A user with this email address already exists.');
   }
 
-  const account = await stripe.accounts.create(
-    {
-      email,
-      type: 'custom',
-      requested_capabilities: ['transfers'],
-      business_type: 'individual',
-      tos_acceptance: {
-        date: Math.floor(Date.now() / 1000),
-        ip: clientIp,
-      },
-    },
-    {
-      idempotencyKey,
+  const createStripeAccount = async () => {
+    if (type === USER_TYPE.BRAND) {
+      return stripe.customers.create(
+        {
+          email,
+        },
+        {
+          idempotencyKey,
+        }
+      );
     }
-  );
+
+    return stripe.accounts.create(
+      {
+        email,
+        type: 'custom',
+        requested_capabilities: ['transfers'],
+        business_type: 'individual',
+        tos_acceptance: {
+          date: Math.floor(Date.now() / 1000),
+          ip: clientIp,
+        },
+      },
+      {
+        idempotencyKey,
+      }
+    );
+  };
+
+  const account = await createStripeAccount();
 
   const emailVerification = await client.query(
     q.Let(

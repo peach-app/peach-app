@@ -41,17 +41,19 @@ module.exports = async (
     );
   }
 
-  await stripe.paymentIntents.create(
-    {
-      amount: 1000, // Pence for campaign creation cost
-      currency: 'gbp',
-      confirm: true,
-      payment_method: paymentMethod,
+  const { id: paymentMethodId } = await stripe.paymentMethods.create({
+    type: 'card',
+    card: {
+      token: paymentMethod,
     },
-    {
-      stripeAccount: 'acct_1GQX2eDMO5BqISFg',
-    }
-  );
+  });
+
+  await stripe.paymentIntents.create({
+    amount: 1000, // Pence for campaign creation cost
+    currency: 'gbp',
+    confirm: true,
+    payment_method: paymentMethodId,
+  });
 
   return client.query(
     DocumentDataWithId(

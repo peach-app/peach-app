@@ -18,22 +18,15 @@ import {
   Tabs,
   MoneyInput,
   DatePicker,
-  AddBankDetailsPlaceholder,
-  SubTitle,
 } from 'components';
 import { CAMPAIGN_TYPE, MODAL_TYPES } from 'consts';
 
 import { useModal } from 'contexts/Modal';
-import { useUser } from 'contexts/User';
 import { validationSchema, FORM_INITIAL_VALUES } from './consts';
 import GET_CAMPAIGN from './graphql/get-campaign';
 import CREATE_OR_UPDATE_CAMPAIGN_MUTATION from './graphql/create-or-update-campaign';
 
 export const CreateOrUpdateCampaign = () => {
-  const {
-    user: { isStripeEnabled },
-  } = useUser();
-
   const navigation = useNavigation();
 
   const { openModal } = useModal();
@@ -110,28 +103,6 @@ export const CreateOrUpdateCampaign = () => {
       });
     },
   });
-
-  if (!isStripeEnabled) {
-    return (
-      <SafeAreaView>
-        <StatusBar />
-        <Grid>
-          <Grid.Item size={12}>
-            <Header title="Create Campaign" />
-            <Intro />
-            <SubTitle isCentered>
-              {`Almost there!\n Finish setting up your account to start creating campaigns.`}
-            </SubTitle>
-            <Intro />
-            <AddBankDetailsPlaceholder
-              onPress={() => navigation.navigate('AccountDetails')}
-              text=" Tap to add your details. "
-            />
-          </Grid.Item>
-        </Grid>
-      </SafeAreaView>
-    );
-  }
 
   return (
     <SafeAreaView>

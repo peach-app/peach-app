@@ -50,7 +50,7 @@ export const Profile = () => {
       <Top>
         <Container>
           <Intro />
-          <BackButton />
+          <BackButton hasCircle />
         </Container>
       </Top>
       <ScrollView>
@@ -60,6 +60,7 @@ export const Profile = () => {
               source={{
                 uri,
               }}
+              isLoading={loading}
               fallback={name}
               isBrand={isBrand}
             />
