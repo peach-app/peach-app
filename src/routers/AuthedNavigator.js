@@ -18,6 +18,7 @@ import {
   PersonalDetails,
   BillingDetails,
   NewBilling,
+  NewPaymentMethod,
   RequestInfluencerToCampaigns,
   RequestInfluencers,
   BookingCompletion,
@@ -90,6 +91,7 @@ export const AuthedNavigator = () => (
     <Stack.Screen name="PersonalDetails" component={PersonalDetails} />
     <Stack.Screen name="BillingDetails" component={BillingDetails} />
     <Stack.Screen name="NewBilling" component={NewBilling} />
+    <Stack.Screen name="NewPaymentMethod" component={NewPaymentMethod} />
     <Stack.Screen name="AcceptBooking" component={AcceptBooking} />
   </Stack.Navigator>
 );

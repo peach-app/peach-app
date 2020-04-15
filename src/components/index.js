@@ -45,4 +45,4 @@ export * from './SocialAccounts';
 export * from './ProgressiveImage';
 export * from './CampaignsByBrand';
 export * from './AddBankDetailsPlaceholder';
-
+export * from './PaymentMethodForm';

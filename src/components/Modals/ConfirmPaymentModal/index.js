@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -10,8 +10,9 @@ import {
   SubTitle,
   Actions,
   Button,
-  TextInput,
   Text,
+  AddBankDetailsPlaceholder,
+  PaymentMethodForm,
 } from 'components';
 import { formatToMoneyFromPence } from 'helpers';
 
@@ -34,6 +35,8 @@ const validationSchema = Yup.object().shape({
 });
 
 const ConfirmPaymentModal = ({ onClose, cost, onConfirm, isLoading }) => {
+  const [showForm, setShowForm] = useState(false);
+
   const formik = useFormik({
     validationSchema,
     initialValues: {
@@ -76,35 +79,16 @@ const ConfirmPaymentModal = ({ onClose, cost, onConfirm, isLoading }) => {
           <Title>{formatToMoneyFromPence(cost)}</Title>
         </Grid.Item>
 
-        <Grid.Item size={12}>
-          <TextInput
-            label="Card number"
-            placeholder="e.g 4000056655665556"
-            value={formik.values.number}
-            error={formik.errors.number}
-            onChangeText={formik.handleChange('number')}
-          />
-        </Grid.Item>
+        {showForm && <PaymentMethodForm formik={formik} />}
 
-        <Grid.Item size={6}>
-          <TextInput
-            label="Expiry date"
-            placeholder="e.g 03/21"
-            value={formik.values.expiry}
-            error={formik.errors.expiry}
-            onChangeText={formik.handleChange('expiry')}
-          />
-        </Grid.Item>
-
-        <Grid.Item size={6}>
-          <TextInput
-            label="CVC"
-            placeholder="e.g 123"
-            value={formik.values.cvc}
-            error={formik.errors.cvc}
-            onChangeText={formik.handleChange('cvc')}
-          />
-        </Grid.Item>
+        {!showForm && (
+          <Grid.Item size={12}>
+            <AddBankDetailsPlaceholder
+              text="Add payment method"
+              onPress={() => setShowForm(true)}
+            />
+          </Grid.Item>
+        )}
 
         {formik.errors.generic && (
           <Grid.Item size={12}>
