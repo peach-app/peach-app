@@ -56,6 +56,7 @@ module.exports = gql`
     completeOnboarding: Boolean
     requestInfluencers(requestedInfluencers: [ID!], campaignId: ID!): Boolean
     createBillingMethod(token: String!): Boolean
+    createPaymentMethod(token: String!): Boolean
     verifyEmail(emailVerificationToken: String!): Boolean
     updateUserAvatar(url: String!): Boolean
     requestInfluencerToCampaigns(influencerId: ID!, campaigns: [ID!]): Boolean

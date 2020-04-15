@@ -9,6 +9,7 @@ module.exports = {
   completeOnboarding: require('./completeOnboarding'),
   requestInfluencers: require('./requestInfluencers'),
   createBillingMethod: require('./createBillingMethod'),
+  createPaymentMethod: require('./createPaymentMethod'),
   verifyEmail: require('./verifyEmail'),
   updateUserAvatar: require('./updateUserAvatar'),
   requestInfluencerToCampaigns: require('./requestInfluencerToCampaigns'),

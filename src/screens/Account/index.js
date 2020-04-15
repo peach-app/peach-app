@@ -52,11 +52,18 @@ export const Account = () => {
               </>
             )}
             {get('user.type', user) === USER_TYPE.BRAND && (
-              <NavLink
-                title="Personal Details"
-                iconProps={{ name: 'ios-arrow-forward' }}
-                onPress={() => navigation.navigate('PersonalDetails')}
-              />
+              <>
+                <NavLink
+                  title="Personal Details"
+                  iconProps={{ name: 'ios-arrow-forward' }}
+                  onPress={() => navigation.navigate('PersonalDetails')}
+                />
+                <NavLink
+                  title="Payment Methods"
+                  iconProps={{ name: 'ios-arrow-forward' }}
+                  onPress={() => navigation.navigate('PaymentMethods')}
+                />
+              </>
             )}
             <NavLink
               title="Payout History"
