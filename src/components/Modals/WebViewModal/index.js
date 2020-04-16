@@ -10,7 +10,7 @@ const Container = styled.View`
   height: ${Dimensions.get('window').height - 200}px;
 `;
 
-const SocialAccountWebViewModal = ({ uri, onClose }) => (
+const WebViewModal = ({ uri, onClose }) => (
   <Modal isOpen>
     <Container>
       <WebView source={uri} onClose={onClose} />
@@ -18,9 +18,9 @@ const SocialAccountWebViewModal = ({ uri, onClose }) => (
   </Modal>
 );
 
-SocialAccountWebViewModal.propTypes = {
+WebViewModal.propTypes = {
   uri: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
 };
 
-export default SocialAccountWebViewModal;
+export default WebViewModal;
