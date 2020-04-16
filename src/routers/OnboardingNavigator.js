@@ -1,6 +1,9 @@
 import React from 'react';
+import get from 'lodash/fp/get';
 import { useNavigation } from '@react-navigation/native';
 
+import { USER_TYPE } from 'consts';
+import { useUser } from 'contexts/User';
 import {
   Welcome,
   CompleteOnboarding,
@@ -27,30 +30,42 @@ const withSkipOption = (Component, { skipTo }) => () => {
   );
 };
 
-export const OnboardingNavigator = () => (
-  <Stack.Navigator
-    initialRouteName="Welcome"
-    screenOptions={{ headerShown: false }}
-  >
-    <Stack.Screen name="Welcome" component={Welcome} />
-    <Stack.Screen
-      name="SocialDetails"
-      component={withSkipOption(SocialDetails, {
-        skipTo: 'PersonalDetails',
-      })}
-    />
-    <Stack.Screen
-      name="PersonalDetails"
-      component={withSkipOption(PersonalDetails, {
-        skipTo: 'NewBilling',
-      })}
-    />
-    <Stack.Screen
-      name="NewBilling"
-      component={withSkipOption(NewBilling, {
-        skipTo: 'CompleteOnboarding',
-      })}
-    />
-    <Stack.Screen name="CompleteOnboarding" component={CompleteOnboarding} />
-  </Stack.Navigator>
-);
+const welcomeScreen = ({ goTo }) => () => <Welcome goTo={goTo} />;
+
+export const OnboardingNavigator = () => {
+  const { user } = useUser();
+  const isBrand = get('user.type', user) === USER_TYPE.BRAND;
+
+  return (
+    <Stack.Navigator
+      initialRouteName="Welcome"
+      screenOptions={{ headerShown: false }}
+    >
+      <Stack.Screen
+        name="Welcome"
+        component={welcomeScreen({
+          goTo: isBrand ? 'CompleteOnboarding' : 'SocialDetails',
+        })}
+      />
+      <Stack.Screen
+        name="SocialDetails"
+        component={withSkipOption(SocialDetails, {
+          skipTo: 'PersonalDetails',
+        })}
+      />
+      <Stack.Screen
+        name="PersonalDetails"
+        component={withSkipOption(PersonalDetails, {
+          skipTo: 'NewBilling',
+        })}
+      />
+      <Stack.Screen
+        name="NewBilling"
+        component={withSkipOption(NewBilling, {
+          skipTo: 'CompleteOnboarding',
+        })}
+      />
+      <Stack.Screen name="CompleteOnboarding" component={CompleteOnboarding} />
+    </Stack.Navigator>
+  );
+};

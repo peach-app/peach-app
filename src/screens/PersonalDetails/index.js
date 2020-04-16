@@ -9,6 +9,8 @@ import get from 'lodash/fp/get';
 import getOr from 'lodash/fp/getOr';
 import parseDate from 'date-fns/parse';
 
+import { USER_TYPE } from 'consts';
+import { useUser } from 'contexts/User';
 import {
   SafeAreaView,
   Header,
@@ -26,15 +28,15 @@ import GET_USER from './graphql/get-user';
 import UPDATE_USER from './graphql/update-user';
 
 const validationSchema = Yup.object().shape({
-  firstName: Yup.string().required(),
-  lastName: Yup.string().required(),
+  firstName: Yup.string(),
+  lastName: Yup.string(),
   email: Yup.string()
     .email('Please enter a valid email address')
     .required('Please enter an email address'),
-  dob: Yup.string().required(),
-  addressLine1: Yup.string().required(),
-  city: Yup.string().required(),
-  postalCode: Yup.string().required(),
+  dob: Yup.string(),
+  addressLine1: Yup.string(),
+  city: Yup.string(),
+  postalCode: Yup.string(),
 });
 
 export const PersonalDetails = ({
@@ -42,7 +44,9 @@ export const PersonalDetails = ({
   onRightActionPressed,
   onComplete,
 }) => {
+  const { user } = useUser();
   const navigation = useNavigation();
+  const isBrand = get('user.type', user) === USER_TYPE.BRAND;
   const { data } = useQuery(GET_USER, {
     fetchPolicy: 'cache-and-network',
   });
@@ -101,25 +105,29 @@ export const PersonalDetails = ({
           <Container>
             <Intro />
             <Grid>
-              <Grid.Item size={6}>
-                <TextInput
-                  label="First name"
-                  value={formik.values.firstName}
-                  error={formik.errors.firstName}
-                  onChangeText={formik.handleChange('firstName')}
-                  onBlur={formik.handleBlur('firstName')}
-                />
-              </Grid.Item>
+              {!isBrand && (
+                <>
+                  <Grid.Item size={6}>
+                    <TextInput
+                      label="First name"
+                      value={formik.values.firstName}
+                      error={formik.errors.firstName}
+                      onChangeText={formik.handleChange('firstName')}
+                      onBlur={formik.handleBlur('firstName')}
+                    />
+                  </Grid.Item>
 
-              <Grid.Item size={6}>
-                <TextInput
-                  label="Last name"
-                  value={formik.values.lastName}
-                  error={formik.errors.lastName}
-                  onChangeText={formik.handleChange('lastName')}
-                  onBlur={formik.handleBlur('lastName')}
-                />
-              </Grid.Item>
+                  <Grid.Item size={6}>
+                    <TextInput
+                      label="Last name"
+                      value={formik.values.lastName}
+                      error={formik.errors.lastName}
+                      onChangeText={formik.handleChange('lastName')}
+                      onBlur={formik.handleBlur('lastName')}
+                    />
+                  </Grid.Item>
+                </>
+              )}
 
               <Grid.Item size={12}>
                 <TextInput
@@ -133,57 +141,61 @@ export const PersonalDetails = ({
                 />
               </Grid.Item>
 
-              <Grid.Item size={12}>
-                <DatePicker
-                  label="Date of birth"
-                  error={formik.errors.dob}
-                  value={formik.values.dob}
-                  onChange={selectedDate => {
-                    formik.setFieldValue('dob', selectedDate);
-                  }}
-                />
-              </Grid.Item>
+              {!isBrand && (
+                <>
+                  <Grid.Item size={12}>
+                    <DatePicker
+                      label="Date of birth"
+                      error={formik.errors.dob}
+                      value={formik.values.dob}
+                      onChange={selectedDate => {
+                        formik.setFieldValue('dob', selectedDate);
+                      }}
+                    />
+                  </Grid.Item>
 
-              <Grid.Item size={12}>
-                <TextInput
-                  label="Address"
-                  placeholder="Address line 1"
-                  value={formik.values.addressLine1}
-                  error={formik.errors.addressLine1}
-                  onChangeText={formik.handleChange('addressLine1')}
-                  onBlur={formik.handleBlur('addressLine1')}
-                />
-              </Grid.Item>
+                  <Grid.Item size={12}>
+                    <TextInput
+                      label="Address"
+                      placeholder="Address line 1"
+                      value={formik.values.addressLine1}
+                      error={formik.errors.addressLine1}
+                      onChangeText={formik.handleChange('addressLine1')}
+                      onBlur={formik.handleBlur('addressLine1')}
+                    />
+                  </Grid.Item>
 
-              <Grid.Item size={12}>
-                <TextInput
-                  placeholder="Address line 2"
-                  value={formik.values.addressLine2}
-                  error={formik.errors.addressLine2}
-                  onChangeText={formik.handleChange('addressLine2')}
-                  onBlur={formik.handleBlur('addressLine2')}
-                />
-              </Grid.Item>
+                  <Grid.Item size={12}>
+                    <TextInput
+                      placeholder="Address line 2"
+                      value={formik.values.addressLine2}
+                      error={formik.errors.addressLine2}
+                      onChangeText={formik.handleChange('addressLine2')}
+                      onBlur={formik.handleBlur('addressLine2')}
+                    />
+                  </Grid.Item>
 
-              <Grid.Item size={6}>
-                <TextInput
-                  label="Town/City"
-                  value={formik.values.city}
-                  error={formik.errors.city}
-                  onChangeText={formik.handleChange('city')}
-                  onBlur={formik.handleBlur('city')}
-                />
-              </Grid.Item>
+                  <Grid.Item size={6}>
+                    <TextInput
+                      label="Town/City"
+                      value={formik.values.city}
+                      error={formik.errors.city}
+                      onChangeText={formik.handleChange('city')}
+                      onBlur={formik.handleBlur('city')}
+                    />
+                  </Grid.Item>
 
-              <Grid.Item size={6}>
-                <TextInput
-                  label="Postal code"
-                  value={formik.values.postalCode}
-                  error={formik.errors.postalCode}
-                  onChangeText={formik.handleChange('postalCode')}
-                  onBlur={formik.handleBlur('postalCode')}
-                />
-              </Grid.Item>
+                  <Grid.Item size={6}>
+                    <TextInput
+                      label="Postal code"
+                      value={formik.values.postalCode}
+                      error={formik.errors.postalCode}
+                      onChangeText={formik.handleChange('postalCode')}
+                      onBlur={formik.handleBlur('postalCode')}
+                    />
+                  </Grid.Item>
+                </>
+              )}
 
               {error && (
                 <Grid.Item size={12}>

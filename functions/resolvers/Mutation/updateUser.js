@@ -2,6 +2,7 @@ const FormatDate = require('date-fns/format');
 const omitBy = require('lodash/omitBy');
 const isNil = require('lodash/isNil');
 const stripe = require('../../helpers/stripe');
+const { USER_TYPE } = require('../../consts');
 
 module.exports = async (root, args, { client, q, activeUserRef }) => {
   const {
@@ -17,15 +18,18 @@ module.exports = async (root, args, { client, q, activeUserRef }) => {
     postalCode,
   } = args.user;
 
-  const { stripeID } = await client.query(
+  const { stripeID, type } = await client.query(
     q.Select(['data'], q.Get(activeUserRef))
   );
+
+  const isBrand = type === USER_TYPE.BRAND;
 
   const [day, month, year] = dob
     ? FormatDate(new Date(dob), 'dd/MM/yyyy').split('/')
     : [];
 
   if (
+    !isBrand &&
     stripeID &&
     (email ||
       firstName ||
@@ -69,6 +73,12 @@ module.exports = async (root, args, { client, q, activeUserRef }) => {
         isNil
       )
     );
+  }
+
+  if (isBrand && stripeID && email) {
+    await stripe.customers.update(stripeID, {
+      email,
+    });
   }
 
   if (name || email || bio) {
