@@ -4,12 +4,16 @@ import { NavigationContainer } from '@react-navigation/native';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { AppearanceProvider } from 'react-native-appearance';
 import { ApolloProvider } from '@apollo/react-hooks';
+import Modal from 'react-modal';
+
 import { VerifyEmail } from './screens/VerifyEmail';
 import { PasswordReset } from './screens/PasswordReset';
 import client from './apollo-client';
 import { App } from './App';
 
 import ThemeProvider from './theme-provider';
+
+Modal.setAppElement(document.body);
 
 const ProvidersHOC = ({ children }) => (
   <ApolloProvider client={client}>

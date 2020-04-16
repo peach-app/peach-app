@@ -1,9 +1,16 @@
 import styled from 'styled-components/native';
 import * as Animatable from 'react-native-animatable';
+import { Platform } from 'react-native';
 
 export const Main = styled.View`
   aspect-ratio: 1;
   width: 100%;
+  ${Platform.select({
+    web: `
+      height: 40vh;
+      min-height: 250px;
+    `,
+  })}
 `;
 
 export const Fallback = styled.View`
