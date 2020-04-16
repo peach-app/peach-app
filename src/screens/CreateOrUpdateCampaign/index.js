@@ -63,7 +63,7 @@ export const CreateOrUpdateCampaign = () => {
 
   const submitCampaign = (
     { name, description, budget, dueDate, paymentId },
-    { cardId, token }
+    { cardId, token } = {}
   ) => {
     createOrUpdateCampaign({
       variables: {
