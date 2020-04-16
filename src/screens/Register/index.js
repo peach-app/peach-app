@@ -1,7 +1,11 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
-import { ScrollView, KeyboardAvoidingView } from 'react-native';
+import {
+  ScrollView,
+  KeyboardAvoidingView,
+  TouchableOpacity,
+} from 'react-native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from '@apollo/react-hooks';
@@ -24,6 +28,7 @@ import {
   Button,
   BackButton,
   GraphQLErrors,
+  SubTitle,
 } from 'components';
 import { useAuth } from 'contexts/Auth';
 
@@ -43,7 +48,6 @@ const validationSchema = Yup.object().shape({
 
 const Touchable = styled.TouchableOpacity`
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: center;
 `;
@@ -173,13 +177,17 @@ export const Register = () => {
                     });
                   }}
                 >
-                  <Title> 📄 </Title>
-                  <Text isPara>👈 Our Terms & Conditions</Text>
+                  <Text isPara isUnderlined>
+                    Our Terms & Conditions
+                  </Text>
                 </Touchable>
               </Grid.Item>
               <Grid.Item size={12}>
+                <SubTitle isCenter> ☝️ </SubTitle>
+              </Grid.Item>
+              <Grid.Item size={12}>
                 <Text isPara isCenter>
-                  By signing up you indicate that you have accepted our T&Cs.
+                  By signing up you indicate that you have accepted them.
                 </Text>
               </Grid.Item>
             </Grid>
