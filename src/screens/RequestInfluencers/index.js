@@ -30,7 +30,6 @@ export const RequestInfluencers = () => {
             openModal({
               type: MODAL_TYPES.CONFIRM_REQUEST_INFLUENCERS,
               props: {
-                shouldCloseOnBackdropClick: true,
                 requestedInfluencers,
                 campaignId,
                 navigation,

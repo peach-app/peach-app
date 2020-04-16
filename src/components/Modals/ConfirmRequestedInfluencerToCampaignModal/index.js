@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Modal, FeedbackView, Grid, Intro } from 'components';
+
+import { Modal, FeedbackView, Grid, Intro, Container } from 'components';
 
 const ConfirmRequestedInfluencerToCampaignModal = ({
   onClose,
@@ -14,14 +15,16 @@ const ConfirmRequestedInfluencerToCampaignModal = ({
     return () => clearTimeout(timeOut);
   }, []);
   return (
-    <Modal isOpen onClose={onClose}>
-      <Grid>
-        <FeedbackView
-          title="All done!"
-          subTitle="We have sent the request to the influencer and we will notify you as soon as they respond."
-        />
-      </Grid>
-      <Intro />
+    <Modal isOpen>
+      <Container>
+        <Intro />
+        <Grid>
+          <FeedbackView
+            title="All done!"
+            subTitle="We have sent the request to the influencer and we will notify you as soon as they respond."
+          />
+        </Grid>
+      </Container>
     </Modal>
   );
 };

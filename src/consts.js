@@ -22,8 +22,8 @@ export const USER_TYPE = {
 };
 
 export const CAMPAIGN_TYPE = {
-  PRIVATE: 'PRIVATE',
   PUBLIC: 'PUBLIC',
+  PRIVATE: 'PRIVATE',
 };
 
 export const BOOKING_STATE = {

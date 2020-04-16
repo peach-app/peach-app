@@ -7,6 +7,8 @@ import {
   Actions,
   Button,
   FeedbackView,
+  Container,
+  Intro,
 } from 'components';
 
 const CampaignCreationModal = ({
@@ -24,42 +26,45 @@ const CampaignCreationModal = ({
   };
 
   return (
-    <Modal isOpen onClose={onClose}>
-      <Grid justify="center" align="center">
-        <FeedbackView
-          title={
-            hasBeenEdited
-              ? 'Your changes were saved! '
-              : 'Campaign created successfully!'
-          }
-          subTitle={
-            hasBeenEdited
-              ? 'We will notify everyone involved. Meanwhile you can:'
-              : 'All influencers on our platform will be able to discover and apply for your campaign. If you want someone specific you can:'
-          }
-        />
-        <Grid.Item size={12}>
-          <Actions>
-            <Button
-              fixedWidth
-              title="Request Influencers"
-              onPress={() => onActionTaken(onRequestInfluencers)}
-            />
-          </Actions>
-        </Grid.Item>
-        <Grid.Item size={12}>
-          <SubTitle isCentered>or</SubTitle>
-        </Grid.Item>
-        <Grid.Item size={12}>
-          <Actions>
-            <Button
-              fixedWidth
-              title="Finish"
-              onPress={() => onActionTaken(onFinish)}
-            />
-          </Actions>
-        </Grid.Item>
-      </Grid>
+    <Modal isOpen>
+      <Container>
+        <Intro />
+        <Grid justify="center" align="center">
+          <FeedbackView
+            title={
+              hasBeenEdited
+                ? 'Your changes were saved! '
+                : 'Campaign created successfully!'
+            }
+            subTitle={
+              hasBeenEdited
+                ? 'We will notify everyone involved. Meanwhile you can:'
+                : 'All influencers on our platform will be able to discover and apply for your campaign. If you want someone specific you can:'
+            }
+          />
+          <Grid.Item size={12}>
+            <Actions>
+              <Button
+                fixedWidth
+                title="Request Influencers"
+                onPress={() => onActionTaken(onRequestInfluencers)}
+              />
+            </Actions>
+          </Grid.Item>
+          <Grid.Item size={12}>
+            <SubTitle isCentered>or</SubTitle>
+          </Grid.Item>
+          <Grid.Item size={12}>
+            <Actions>
+              <Button
+                fixedWidth
+                title="Finish"
+                onPress={() => onActionTaken(onFinish)}
+              />
+            </Actions>
+          </Grid.Item>
+        </Grid>
+      </Container>
     </Modal>
   );
 };
@@ -70,4 +75,5 @@ CampaignCreationModal.propTypes = {
   onRequestInfluencers: PropTypes.func.isRequired,
   hasBeenEdited: PropTypes.bool.isRequired,
 };
+
 export default CampaignCreationModal;

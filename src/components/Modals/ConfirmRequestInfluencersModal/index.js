@@ -11,6 +11,8 @@ import {
   Avatar,
   Actions,
   FeedbackView,
+  Container,
+  Intro,
 } from 'components';
 import REQUEST_INFLUENCERS from './graphql';
 
@@ -44,50 +46,53 @@ const ConfirmRequestedInfluencersModal = ({
   }, []);
 
   return (
-    <Modal isOpen onClose={onClose} shouldCloseOnBackdropClick>
-      <Grid justify="center" align="center">
-        {isSuccessScreenVisible ? (
-          <FeedbackView
-            title="Influecers successfully requested!"
-            subTitle="They will be notified about your interest"
-            actionButtonLabel="Done"
-            onActionButtonPressed={handleFeedbackActionButtonPressed}
-          />
-        ) : (
-          <>
-            <Grid.Item size={12}>
-              <Title isCentered>Great choice!</Title>
-            </Grid.Item>
-            <Grid.Item size={12}>
-              <SubTitle isCentered>
-                You are about to request the following influencers:
-              </SubTitle>
-            </Grid.Item>
-            <Grid.Item size={12}>
-              <Avatar.List isCentered>
-                {requestedInfluencers.map(influencer => (
-                  <Avatar
-                    key={influencer._id}
-                    size={60}
-                    fallback={influencer.name}
-                    source={{ uri: get('avatar.url', influencer) }}
+    <Modal isOpen>
+      <Container>
+        <Intro />
+        <Grid justify="center" align="center">
+          {isSuccessScreenVisible ? (
+            <FeedbackView
+              title="Influecers successfully requested!"
+              subTitle="They will be notified about your interest"
+              actionButtonLabel="Done"
+              onActionButtonPressed={handleFeedbackActionButtonPressed}
+            />
+          ) : (
+            <>
+              <Grid.Item size={12}>
+                <Title isCentered>Great choice!</Title>
+              </Grid.Item>
+              <Grid.Item size={12}>
+                <SubTitle isCentered>
+                  You are about to request the following influencers:
+                </SubTitle>
+              </Grid.Item>
+              <Grid.Item size={12}>
+                <Avatar.List isCentered>
+                  {requestedInfluencers.map(influencer => (
+                    <Avatar
+                      key={influencer._id}
+                      size={60}
+                      fallback={influencer.name}
+                      source={{ uri: get('avatar.url', influencer) }}
+                    />
+                  ))}
+                </Avatar.List>
+              </Grid.Item>
+              <Grid.Item size={12}>
+                <Actions>
+                  <Button
+                    onPress={onSubmitRequest}
+                    title="Request"
+                    fixedWidth
+                    isLoading={loading}
                   />
-                ))}
-              </Avatar.List>
-            </Grid.Item>
-            <Grid.Item size={12}>
-              <Actions>
-                <Button
-                  onPress={onSubmitRequest}
-                  title="Request"
-                  fixedWidth
-                  isLoading={loading}
-                />
-              </Actions>
-            </Grid.Item>
-          </>
-        )}
-      </Grid>
+                </Actions>
+              </Grid.Item>
+            </>
+          )}
+        </Grid>
+      </Container>
     </Modal>
   );
 };

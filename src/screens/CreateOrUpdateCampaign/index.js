@@ -73,7 +73,7 @@ export const CreateOrUpdateCampaign = () => {
           description,
           budget: budget.toString(),
           ...(!campaignId && { dueDate }),
-          private: activeTab === 0,
+          private: activeTab === 1,
           paymentId,
         },
         cardId,
@@ -166,17 +166,20 @@ export const CreateOrUpdateCampaign = () => {
                   value={formik.values.budget}
                 />
               </Grid.Item>
+
+              <Grid.Item size={12}>
+                <Actions>
+                  <Button
+                    isLoading={saving}
+                    onPress={formik.handleSubmit}
+                    title={campaignId ? 'Save' : 'Create'}
+                    fixedWidth
+                  />
+                </Actions>
+              </Grid.Item>
             </Grid>
           </Container>
         </ScrollView>
-        <Actions>
-          <Button
-            isLoading={saving}
-            onPress={formik.handleSubmit}
-            title={campaignId ? 'Save' : 'Create'}
-            fixedWidth
-          />
-        </Actions>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

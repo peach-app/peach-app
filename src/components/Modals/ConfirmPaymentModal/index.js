@@ -11,8 +11,10 @@ import {
   Actions,
   Button,
   Text,
+  Intro,
   PaymentMethodForm,
   UserPaymentMethods,
+  Container,
 } from 'components';
 import { formatToMoneyFromPence } from 'helpers';
 
@@ -34,7 +36,7 @@ const validationSchema = Yup.object().shape({
     .required('CVC is required'),
 });
 
-const ConfirmPaymentModal = ({ onClose, cost, onConfirm, description }) => {
+const ConfirmPaymentModal = ({ cost, onConfirm, description }) => {
   const [showForm, setShowForm] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -83,51 +85,54 @@ const ConfirmPaymentModal = ({ onClose, cost, onConfirm, description }) => {
   });
 
   return (
-    <Modal isOpen shouldCloseOnBackdropClick onClose={onClose}>
-      <Grid>
-        <Grid.Item size={12}>
-          <Title>Payment Details</Title>
-        </Grid.Item>
-
-        {description && (
+    <Modal isOpen>
+      <Container>
+        <Intro />
+        <Grid>
           <Grid.Item size={12}>
-            <Text>{description}</Text>
+            <Title>Payment Details</Title>
           </Grid.Item>
-        )}
 
-        <Grid.Item size={12}>
-          <SubTitle>Total</SubTitle>
-          <Title>{formatToMoneyFromPence(cost)}</Title>
-        </Grid.Item>
+          {description && (
+            <Grid.Item size={12}>
+              <Text>{description}</Text>
+            </Grid.Item>
+          )}
 
-        {!showForm && (
-          <UserPaymentMethods
-            selectedId={selectedId}
-            setSelectedId={setSelectedId}
-            onAddNewPress={() => setShowForm(true)}
-          />
-        )}
-
-        {showForm && <PaymentMethodForm formik={formik} />}
-
-        {formik.errors.generic && (
           <Grid.Item size={12}>
-            <Text isCenter>{formik.errors.generic}</Text>
+            <SubTitle>Total</SubTitle>
+            <Title>{formatToMoneyFromPence(cost)}</Title>
           </Grid.Item>
-        )}
 
-        <Grid.Item size={12}>
-          <Actions>
-            <Button
-              fixedWidth
-              title="Confirm"
-              disabled={showForm ? false : !selectedId}
-              onPress={formik.handleSubmit}
-              isLoading={loading}
+          {!showForm && (
+            <UserPaymentMethods
+              selectedId={selectedId}
+              setSelectedId={setSelectedId}
+              onAddNewPress={() => setShowForm(true)}
             />
-          </Actions>
-        </Grid.Item>
-      </Grid>
+          )}
+
+          {showForm && <PaymentMethodForm formik={formik} />}
+
+          {formik.errors.generic && (
+            <Grid.Item size={12}>
+              <Text isCenter>{formik.errors.generic}</Text>
+            </Grid.Item>
+          )}
+
+          <Grid.Item size={12}>
+            <Actions>
+              <Button
+                fixedWidth
+                title="Confirm"
+                disabled={showForm ? false : !selectedId}
+                onPress={formik.handleSubmit}
+                isLoading={loading}
+              />
+            </Actions>
+          </Grid.Item>
+        </Grid>
+      </Container>
     </Modal>
   );
 };
@@ -137,7 +142,6 @@ ConfirmPaymentModal.defaultProps = {
 };
 
 ConfirmPaymentModal.propTypes = {
-  onClose: PropTypes.func.isRequired,
   cost: PropTypes.number.isRequired,
   onConfirm: PropTypes.func.isRequired,
   description: PropTypes.string,
