@@ -85,6 +85,7 @@ export const Booking = ({ _id, cost, state, note, user, isLoading }) => {
                       description: `Accept ${startCase(
                         get('name', user)
                       )} onto your campaign.`,
+                      onClose: closeModal,
                       onConfirm: ({ cardId, token }) => {
                         updateBooking({
                           variables: {

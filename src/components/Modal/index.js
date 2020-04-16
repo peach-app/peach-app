@@ -1,9 +1,9 @@
 import React from 'react';
 import { Modal as ImportedModal } from 'react-native';
 
-import { Main, Content } from './styles';
+import { Main, Content, Cover } from './styles';
 
-export const Modal = ({ children, isOpen, customWrapper }) => {
+export const Modal = ({ children, isOpen, customWrapper, onClose }) => {
   const Wrapper = customWrapper || Content;
 
   return (
@@ -14,6 +14,7 @@ export const Modal = ({ children, isOpen, customWrapper }) => {
       transparent
     >
       <Main>
+        <Cover onPress={onClose} />
         <Wrapper>{children}</Wrapper>
       </Main>
     </ImportedModal>

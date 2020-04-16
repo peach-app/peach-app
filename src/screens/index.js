@@ -13,7 +13,6 @@ export * from './Login';
 export * from './AccountDetails';
 export * from './SocialDetails';
 export * from './Welcome';
-export * from './Payouts';
 export * from './Profile';
 export * from './Register';
 export * from './Search';

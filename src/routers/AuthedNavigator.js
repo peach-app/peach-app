@@ -9,7 +9,6 @@ import {
   Search,
   Account,
   EditProfile,
-  Payouts,
   SocialDetails,
   AccountDetails,
   CreateOrUpdateCampaign,
@@ -84,7 +83,6 @@ export const AuthedNavigator = () => (
       component={RequestInfluencerToCampaigns}
     />
     <Stack.Screen name="EditProfile" component={EditProfile} />
-    <Stack.Screen name="Payouts" component={Payouts} />
     <Stack.Screen name="SocialDetails" component={SocialDetails} />
     <Stack.Screen name="AccountDetails" component={AccountDetails} />
     <Stack.Screen name="AccountDocuments" component={AccountDocuments} />

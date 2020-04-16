@@ -17,3 +17,11 @@ export const Content = styled(Animatable.View).attrs({
   border-top-start-radius: ${props => props.theme.radius}px;
   border-top-end-radius: ${props => props.theme.radius}px;
 `;
+
+export const Cover = styled.TouchableOpacity`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+`;

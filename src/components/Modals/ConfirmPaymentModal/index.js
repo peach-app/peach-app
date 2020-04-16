@@ -36,7 +36,7 @@ const validationSchema = Yup.object().shape({
     .required('CVC is required'),
 });
 
-const ConfirmPaymentModal = ({ cost, onConfirm, description }) => {
+const ConfirmPaymentModal = ({ cost, onConfirm, description, onClose }) => {
   const [showForm, setShowForm] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -85,7 +85,7 @@ const ConfirmPaymentModal = ({ cost, onConfirm, description }) => {
   });
 
   return (
-    <Modal isOpen>
+    <Modal isOpen onClose={onClose}>
       <Container>
         <Intro />
         <Grid>
@@ -145,6 +145,7 @@ ConfirmPaymentModal.propTypes = {
   cost: PropTypes.number.isRequired,
   onConfirm: PropTypes.func.isRequired,
   description: PropTypes.string,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default ConfirmPaymentModal;

@@ -29,7 +29,7 @@ import CREATE_OR_UPDATE_CAMPAIGN_MUTATION from './graphql/create-or-update-campa
 export const CreateOrUpdateCampaign = () => {
   const navigation = useNavigation();
 
-  const { openModal } = useModal();
+  const { openModal, closeModal } = useModal();
 
   const [activeTab, setTab] = useState(0);
   const { params } = useRoute();
@@ -96,6 +96,7 @@ export const CreateOrUpdateCampaign = () => {
       openModal({
         type: MODAL_TYPES.CONFIRM_PAYMENT,
         props: {
+          onClose: closeModal,
           onConfirm: paymentMethod =>
             submitCampaign(campaignDetails, paymentMethod),
           cost: 500,
