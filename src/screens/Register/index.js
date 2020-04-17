@@ -172,13 +172,27 @@ export const Register = () => {
                     openModal({
                       type: MODAL_TYPES.WEB_VIEW_MODAL,
                       props: {
-                        uri: 'https://peachapp.io',
+                        uri: 'https://peachapp.io/terms',
                       },
                     });
                   }}
                 >
-                  <Text isPara isUnderlined>
-                    Our Terms & Conditions
+                  <Text isUnderlined isPara>
+                    Our Service Agreement
+                  </Text>
+                </Touchable>
+                <Touchable
+                  onPress={() => {
+                    openModal({
+                      type: MODAL_TYPES.WEB_VIEW_MODAL,
+                      props: {
+                        uri: 'https://stripe.com/gb/connect-account/legal',
+                      },
+                    });
+                  }}
+                >
+                  <Text isUnderlined isPara>
+                    Stripe Connected Account Agreement
                   </Text>
                 </Touchable>
               </Grid.Item>
@@ -187,7 +201,8 @@ export const Register = () => {
               </Grid.Item>
               <Grid.Item size={12}>
                 <Text isPara isCenter>
-                  By signing up you indicate that you have accepted them.
+                  By registering your account, you agree to our Services
+                  Agreement and the Stripe Connected Account Agreement.
                 </Text>
               </Grid.Item>
             </Grid>
