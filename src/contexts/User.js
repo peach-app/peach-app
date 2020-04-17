@@ -11,10 +11,9 @@ export const Provider = ({ children }) => {
   const { setToken } = useAuth();
 
   const { client, data, loading } = useQuery(GET_USER, {
-    onError: async error => {
-      console.log(error);
-      // await setToken(null);
-      // client.resetStore();
+    onError: async () => {
+      await setToken(null);
+      client.resetStore();
     },
   });
 
