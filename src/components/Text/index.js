@@ -8,7 +8,7 @@ export const Text = styled.Text`
   ${props => props.isPara && `line-height: 22px;`}
   ${props =>
     props.isUnderlined &&
-    `text-decoration: underline; text-decoration-color: ${props.theme.white}`}
+    `text-decoration: underline; text-decoration-color: ${props.theme.foreground}`}
 `;
 
 Text.defaultProps = {

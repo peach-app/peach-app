@@ -1,10 +1,18 @@
+/* eslint-disable jsx-a11y/accessible-emoji */
 import React, { useState } from 'react';
-import { ScrollView, KeyboardAvoidingView } from 'react-native';
+import styled from 'styled-components/native';
+import {
+  ScrollView,
+  KeyboardAvoidingView,
+  TouchableOpacity,
+} from 'react-native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 import uuid from 'uuid/v4';
+import { useModal } from 'contexts/Modal';
+import { MODAL_TYPES } from 'consts';
 
 import {
   SafeAreaView,
@@ -20,6 +28,7 @@ import {
   Button,
   BackButton,
   GraphQLErrors,
+  SubTitle,
 } from 'components';
 import { useAuth } from 'contexts/Auth';
 
@@ -37,6 +46,12 @@ const validationSchema = Yup.object().shape({
   ),
 });
 
+const Touchable = styled.TouchableOpacity`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const Register = () => {
   const [activeTab, setTab] = useState(0);
   const { setToken } = useAuth();
@@ -45,6 +60,7 @@ export const Register = () => {
       setToken(get('register.secret', data));
     },
   });
+  const { openModal } = useModal();
 
   const formik = useFormik({
     validateOnBlur: false,
@@ -148,20 +164,43 @@ export const Register = () => {
                   <GraphQLErrors error={error} />
                 </Grid.Item>
               )}
+              <Grid.Item size={12} />
 
               <Grid.Item size={12}>
-                <Actions>
-                  <Button
-                    isLoading={loading}
-                    onPress={formik.handleSubmit}
-                    title="Sign Up"
-                    fixedWidth
-                  />
-                </Actions>
+                <Touchable
+                  onPress={() => {
+                    openModal({
+                      type: MODAL_TYPES.WEB_VIEW_MODAL,
+                      props: {
+                        uri: 'https://peachapp.io',
+                      },
+                    });
+                  }}
+                >
+                  <Text isPara isUnderlined>
+                    Our Terms & Conditions
+                  </Text>
+                </Touchable>
+              </Grid.Item>
+              <Grid.Item size={12}>
+                <SubTitle isCenter> ☝️ </SubTitle>
+              </Grid.Item>
+              <Grid.Item size={12}>
+                <Text isPara isCenter>
+                  By signing up you indicate that you have accepted them.
+                </Text>
               </Grid.Item>
             </Grid>
           </Container>
         </ScrollView>
+        <Actions>
+          <Button
+            isLoading={loading}
+            onPress={formik.handleSubmit}
+            title="Sign Up"
+            fixedWidth
+          />
+        </Actions>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

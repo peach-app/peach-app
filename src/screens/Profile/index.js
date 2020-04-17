@@ -75,7 +75,7 @@ export const Profile = () => {
                       socialAccounts={omit(socialAccounts, ['__typename'])}
                       onSocialAccountPressed={uri =>
                         openModal({
-                          type: MODAL_TYPES.SOCIAL_ACCOUNT_WEB_VIEW,
+                          type: MODAL_TYPES.WEB_VIEW_MODAL,
                           props: {
                             uri,
                           },

@@ -34,11 +34,6 @@ export const AccountDetails = () => {
 
             <Grid.Item size={12}>
               <NavLink
-                title="Identity Documents"
-                iconProps={{ name: 'ios-arrow-forward' }}
-                onPress={() => navigation.navigate('AccountDocuments')}
-              />
-              <NavLink
                 title="Personal Details"
                 iconProps={{ name: 'ios-arrow-forward' }}
                 onPress={() => navigation.navigate('PersonalDetails')}

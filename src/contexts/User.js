@@ -21,7 +21,6 @@ export const Provider = ({ children }) => {
     ...data,
     isEmailVerified: get('user.emailVerification.isVerified', data),
     isStripeEnabled:
-      get('user.stripeAccount.capabilities.card_payments', data) === 'active' &&
       get('user.stripeAccount.capabilities.transfers', data) === 'active',
   };
 
