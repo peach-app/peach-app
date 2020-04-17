@@ -12,8 +12,8 @@ export default gql`
       onboarded
       ...ProfileHeaderFragment
       stripeAccount {
+        id
         capabilities {
-          card_payments
           transfers
         }
       }

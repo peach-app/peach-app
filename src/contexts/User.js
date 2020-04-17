@@ -11,9 +11,10 @@ export const Provider = ({ children }) => {
   const { setToken } = useAuth();
 
   const { client, data, loading } = useQuery(GET_USER, {
-    onError: async () => {
-      await setToken(null);
-      client.resetStore();
+    onError: async error => {
+      console.log(error);
+      // await setToken(null);
+      // client.resetStore();
     },
   });
 
@@ -21,7 +22,6 @@ export const Provider = ({ children }) => {
     ...data,
     isEmailVerified: get('user.emailVerification.isVerified', data),
     isStripeEnabled:
-      get('user.stripeAccount.capabilities.card_payments', data) === 'active' &&
       get('user.stripeAccount.capabilities.transfers', data) === 'active',
   };
 

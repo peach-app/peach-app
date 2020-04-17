@@ -180,7 +180,6 @@ module.exports = gql`
   }
 
   type StripeCapabilities {
-    card_payments: String
     transfers: String
   }
 

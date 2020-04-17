@@ -21,7 +21,6 @@ import {
   RequestInfluencerToCampaigns,
   RequestInfluencers,
   BookingCompletion,
-  AccountDocuments,
   PaymentMethods,
 } from 'screens';
 
@@ -85,7 +84,6 @@ export const AuthedNavigator = () => (
     <Stack.Screen name="EditProfile" component={EditProfile} />
     <Stack.Screen name="SocialDetails" component={SocialDetails} />
     <Stack.Screen name="AccountDetails" component={AccountDetails} />
-    <Stack.Screen name="AccountDocuments" component={AccountDocuments} />
     <Stack.Screen name="PersonalDetails" component={PersonalDetails} />
     <Stack.Screen name="BillingDetails" component={BillingDetails} />
     <Stack.Screen name="NewBilling" component={NewBilling} />
