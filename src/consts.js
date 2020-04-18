@@ -13,7 +13,7 @@ export const FORM_ERROR_MESSAGES = {
   REQUIRED_PASSWORD: 'We need you to set a password',
   REQUIRED_EMAIL: 'We need your email',
   INVALID_NUMBER: 'Please enter a valid budget amount',
-  POSITIVE_AMOUNT: 'Please enter a positive amount for the bugdet',
+  MIN_BUDGET: 'Budget must be more than £5.00',
 };
 
 export const USER_TYPE = {

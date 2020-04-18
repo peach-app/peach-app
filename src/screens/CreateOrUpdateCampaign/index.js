@@ -84,7 +84,6 @@ export const CreateOrUpdateCampaign = () => {
 
   const formik = useFormik({
     validateOnBlur: false,
-    validateOnChange: false,
     initialValues: campaign || FORM_INITIAL_VALUES,
     validationSchema,
     onSubmit: campaignDetails => {

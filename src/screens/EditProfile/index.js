@@ -26,6 +26,7 @@ const validationSchema = Yup.object().shape({
   name: Yup.string()
     .max(25)
     .required('Your name is required'),
+  bio: Yup.string().max(1500),
 });
 
 export const EditProfile = () => {
@@ -42,7 +43,6 @@ export const EditProfile = () => {
 
   const formik = useFormik({
     validateOnBlur: false,
-    validateOnChange: false,
     validationSchema,
     enableReinitialize: true,
     initialValues: {
