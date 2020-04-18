@@ -32,7 +32,7 @@ export const Support = () => (
             </Card>
           </Grid.Item>
           <Grid.Item size={12}>
-            <Text isCenter>We aim to respond within 24 hours.</Text>
+            <Text isCenter>We aim to respond within 24 hours ⏰</Text>
           </Grid.Item>
         </Grid>
       </Container>
