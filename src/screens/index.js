@@ -28,3 +28,4 @@ export * from './BookingCompletion';
 export * from './CompleteOnboarding';
 export * from './PasswordResetEmail';
 export * from './PaymentMethods';
+export * from './Support';

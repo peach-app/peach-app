@@ -22,6 +22,7 @@ import {
   RequestInfluencers,
   BookingCompletion,
   PaymentMethods,
+  Support,
 } from 'screens';
 
 import { createStackNavigator, createBottomTabNavigator } from './components';
@@ -89,5 +90,6 @@ export const AuthedNavigator = () => (
     <Stack.Screen name="NewBilling" component={NewBilling} />
     <Stack.Screen name="PaymentMethods" component={PaymentMethods} />
     <Stack.Screen name="NewPaymentMethod" component={NewPaymentMethod} />
+    <Stack.Screen name="Support" component={Support} />
   </Stack.Navigator>
 );

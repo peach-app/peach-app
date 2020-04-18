@@ -66,6 +66,11 @@ export const Account = () => {
               </>
             )}
             <NavLink
+              title="Support"
+              iconProps={{ name: 'ios-arrow-forward' }}
+              onPress={() => navigation.navigate('Support')}
+            />
+            <NavLink
               title="Logout"
               onPress={async () => {
                 await setToken(null);
