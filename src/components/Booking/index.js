@@ -57,11 +57,13 @@ export const Booking = ({ _id, cost, state, note, user, isLoading }) => {
                   {startCase(get('name', user))}
                 </SkeletonText>
               </Text>
-              <Text>
-                <SkeletonText isLoading={isLoading} loadingText="Rate: £0.00">
-                  Pay Rate: {formatToMoneyFromPence(cost)}
-                </SkeletonText>
-              </Text>
+              {state !== BOOKING_STATE.REQUESTED && (
+                <Text>
+                  <SkeletonText isLoading={isLoading} loadingText="Rate: £0.00">
+                    Pay Rate: {formatToMoneyFromPence(cost)}
+                  </SkeletonText>
+                </Text>
+              )}
             </Grid.Item>
           </Grid>
         </Grid.Item>
