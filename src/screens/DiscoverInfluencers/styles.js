@@ -13,3 +13,7 @@ export const Item = styled.View`
   padding-bottom: ${props => props.theme.spacing}px;
   width: 50%;
 `;
+
+export const Skeletons = styled.View`
+  flex-direction: row;
+`;

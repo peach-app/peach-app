@@ -14,7 +14,7 @@ import {
   FlatList,
 } from 'components';
 
-import { Main, Head, Item } from './styles';
+import { Main, Head, Item, Skeletons } from './styles';
 import GET_DISCOVER_USERS from './graphql/get-discover-users';
 
 export const DiscoverInfluencers = () => {
@@ -52,12 +52,17 @@ export const DiscoverInfluencers = () => {
                 </FlatList.Item>
               </Head>
 
-              {fetching &&
-                Array.from(Array(3)).map((_, key) => (
-                  <Item key={key}>
-                    <UserProfileCard isLoading />
-                  </Item>
-                ))}
+              {fetching && (
+                <FlatList.Item>
+                  <Skeletons>
+                    {Array.from(Array(2)).map((_, key) => (
+                      <Item key={key}>
+                        <UserProfileCard isLoading />
+                      </Item>
+                    ))}
+                  </Skeletons>
+                </FlatList.Item>
+              )}
             </>
           }
           keyExtractor={item => item._id}
