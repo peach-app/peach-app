@@ -89,6 +89,13 @@ export const NewBilling = ({
             <Intro />
             <Grid>
               <Grid.Item size={12}>
+                <Text>
+                  Add new bank account details to receive payouts after you’ve
+                  completed work on campaigns.
+                </Text>
+              </Grid.Item>
+
+              <Grid.Item size={12}>
                 <TextInput
                   label="Account holder name"
                   placeholder="e.g John Smith"
