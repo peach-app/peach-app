@@ -23,7 +23,9 @@ import GET_USER from './graphql/get-user';
 import SAVE_USER from './graphql/save-user';
 
 const validationSchema = Yup.object().shape({
-  name: Yup.string().required('Your name is required'),
+  name: Yup.string()
+    .max(25)
+    .required('Your name is required'),
 });
 
 export const EditProfile = () => {

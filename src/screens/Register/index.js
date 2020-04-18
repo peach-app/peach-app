@@ -36,7 +36,9 @@ import { USER_TYPE_TABS, FORM_ERROR_MESSAGES } from './consts';
 import REGISTER from './graphql/register';
 
 const validationSchema = Yup.object().shape({
-  name: Yup.string().required(FORM_ERROR_MESSAGES.REQUIRED_NAME),
+  name: Yup.string()
+    .max(25)
+    .required(FORM_ERROR_MESSAGES.REQUIRED_NAME),
   email: Yup.string()
     .required(FORM_ERROR_MESSAGES.REQUIRED_EMAIL)
     .email(FORM_ERROR_MESSAGES.INVALID_EMAIL),
