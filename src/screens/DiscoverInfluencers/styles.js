@@ -2,6 +2,7 @@ import styled from 'styled-components/native';
 
 export const Main = styled.View`
   margin-right: -${props => props.theme.spacing}px;
+  flex: 1;
 `;
 
 export const Head = styled.View`
