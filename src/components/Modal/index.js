@@ -1,10 +1,16 @@
 import React from 'react';
-import { Modal as ImportedModal } from 'react-native';
+import { Modal as ImportedModal, ScrollView } from 'react-native';
 
 import { Main, Content, Cover } from './styles';
 
+const DefaultWrapper = ({ children }) => (
+  <Content>
+    <ScrollView>{children}</ScrollView>
+  </Content>
+);
+
 export const Modal = ({ children, isOpen, customWrapper, onClose }) => {
-  const Wrapper = customWrapper || Content;
+  const Wrapper = customWrapper || DefaultWrapper;
 
   return (
     <ImportedModal

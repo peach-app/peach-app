@@ -16,6 +16,7 @@ export const Content = styled(Animatable.View).attrs({
   padding-bottom: ${props => props.theme.spacingXLarge}px;
   border-top-start-radius: ${props => props.theme.radius}px;
   border-top-end-radius: ${props => props.theme.radius}px;
+  max-height: 90%;
 `;
 
 export const Cover = styled.TouchableOpacity`
