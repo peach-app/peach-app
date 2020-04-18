@@ -10,10 +10,11 @@ import {
   Title,
   Grid,
   IconButton,
-  UserCard,
+  UserProfileCard,
   FlatList,
 } from 'components';
 
+import { Main, Head, Item } from './styles';
 import GET_DISCOVER_USERS from './graphql/get-discover-users';
 
 export const DiscoverInfluencers = () => {
@@ -26,43 +27,48 @@ export const DiscoverInfluencers = () => {
 
   return (
     <SafeAreaView>
-      <FlatList
-        ListHeaderComponent={
-          <>
-            <FlatList.Item>
-              <Intro>
-                <Grid align="flex-end">
-                  <Grid.Item flex={1}>
-                    <Title>Discover</Title>
-                  </Grid.Item>
+      <Main>
+        <FlatList
+          numColumns={2}
+          ListHeaderComponent={
+            <>
+              <Head>
+                <FlatList.Item>
+                  <Intro>
+                    <Grid align="flex-end">
+                      <Grid.Item flex={1}>
+                        <Title>Discover</Title>
+                      </Grid.Item>
 
-                  <Grid.Item>
-                    <IconButton
-                      size={30}
-                      name="ios-search"
-                      onPress={() => navigation.navigate('Search')}
-                    />
-                  </Grid.Item>
-                </Grid>
-              </Intro>
-            </FlatList.Item>
-
-            {fetching &&
-              Array.from(Array(3)).map((_, key) => (
-                <FlatList.Item key={key}>
-                  <UserCard isLoading />
+                      <Grid.Item>
+                        <IconButton
+                          size={30}
+                          name="ios-search"
+                          onPress={() => navigation.navigate('Search')}
+                        />
+                      </Grid.Item>
+                    </Grid>
+                  </Intro>
                 </FlatList.Item>
-              ))}
-          </>
-        }
-        keyExtractor={item => item._id}
-        data={!fetching && getOr([], 'discover.popularUsers.data', data)}
-        renderItem={({ item }) => (
-          <FlatList.Item>
-            <UserCard {...item} />
-          </FlatList.Item>
-        )}
-      />
+              </Head>
+
+              {fetching &&
+                Array.from(Array(3)).map((_, key) => (
+                  <Item key={key}>
+                    <UserProfileCard isLoading />
+                  </Item>
+                ))}
+            </>
+          }
+          keyExtractor={item => item._id}
+          data={!fetching && getOr([], 'discover.popularUsers.data', data)}
+          renderItem={({ item }) => (
+            <Item>
+              <UserProfileCard {...item} />
+            </Item>
+          )}
+        />
+      </Main>
     </SafeAreaView>
   );
 };

@@ -29,6 +29,7 @@ export * from './TextInput';
 export * from './ThreadCard';
 export * from './Title';
 export * from './UserCard';
+export * from './UserProfileCard';
 export * from './Splash';
 export * from './Foot';
 export * from './Label';

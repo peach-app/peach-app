@@ -34,7 +34,7 @@ export const UserCard = ({ isLoading, _id, name, bio, avatar, size }) => {
               {startCase(name)}
             </SkeletonText>
           </Text>
-          {bio && <Bio numberOfLines={2}>{bio}</Bio>}
+          {bio && <Bio numberOfLines={1}>{bio}</Bio>}
         </Grid.Item>
       </Grid>
     </TouchableOpacity>
