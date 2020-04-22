@@ -23,12 +23,12 @@ export const Modal = ({ children, isOpen, customWrapper, onClose }) => {
       presentationStyle="overFullScreen"
       transparent
     >
-      <Main>
-        <Cover onPress={onClose} />
-        <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+        <Main>
+          <Cover onPress={onClose} />
           <Wrapper>{children}</Wrapper>
-        </KeyboardAvoidingView>
-      </Main>
+        </Main>
+      </KeyboardAvoidingView>
     </ImportedModal>
   );
 };

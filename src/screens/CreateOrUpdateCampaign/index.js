@@ -71,7 +71,7 @@ export const CreateOrUpdateCampaign = () => {
           ...(Boolean(campaignId) && { _id: campaignId }),
           name,
           description,
-          budget: console.log('BUDGET', budget) || budget.toString(),
+          budget: budget.toString(),
           ...(!campaignId && { dueDate }),
           private: activeTab === 1,
           paymentId,
