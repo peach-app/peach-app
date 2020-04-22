@@ -29,7 +29,6 @@ export const Payouts = () => {
 
   const hasMore = getOr(false, 'payouts.has_more', data);
   const payouts = getOr([], 'payouts.data', data);
-
   return (
     <SafeAreaView>
       <StatusBar />
