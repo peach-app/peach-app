@@ -83,7 +83,6 @@ const ConfirmPaymentModal = ({ cost, onConfirm, description, onClose }) => {
       });
     },
   });
-
   return (
     <Modal isOpen onClose={onClose}>
       <Container>
@@ -142,7 +141,7 @@ ConfirmPaymentModal.defaultProps = {
 };
 
 ConfirmPaymentModal.propTypes = {
-  cost: PropTypes.number.isRequired,
+  cost: PropTypes.string.isRequired,
   onConfirm: PropTypes.func.isRequired,
   description: PropTypes.string,
   onClose: PropTypes.func.isRequired,

@@ -62,7 +62,7 @@ module.exports = async (
   const { id: paymentId } = await getPaymentMethod();
 
   await stripe.paymentIntents.create({
-    amount: 500, // Pence for campaign creation cost
+    amount: campaign.budget,
     currency: 'gbp',
     confirm: true,
     payment_method: paymentId,

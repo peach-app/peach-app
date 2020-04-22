@@ -1,5 +1,9 @@
 import React from 'react';
-import { Modal as ImportedModal, ScrollView } from 'react-native';
+import {
+  Modal as ImportedModal,
+  ScrollView,
+  KeyboardAvoidingView,
+} from 'react-native';
 
 import { Main, Content, Cover } from './styles';
 
@@ -21,7 +25,9 @@ export const Modal = ({ children, isOpen, customWrapper, onClose }) => {
     >
       <Main>
         <Cover onPress={onClose} />
-        <Wrapper>{children}</Wrapper>
+        <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+          <Wrapper>{children}</Wrapper>
+        </KeyboardAvoidingView>
       </Main>
     </ImportedModal>
   );

@@ -71,7 +71,7 @@ export const CreateOrUpdateCampaign = () => {
           ...(Boolean(campaignId) && { _id: campaignId }),
           name,
           description,
-          budget: budget.toString(),
+          budget: console.log('BUDGET', budget) || budget.toString(),
           ...(!campaignId && { dueDate }),
           private: activeTab === 1,
           paymentId,
@@ -98,7 +98,8 @@ export const CreateOrUpdateCampaign = () => {
           onClose: closeModal,
           onConfirm: paymentMethod =>
             submitCampaign(campaignDetails, paymentMethod),
-          cost: 500,
+          cost: campaignDetails.budget,
+          description: campaignDetails.description,
         },
       });
     },
@@ -166,21 +167,18 @@ export const CreateOrUpdateCampaign = () => {
                   value={formik.values.budget}
                 />
               </Grid.Item>
-
-              <Grid.Item size={12}>
-                <Actions>
-                  <Button
-                    isLoading={saving}
-                    onPress={formik.handleSubmit}
-                    title={campaignId ? 'Save' : 'Create'}
-                    fixedWidth
-                  />
-                </Actions>
-              </Grid.Item>
             </Grid>
           </Container>
         </ScrollView>
       </KeyboardAvoidingView>
+      <Actions>
+        <Button
+          isLoading={saving}
+          onPress={formik.handleSubmit}
+          title={campaignId ? 'Save' : 'Create'}
+          fixedWidth
+        />
+      </Actions>
     </SafeAreaView>
   );
 };
