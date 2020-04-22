@@ -13,11 +13,9 @@ module.exports = async (
   if (!customer) {
     throw new UserInputError('The user is missing a stripeID');
   }
-  const p = await stripe.charges.list({
+  return stripe.charges.list({
     customer,
     limit,
     starting_after,
   });
-  console.log('PP', p.data[0]);
-  return p;
 };

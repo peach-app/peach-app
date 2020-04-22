@@ -8,4 +8,5 @@ module.exports = {
   discover: require('./discover'),
   searchUsers: require('./searchUsers'),
   findCampaignsByBrand: require('./findCampaignsByBrand'),
+  payouts: require('./payouts'),
 };
