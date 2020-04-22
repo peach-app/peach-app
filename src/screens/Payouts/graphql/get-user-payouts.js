@@ -10,6 +10,11 @@ export default gql`
         created
         amount_refunded
         status
+        payment_method_details {
+          card {
+            last4
+          }
+        }
       }
     }
   }
