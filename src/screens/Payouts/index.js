@@ -56,10 +56,7 @@ export const Payouts = () => {
 
             {!fetching && payouts.length <= 0 && (
               <NoResultText isPara>
-                <Branch
-                  left="You don't have any payout history yet."
-                  right="Once a campaign is completed the payout details will be displayed here."
-                />
+                <Branch test left="You don't have any payout history yet." />
               </NoResultText>
             )}
 
