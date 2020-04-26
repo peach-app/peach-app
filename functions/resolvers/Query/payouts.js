@@ -17,11 +17,13 @@ module.exports = async (
   }
 
   if (type === USER_TYPE.INFLUENCER) {
-    return stripe.payouts.list({
-      stripeAccount: customer,
-      limit,
-      starting_after,
-    });
+    return stripe.payouts.list(
+      {
+        limit,
+        starting_after,
+      },
+      { stripeAccount: customer }
+    );
   }
 
   return stripe.charges.list({
