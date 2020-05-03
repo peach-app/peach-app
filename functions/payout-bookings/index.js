@@ -1,7 +1,8 @@
 const faunadb = require('faunadb');
 const DocumentDataWithId = require('../helpers/DocumentDataWithId');
 const { BOOKING_STATE } = require('../consts');
-const stripe = require('../helpers/stripe');
+const processPayments = require('./procesPayments');
+const sendMail = require('../helpers/sendMail');
 
 const q = faunadb.query;
 
@@ -30,32 +31,12 @@ const q = faunadb.query;
 
   console.log('\nProcessing payments..............');
 
-  const completedTransfers = [];
-  const failedTransfers = [];
+  const [completedTransfers, failedTransfers] = await processPayments(
+    completedBookingDetails.data
+  );
 
-  const processPayment = async details => {
-    try {
-      const transfer = await stripe.transfers.create({
-        amount: details.booking.cost,
-        currency: 'gbp',
-        destination: details.user.stripeID,
-      });
-
-      completedTransfers.push({
-        bookingId: details.booking._id,
-        transferId: transfer.id,
-      });
-    } catch (error) {
-      console.log(`\nPayment failed for booking: ${details.booking._id} `);
-
-      failedTransfers.push({ bookingId: details.booking._id, error });
-    }
-  };
-
-  Promise.all(completedBookingDetails.data.map(processPayment));
-
-  console.log('\nUpdating booking collection..............');
   if (completedTransfers.length > 0) {
+    console.log('\nUpdating booking collection..............');
     try {
       await client.query(
         q.Map(
@@ -80,6 +61,41 @@ const q = faunadb.query;
       console.log('Booking collection update failed', e);
     }
   }
+
+  if (failedTransfers.length > 0) {
+    console.log('\nLogging failed bookings..............');
+
+    try {
+      await client.query(
+        q.Map(
+          failedTransfers,
+          q.Lambda(
+            ['transfer'],
+            q.Create(q.Collection('FailedBookingPayments'), {
+              data: {
+                bookingId: q.Select(['bookingId'], q.Var('transfer')),
+                error: q.Select(['error'], q.Var('transfer')),
+              },
+            })
+          )
+        )
+      );
+      // for when we automate it
+      await sendMail({
+        to: 'rosendanew@gmail.com',
+        subject: 'Failed booking payments alert!',
+        text: `
+        Alert! Alert! Alert!
+        Problems with payments. 
+        Please resolve.
+        `,
+      });
+    } catch (e) {
+      console.log('Failed Booking Payments collection update failed', e);
+    }
+  }
+
+  console.log('\nDone!');
 })().catch(e => {
   console.log('There was a problem while processing booking payouts', e);
 });
