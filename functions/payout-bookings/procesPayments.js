@@ -8,11 +8,16 @@ const processPayments = async completedBookingDetails => {
   for (const details of completedBookingDetails) {
     try {
       // eslint-disable-next-line no-await-in-loop
-      const transfer = await stripe.transfers.create({
-        amount: details.booking.cost,
-        currency: 'gbp',
-        destination: details.user.stripeID,
-      });
+      const transfer = await stripe.transfers.create(
+        {
+          amount: details.booking.cost,
+          currency: 'gbp',
+          destination: details.user.stripeID,
+        },
+        {
+          idempotencyKey: details.booking._id,
+        }
+      );
 
       completedTransfers.push({
         bookingId: details.booking._id,
