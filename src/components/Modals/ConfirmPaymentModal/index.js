@@ -15,9 +15,10 @@ import {
   PaymentMethodForm,
   UserPaymentMethods,
   Container,
+  Card,
 } from 'components';
 import { formatToMoneyFromPence } from 'helpers';
-
+import { Main, Icon } from './styles';
 import { stripe } from '../../../stripe';
 
 const validationSchema = Yup.object().shape({
@@ -112,7 +113,19 @@ const ConfirmPaymentModal = ({ cost, onConfirm, description, onClose }) => {
             />
           )}
 
-          {showForm && <PaymentMethodForm formik={formik} />}
+          {showForm && (
+            <Grid.Item size={12}>
+              <Main onPress={() => setShowForm(false)}>
+                <Icon />
+                <Text>Back </Text>
+              </Main>
+              <Card>
+                <Grid>
+                  <PaymentMethodForm formik={formik} />
+                </Grid>
+              </Card>
+            </Grid.Item>
+          )}
 
           {formik.errors.generic && (
             <Grid.Item size={12}>
