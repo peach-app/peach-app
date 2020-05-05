@@ -1,11 +1,8 @@
 import React from 'react';
-import {
-  Modal as ImportedModal,
-  ScrollView,
-  KeyboardAvoidingView,
-} from 'react-native';
+import { Modal as ImportedModal, ScrollView } from 'react-native';
 
 import { Main, Content, Cover } from './styles';
+import { KeyboardAvoidingView } from '../KeyboardAvoidingView';
 
 const DefaultWrapper = ({ children }) => (
   <Content>
@@ -23,7 +20,7 @@ export const Modal = ({ children, isOpen, customWrapper, onClose }) => {
       presentationStyle="overFullScreen"
       transparent
     >
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      <KeyboardAvoidingView>
         <Main>
           <Cover onPress={onClose} />
           <Wrapper>{children}</Wrapper>

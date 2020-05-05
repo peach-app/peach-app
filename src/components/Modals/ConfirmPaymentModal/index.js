@@ -154,7 +154,7 @@ ConfirmPaymentModal.defaultProps = {
 };
 
 ConfirmPaymentModal.propTypes = {
-  cost: PropTypes.string.isRequired,
+  cost: PropTypes.number.isRequired,
   onConfirm: PropTypes.func.isRequired,
   description: PropTypes.string,
   onClose: PropTypes.func.isRequired,

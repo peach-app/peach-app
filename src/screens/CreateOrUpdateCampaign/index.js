@@ -99,8 +99,7 @@ export const CreateOrUpdateCampaign = () => {
           onClose: closeModal,
           onConfirm: paymentMethod =>
             submitCampaign(campaignDetails, paymentMethod),
-          cost: campaignDetails.budget,
-          description: campaignDetails.description,
+          cost: 500, // Pence for campaign creation cost
         },
       });
     },
