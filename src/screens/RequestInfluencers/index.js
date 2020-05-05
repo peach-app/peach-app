@@ -2,10 +2,16 @@ import React, { useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 import { ACTION_COMPONENTS, MODAL_TYPES } from 'consts';
-import { SafeAreaView, StatusBar, Header, SearchInfluencers } from 'components';
+import {
+  SafeAreaView,
+  StatusBar,
+  Header,
+  SearchInfluencers,
+  KeyboardAvoidingView,
+} from 'components';
 import { useModal } from 'contexts/Modal';
 
-import { RequestedInfluencers, KeyboardAvoidingView } from './components';
+import { RequestedInfluencers } from './components';
 import { formatInfluencersArray } from './helper';
 
 export const RequestInfluencers = () => {
