@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import getOr from 'lodash/fp/getOr';
-import { ScrollView, KeyboardAvoidingView } from 'react-native';
+import { ScrollView } from 'react-native';
 import { useFormik } from 'formik';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useNavigation } from '@react-navigation/native';
@@ -16,6 +16,7 @@ import {
   Button,
   Intro,
   TextInput,
+  KeyboardAvoidingView,
 } from 'components';
 
 import {
@@ -72,7 +73,7 @@ export const SocialDetails = ({
   return (
     <SafeAreaView>
       <StatusBar />
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      <KeyboardAvoidingView>
         <Header
           title="Social Accounts"
           rightActionLabel={rightActionLabel}

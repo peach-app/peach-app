@@ -1,5 +1,5 @@
 import React from 'react';
-import { KeyboardAvoidingView, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -17,6 +17,7 @@ import {
   Button,
   GraphQLErrors,
   ProfileHeader,
+  KeyboardAvoidingView,
 } from 'components';
 
 import GET_USER from './graphql/get-user';
@@ -64,7 +65,7 @@ export const EditProfile = () => {
   return (
     <SafeAreaView>
       <Header title="Edit Profile" />
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      <KeyboardAvoidingView>
         <ScrollView>
           <Container>
             <ProfileHeader {...get('user', data)} isEditable />

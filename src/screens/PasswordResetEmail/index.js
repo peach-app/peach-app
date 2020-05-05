@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, KeyboardAvoidingView } from 'react-native';
+import { ScrollView } from 'react-native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from '@apollo/react-hooks';
@@ -18,6 +18,7 @@ import {
   GraphQLErrors,
   SubTitle,
   FeedbackView,
+  KeyboardAvoidingView,
 } from 'components';
 
 import REQUEST_PASSWORD_RESET from './graphql/request-reset-password';
@@ -100,7 +101,7 @@ export const PasswordResetEmail = () => {
 
   return (
     <SafeAreaView>
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      <KeyboardAvoidingView>
         <ScrollView>
           <Container>
             <StatusBar />

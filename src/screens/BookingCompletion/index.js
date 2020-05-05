@@ -1,5 +1,5 @@
 import React from 'react';
-import { KeyboardAvoidingView, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { useFormik } from 'formik';
 import { useMutation } from '@apollo/react-hooks';
@@ -15,6 +15,7 @@ import {
   TextInput,
   Actions,
   Button,
+  KeyboardAvoidingView,
 } from 'components';
 
 import COMPLETE_BOOKING from './graphql/complete-booking';
@@ -50,7 +51,7 @@ export const BookingCompletion = () => {
     <SafeAreaView>
       <StatusBar />
       <Header title="Campaign Submission" />
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      <KeyboardAvoidingView>
         <ScrollView>
           <Container>
             <Intro />

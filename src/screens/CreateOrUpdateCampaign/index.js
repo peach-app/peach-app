@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, KeyboardAvoidingView } from 'react-native';
+import { ScrollView } from 'react-native';
 import { useFormik } from 'formik';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -18,6 +18,7 @@ import {
   Tabs,
   MoneyInput,
   DatePicker,
+  KeyboardAvoidingView,
 } from 'components';
 import { CAMPAIGN_TYPE, MODAL_TYPES } from 'consts';
 
@@ -108,7 +109,7 @@ export const CreateOrUpdateCampaign = () => {
     <SafeAreaView>
       <StatusBar />
       <Header title={campaignId ? 'Edit Campaign' : 'Create Campaign'} />
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      <KeyboardAvoidingView>
         <ScrollView>
           <Container>
             <Intro />
