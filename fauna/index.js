@@ -19,6 +19,7 @@ console.log({ FAUNADB_SECRET });
     await require('./collections/Campaign')();
     await require('./collections/Booking')();
     await require('./collections/EmailVerification')();
+    await require('./collections/Invite')();
 
     // Indexes
     await require('./indexes/all_campaign')();
@@ -36,6 +37,7 @@ console.log({ FAUNADB_SECRET });
     await require('./indexes/user_by_email')();
     await require('./indexes/user_name_by_type')();
     await require('./indexes/booking_campaign_by_user')();
+    await require('./indexes/invite_by_code_email')();
 
     // Roles
     await require('./roles/user')();

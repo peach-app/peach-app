@@ -40,6 +40,7 @@ module.exports = gql`
   type Mutation {
     login(email: String!, password: String!): Auth
     register(
+      code: String!
       name: String!
       email: String!
       password: String!
