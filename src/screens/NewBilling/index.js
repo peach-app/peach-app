@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ScrollView, KeyboardAvoidingView } from 'react-native';
+import { ScrollView } from 'react-native';
 import { useFormik } from 'formik';
 import { useMutation } from '@apollo/react-hooks';
 import { useNavigation } from '@react-navigation/native';
@@ -17,6 +17,7 @@ import {
   Intro,
   GraphQLErrors,
   Text,
+  KeyboardAvoidingView,
 } from 'components';
 
 import { stripe } from '../../stripe';
@@ -83,7 +84,7 @@ export const NewBilling = ({
         rightActionLabel={rightActionLabel}
         onRightActionPressed={onRightActionPressed}
       />
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      <KeyboardAvoidingView>
         <ScrollView>
           <Container>
             <Intro />

@@ -1,11 +1,7 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
-import {
-  ScrollView,
-  KeyboardAvoidingView,
-  TouchableOpacity,
-} from 'react-native';
+import { ScrollView } from 'react-native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from '@apollo/react-hooks';
@@ -29,6 +25,7 @@ import {
   BackButton,
   GraphQLErrors,
   SubTitle,
+  KeyboardAvoidingView,
 } from 'components';
 import { useAuth } from 'contexts/Auth';
 
@@ -97,7 +94,7 @@ export const Register = () => {
   return (
     <SafeAreaView>
       <StatusBar />
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      <KeyboardAvoidingView>
         <ScrollView>
           <Container>
             <Grid>

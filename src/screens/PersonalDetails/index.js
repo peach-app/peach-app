@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { KeyboardAvoidingView, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useNavigation } from '@react-navigation/native';
 import { useFormik } from 'formik';
@@ -22,6 +22,7 @@ import {
   Actions,
   Button,
   GraphQLErrors,
+  KeyboardAvoidingView,
 } from 'components';
 
 import GET_USER from './graphql/get-user';
@@ -95,7 +96,7 @@ export const PersonalDetails = ({
 
   return (
     <SafeAreaView>
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      <KeyboardAvoidingView>
         <Header
           title="Personal Details"
           rightActionLabel={rightActionLabel}
