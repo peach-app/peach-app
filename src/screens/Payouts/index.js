@@ -1,6 +1,7 @@
 import React from 'react';
 import { RefreshControl } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
+import getOr from 'lodash/fp/getOr';
 
 import {
   SafeAreaView,
@@ -11,10 +12,9 @@ import {
   FlatList,
   PayoutCard,
   NoResultText,
-  Branch,
 } from 'components';
 import { NETWORK_STATUS } from 'consts';
-import getOr from 'lodash/fp/getOr';
+
 import GET_USER_PAYOUTS from './graphql/get-user-payouts';
 
 export const Payouts = () => {
@@ -55,7 +55,7 @@ export const Payouts = () => {
 
             {!fetching && payouts.length <= 0 && (
               <NoResultText isPara>
-                <Branch test left="You don't have any payout history yet." />
+                You don't have any payout history yet.
               </NoResultText>
             )}
 
