@@ -23,6 +23,7 @@ import {
 import { CAMPAIGN_TYPE, MODAL_TYPES } from 'consts';
 
 import { useModal } from 'contexts/Modal';
+import { PushToTop } from './styles';
 import { validationSchema, FORM_INITIAL_VALUES } from './consts';
 import GET_CAMPAIGN from './graphql/get-campaign';
 import CREATE_OR_UPDATE_CAMPAIGN_MUTATION from './graphql/create-or-update-campaign';
@@ -146,16 +147,18 @@ export const CreateOrUpdateCampaign = () => {
               </Grid.Item>
 
               {!campaignId && (
-                <Grid.Item size={12}>
-                  <DatePicker
-                    label="Due date"
-                    error={formik.errors.dueDate}
-                    onChange={selectedDate => {
-                      formik.setFieldValue('dueDate', selectedDate);
-                    }}
-                    value={formik.values.dueDate}
-                  />
-                </Grid.Item>
+                <PushToTop>
+                  <Grid.Item size={12}>
+                    <DatePicker
+                      label="Due date"
+                      error={formik.errors.dueDate}
+                      onChange={selectedDate => {
+                        formik.setFieldValue('dueDate', selectedDate);
+                      }}
+                      value={formik.values.dueDate}
+                    />
+                  </Grid.Item>
+                </PushToTop>
               )}
 
               <Grid.Item size={12}>
