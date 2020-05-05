@@ -39,7 +39,9 @@ const validationSchema = Yup.object().shape({
   email: Yup.string()
     .required(FORM_ERROR_MESSAGES.REQUIRED_EMAIL)
     .email(FORM_ERROR_MESSAGES.INVALID_EMAIL),
-  password: Yup.string().required(FORM_ERROR_MESSAGES.REQUIRED_PASSWORD),
+  password: Yup.string()
+    .required(FORM_ERROR_MESSAGES.REQUIRED_PASSWORD)
+    .min(8, 'Password must have at least 8 characters'),
   confirmPassword: Yup.string().required(
     FORM_ERROR_MESSAGES.REQUIRED_CONFIRM_PASSWORD
   ),

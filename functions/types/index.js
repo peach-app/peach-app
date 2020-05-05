@@ -33,6 +33,8 @@ module.exports = gql`
     findUserByID(id: ID!): User
 
     searchUsers(type: UserType!, query: String!): UserPage
+
+    payouts(size: Int, after: ID, before: ID): PayoutsPage
   }
 
   type Mutation {
@@ -165,6 +167,26 @@ module.exports = gql`
     stripeAccount: StripeAccount
 
     socialAccounts: SocialAccounts
+
+    payouts: PayoutsPage
+  }
+
+  type PayoutsPage {
+    has_more: Boolean
+    data: [Payout]
+  }
+
+  type PayoutPaymentMethod {
+    card: StripeCard
+  }
+
+  type Payout {
+    id: ID
+    amount: Int
+    created: Int
+    amount_refunded: Int
+    status: String
+    payment_method_details: PayoutPaymentMethod
   }
 
   type UserEmailVerification {

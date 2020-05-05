@@ -84,7 +84,6 @@ const ConfirmPaymentModal = ({ cost, onConfirm, description, onClose }) => {
       });
     },
   });
-
   return (
     <Modal isOpen onClose={onClose}>
       <Container>

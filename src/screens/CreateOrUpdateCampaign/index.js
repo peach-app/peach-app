@@ -99,7 +99,7 @@ export const CreateOrUpdateCampaign = () => {
           onClose: closeModal,
           onConfirm: paymentMethod =>
             submitCampaign(campaignDetails, paymentMethod),
-          cost: 500,
+          cost: 500, // Pence for campaign creation cost
         },
       });
     },
@@ -167,21 +167,18 @@ export const CreateOrUpdateCampaign = () => {
                   value={formik.values.budget}
                 />
               </Grid.Item>
-
-              <Grid.Item size={12}>
-                <Actions>
-                  <Button
-                    isLoading={saving}
-                    onPress={formik.handleSubmit}
-                    title={campaignId ? 'Save' : 'Create'}
-                    fixedWidth
-                  />
-                </Actions>
-              </Grid.Item>
             </Grid>
           </Container>
         </ScrollView>
       </KeyboardAvoidingView>
+      <Actions>
+        <Button
+          isLoading={saving}
+          onPress={formik.handleSubmit}
+          title={campaignId ? 'Save' : 'Create'}
+          fixedWidth
+        />
+      </Actions>
     </SafeAreaView>
   );
 };

@@ -49,4 +49,5 @@ export * from './AddBankDetailsPlaceholder';
 export * from './PaymentMethodForm';
 export * from './UserPaymentMethods';
 export * from './BillingMethodCard';
+export * from './PayoutCard';
 export * from './KeyboardAvoidingView';
