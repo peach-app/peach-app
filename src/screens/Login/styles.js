@@ -1,9 +1,9 @@
 import styled from 'styled-components/native';
-import { Dimensions } from 'react-native';
+import { Dimensions, Platform } from 'react-native';
 
 export const Touchable = styled.TouchableOpacity``;
 
-const size = Dimensions.get('window').width * 0.75;
+const size = Math.min(Dimensions.get('window').width * 0.8, 500);
 
 export const Main = styled.View`
   flex: 1;
@@ -21,6 +21,10 @@ export const Graphic = styled.View`
 `;
 
 export const Form = styled.View`
-  margin-top: auto;
+  ${Platform.select({
+    ios: 'margin-top: auto;',
+    android: 'margin-top: auot;',
+  })}
   padding-bottom: ${props => props.theme.spacingXLarge}px;
+  padding-top: ${props => props.theme.spacing}px;
 `;

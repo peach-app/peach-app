@@ -66,11 +66,13 @@ export const Login = () => {
       <KeyboardAvoidingView>
         <ScrollView contentContainerStyle={{ flex: 1 }}>
           <Graphic />
-          <Container>
-            <Intro>
-              <BackButton />
-            </Intro>
-          </Container>
+          <SafeAreaView>
+            <Container>
+              <Intro>
+                <BackButton />
+              </Intro>
+            </Container>
+          </SafeAreaView>
 
           <Form>
             <Container>
