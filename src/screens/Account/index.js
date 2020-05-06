@@ -66,6 +66,11 @@ export const Account = () => {
               </>
             )}
             <NavLink
+              title="Payouts"
+              iconProps={{ name: 'ios-arrow-forward' }}
+              onPress={() => navigation.navigate('Payouts')}
+            />
+            <NavLink
               title="Support"
               iconProps={{ name: 'ios-arrow-forward' }}
               onPress={() => navigation.navigate('Support')}

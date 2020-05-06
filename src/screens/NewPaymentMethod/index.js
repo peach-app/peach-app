@@ -1,5 +1,5 @@
 import React from 'react';
-import { KeyboardAvoidingView, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useMutation } from '@apollo/react-hooks';
@@ -17,6 +17,7 @@ import {
   Button,
   Text,
   GraphQLErrors,
+  KeyboardAvoidingView,
 } from 'components';
 
 import { stripe } from '../../stripe';
@@ -87,7 +88,7 @@ export const NewPaymentMethod = () => {
     <SafeAreaView>
       <StatusBar />
       <Header title="New Payment Method" />
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      <KeyboardAvoidingView>
         <ScrollView>
           <Container>
             <Intro />

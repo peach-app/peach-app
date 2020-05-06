@@ -23,6 +23,7 @@ import {
   BookingCompletion,
   PaymentMethods,
   Support,
+  Payouts,
 } from 'screens';
 
 import { createStackNavigator, createBottomTabNavigator } from './components';
@@ -91,5 +92,6 @@ export const AuthedNavigator = () => (
     <Stack.Screen name="PaymentMethods" component={PaymentMethods} />
     <Stack.Screen name="NewPaymentMethod" component={NewPaymentMethod} />
     <Stack.Screen name="Support" component={Support} />
+    <Stack.Screen name="Payouts" component={Payouts} />
   </Stack.Navigator>
 );

@@ -34,11 +34,14 @@ module.exports = gql`
 
     searchUsers(type: UserType!, query: String!): UserPage
     getPaymentConfirmationStatus(id: ID!): PaymentIntent
+
+    payouts(size: Int, after: ID, before: ID): PayoutsPage
   }
 
   type Mutation {
     login(email: String!, password: String!): Auth
     register(
+      code: String!
       name: String!
       email: String!
       password: String!
@@ -167,6 +170,26 @@ module.exports = gql`
     stripeAccount: StripeAccount
 
     socialAccounts: SocialAccounts
+
+    payouts: PayoutsPage
+  }
+
+  type PayoutsPage {
+    has_more: Boolean
+    data: [Payout]
+  }
+
+  type PayoutPaymentMethod {
+    card: StripeCard
+  }
+
+  type Payout {
+    id: ID
+    amount: Int
+    created: Int
+    amount_refunded: Int
+    status: String
+    payment_method_details: PayoutPaymentMethod
   }
 
   type UserEmailVerification {

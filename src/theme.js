@@ -7,6 +7,8 @@ const theme = {
   greyDark: '#aaa',
   grey: '#ddd',
   greyLight: '#eee',
+  green: '#04b876',
+  orange: '#ffa500',
   error: '#f00',
   radius: 6,
   spacingXSmall: 4,

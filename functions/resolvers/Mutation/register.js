@@ -40,9 +40,17 @@ module.exports = async (
   args,
   { client, q, clientIp, DocumentDataWithId }
 ) => {
-  const { name, password, type, idempotencyKey } = args;
+  const { code, name, password, type, idempotencyKey } = args;
 
   const email = args.email.toLowerCase();
+
+  const inviteExists = await client.query(
+    q.Exists(q.Match(q.Index('invite_by_code_email'), code, email))
+  );
+
+  if (!inviteExists) {
+    throw new UserInputError('Invalid invite code');
+  }
 
   const existingUser = await client.query(
     q.Exists(q.Match(q.Index('user_by_email'), email))

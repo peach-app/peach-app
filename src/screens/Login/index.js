@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, KeyboardAvoidingView } from 'react-native';
+import { ScrollView } from 'react-native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from '@apollo/react-hooks';
@@ -19,6 +19,7 @@ import {
   Text,
   BackButton,
   GraphQLErrors,
+  KeyboardAvoidingView,
 } from 'components';
 import { useAuth } from 'contexts/Auth';
 import { Touchable } from './styles';
@@ -61,7 +62,7 @@ export const Login = () => {
 
   return (
     <SafeAreaView>
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      <KeyboardAvoidingView>
         <ScrollView>
           <Container>
             <StatusBar />

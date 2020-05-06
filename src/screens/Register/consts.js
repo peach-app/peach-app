@@ -8,4 +8,5 @@ export const FORM_ERROR_MESSAGES = {
   INVALID_EMAIL: 'Please enter a valid email address',
   REQUIRED_PASSWORD: 'Please enter a password',
   REQUIRED_CONFIRM_PASSWORD: 'Please confirm your password',
+  REQUIRED_CODE: 'An invite code is required for sign up at this time',
 };

@@ -9,4 +9,5 @@ module.exports = {
   searchUsers: require('./searchUsers'),
   findCampaignsByBrand: require('./findCampaignsByBrand'),
   getPaymentConfirmationStatus: require('./getPaymentConfirmationStatus'),
+  payouts: require('./payouts'),
 };

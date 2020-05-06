@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, KeyboardAvoidingView } from 'react-native';
+import { ScrollView } from 'react-native';
 import { useFormik } from 'formik';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -18,10 +18,12 @@ import {
   Tabs,
   MoneyInput,
   DatePicker,
+  KeyboardAvoidingView,
 } from 'components';
 import { CAMPAIGN_TYPE, MODAL_TYPES } from 'consts';
 
 import { useModal } from 'contexts/Modal';
+import { PushToTop } from './styles';
 import { validationSchema, FORM_INITIAL_VALUES } from './consts';
 import GET_CAMPAIGN from './graphql/get-campaign';
 import CREATE_OR_UPDATE_CAMPAIGN_MUTATION from './graphql/create-or-update-campaign';
@@ -98,7 +100,7 @@ export const CreateOrUpdateCampaign = () => {
         props: {
           onConfirm: paymentId =>
             submitCampaign({ ...campaignDetails, paymentId }),
-          cost: 500,
+          cost: campaignDetails.budget,
         },
       });
     },
@@ -108,7 +110,7 @@ export const CreateOrUpdateCampaign = () => {
     <SafeAreaView>
       <StatusBar />
       <Header title={campaignId ? 'Edit Campaign' : 'Create Campaign'} />
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      <KeyboardAvoidingView>
         <ScrollView>
           <Container>
             <Intro />
@@ -145,16 +147,18 @@ export const CreateOrUpdateCampaign = () => {
               </Grid.Item>
 
               {!campaignId && (
-                <Grid.Item size={12}>
-                  <DatePicker
-                    label="Due date"
-                    error={formik.errors.dueDate}
-                    onChange={selectedDate => {
-                      formik.setFieldValue('dueDate', selectedDate);
-                    }}
-                    value={formik.values.dueDate}
-                  />
-                </Grid.Item>
+                <PushToTop>
+                  <Grid.Item size={12}>
+                    <DatePicker
+                      label="Due date"
+                      error={formik.errors.dueDate}
+                      onChange={selectedDate => {
+                        formik.setFieldValue('dueDate', selectedDate);
+                      }}
+                      value={formik.values.dueDate}
+                    />
+                  </Grid.Item>
+                </PushToTop>
               )}
 
               <Grid.Item size={12}>
@@ -166,21 +170,18 @@ export const CreateOrUpdateCampaign = () => {
                   value={formik.values.budget}
                 />
               </Grid.Item>
-
-              <Grid.Item size={12}>
-                <Actions>
-                  <Button
-                    isLoading={saving}
-                    onPress={formik.handleSubmit}
-                    title={campaignId ? 'Save' : 'Create'}
-                    fixedWidth
-                  />
-                </Actions>
-              </Grid.Item>
             </Grid>
           </Container>
         </ScrollView>
       </KeyboardAvoidingView>
+      <Actions>
+        <Button
+          isLoading={saving}
+          onPress={formik.handleSubmit}
+          title={campaignId ? 'Save' : 'Create'}
+          fixedWidth
+        />
+      </Actions>
     </SafeAreaView>
   );
 };

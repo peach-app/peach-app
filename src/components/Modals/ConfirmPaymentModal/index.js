@@ -173,7 +173,7 @@ const ConfirmPaymentModal = ({ cost, onConfirm, description, onClose }) => {
 
               {hasError && (
                 <Grid.Item size={12}>
-                  <Text isError isCenter>
+                  <Text isError isCenter isBold>
                     {formik.errors.generic || confirmingError}
                   </Text>
                 </Grid.Item>

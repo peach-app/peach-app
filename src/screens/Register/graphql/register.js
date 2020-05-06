@@ -2,6 +2,7 @@ import gql from 'graphql-tag';
 
 export default gql`
   mutation(
+    $code: String!
     $name: String!
     $email: String!
     $password: String!
@@ -9,6 +10,7 @@ export default gql`
     $idempotencyKey: String!
   ) {
     register(
+      code: $code
       name: $name
       email: $email
       password: $password

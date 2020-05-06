@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import { KeyboardAvoidingView } from 'react-native';
 import debounce from 'lodash/debounce';
 import getOr from 'lodash/fp/getOr';
 import get from 'lodash/fp/get';
@@ -14,6 +13,7 @@ import {
   Loading,
   FlatList,
   MessageBubble,
+  KeyboardAvoidingView,
 } from 'components';
 
 import SEND_MESSAGE from './graphql/send-message';
@@ -67,7 +67,7 @@ export const Thread = () => {
 
   return (
     <SafeAreaView>
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      <KeyboardAvoidingView>
         <Header title={startCase(title)} />
         <FlatList
           ListFooterComponent={<Spacer />}
