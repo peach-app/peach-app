@@ -33,6 +33,7 @@ module.exports = gql`
     findUserByID(id: ID!): User
 
     searchUsers(type: UserType!, query: String!): UserPage
+    getPaymentConfirmationStatus(id: ID!): PaymentIntent
   }
 
   type Mutation {
@@ -45,11 +46,7 @@ module.exports = gql`
       idempotencyKey: String!
     ): Auth
     sendMessage(threadId: ID!, text: String!): Message
-    createOrUpdateCampaign(
-      campaign: CampaignInput
-      cardId: ID
-      token: String
-    ): Campaign
+    createOrUpdateCampaign(campaign: CampaignInput): Campaign
     applyToCampaign(id: ID!, cost: Int!): Booking
     updateBookingState(
       id: ID!
@@ -69,6 +66,11 @@ module.exports = gql`
     completeBooking(id: ID!, note: String): Boolean
     requestPasswordReset(email: String!): Boolean
     resetPassword(userId: ID!, password: String!): Boolean
+    createCampaignPayment(
+      cost: Int!
+      token: String
+      selectedId: String
+    ): PaymentIntent
   }
 
   # Fauna references #
@@ -208,6 +210,12 @@ module.exports = gql`
     last_name: String
     address: Address
     dob: DateOfBirth
+  }
+
+  type PaymentIntent {
+    id: ID
+    redirectUrl: String
+    status: String
   }
 
   type Address {

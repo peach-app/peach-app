@@ -4,7 +4,7 @@ const stripe = require('../../helpers/stripe');
 
 module.exports = async (
   _,
-  { campaign, cardId, token },
+  { campaign },
   { client, q, DocumentDataWithId, activeUserRef }
 ) => {
   const isBrand = await client.query(
@@ -41,34 +41,6 @@ module.exports = async (
       )
     );
   }
-
-  const customerId = await client.query(
-    q.Select(['data', 'stripeID'], q.Get(activeUserRef))
-  );
-
-  const getPaymentMethod = async () => {
-    if (token) {
-      return stripe.paymentMethods.create({
-        type: 'card',
-        card: {
-          token,
-        },
-      });
-    }
-
-    return { id: cardId };
-  };
-
-  const { id: paymentId } = await getPaymentMethod();
-
-  await stripe.paymentIntents.create({
-    amount: 500, // Pence for campaign creation cost
-    currency: 'gbp',
-    confirm: true,
-    payment_method: paymentId,
-    setup_future_usage: 'off_session',
-    customer: customerId,
-  });
 
   return client.query(
     DocumentDataWithId(

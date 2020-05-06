@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Linking } from 'react-native';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -17,9 +18,12 @@ import {
   Container,
   Card,
 } from 'components';
+import { useMutation } from '@apollo/react-hooks';
 import { formatToMoneyFromPence } from 'helpers';
 import { Main, Icon } from './styles';
 import { stripe } from '../../../stripe';
+import CREATE_CAMPAIGN_PAYMENT from './graphql/create-payment';
+import { ConfirmPayment } from './ConfirmPayment';
 
 const validationSchema = Yup.object().shape({
   number: Yup.string()
@@ -41,6 +45,31 @@ const ConfirmPaymentModal = ({ cost, onConfirm, description, onClose }) => {
   const [showForm, setShowForm] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [confirmingPaymentId, setIsConfirmingPayment] = useState('');
+  const [confirmingError, setConfirmingError] = useState('');
+
+  const [createCampaignPayment] = useMutation(CREATE_CAMPAIGN_PAYMENT, {
+    onCompleted: ({ createCampaignPayment: { id, redirectUrl } }) => {
+      if (redirectUrl) {
+        setLoading(false);
+
+        setIsConfirmingPayment(id);
+
+        Linking.openURL(redirectUrl);
+        return;
+      }
+      onConfirm(id);
+    },
+  });
+
+  const handlePayment = paymentParams => {
+    createCampaignPayment({
+      variables: {
+        cost,
+        ...paymentParams,
+      },
+    });
+  };
 
   const formik = useFormik({
     validationSchema: showForm && validationSchema,
@@ -55,9 +84,7 @@ const ConfirmPaymentModal = ({ cost, onConfirm, description, onClose }) => {
       setLoading(true);
 
       if (selectedId) {
-        onConfirm({
-          cardId: selectedId,
-        });
+        handlePayment({ selectedId });
         return;
       }
 
@@ -79,71 +106,92 @@ const ConfirmPaymentModal = ({ cost, onConfirm, description, onClose }) => {
         return;
       }
 
-      onConfirm({
-        token: id,
-      });
+      handlePayment({ id });
     },
   });
+
+  const handleConfirmationFailure = () => {
+    setIsConfirmingPayment('');
+    setConfirmingError(
+      'There was a problem authorizing the payment. Please try again.'
+    );
+  };
+
+  const hasError = formik.errors.generic || confirmingError.length > 0;
 
   return (
     <Modal isOpen onClose={onClose}>
       <Container>
         <Intro />
         <Grid>
-          <Grid.Item size={12}>
-            <Title>Payment Details</Title>
-          </Grid.Item>
-
-          {description && (
+          {confirmingPaymentId ? (
             <Grid.Item size={12}>
-              <Text>{description}</Text>
-            </Grid.Item>
-          )}
-
-          <Grid.Item size={12}>
-            <SubTitle>Total</SubTitle>
-            <Title>{formatToMoneyFromPence(cost)}</Title>
-          </Grid.Item>
-
-          {!showForm && (
-            <UserPaymentMethods
-              selectedId={selectedId}
-              setSelectedId={setSelectedId}
-              onAddNewPress={() => setShowForm(true)}
-            />
-          )}
-
-          {showForm && (
-            <Grid.Item size={12}>
-              <Main onPress={() => setShowForm(false)}>
-                <Icon />
-                <Text>Back </Text>
-              </Main>
-              <Card>
-                <Grid>
-                  <PaymentMethodForm formik={formik} />
-                </Grid>
-              </Card>
-            </Grid.Item>
-          )}
-
-          {formik.errors.generic && (
-            <Grid.Item size={12}>
-              <Text isCenter>{formik.errors.generic}</Text>
-            </Grid.Item>
-          )}
-
-          <Grid.Item size={12}>
-            <Actions>
-              <Button
-                fixedWidth
-                title="Confirm"
-                disabled={showForm ? false : !selectedId}
-                onPress={formik.handleSubmit}
-                isLoading={loading}
+              <ConfirmPayment
+                id={confirmingPaymentId}
+                onPaymentConfirmed={onConfirm}
+                onPaymentConfirmationFailed={handleConfirmationFailure}
               />
-            </Actions>
-          </Grid.Item>
+            </Grid.Item>
+          ) : (
+            <>
+              <Grid.Item size={12}>
+                <Title>Payment Details</Title>
+              </Grid.Item>
+
+              {description && (
+                <Grid.Item size={12}>
+                  <Text>{description}</Text>
+                </Grid.Item>
+              )}
+
+              <Grid.Item size={12}>
+                <SubTitle>Total</SubTitle>
+                <Title>{formatToMoneyFromPence(cost)}</Title>
+              </Grid.Item>
+
+              {!showForm && (
+                <UserPaymentMethods
+                  selectedId={selectedId}
+                  setSelectedId={setSelectedId}
+                  onAddNewPress={() => setShowForm(true)}
+                />
+              )}
+
+              {showForm && (
+                <Grid.Item size={12}>
+                  <Main onPress={() => setShowForm(false)}>
+                    <Icon />
+                    <Text>Back </Text>
+                  </Main>
+                  <Card>
+                    <Grid>
+                      <PaymentMethodForm formik={formik} />
+                    </Grid>
+                  </Card>
+                </Grid.Item>
+              )}
+
+              {hasError && (
+                <Grid.Item size={12}>
+                  <Text isError isCenter>
+                    {formik.errors.generic || confirmingError}
+                  </Text>
+                </Grid.Item>
+              )}
+
+              <Grid.Item size={12}>
+                <Actions>
+                  <Button
+                    fixedWidth
+                    title="Confirm"
+                    disabled={showForm ? false : !selectedId}
+                    onPress={formik.handleSubmit}
+                    isLoading={loading}
+                  />
+                </Actions>
+              </Grid.Item>
+            </>
+          )}
         </Grid>
       </Container>
     </Modal>

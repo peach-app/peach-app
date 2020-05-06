@@ -17,4 +17,5 @@ module.exports = {
   completeBooking: require('./completeBooking'),
   requestPasswordReset: require('./requestPasswordReset'),
   resetPassword: require('./resetPassword'),
+  createCampaignPayment: require('./createCampaignPayment'),
 };
