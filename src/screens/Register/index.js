@@ -66,6 +66,7 @@ export const Register = () => {
 
   const formik = useFormik({
     validateOnBlur: false,
+    validateOnChange: false,
     validationSchema,
     initialValues: {
       code: '',

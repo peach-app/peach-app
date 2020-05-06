@@ -173,15 +173,15 @@ export const CreateOrUpdateCampaign = () => {
             </Grid>
           </Container>
         </ScrollView>
+        <Actions>
+          <Button
+            isLoading={saving}
+            onPress={formik.handleSubmit}
+            title={campaignId ? 'Save' : 'Create'}
+            fixedWidth
+          />
+        </Actions>
       </KeyboardAvoidingView>
-      <Actions>
-        <Button
-          isLoading={saving}
-          onPress={formik.handleSubmit}
-          title={campaignId ? 'Save' : 'Create'}
-          fixedWidth
-        />
-      </Actions>
     </SafeAreaView>
   );
 };

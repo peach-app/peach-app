@@ -1,8 +1,6 @@
 import React from 'react';
-import get from 'lodash/fp/get';
 import { useNavigation } from '@react-navigation/native';
 
-import { USER_TYPE } from 'consts';
 import { useUser } from 'contexts/User';
 import {
   Welcome,
@@ -33,8 +31,7 @@ const withSkipOption = (Component, { skipTo }) => () => {
 const welcomeScreen = ({ goTo }) => () => <Welcome goTo={goTo} />;
 
 export const OnboardingNavigator = () => {
-  const { user } = useUser();
-  const isBrand = get('user.type', user) === USER_TYPE.BRAND;
+  const { isBrand } = useUser();
 
   return (
     <Stack.Navigator

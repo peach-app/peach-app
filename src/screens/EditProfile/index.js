@@ -98,20 +98,17 @@ export const EditProfile = () => {
                   <GraphQLErrors error={error} />
                 </Grid.Item>
               )}
-
-              <Grid.Item size={12}>
-                <Actions>
-                  <Button
-                    isLoading={loading}
-                    onPress={formik.handleSubmit}
-                    title="Save"
-                    fixedWidth
-                  />
-                </Actions>
-              </Grid.Item>
             </Grid>
           </Container>
         </ScrollView>
+        <Actions>
+          <Button
+            isLoading={loading}
+            onPress={formik.handleSubmit}
+            title="Save"
+            fixedWidth
+          />
+        </Actions>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

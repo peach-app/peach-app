@@ -20,7 +20,7 @@ import {
 } from 'components';
 import { formatRefs } from 'helpers';
 import { useUser } from 'contexts/User';
-import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from 'consts';
+import { NETWORK_STATUS, BOOKING_STATE } from 'consts';
 
 import { INFLUENCER_NO_BOOKING } from './consts';
 import GET_CAMPAIGNS from './graphql/get-campaigns';
@@ -29,9 +29,7 @@ export const Campaigns = () => {
   const navigation = useNavigation();
 
   const [activeTabIndex, setTabIndex] = useState(0);
-  const { user } = useUser();
-  const userType = get('user.type', user);
-  const isBrand = userType === USER_TYPE.BRAND;
+  const { isBrand } = useUser();
 
   const activeTab = useMemo(
     () =>

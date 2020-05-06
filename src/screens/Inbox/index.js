@@ -1,7 +1,6 @@
 import React from 'react';
 import { RefreshControl } from 'react-native';
 import getOr from 'lodash/fp/getOr';
-import get from 'lodash/fp/get';
 import { useQuery } from '@apollo/react-hooks';
 
 import {
@@ -17,12 +16,11 @@ import {
 } from 'components';
 import { useUser } from 'contexts/User';
 
-import { NETWORK_STATUS, USER_TYPE } from 'consts';
+import { NETWORK_STATUS } from 'consts';
 import GET_THREADS from './graphql/get-threads';
 
 export const Inbox = () => {
-  const { user } = useUser();
-  const userType = get('user.type', user);
+  const { isBrand } = useUser();
 
   const { data, loading, networkStatus, refetch } = useQuery(GET_THREADS, {
     notifyOnNetworkStatusChange: true,
@@ -58,7 +56,7 @@ export const Inbox = () => {
               {!loading && messages.length <= 0 && (
                 <NoResultText isPara>
                   <Branch
-                    test={userType === USER_TYPE.BRAND}
+                    test={isBrand}
                     left={`Threads will appear here when you\naccept an influencer onto a campaign.`}
                     right={`Threads will appear here when \nyou join your first campaign.`}
                   />

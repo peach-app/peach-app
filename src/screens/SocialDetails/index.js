@@ -130,19 +130,17 @@ export const SocialDetails = ({
                   onChangeText={formik.handleChange('tikTok')}
                 />
               </Grid.Item>
-              <Grid.Item size={12}>
-                <Actions>
-                  <Button
-                    isLoading={isSubmitting}
-                    title="Save"
-                    fixedWidth
-                    onPress={formik.handleSubmit}
-                  />
-                </Actions>
-              </Grid.Item>
             </Grid>
           </Container>
         </ScrollView>
+        <Actions>
+          <Button
+            isLoading={isSubmitting}
+            title="Save"
+            fixedWidth
+            onPress={formik.handleSubmit}
+          />
+        </Actions>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

@@ -2,21 +2,16 @@ import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView } from 'react-native';
-import get from 'lodash/fp/get';
 
 import { useUser } from 'contexts/User';
-import { USER_TYPE } from 'consts';
 
 import { Grid } from '../Grid';
 import { Container } from '../Container';
 import { Touchable, Main, Copy } from './styles';
 
 export const AccountDetailsBanner = () => {
-  const { user } = useUser();
+  const { user, isBrand } = useUser();
   const navigation = useNavigation();
-
-  const userType = get('user.type', user);
-  const isBrand = userType === USER_TYPE.BRAND;
 
   const passesStripe = isBrand || user.isStripeEnabled;
 

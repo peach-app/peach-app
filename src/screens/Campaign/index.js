@@ -23,9 +23,10 @@ import {
   FlatList,
   Foot,
   Label,
+  Pill,
 } from 'components';
 import { useUser } from 'contexts/User';
-import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from 'consts';
+import { NETWORK_STATUS, BOOKING_STATE } from 'consts';
 import { formatToMoneyFromPence } from 'helpers';
 
 import { RequestActions, AcceptedActions } from './components';
@@ -45,10 +46,8 @@ export const Campaign = () => {
   const {
     params: { id },
   } = useRoute();
-  const { user } = useUser();
+  const { isBrand, isInfluencer } = useUser();
 
-  const isBrand = get('user.type', user) === USER_TYPE.BRAND;
-  const isInfluencer = get('user.type', user) === USER_TYPE.INFLUENCER;
   const tabBookingState = TAB_INDEX_BOOKING_STATE[activeTab];
 
   const { data: campaign, loading, networkStatus, refetch } = useQuery(
@@ -139,33 +138,32 @@ export const Campaign = () => {
                     </Text>
                   </Grid.Item>
 
-                  <Grid.Item size={6}>
-                    <Label>Budget</Label>
-                    <Text>
-                      <SkeletonText loadingText="£0.00" isLoading={fetching}>
-                        {formatToMoneyFromPence(
+                  {!fetching && (
+                    <Grid.Item size={6}>
+                      <Label>Budget</Label>
+                      <Pill
+                        icon="ios-wallet"
+                        value={formatToMoneyFromPence(
                           get('findCampaignById.budget', campaign)
                         )}
-                      </SkeletonText>
-                    </Text>
-                  </Grid.Item>
+                      />
+                    </Grid.Item>
+                  )}
 
-                  <Grid.Item size={6}>
-                    <Label>Completion Date</Label>
-                    <Text>
-                      <SkeletonText
-                        loadingText="00/00/0000"
-                        isLoading={fetching}
-                      >
-                        {FormatDate(
+                  {!fetching && (
+                    <Grid.Item size={6}>
+                      <Label>Completion Date</Label>
+                      <Pill
+                        icon="ios-calendar"
+                        value={FormatDate(
                           new Date(
                             getOr('2020', 'findCampaignById.dueDate', campaign)
                           ),
-                          'dd/MM/yyyy'
+                          'do MMM yyyy'
                         )}
-                      </SkeletonText>
-                    </Text>
-                  </Grid.Item>
+                      />
+                    </Grid.Item>
+                  )}
                 </Grid>
               </Intro>
             </FlatList.Item>

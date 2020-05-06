@@ -7,3 +7,7 @@ export const Note = styled.View`
   border-width: 1px;
   margin-vertical: ${props => props.theme.spacingSmall}px;
 `;
+
+export const PayRate = styled.View`
+  margin-top: ${props => props.theme.spacingSmall}px;
+`;
