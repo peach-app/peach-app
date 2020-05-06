@@ -100,7 +100,7 @@ export const CreateOrUpdateCampaign = () => {
         props: {
           onConfirm: paymentId =>
             submitCampaign({ ...campaignDetails, paymentId }),
-          cost: campaignDetails.budget,
+          cost: 500,
         },
       });
     },

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Linking } from 'react-native';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -45,17 +44,16 @@ const ConfirmPaymentModal = ({ cost, onConfirm, description, onClose }) => {
   const [showForm, setShowForm] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [confirmingPaymentId, setIsConfirmingPayment] = useState('');
+  const [confirmingPayment, setIsConfirmingPayment] = useState(null);
   const [confirmingError, setConfirmingError] = useState('');
 
   const [createCampaignPayment] = useMutation(CREATE_CAMPAIGN_PAYMENT, {
-    onCompleted: ({ createCampaignPayment: { id, redirectUrl } }) => {
+    onCompleted: async ({ createCampaignPayment: { id, redirectUrl } }) => {
       if (redirectUrl) {
         setLoading(false);
 
-        setIsConfirmingPayment(id);
+        setIsConfirmingPayment({ id, redirectUrl });
 
-        Linking.openURL(redirectUrl);
         return;
       }
       onConfirm(id);
@@ -124,10 +122,10 @@ const ConfirmPaymentModal = ({ cost, onConfirm, description, onClose }) => {
       <Container>
         <Intro />
         <Grid>
-          {confirmingPaymentId ? (
+          {confirmingPayment ? (
             <Grid.Item size={12}>
               <ConfirmPayment
-                id={confirmingPaymentId}
+                payment={confirmingPayment}
                 onPaymentConfirmed={onConfirm}
                 onPaymentConfirmationFailed={handleConfirmationFailure}
               />

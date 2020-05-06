@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { AppState } from 'react-native';
-import styled from 'styled-components';
+import { Platform } from 'react-native';
+import styled from 'styled-components/native';
+
 import { Loading, Container, Title, Intro, Icon } from 'components';
 import getOr from 'lodash/fp/getOr';
 import { useQuery } from '@apollo/react-hooks';
+import * as WebBrowser from 'expo-web-browser';
 import GET_PAYMENT_CONFIRMATION_STATUS from './graphql/get-payment-status';
 
 const IconWrapper = styled.View`
@@ -15,52 +17,63 @@ const IconWrapper = styled.View`
 `;
 
 export const ConfirmPayment = ({
-  id,
+  payment,
   onPaymentConfirmed,
   onPaymentConfirmationFailed,
 }) => {
-  const [appHasBeenInactive, setAppHasBeenIactive] = useState(false);
+  const [appHasBeenInactive, setAppHasBeenInactive] = useState(false);
 
-  const [appState, setAppState] = useState(AppState.currentState);
-
-  const handleAppStateChange = nextAppState => {
-    if (nextAppState === 'background') {
-      setAppHasBeenIactive(true);
-    }
-    setAppState(nextAppState);
-  };
-
-  useEffect(() => {
-    AppState.addEventListener('change', handleAppStateChange);
-
-    return () => {
-      AppState.removeEventListener('change', handleAppStateChange);
-    };
-  }, []);
+  const [isAppFocused, setIsAppFocused] = useState(false);
 
   const { data } = useQuery(GET_PAYMENT_CONFIRMATION_STATUS, {
-    variables: { id },
+    variables: { id: payment.id },
     pollInterval: 1000,
     fetchPolicy: 'network-only',
   });
 
   const status = getOr('', 'getPaymentConfirmationStatus.status', data);
 
+  const onFocus = () => {
+    setIsAppFocused(true);
+  };
+
+  useEffect(() => {
+    if (Platform.OS === 'web') {
+      window.addEventListener('focus', onFocus);
+    }
+    const getBrowserState = async () => {
+      const state = await WebBrowser.openBrowserAsync(payment.redirectUrl);
+
+      if (state.type === 'dismiss' || state.type === 'cancel') {
+        setAppHasBeenInactive(true);
+      }
+    };
+
+    getBrowserState();
+
+    if (Platform.OS === 'web') {
+      return () => window.removeEventListener('focus', onFocus);
+    }
+  }, []);
+
   useEffect(() => {
     let timer;
-    if (status === 'succeeded') {
-      onPaymentConfirmed(id);
-    } else {
-      // eslint-disable-next-line
-      if (appHasBeenInactive && appState === 'active' && !timer) {
-        const startTimer = () =>
-          setTimeout(() => {
-            if (status !== 'succeeded') {
-              onPaymentConfirmationFailed();
-            }
-          }, 5000);
+    if (status) {
+      if (status === 'succeeded') {
+        onPaymentConfirmed(payment.id);
+      } else {
+        const isAppActive = Platform.OS === 'web' ? isAppFocused : true;
+        // eslint-disable-next-line
+      if (appHasBeenInactive && isAppActive && !timer) {
+          const startTimer = () =>
+            setTimeout(() => {
+              if (status !== 'succeeded') {
+                onPaymentConfirmationFailed();
+              }
+            }, 5000);
 
-        timer = startTimer();
+          timer = startTimer();
+        }
       }
     }
     return () => {
@@ -81,7 +94,10 @@ export const ConfirmPayment = ({
 };
 
 ConfirmPayment.propTypes = {
-  id: PropTypes.string.isRequired,
+  payment: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    redirectUrl: PropTypes.string.isRequired,
+  }).isRequired,
   onPaymentConfirmed: PropTypes.func.isRequired,
   onPaymentConfirmationFailed: PropTypes.func.isRequired,
 };

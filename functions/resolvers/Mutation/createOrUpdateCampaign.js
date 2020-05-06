@@ -42,6 +42,12 @@ module.exports = async (
     );
   }
 
+  const { status } = await stripe.paymentIntents.retrieve(campaign.paymentId);
+
+  if (status !== 'succeeded') {
+    throw new Error('The campaign fee has not been paid');
+  }
+
   return client.query(
     DocumentDataWithId(
       q.Create(q.Collection('Campaign'), {
