@@ -44,7 +44,7 @@ export const ConfirmPayment = ({
     const getBrowserState = async () => {
       const state = await WebBrowser.openBrowserAsync(payment.redirectUrl);
 
-      if (state.type === 'dismiss' || state.type === 'cancel') {
+      if (['opened', 'dismiss', 'cancel'].includes(state.type)) {
         setAppHasBeenInactive(true);
       }
     };
