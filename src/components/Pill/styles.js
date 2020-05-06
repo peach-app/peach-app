@@ -11,6 +11,7 @@ export const Main = styled.View`
   padding-horizontal: ${props => props.theme.spacingSmall}px;
   padding-vertical: ${props => props.theme.spacingXSmall}px;
   margin-right: ${props => props.theme.spacingXSmall}px;
+  align-self: flex-start;
 `;
 
 export const Text = styled(BaseText)`
