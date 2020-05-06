@@ -9,7 +9,6 @@ import get from 'lodash/fp/get';
 import getOr from 'lodash/fp/getOr';
 import parseDate from 'date-fns/parse';
 
-import { USER_TYPE } from 'consts';
 import { useUser } from 'contexts/User';
 import {
   SafeAreaView,
@@ -45,9 +44,9 @@ export const PersonalDetails = ({
   onRightActionPressed,
   onComplete,
 }) => {
-  const { user } = useUser();
+  const { isBrand } = useUser();
   const navigation = useNavigation();
-  const isBrand = get('user.type', user) === USER_TYPE.BRAND;
+
   const { data } = useQuery(GET_USER, {
     fetchPolicy: 'cache-and-network',
   });

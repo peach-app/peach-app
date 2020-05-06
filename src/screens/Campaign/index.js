@@ -25,7 +25,7 @@ import {
   Label,
 } from 'components';
 import { useUser } from 'contexts/User';
-import { NETWORK_STATUS, USER_TYPE, BOOKING_STATE } from 'consts';
+import { NETWORK_STATUS, BOOKING_STATE } from 'consts';
 import { formatToMoneyFromPence } from 'helpers';
 
 import { RequestActions, AcceptedActions } from './components';
@@ -45,10 +45,8 @@ export const Campaign = () => {
   const {
     params: { id },
   } = useRoute();
-  const { user } = useUser();
+  const { isBrand, isInfluencer } = useUser();
 
-  const isBrand = get('user.type', user) === USER_TYPE.BRAND;
-  const isInfluencer = get('user.type', user) === USER_TYPE.INFLUENCER;
   const tabBookingState = TAB_INDEX_BOOKING_STATE[activeTab];
 
   const { data: campaign, loading, networkStatus, refetch } = useQuery(

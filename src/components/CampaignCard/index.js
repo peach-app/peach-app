@@ -4,6 +4,8 @@ import { TouchableOpacity } from 'react-native';
 import gql from 'graphql-tag';
 import get from 'lodash/fp/get';
 
+import { useUser } from 'contexts/User';
+
 import { MainTitle, Description, User, ArrowIcon } from './styles';
 import { Grid } from '../Grid';
 import { Avatar } from '../Avatar';
@@ -17,17 +19,21 @@ export const CampaignCard = ({
   onPress,
   ActionItem,
 }) => {
+  const { isInfluencer } = useUser();
+
   return (
     <TouchableOpacity onPress={() => !isLoading && onPress()}>
       <Grid noWrap align="center">
-        <Grid.Item>
-          <Avatar
-            isLoading={isLoading}
-            size={50}
-            source={{ uri: get('avatar.url', user) }}
-            fallback={get('name', user)}
-          />
-        </Grid.Item>
+        {isInfluencer && (
+          <Grid.Item>
+            <Avatar
+              isLoading={isLoading}
+              size={50}
+              source={{ uri: get('avatar.url', user) }}
+              fallback={get('name', user)}
+            />
+          </Grid.Item>
+        )}
         <Grid.Item flex={1}>
           <MainTitle numberOfLines={2}>
             <SkeletonText
@@ -45,11 +51,13 @@ export const CampaignCard = ({
               {description}
             </SkeletonText>
           </Description>
-          <User>
-            <SkeletonText isLoading={isLoading} loadingText="Campaign user">
-              {get('name', user)}
-            </SkeletonText>
-          </User>
+          {isInfluencer && (
+            <User>
+              <SkeletonText isLoading={isLoading} loadingText="Campaign user">
+                {get('name', user)}
+              </SkeletonText>
+            </User>
+          )}
         </Grid.Item>
         {!isLoading && Boolean(ActionItem) && (
           <Grid.Item>

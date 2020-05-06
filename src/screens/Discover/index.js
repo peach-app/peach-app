@@ -1,18 +1,15 @@
 import React from 'react';
-import get from 'lodash/fp/get';
 import { useUser } from 'contexts/User';
 
 import { AccountDetailsBanner } from 'components';
-import { USER_TYPE } from 'consts';
 
 import { DiscoverCampaigns } from '../DiscoverCampaigns';
 import { DiscoverInfluencers } from '../DiscoverInfluencers';
 
 export const Discover = () => {
-  const { user } = useUser();
-  const type = get('user.type', user);
+  const { isBrand, isInfluencer } = useUser();
 
-  if (type === USER_TYPE.BRAND) {
+  if (isBrand) {
     return (
       <>
         <AccountDetailsBanner />
@@ -21,7 +18,7 @@ export const Discover = () => {
     );
   }
 
-  if (type === USER_TYPE.INFLUENCER) {
+  if (isInfluencer) {
     return (
       <>
         <AccountDetailsBanner />

@@ -14,14 +14,13 @@ import {
 } from 'components';
 import { useAuth } from 'contexts/Auth';
 import { useUser } from 'contexts/User';
-import { USER_TYPE } from 'consts';
 
 import GET_USER from './graphql/get-user';
 
 export const Account = () => {
   const navigation = useNavigation();
   const { setToken } = useAuth();
-  const { user } = useUser();
+  const { isBrand, isInfluencer } = useUser();
   const { client, data, loading } = useQuery(GET_USER);
 
   return (
@@ -37,7 +36,7 @@ export const Account = () => {
               iconProps={{ name: 'ios-arrow-forward' }}
               onPress={() => navigation.navigate('EditProfile')}
             />
-            {get('user.type', user) === USER_TYPE.INFLUENCER && (
+            {isInfluencer && (
               <>
                 <NavLink
                   title="Social Accounts"
@@ -51,7 +50,7 @@ export const Account = () => {
                 />
               </>
             )}
-            {get('user.type', user) === USER_TYPE.BRAND && (
+            {isBrand && (
               <>
                 <NavLink
                   title="Personal Details"

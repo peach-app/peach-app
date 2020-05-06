@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 
+import { USER_TYPE } from 'consts';
+
 import { useAuth } from './Auth';
 import GET_USER from './graphql/get-user';
 
@@ -17,6 +19,10 @@ export const Provider = ({ children }) => {
     },
   });
 
+  const userType = get('user.type', data);
+  const isBrand = userType === USER_TYPE.BRAND;
+  const isInfluencer = userType === USER_TYPE.INFLUENCER;
+
   const user = {
     ...data,
     isEmailVerified: get('user.emailVerification.isVerified', data),
@@ -25,7 +31,7 @@ export const Provider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ user, loading }}>
+    <UserContext.Provider value={{ user, isBrand, isInfluencer, loading }}>
       {children}
     </UserContext.Provider>
   );
