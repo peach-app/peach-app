@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, SafeAreaView } from 'react-native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from '@apollo/react-hooks';
@@ -7,7 +7,6 @@ import get from 'lodash/fp/get';
 import { useNavigation } from '@react-navigation/native';
 
 import {
-  SafeAreaView,
   StatusBar,
   Container,
   Grid,
@@ -22,7 +21,8 @@ import {
   KeyboardAvoidingView,
 } from 'components';
 import { useAuth } from 'contexts/Auth';
-import { Touchable } from './styles';
+
+import { Main, Touchable, Graphic, Form } from './styles';
 
 import LOGIN from './graphql/login';
 
@@ -61,74 +61,76 @@ export const Login = () => {
   });
 
   return (
-    <SafeAreaView>
+    <Main>
+      <StatusBar />
       <KeyboardAvoidingView>
-        <ScrollView>
+        <ScrollView contentContainerStyle={{ flex: 1 }}>
+          <Graphic />
           <Container>
-            <StatusBar />
-            <Grid>
-              <Grid.Item size={12}>
-                <Intro>
-                  <Grid>
-                    <Grid.Item size={12}>
-                      <BackButton />
-                    </Grid.Item>
-                    <Grid.Item size={12}>
-                      <Title>Login</Title>
-                    </Grid.Item>
-                  </Grid>
-                </Intro>
-              </Grid.Item>
-
-              <Grid.Item size={12}>
-                <TextInput
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                  label="Email address"
-                  error={formik.errors.email}
-                  onChangeText={formik.handleChange('email')}
-                  onBlur={formik.handleBlur('email')}
-                />
-              </Grid.Item>
-
-              <Grid.Item size={12}>
-                <TextInput
-                  label="Password"
-                  secureTextEntry
-                  error={formik.errors.password}
-                  onChangeText={formik.handleChange('password')}
-                  onBlur={formik.handleBlur('password')}
-                />
-              </Grid.Item>
-
-              {error && (
-                <Grid.Item size={12}>
-                  <GraphQLErrors error={error} />
-                </Grid.Item>
-              )}
-              <Grid.Item size={12}>
-                <Touchable>
-                  <Text
-                    isCenter
-                    isUnderlined
-                    onPress={() => navigation.navigate('PasswordResetEmail')}
-                  >
-                    Forgot your password?
-                  </Text>
-                </Touchable>
-              </Grid.Item>
-            </Grid>
+            <Intro>
+              <BackButton />
+            </Intro>
           </Container>
+
+          <Form>
+            <Container>
+              <Grid>
+                <Grid.Item size={12}>
+                  <Title>Login</Title>
+                </Grid.Item>
+
+                <Grid.Item size={12}>
+                  <TextInput
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                    label="Email address"
+                    error={formik.errors.email}
+                    onChangeText={formik.handleChange('email')}
+                    onBlur={formik.handleBlur('email')}
+                  />
+                </Grid.Item>
+
+                <Grid.Item size={12}>
+                  <TextInput
+                    label="Password"
+                    secureTextEntry
+                    error={formik.errors.password}
+                    onChangeText={formik.handleChange('password')}
+                    onBlur={formik.handleBlur('password')}
+                  />
+                </Grid.Item>
+
+                {error && (
+                  <Grid.Item size={12}>
+                    <GraphQLErrors error={error} />
+                  </Grid.Item>
+                )}
+                <Grid.Item size={12}>
+                  <Touchable>
+                    <Text
+                      isCenter
+                      isUnderlined
+                      onPress={() => navigation.navigate('PasswordResetEmail')}
+                    >
+                      Forgot your password?
+                    </Text>
+                  </Touchable>
+                </Grid.Item>
+              </Grid>
+            </Container>
+          </Form>
         </ScrollView>
-        <Actions>
-          <Button
-            isLoading={loading}
-            onPress={formik.handleSubmit}
-            title="Login"
-            fixedWidth
-          />
-        </Actions>
+        <SafeAreaView>
+          <Actions>
+            <Button
+              isLoading={loading}
+              onPress={formik.handleSubmit}
+              title="Login"
+              fixedWidth
+            />
+          </Actions>
+        </SafeAreaView>
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </Main>
   );
 };

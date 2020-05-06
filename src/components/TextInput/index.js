@@ -15,6 +15,7 @@ const Input = styled.TextInput`
     ${props => props.theme.spacing}px;
   min-height: 38px;
   font-family: ${props => props.theme.fontFamily.regular};
+  background: ${props => props.theme.background};
 `;
 
 export const TextInput = ({ label, error, ...props }) => (
