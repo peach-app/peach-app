@@ -138,20 +138,17 @@ export const NewBilling = ({
                   <Text isCenter>{formik.errors.generic}</Text>
                 </Grid.Item>
               )}
-
-              <Grid.Item size={12}>
-                <Actions>
-                  <Button
-                    title="Save"
-                    fixedWidth
-                    isLoading={loading}
-                    onPress={formik.handleSubmit}
-                  />
-                </Actions>
-              </Grid.Item>
             </Grid>
           </Container>
         </ScrollView>
+        <Actions>
+          <Button
+            title="Save"
+            fixedWidth
+            isLoading={loading}
+            onPress={formik.handleSubmit}
+          />
+        </Actions>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

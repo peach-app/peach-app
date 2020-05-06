@@ -68,19 +68,17 @@ export const BookingCompletion = () => {
                   onBlur={formik.handleBlur('note')}
                 />
               </Grid.Item>
-              <Grid.Item size={12}>
-                <Actions>
-                  <Button
-                    title="Submit"
-                    isLoading={loading}
-                    fixedWidth
-                    onPress={formik.handleSubmit}
-                  />
-                </Actions>
-              </Grid.Item>
             </Grid>
           </Container>
         </ScrollView>
+        <Actions>
+          <Button
+            title="Submit"
+            isLoading={loading}
+            fixedWidth
+            onPress={formik.handleSubmit}
+          />
+        </Actions>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

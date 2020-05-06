@@ -117,20 +117,17 @@ export const Login = () => {
                   </Text>
                 </Touchable>
               </Grid.Item>
-
-              <Grid.Item size={12}>
-                <Actions>
-                  <Button
-                    isLoading={loading}
-                    onPress={formik.handleSubmit}
-                    title="Login"
-                    fixedWidth
-                  />
-                </Actions>
-              </Grid.Item>
             </Grid>
           </Container>
         </ScrollView>
+        <Actions>
+          <Button
+            isLoading={loading}
+            onPress={formik.handleSubmit}
+            title="Login"
+            fixedWidth
+          />
+        </Actions>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
