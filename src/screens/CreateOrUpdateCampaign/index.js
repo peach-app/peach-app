@@ -31,7 +31,7 @@ import CREATE_OR_UPDATE_CAMPAIGN_MUTATION from './graphql/create-or-update-campa
 export const CreateOrUpdateCampaign = () => {
   const navigation = useNavigation();
 
-  const { openModal, closeModal } = useModal();
+  const { openModal } = useModal();
 
   const [activeTab, setTab] = useState(0);
   const { params } = useRoute();
@@ -63,10 +63,13 @@ export const CreateOrUpdateCampaign = () => {
     }
   );
 
-  const submitCampaign = (
-    { name, description, budget, dueDate, paymentId },
-    { cardId, token } = {}
-  ) => {
+  const submitCampaign = ({
+    name,
+    description,
+    budget,
+    dueDate,
+    paymentId,
+  }) => {
     createOrUpdateCampaign({
       variables: {
         campaign: {
@@ -78,8 +81,6 @@ export const CreateOrUpdateCampaign = () => {
           private: activeTab === 1,
           paymentId,
         },
-        cardId,
-        token,
       },
     });
   };
@@ -97,10 +98,9 @@ export const CreateOrUpdateCampaign = () => {
       openModal({
         type: MODAL_TYPES.CONFIRM_PAYMENT,
         props: {
-          onClose: closeModal,
-          onConfirm: paymentMethod =>
-            submitCampaign(campaignDetails, paymentMethod),
-          cost: 500, // Pence for campaign creation cost
+          onConfirm: paymentId =>
+            submitCampaign({ ...campaignDetails, paymentId }),
+          cost: 500,
         },
       });
     },

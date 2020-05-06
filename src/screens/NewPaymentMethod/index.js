@@ -61,7 +61,7 @@ export const NewPaymentMethod = () => {
     },
     onSubmit: async ({ number, expiry, cvc }) => {
       const [expMonth, expYear] = expiry.split('/');
-      const { id, error } = await stripe.createToken({
+      const paymentMethod = await stripe.createToken({
         card: {
           currency: 'gbp',
           number,
@@ -71,14 +71,14 @@ export const NewPaymentMethod = () => {
         },
       });
 
-      if (error) {
-        formik.setErrors({ generic: error.message });
+      if (paymentMethod.error) {
+        formik.setErrors({ generic: paymentMethod.error.message });
         return;
       }
 
       createPaymentMethod({
         variables: {
-          token: id,
+          token: paymentMethod.id,
         },
       });
     },

@@ -6,7 +6,8 @@ export const Text = styled.Text`
     props.isBold
       ? props.theme.fontFamily.bold
       : props.theme.fontFamily.regular};
-  color: ${props => props.theme.foreground};
+  color: ${props =>
+    props.isError ? props.theme.error : props.theme.foreground};
   ${props => props.isCenter && `text-align: center;`}
   ${props => props.isPara && `line-height: 22px;`}
   ${props =>
