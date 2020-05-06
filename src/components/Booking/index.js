@@ -10,13 +10,14 @@ import { BOOKING_STATE, MODAL_TYPES } from 'consts';
 import { formatToMoneyFromPence } from 'helpers';
 import { useModal } from 'contexts/Modal';
 
-import { Note } from './styles';
+import { Note, PayRate } from './styles';
 import { Grid } from '../Grid';
 import { SkeletonText } from '../Skeletons';
 import { Loading } from '../Loading';
 import { IconButton } from '../IconButton';
 import { Avatar } from '../Avatar';
 import { Text } from '../Text';
+import { Pill } from '../Pill';
 import UPDATE_BOOKING_STATE from './graphql/update-booking-state';
 
 export const Booking = ({ _id, cost, state, note, user, isLoading }) => {
@@ -57,12 +58,13 @@ export const Booking = ({ _id, cost, state, note, user, isLoading }) => {
                   {startCase(get('name', user))}
                 </SkeletonText>
               </Text>
-              {state !== BOOKING_STATE.REQUESTED && (
-                <Text>
-                  <SkeletonText isLoading={isLoading} loadingText="Rate: £0.00">
-                    Pay Rate: {formatToMoneyFromPence(cost)}
-                  </SkeletonText>
-                </Text>
+              {!isLoading && state !== BOOKING_STATE.REQUESTED && (
+                <PayRate>
+                  <Pill
+                    icon="ios-wallet"
+                    value={formatToMoneyFromPence(cost)}
+                  />
+                </PayRate>
               )}
             </Grid.Item>
           </Grid>
