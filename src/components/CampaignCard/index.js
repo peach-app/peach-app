@@ -3,26 +3,39 @@ import PropTypes from 'prop-types';
 import { TouchableOpacity } from 'react-native';
 import gql from 'graphql-tag';
 import get from 'lodash/fp/get';
+import FormatDate from 'date-fns/format';
 
 import { useUser } from 'contexts/User';
+import { formatToMoneyFromPence } from 'helpers';
 
-import { MainTitle, Description, User, ArrowIcon } from './styles';
+import {
+  TouchableCard,
+  MainTitle,
+  Description,
+  User,
+  ArrowIcon,
+  Pills,
+} from './styles';
 import { Grid } from '../Grid';
 import { Avatar } from '../Avatar';
 import { SkeletonText } from '../Skeletons';
+import { Pill } from '../Pill';
 
 export const CampaignCard = ({
   isLoading,
   user,
   name,
   description,
+  budget,
+  dueDate,
   onPress,
   ActionItem,
 }) => {
-  const { isInfluencer } = useUser();
+  const { isInfluencer, isBrand } = useUser();
+  const Touchable = isBrand ? TouchableCard : TouchableOpacity;
 
   return (
-    <TouchableOpacity onPress={() => !isLoading && onPress()}>
+    <Touchable onPress={() => !isLoading && onPress()}>
       <Grid noWrap align="center">
         {isInfluencer && (
           <Grid.Item>
@@ -58,6 +71,15 @@ export const CampaignCard = ({
               </SkeletonText>
             </User>
           )}
+          {!isLoading && isBrand && (
+            <Pills>
+              <Pill icon="ios-wallet" value={formatToMoneyFromPence(budget)} />
+              <Pill
+                icon="ios-calendar"
+                value={FormatDate(new Date(dueDate), 'do MMM')}
+              />
+            </Pills>
+          )}
         </Grid.Item>
         {!isLoading && Boolean(ActionItem) && (
           <Grid.Item>
@@ -65,7 +87,7 @@ export const CampaignCard = ({
           </Grid.Item>
         )}
       </Grid>
-    </TouchableOpacity>
+    </Touchable>
   );
 };
 
@@ -75,6 +97,8 @@ CampaignCard.defaultProps = {
   isLoading: false,
   name: '',
   description: '',
+  budget: null,
+  dueDate: null,
   user: null,
   onPress: null,
   ActionItem: ArrowIcon,
@@ -86,6 +110,8 @@ CampaignCard.propTypes = {
   onPress: PropTypes.func,
   name: PropTypes.string,
   description: PropTypes.string,
+  budget: PropTypes.number,
+  dueDate: PropTypes.string,
   user: PropTypes.shape({
     name: PropTypes.string,
     avatar: PropTypes.shape({
@@ -99,6 +125,8 @@ export const CampaignCardFragment = gql`
     _id
     name
     description
+    budget
+    dueDate
     user {
       name
       avatar {

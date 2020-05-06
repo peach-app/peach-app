@@ -45,6 +45,7 @@ export const Login = () => {
 
   const formik = useFormik({
     validateOnBlur: false,
+    validateOnChange: false,
     initialValues: {
       email: '',
       password: '',

@@ -51,3 +51,4 @@ export * from './UserPaymentMethods';
 export * from './BillingMethodCard';
 export * from './PayoutCard';
 export * from './KeyboardAvoidingView';
+export * from './Pill';
