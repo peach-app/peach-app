@@ -23,7 +23,7 @@ export const Graphic = styled.View`
 export const Form = styled.View`
   ${Platform.select({
     ios: 'margin-top: auto;',
-    android: 'margin-top: auot;',
+    android: 'margin-top: auto;',
   })}
   padding-bottom: ${props => props.theme.spacingXLarge}px;
   padding-top: ${props => props.theme.spacing}px;
