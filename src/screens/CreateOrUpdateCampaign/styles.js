@@ -18,3 +18,12 @@ export const Graphic = styled.View`
   top: -${size * 2}px;
   right: -${size}px;
 `;
+
+export const Wrapper = styled.View`
+  ${Platform.select({
+    ios: 'margin-top: auto;',
+    android: 'margin-top: auto;',
+  })}
+  padding-bottom: ${props => props.theme.spacingXLarge}px;
+  padding-top: ${props => props.theme.spacing}px;
+`;

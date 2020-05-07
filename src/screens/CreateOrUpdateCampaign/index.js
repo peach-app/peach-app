@@ -22,8 +22,8 @@ import {
 } from 'components';
 import { CAMPAIGN_TYPE, MODAL_TYPES } from 'consts';
 import { useModal } from 'contexts/Modal';
-import { PushToTop, Graphic } from './styles';
-import { Form } from '../Login/styles';
+import { PushToTop, Graphic, Wrapper } from './styles';
+
 import { validationSchema, FORM_INITIAL_VALUES } from './consts';
 import GET_CAMPAIGN from './graphql/get-campaign';
 import CREATE_OR_UPDATE_CAMPAIGN_MUTATION from './graphql/create-or-update-campaign';
@@ -112,7 +112,7 @@ export const CreateOrUpdateCampaign = () => {
       <Header title={campaignId ? 'Edit Campaign' : 'Create Campaign'} />
       <KeyboardAvoidingView>
         <ScrollView contentContainerStyle={{ flex: 1 }}>
-          <Form>
+          <Wrapper>
             <Container>
               <Intro />
               <Graphic />
@@ -176,7 +176,7 @@ export const CreateOrUpdateCampaign = () => {
                 </Grid.Item>
               </Grid>
             </Container>
-          </Form>
+          </Wrapper>
         </ScrollView>
         <Actions>
           <Button
