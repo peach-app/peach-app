@@ -1,5 +1,4 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { useFormik } from 'formik';
 import { useMutation } from '@apollo/react-hooks';
@@ -16,6 +15,7 @@ import {
   Actions,
   Button,
   KeyboardAvoidingView,
+  ScrollView,
 } from 'components';
 
 import COMPLETE_BOOKING from './graphql/complete-booking';

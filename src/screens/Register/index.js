@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
-import { ScrollView } from 'react-native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from '@apollo/react-hooks';
@@ -26,6 +25,7 @@ import {
   GraphQLErrors,
   SubTitle,
   KeyboardAvoidingView,
+  ScrollView,
 } from 'components';
 import { useAuth } from 'contexts/Auth';
 

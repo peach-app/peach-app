@@ -1,5 +1,4 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useMutation } from '@apollo/react-hooks';
@@ -18,6 +17,7 @@ import {
   Text,
   GraphQLErrors,
   KeyboardAvoidingView,
+  ScrollView,
 } from 'components';
 
 import { stripe } from '../../stripe';

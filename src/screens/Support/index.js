@@ -1,5 +1,4 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
 
 import {
   SafeAreaView,
@@ -9,6 +8,7 @@ import {
   Intro,
   SubTitle,
   Grid,
+  ScrollView,
 } from 'components';
 
 export const Support = () => (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, SafeAreaView } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 import omit from 'lodash/omit';
@@ -18,6 +18,7 @@ import {
   Container,
   BackButton,
   SkeletonText,
+  ScrollView,
 } from 'components';
 import { useModal } from 'contexts/Modal';
 import { USER_TYPE, MODAL_TYPES } from 'consts';

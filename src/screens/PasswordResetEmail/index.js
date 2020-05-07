@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { ScrollView } from 'react-native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from '@apollo/react-hooks';
@@ -19,6 +18,7 @@ import {
   SubTitle,
   FeedbackView,
   KeyboardAvoidingView,
+  ScrollView,
 } from 'components';
 
 import REQUEST_PASSWORD_RESET from './graphql/request-reset-password';

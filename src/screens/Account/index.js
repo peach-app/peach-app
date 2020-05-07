@@ -1,5 +1,4 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 import { useNavigation } from '@react-navigation/native';
@@ -11,6 +10,7 @@ import {
   NavLink,
   ProfileHeader,
   AccountDetailsBanner,
+  ScrollView,
 } from 'components';
 import { useAuth } from 'contexts/Auth';
 import { useUser } from 'contexts/User';

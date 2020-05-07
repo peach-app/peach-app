@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ScrollView } from 'react-native';
 import { useFormik } from 'formik';
 import { useMutation } from '@apollo/react-hooks';
 import { useNavigation } from '@react-navigation/native';
@@ -18,6 +17,7 @@ import {
   GraphQLErrors,
   Text,
   KeyboardAvoidingView,
+  ScrollView,
 } from 'components';
 
 import { stripe } from '../../stripe';

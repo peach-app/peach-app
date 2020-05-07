@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import getOr from 'lodash/fp/getOr';
-import { ScrollView } from 'react-native';
 import { useFormik } from 'formik';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useNavigation } from '@react-navigation/native';
@@ -17,6 +16,7 @@ import {
   Intro,
   TextInput,
   KeyboardAvoidingView,
+  ScrollView,
 } from 'components';
 
 import {

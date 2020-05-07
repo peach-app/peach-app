@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ScrollView } from 'react-native';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useNavigation } from '@react-navigation/native';
 import { useFormik } from 'formik';
@@ -22,6 +21,7 @@ import {
   Button,
   GraphQLErrors,
   KeyboardAvoidingView,
+  ScrollView,
 } from 'components';
 
 import { PushToTop } from './styles';

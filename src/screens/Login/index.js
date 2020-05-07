@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, SafeAreaView } from 'react-native';
+import { SafeAreaView } from 'react-native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from '@apollo/react-hooks';
@@ -19,6 +19,7 @@ import {
   BackButton,
   GraphQLErrors,
   KeyboardAvoidingView,
+  ScrollView,
 } from 'components';
 import { useAuth } from 'contexts/Auth';
 

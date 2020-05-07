@@ -1,7 +1,6 @@
 import React from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import { useFormik } from 'formik';
-import { ScrollView } from 'react-native';
 import * as Yup from 'yup';
 import { useRoute, useNavigation } from '@react-navigation/native';
 
@@ -17,6 +16,7 @@ import {
   Grid,
   Text,
   KeyboardAvoidingView,
+  ScrollView,
 } from 'components';
 
 import APPLY_TO_CAMPAIGN from './graphql/apply-to-campaign';

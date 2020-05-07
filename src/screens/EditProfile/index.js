@@ -1,5 +1,4 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -18,6 +17,7 @@ import {
   GraphQLErrors,
   ProfileHeader,
   KeyboardAvoidingView,
+  ScrollView,
 } from 'components';
 
 import GET_USER from './graphql/get-user';
