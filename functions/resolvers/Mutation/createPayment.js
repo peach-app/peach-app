@@ -2,7 +2,7 @@ const stripe = require('../../helpers/stripe');
 
 module.exports = async (
   root,
-  { token, selectedId },
+  { token, selectedId, cost },
   { client, q, activeUserRef }
 ) => {
   const customerId = await client.query(
@@ -24,11 +24,13 @@ module.exports = async (
 
   const { id: paymentId } = await getPaymentMethod();
 
+  const amount = cost || 500; // or pence for campaign creation cost
+
   const {
     id,
     next_action: nextAction = null,
   } = await stripe.paymentIntents.create({
-    amount: 500, // Pence for campaign creation cost
+    amount,
     currency: 'gbp',
     confirm: true,
     payment_method: paymentId,
