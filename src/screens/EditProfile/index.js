@@ -85,7 +85,6 @@ export const EditProfile = () => {
                 <TextInput
                   label="Bio"
                   multiline
-                  autoCapitalize="none"
                   value={formik.values.bio}
                   error={formik.errors.bio}
                   onChangeText={formik.handleChange('bio')}
