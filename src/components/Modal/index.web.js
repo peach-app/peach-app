@@ -7,10 +7,11 @@ const Main = styled.View`
   min-height: 100%;
 `;
 
-export const Modal = ({ children, isOpen }) => {
+export const Modal = ({ children, isOpen, onClose }) => {
   return (
     <ImportedModal
       isOpen={isOpen}
+      onRequestClose={onClose}
       style={{
         content: {
           padding: 0,
