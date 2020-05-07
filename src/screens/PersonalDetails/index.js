@@ -24,6 +24,7 @@ import {
   KeyboardAvoidingView,
 } from 'components';
 
+import { PushToTop } from './styles';
 import GET_USER from './graphql/get-user';
 import UPDATE_USER from './graphql/update-user';
 
@@ -143,16 +144,18 @@ export const PersonalDetails = ({
 
               {!isBrand && (
                 <>
-                  <Grid.Item size={12}>
-                    <DatePicker
-                      label="Date of birth"
-                      error={formik.errors.dob}
-                      value={formik.values.dob}
-                      onChange={selectedDate => {
-                        formik.setFieldValue('dob', selectedDate);
-                      }}
-                    />
-                  </Grid.Item>
+                  <PushToTop>
+                    <Grid.Item size={12}>
+                      <DatePicker
+                        label="Date of birth"
+                        error={formik.errors.dob}
+                        value={formik.values.dob}
+                        onChange={selectedDate => {
+                          formik.setFieldValue('dob', selectedDate);
+                        }}
+                      />
+                    </Grid.Item>
+                  </PushToTop>
 
                   <Grid.Item size={12}>
                     <TextInput
