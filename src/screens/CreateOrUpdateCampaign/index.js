@@ -21,9 +21,9 @@ import {
   KeyboardAvoidingView,
 } from 'components';
 import { CAMPAIGN_TYPE, MODAL_TYPES } from 'consts';
-
 import { useModal } from 'contexts/Modal';
-import { PushToTop } from './styles';
+import { PushToTop, Graphic } from './styles';
+import { Form } from '../Login/styles';
 import { validationSchema, FORM_INITIAL_VALUES } from './consts';
 import GET_CAMPAIGN from './graphql/get-campaign';
 import CREATE_OR_UPDATE_CAMPAIGN_MUTATION from './graphql/create-or-update-campaign';
@@ -111,67 +111,72 @@ export const CreateOrUpdateCampaign = () => {
       <StatusBar />
       <Header title={campaignId ? 'Edit Campaign' : 'Create Campaign'} />
       <KeyboardAvoidingView>
-        <ScrollView>
-          <Container>
-            <Intro />
-            <Grid>
-              {!campaignId && (
-                <Grid.Item size={12}>
-                  <Tabs
-                    activeTabIndex={activeTab}
-                    onTabPress={setTab}
-                    tabs={Object.values(CAMPAIGN_TYPE)}
-                  />
-                </Grid.Item>
-              )}
-              <Grid.Item size={12}>
-                <TextInput
-                  label="Campaign name"
-                  name="name"
-                  placeholder="e.g Soft Tea promoters"
-                  error={formik.errors.name}
-                  onChangeText={formik.handleChange('name')}
-                  value={formik.values.name}
-                />
-              </Grid.Item>
-              <Grid.Item size={12}>
-                <TextInput
-                  label="Description"
-                  name="description"
-                  multiline
-                  placeholder="Picture at home drinking tea"
-                  error={formik.errors.description}
-                  onChangeText={formik.handleChange('description')}
-                  value={formik.values.description}
-                />
-              </Grid.Item>
-
-              {!campaignId && (
-                <PushToTop>
+        <ScrollView contentContainerStyle={{ flex: 1 }}>
+          <Form>
+            <Container>
+              <Intro />
+              <Graphic />
+              <Grid>
+                {!campaignId && (
                   <Grid.Item size={12}>
-                    <DatePicker
-                      label="Due date"
-                      error={formik.errors.dueDate}
-                      onChange={selectedDate => {
-                        formik.setFieldValue('dueDate', selectedDate);
-                      }}
-                      value={formik.values.dueDate}
+                    <Tabs
+                      activeTabIndex={activeTab}
+                      onTabPress={setTab}
+                      tabs={Object.values(CAMPAIGN_TYPE)}
                     />
                   </Grid.Item>
-                </PushToTop>
-              )}
-
-              <Grid.Item size={12}>
-                <MoneyInput
-                  label="Budget (GBP)"
-                  name="budget"
-                  error={formik.errors.budget}
-                  onChange={formik.handleChange('budget')}
-                  value={formik.values.budget}
-                />
-              </Grid.Item>
-            </Grid>
-          </Container>
+                )}
+                <Grid.Item size={12}>
+                  <TextInput
+                    label="Campaign name"
+                    name="name"
+                    placeholder="e.g Soft Tea promoters"
+                    error={formik.errors.name}
+                    onChangeText={formik.handleChange('name')}
+                    value={formik.values.name}
+                  />
+                </Grid.Item>
+                <Grid.Item size={12}>
+                  <TextInput
+                    label="Description"
+                    name="description"
+                    multiline
+                    placeholder="Picture at home drinking tea"
+                    error={formik.errors.description}
+                    onChangeText={formik.handleChange('description')}
+                    value={formik.values.description}
+                  />
+                </Grid.Item>
+                <Grid.Item size={12}>
+                  <Grid noWrap>
+                    <Grid.Item size={6}>
+                      <MoneyInput
+                        label="Budget (GBP)"
+                        name="budget"
+                        error={formik.errors.budget}
+                        onChange={formik.handleChange('budget')}
+                        value={formik.values.budget}
+                      />
+                    </Grid.Item>
+                    {!campaignId && (
+                      <PushToTop>
+                        <Grid.Item size={6}>
+                          <DatePicker
+                            label="Due date"
+                            error={formik.errors.dueDate}
+                            onChange={selectedDate => {
+                              formik.setFieldValue('dueDate', selectedDate);
+                            }}
+                            value={formik.values.dueDate}
+                          />
+                        </Grid.Item>
+                      </PushToTop>
+                    )}
+                  </Grid>
+                </Grid.Item>
+              </Grid>
+            </Container>
+          </Form>
         </ScrollView>
         <Actions>
           <Button

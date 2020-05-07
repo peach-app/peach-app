@@ -4,12 +4,12 @@ import { FORM_ERROR_MESSAGES } from '../../consts';
 export const validationSchema = Yup.object().shape({
   name: Yup.string()
     .max(45)
-    .required(FORM_ERROR_MESSAGES.REQUIRED_FIELD),
-  description: Yup.string().required(FORM_ERROR_MESSAGES.REQUIRED_FIELD),
+    .required('Your campaign needs a name.'),
+  description: Yup.string().required('Please describe your campaign'),
   budget: Yup.number(FORM_ERROR_MESSAGES.INVALID_NUMBER)
-    .required(FORM_ERROR_MESSAGES.REQUIRED_FIELD)
+    .required('Let the influencers know the budget')
     .min(500, FORM_ERROR_MESSAGES.MIN_BUDGET),
-  dueDate: Yup.string().required(FORM_ERROR_MESSAGES.REQUIRED_FIELD),
+  dueDate: Yup.string().required('What is the due date for the campaign?'),
 });
 
 export const FORM_INITIAL_VALUES = {
