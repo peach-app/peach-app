@@ -86,9 +86,9 @@ export const Booking = ({ _id, cost, state, note, user, isLoading }) => {
                   openModal({
                     type: MODAL_TYPES.CONFIRM_PAYMENT,
                     props: {
-                      description: `Accept ${startCase(
+                      description: `You will be charged the following to accept ${startCase(
                         get('name', user)
-                      )} onto your campaign.`,
+                      )} onto your campaign. This charge can be refunded should the work not be carried out by the completion date.`,
                       onClose: closeModal,
                       onConfirm: ({ cardId, token }) => {
                         updateBooking({
