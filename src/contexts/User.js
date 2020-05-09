@@ -22,12 +22,12 @@ export const Provider = ({ children }) => {
   const userType = get('user.type', data);
   const isBrand = userType === USER_TYPE.BRAND;
   const isInfluencer = userType === USER_TYPE.INFLUENCER;
-
   const user = {
     ...data,
     isEmailVerified: get('user.emailVerification.isVerified', data),
     isStripeEnabled:
       get('user.stripeAccount.capabilities.transfers', data) === 'active',
+    pendingBookingsToAction: get('user.pendingBookingsToAction', data),
   };
 
   return (
