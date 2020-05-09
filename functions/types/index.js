@@ -74,6 +74,7 @@ module.exports = gql`
       token: String
       selectedId: String
     ): PaymentIntent
+    declineBooking(campaignId: ID): Boolean
   }
 
   # Fauna references #
