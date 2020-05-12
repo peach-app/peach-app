@@ -247,7 +247,9 @@ export const Campaign = () => {
             <Text>Your application for this campaign was unsuccessful.</Text>
           )}
           {userBookingState === BOOKING_STATE.COMPLETE && (
-            <Text>Your work here is done</Text>
+            <Text
+              isCenter
+            >{`Your work here is done!\nThe brand will review your work and you will recieve a payout around 2 days after the completion date.`}</Text>
           )}
           {userBookingState === BOOKING_STATE.ACCEPTED && (
             <AcceptedActions
