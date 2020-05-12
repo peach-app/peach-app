@@ -51,12 +51,7 @@ module.exports = gql`
     sendMessage(threadId: ID!, text: String!): Message
     createOrUpdateCampaign(campaign: CampaignInput): Campaign
     applyToCampaign(id: ID!, cost: Int!): Booking
-    updateBookingState(
-      id: ID!
-      state: BookingState!
-      cardId: ID
-      token: String
-    ): Boolean
+    updateBookingState(id: ID!, state: BookingState!): Boolean
     updateUser(user: UserInput): Boolean
     completeOnboarding: Boolean
     requestInfluencers(requestedInfluencers: [ID!], campaignId: ID!): Boolean
@@ -69,11 +64,7 @@ module.exports = gql`
     completeBooking(id: ID!, note: String): Boolean
     requestPasswordReset(email: String!): Boolean
     resetPassword(userId: ID!, password: String!): Boolean
-    createCampaignPayment(
-      cost: Int!
-      token: String
-      selectedId: String
-    ): PaymentIntent
+    createPayment(cost: Int!, token: String, selectedId: String): PaymentIntent
     declineBooking(campaignId: ID): Boolean
   }
 

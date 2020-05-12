@@ -47,8 +47,8 @@ const ConfirmPaymentModal = ({ cost, onConfirm, description, onClose }) => {
   const [confirmingPayment, setIsConfirmingPayment] = useState(null);
   const [confirmingError, setConfirmingError] = useState('');
 
-  const [createCampaignPayment] = useMutation(CREATE_CAMPAIGN_PAYMENT, {
-    onCompleted: async ({ createCampaignPayment: { id, redirectUrl } }) => {
+  const [createPayment] = useMutation(CREATE_CAMPAIGN_PAYMENT, {
+    onCompleted: async ({ createPayment: { id, redirectUrl } }) => {
       if (redirectUrl) {
         setLoading(false);
 
@@ -61,7 +61,7 @@ const ConfirmPaymentModal = ({ cost, onConfirm, description, onClose }) => {
   });
 
   const handlePayment = paymentParams => {
-    createCampaignPayment({
+    createPayment({
       variables: {
         cost,
         ...paymentParams,
@@ -80,7 +80,6 @@ const ConfirmPaymentModal = ({ cost, onConfirm, description, onClose }) => {
     validateOnBlur: false,
     onSubmit: async ({ number, expiry, cvc }) => {
       setLoading(true);
-
       if (selectedId) {
         handlePayment({ selectedId });
         return;
