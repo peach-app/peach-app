@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components/native';
 import { Text } from '../Text';
 
 export const ActivityIndicator = styled.ActivityIndicator.attrs(props => ({
-  color: props.theme.white,
+  color: props.isGhost ? props.theme.foreground : props.theme.white,
 }))``;
 
 export const Main = styled.TouchableOpacity`

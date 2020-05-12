@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { KeyboardAvoidingView, ScrollView } from 'react-native';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useNavigation } from '@react-navigation/native';
 import { useFormik } from 'formik';
@@ -9,7 +8,6 @@ import get from 'lodash/fp/get';
 import getOr from 'lodash/fp/getOr';
 import parseDate from 'date-fns/parse';
 
-import { USER_TYPE } from 'consts';
 import { useUser } from 'contexts/User';
 import {
   SafeAreaView,
@@ -22,21 +20,24 @@ import {
   Actions,
   Button,
   GraphQLErrors,
+  KeyboardAvoidingView,
+  ScrollView,
 } from 'components';
 
+import { PushToTop } from './styles';
 import GET_USER from './graphql/get-user';
 import UPDATE_USER from './graphql/update-user';
 
 const validationSchema = Yup.object().shape({
-  firstName: Yup.string(),
-  lastName: Yup.string(),
+  firstName: Yup.string().nullable(),
+  lastName: Yup.string().nullable(),
   email: Yup.string()
     .email('Please enter a valid email address')
     .required('Please enter an email address'),
-  dob: Yup.string(),
-  addressLine1: Yup.string(),
-  city: Yup.string(),
-  postalCode: Yup.string(),
+  dob: Yup.string().nullable(),
+  addressLine1: Yup.string().nullable(),
+  city: Yup.string().nullable(),
+  postalCode: Yup.string().nullable(),
 });
 
 export const PersonalDetails = ({
@@ -44,9 +45,9 @@ export const PersonalDetails = ({
   onRightActionPressed,
   onComplete,
 }) => {
-  const { user } = useUser();
+  const { isBrand } = useUser();
   const navigation = useNavigation();
-  const isBrand = get('user.type', user) === USER_TYPE.BRAND;
+
   const { data } = useQuery(GET_USER, {
     fetchPolicy: 'cache-and-network',
   });
@@ -95,7 +96,7 @@ export const PersonalDetails = ({
 
   return (
     <SafeAreaView>
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      <KeyboardAvoidingView>
         <Header
           title="Personal Details"
           rightActionLabel={rightActionLabel}
@@ -143,16 +144,18 @@ export const PersonalDetails = ({
 
               {!isBrand && (
                 <>
-                  <Grid.Item size={12}>
-                    <DatePicker
-                      label="Date of birth"
-                      error={formik.errors.dob}
-                      value={formik.values.dob}
-                      onChange={selectedDate => {
-                        formik.setFieldValue('dob', selectedDate);
-                      }}
-                    />
-                  </Grid.Item>
+                  <PushToTop>
+                    <Grid.Item size={12}>
+                      <DatePicker
+                        label="Date of birth"
+                        error={formik.errors.dob}
+                        value={formik.values.dob}
+                        onChange={selectedDate => {
+                          formik.setFieldValue('dob', selectedDate);
+                        }}
+                      />
+                    </Grid.Item>
+                  </PushToTop>
 
                   <Grid.Item size={12}>
                     <TextInput
@@ -202,20 +205,17 @@ export const PersonalDetails = ({
                   <GraphQLErrors error={error} />
                 </Grid.Item>
               )}
-
-              <Grid.Item size={12}>
-                <Actions>
-                  <Button
-                    title="Save"
-                    fixedWidth
-                    isLoading={loading}
-                    onPress={formik.handleSubmit}
-                  />
-                </Actions>
-              </Grid.Item>
             </Grid>
           </Container>
         </ScrollView>
+        <Actions>
+          <Button
+            title="Save"
+            fixedWidth
+            isLoading={loading}
+            onPress={formik.handleSubmit}
+          />
+        </Actions>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

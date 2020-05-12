@@ -33,11 +33,15 @@ module.exports = gql`
     findUserByID(id: ID!): User
 
     searchUsers(type: UserType!, query: String!): UserPage
+    getPaymentConfirmationStatus(id: ID!): PaymentIntent
+
+    payouts(size: Int, after: ID, before: ID): PayoutsPage
   }
 
   type Mutation {
     login(email: String!, password: String!): Auth
     register(
+      code: String!
       name: String!
       email: String!
       password: String!
@@ -45,18 +49,9 @@ module.exports = gql`
       idempotencyKey: String!
     ): Auth
     sendMessage(threadId: ID!, text: String!): Message
-    createOrUpdateCampaign(
-      campaign: CampaignInput
-      cardId: ID
-      token: String
-    ): Campaign
+    createOrUpdateCampaign(campaign: CampaignInput): Campaign
     applyToCampaign(id: ID!, cost: Int!): Booking
-    updateBookingState(
-      id: ID!
-      state: BookingState!
-      cardId: ID
-      token: String
-    ): Boolean
+    updateBookingState(id: ID!, state: BookingState!): Boolean
     updateUser(user: UserInput): Boolean
     completeOnboarding: Boolean
     requestInfluencers(requestedInfluencers: [ID!], campaignId: ID!): Boolean
@@ -69,6 +64,13 @@ module.exports = gql`
     completeBooking(id: ID!, note: String): Boolean
     requestPasswordReset(email: String!): Boolean
     resetPassword(userId: ID!, password: String!): Boolean
+    createPayment(
+      reason: PaymentReason!
+      bookingId: ID
+      token: String
+      selectedId: String
+    ): PaymentIntent
+    declineBooking(campaignId: ID): Boolean
   }
 
   # Fauna references #
@@ -107,6 +109,11 @@ module.exports = gql`
   enum UserType {
     BRAND
     INFLUENCER
+  }
+
+  enum PaymentReason {
+    CREATE_CAMPAIGN
+    ACCEPT_BOOKING
   }
 
   type UserPage {
@@ -165,6 +172,28 @@ module.exports = gql`
     stripeAccount: StripeAccount
 
     socialAccounts: SocialAccounts
+
+    payouts: PayoutsPage
+
+    pendingBookingsToAction: Int
+  }
+
+  type PayoutsPage {
+    has_more: Boolean
+    data: [Payout]
+  }
+
+  type PayoutPaymentMethod {
+    card: StripeCard
+  }
+
+  type Payout {
+    id: ID
+    amount: Int
+    created: Int
+    amount_refunded: Int
+    status: String
+    payment_method_details: PayoutPaymentMethod
   }
 
   type UserEmailVerification {
@@ -208,6 +237,12 @@ module.exports = gql`
     last_name: String
     address: Address
     dob: DateOfBirth
+  }
+
+  type PaymentIntent {
+    id: ID
+    redirectUrl: String
+    status: String
   }
 
   type Address {

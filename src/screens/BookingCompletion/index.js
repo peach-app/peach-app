@@ -1,5 +1,4 @@
 import React from 'react';
-import { KeyboardAvoidingView, ScrollView } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { useFormik } from 'formik';
 import { useMutation } from '@apollo/react-hooks';
@@ -15,6 +14,8 @@ import {
   TextInput,
   Actions,
   Button,
+  KeyboardAvoidingView,
+  ScrollView,
 } from 'components';
 
 import COMPLETE_BOOKING from './graphql/complete-booking';
@@ -50,7 +51,7 @@ export const BookingCompletion = () => {
     <SafeAreaView>
       <StatusBar />
       <Header title="Campaign Submission" />
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      <KeyboardAvoidingView>
         <ScrollView>
           <Container>
             <Intro />
@@ -67,19 +68,17 @@ export const BookingCompletion = () => {
                   onBlur={formik.handleBlur('note')}
                 />
               </Grid.Item>
-              <Grid.Item size={12}>
-                <Actions>
-                  <Button
-                    title="Submit"
-                    isLoading={loading}
-                    fixedWidth
-                    onPress={formik.handleSubmit}
-                  />
-                </Actions>
-              </Grid.Item>
             </Grid>
           </Container>
         </ScrollView>
+        <Actions>
+          <Button
+            title="Submit"
+            isLoading={loading}
+            fixedWidth
+            onPress={formik.handleSubmit}
+          />
+        </Actions>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

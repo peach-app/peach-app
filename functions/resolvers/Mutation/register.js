@@ -40,9 +40,17 @@ module.exports = async (
   args,
   { client, q, clientIp, DocumentDataWithId }
 ) => {
-  const { name, password, type, idempotencyKey } = args;
+  const { code, name, password, type, idempotencyKey } = args;
 
   const email = args.email.toLowerCase();
+
+  const inviteExists = await client.query(
+    q.Exists(q.Match(q.Index('invite_by_code_email'), code, email))
+  );
+
+  if (!inviteExists) {
+    throw new UserInputError('Invalid invite code');
+  }
 
   const existingUser = await client.query(
     q.Exists(q.Match(q.Index('user_by_email'), email))
@@ -63,22 +71,23 @@ module.exports = async (
         }
       );
     }
-
-    return stripe.accounts.create(
-      {
-        email,
-        type: 'custom',
-        requested_capabilities: ['transfers'],
-        business_type: 'individual',
-        tos_acceptance: {
-          date: Math.floor(Date.now() / 1000),
-          ip: clientIp,
+    if (type === USER_TYPE.INFLUENCER) {
+      return stripe.accounts.create(
+        {
+          email,
+          type: 'custom',
+          requested_capabilities: ['transfers'],
+          business_type: 'individual',
+          tos_acceptance: {
+            date: Math.floor(Date.now() / 1000),
+            ip: clientIp,
+          },
         },
-      },
-      {
-        idempotencyKey,
-      }
-    );
+        {
+          idempotencyKey,
+        }
+      );
+    }
   };
 
   const account = await createStripeAccount();

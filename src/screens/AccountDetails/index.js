@@ -1,5 +1,4 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import {
@@ -11,6 +10,7 @@ import {
   Text,
   NavLink,
   Grid,
+  ScrollView,
 } from 'components';
 
 export const AccountDetails = () => {

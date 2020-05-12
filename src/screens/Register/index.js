@@ -1,11 +1,6 @@
 /* eslint-disable jsx-a11y/accessible-emoji */
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
-import {
-  ScrollView,
-  KeyboardAvoidingView,
-  TouchableOpacity,
-} from 'react-native';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useMutation } from '@apollo/react-hooks';
@@ -29,6 +24,8 @@ import {
   BackButton,
   GraphQLErrors,
   SubTitle,
+  KeyboardAvoidingView,
+  ScrollView,
 } from 'components';
 import { useAuth } from 'contexts/Auth';
 
@@ -36,13 +33,16 @@ import { USER_TYPE_TABS, FORM_ERROR_MESSAGES } from './consts';
 import REGISTER from './graphql/register';
 
 const validationSchema = Yup.object().shape({
+  code: Yup.string().required(FORM_ERROR_MESSAGES.REQUIRED_CODE),
   name: Yup.string()
     .max(25)
     .required(FORM_ERROR_MESSAGES.REQUIRED_NAME),
   email: Yup.string()
     .required(FORM_ERROR_MESSAGES.REQUIRED_EMAIL)
     .email(FORM_ERROR_MESSAGES.INVALID_EMAIL),
-  password: Yup.string().required(FORM_ERROR_MESSAGES.REQUIRED_PASSWORD),
+  password: Yup.string()
+    .required(FORM_ERROR_MESSAGES.REQUIRED_PASSWORD)
+    .min(8, 'Password must have at least 8 characters'),
   confirmPassword: Yup.string().required(
     FORM_ERROR_MESSAGES.REQUIRED_CONFIRM_PASSWORD
   ),
@@ -66,13 +66,15 @@ export const Register = () => {
 
   const formik = useFormik({
     validateOnBlur: false,
+    validateOnChange: false,
     validationSchema,
     initialValues: {
+      code: '',
       name: '',
       email: '',
       password: '',
     },
-    onSubmit: ({ name, email, password, confirmPassword }) => {
+    onSubmit: ({ code, name, email, password, confirmPassword }) => {
       if (password !== confirmPassword) {
         formik.setErrors({
           confirmPassword: "Passwords don't correctly match",
@@ -82,6 +84,7 @@ export const Register = () => {
 
       register({
         variables: {
+          code,
           name,
           email,
           password,
@@ -95,7 +98,7 @@ export const Register = () => {
   return (
     <SafeAreaView>
       <StatusBar />
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      <KeyboardAvoidingView>
         <ScrollView>
           <Container>
             <Grid>
@@ -117,6 +120,16 @@ export const Register = () => {
                   activeTabIndex={activeTab}
                   onTabPress={setTab}
                   tabs={USER_TYPE_TABS}
+                />
+              </Grid.Item>
+
+              <Grid.Item size={12}>
+                <TextInput
+                  label="Invite code"
+                  autoCapitalize="none"
+                  error={formik.errors.code}
+                  onChangeText={formik.handleChange('code')}
+                  onBlur={formik.handleBlur('code')}
                 />
               </Grid.Item>
 

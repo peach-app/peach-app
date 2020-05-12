@@ -64,12 +64,12 @@ export const AvatarUpload = () => {
 
       setUploading(false);
 
-      const { url } = await res.json();
+      const { secure_url } = await res.json();
 
-      if (url) {
+      if (secure_url) {
         updateUserAvatar({
           variables: {
-            url,
+            url: secure_url,
           },
         });
       }

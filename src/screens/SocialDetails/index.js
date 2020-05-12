@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import getOr from 'lodash/fp/getOr';
-import { ScrollView, KeyboardAvoidingView } from 'react-native';
 import { useFormik } from 'formik';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useNavigation } from '@react-navigation/native';
@@ -16,6 +15,8 @@ import {
   Button,
   Intro,
   TextInput,
+  KeyboardAvoidingView,
+  ScrollView,
 } from 'components';
 
 import {
@@ -72,7 +73,7 @@ export const SocialDetails = ({
   return (
     <SafeAreaView>
       <StatusBar />
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      <KeyboardAvoidingView>
         <Header
           title="Social Accounts"
           rightActionLabel={rightActionLabel}
@@ -124,24 +125,22 @@ export const SocialDetails = ({
                 <TextInput
                   autoCapitalize="none"
                   value={formik.values.tikTok}
-                  label="TicTok (Username)"
+                  label="TikTok (Username)"
                   error={formik.errors.tikTok}
                   onChangeText={formik.handleChange('tikTok')}
                 />
               </Grid.Item>
-              <Grid.Item size={12}>
-                <Actions>
-                  <Button
-                    isLoading={isSubmitting}
-                    title="Save"
-                    fixedWidth
-                    onPress={formik.handleSubmit}
-                  />
-                </Actions>
-              </Grid.Item>
             </Grid>
           </Container>
         </ScrollView>
+        <Actions>
+          <Button
+            isLoading={isSubmitting}
+            title="Save"
+            fixedWidth
+            onPress={formik.handleSubmit}
+          />
+        </Actions>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

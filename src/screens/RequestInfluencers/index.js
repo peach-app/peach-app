@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
-import { KeyboardAvoidingView } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 import { ACTION_COMPONENTS, MODAL_TYPES } from 'consts';
-import { SafeAreaView, StatusBar, Header, SearchInfluencers } from 'components';
+import {
+  SafeAreaView,
+  StatusBar,
+  Header,
+  SearchInfluencers,
+  KeyboardAvoidingView,
+} from 'components';
 import { useModal } from 'contexts/Modal';
 
 import { RequestedInfluencers } from './components';
@@ -22,7 +27,7 @@ export const RequestInfluencers = () => {
 
   return (
     <SafeAreaView>
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      <KeyboardAvoidingView>
         <Header
           title="Request Influencers"
           rightActionLabel={hasRequestedInfluencers && 'Finish'}

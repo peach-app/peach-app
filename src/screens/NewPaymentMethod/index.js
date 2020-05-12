@@ -1,5 +1,5 @@
 import React from 'react';
-import { KeyboardAvoidingView, ScrollView } from 'react-native';
+import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useMutation } from '@apollo/react-hooks';
@@ -17,6 +17,8 @@ import {
   Button,
   Text,
   GraphQLErrors,
+  KeyboardAvoidingView,
+  ScrollView,
 } from 'components';
 
 import { stripe } from '../../stripe';
@@ -38,7 +40,11 @@ const validationSchema = Yup.object().shape({
     .required('CVC is required'),
 });
 
-export const NewPaymentMethod = () => {
+export const NewPaymentMethod = ({
+  rightActionLabel,
+  onRightActionPressed,
+  onComplete,
+}) => {
   const navigation = useNavigation();
 
   const [createPaymentMethod, { loading, error }] = useMutation(
@@ -46,6 +52,7 @@ export const NewPaymentMethod = () => {
     {
       refetchQueries: ['getPaymentMethods'],
       onCompleted: () => {
+        if (onComplete) return onComplete();
         navigation.goBack();
       },
     }
@@ -60,7 +67,7 @@ export const NewPaymentMethod = () => {
     },
     onSubmit: async ({ number, expiry, cvc }) => {
       const [expMonth, expYear] = expiry.split('/');
-      const { id, error } = await stripe.createToken({
+      const paymentMethod = await stripe.createToken({
         card: {
           currency: 'gbp',
           number,
@@ -70,14 +77,14 @@ export const NewPaymentMethod = () => {
         },
       });
 
-      if (error) {
-        formik.setErrors({ generic: error.message });
+      if (paymentMethod.error) {
+        formik.setErrors({ generic: paymentMethod.error.message });
         return;
       }
 
       createPaymentMethod({
         variables: {
-          token: id,
+          token: paymentMethod.id,
         },
       });
     },
@@ -86,12 +93,23 @@ export const NewPaymentMethod = () => {
   return (
     <SafeAreaView>
       <StatusBar />
-      <Header title="New Payment Method" />
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      <Header
+        title="New Payment Method"
+        rightActionLabel={rightActionLabel}
+        onRightActionPressed={onRightActionPressed}
+      />
+      <KeyboardAvoidingView>
         <ScrollView>
           <Container>
             <Intro />
             <Grid>
+              <Grid.Item size={12}>
+                <Text>
+                  Add a new payment method to to fast track through campaign
+                  creations and influencer payouts.
+                </Text>
+              </Grid.Item>
+
               <PaymentMethodForm formik={formik} />
 
               {error && (
@@ -105,21 +123,30 @@ export const NewPaymentMethod = () => {
                   <Text isCenter>{formik.errors.generic}</Text>
                 </Grid.Item>
               )}
-
-              <Grid.Item size={12}>
-                <Actions>
-                  <Button
-                    title="Save"
-                    fixedWidth
-                    isLoading={loading}
-                    onPress={formik.handleSubmit}
-                  />
-                </Actions>
-              </Grid.Item>
             </Grid>
           </Container>
         </ScrollView>
+        <Actions>
+          <Button
+            title="Save"
+            fixedWidth
+            isLoading={loading}
+            onPress={formik.handleSubmit}
+          />
+        </Actions>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
+};
+
+NewPaymentMethod.defaultProps = {
+  rightActionLabel: null,
+  onRightActionPressed: null,
+  onComplete: null,
+};
+
+NewPaymentMethod.propTypes = {
+  rightActionLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  onRightActionPressed: PropTypes.func,
+  onComplete: PropTypes.func,
 };

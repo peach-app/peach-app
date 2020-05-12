@@ -1,8 +1,6 @@
 import React from 'react';
-import get from 'lodash/fp/get';
 import { useNavigation } from '@react-navigation/native';
 
-import { USER_TYPE } from 'consts';
 import { useUser } from 'contexts/User';
 import {
   Welcome,
@@ -10,6 +8,7 @@ import {
   SocialDetails,
   PersonalDetails,
   NewBilling,
+  NewPaymentMethod,
 } from 'screens';
 
 import { createStackNavigator } from './components';
@@ -33,8 +32,7 @@ const withSkipOption = (Component, { skipTo }) => () => {
 const welcomeScreen = ({ goTo }) => () => <Welcome goTo={goTo} />;
 
 export const OnboardingNavigator = () => {
-  const { user } = useUser();
-  const isBrand = get('user.type', user) === USER_TYPE.BRAND;
+  const { isBrand } = useUser();
 
   return (
     <Stack.Navigator
@@ -44,7 +42,7 @@ export const OnboardingNavigator = () => {
       <Stack.Screen
         name="Welcome"
         component={welcomeScreen({
-          goTo: isBrand ? 'CompleteOnboarding' : 'SocialDetails',
+          goTo: isBrand ? 'NewPaymentMethod' : 'SocialDetails',
         })}
       />
       <Stack.Screen
@@ -62,6 +60,12 @@ export const OnboardingNavigator = () => {
       <Stack.Screen
         name="NewBilling"
         component={withSkipOption(NewBilling, {
+          skipTo: 'CompleteOnboarding',
+        })}
+      />
+      <Stack.Screen
+        name="NewPaymentMethod"
+        component={withSkipOption(NewPaymentMethod, {
           skipTo: 'CompleteOnboarding',
         })}
       />

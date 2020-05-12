@@ -1,8 +1,9 @@
 import styled from 'styled-components/native';
 import PropTypes from 'prop-types';
+import { Platform } from 'react-native';
 
 export const Grid = styled.View`
-  flex-direction: row;
+  flex-direction: ${props => (props.direction ? props.direction : 'row')} ;
   margin: ${props => `-${props.theme.spacing}px -${props.theme.spacing}px 0 0`};
   ${props => !props.noWrap && `flex-wrap: wrap;`}
   ${props => props.align && `align-items: ${props.align};`}
@@ -37,8 +38,9 @@ const GridItem = styled.View`
 
     return null;
   }}
+  ${Platform.select({ web: 'position: static;' })}
   padding: ${props => `${props.theme.spacing}px ${props.theme.spacing}px 0 0`};
-
+  ${props => props.content && `justify-content: ${props.content}`}
 `;
 
 GridItem.defaultProps = {

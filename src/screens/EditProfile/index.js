@@ -1,5 +1,4 @@
 import React from 'react';
-import { KeyboardAvoidingView, ScrollView } from 'react-native';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -17,6 +16,8 @@ import {
   Button,
   GraphQLErrors,
   ProfileHeader,
+  KeyboardAvoidingView,
+  ScrollView,
 } from 'components';
 
 import GET_USER from './graphql/get-user';
@@ -64,7 +65,7 @@ export const EditProfile = () => {
   return (
     <SafeAreaView>
       <Header title="Edit Profile" />
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      <KeyboardAvoidingView>
         <ScrollView>
           <Container>
             <ProfileHeader {...get('user', data)} isEditable />
@@ -84,7 +85,6 @@ export const EditProfile = () => {
                 <TextInput
                   label="Bio"
                   multiline
-                  autoCapitalize="none"
                   value={formik.values.bio}
                   error={formik.errors.bio}
                   onChangeText={formik.handleChange('bio')}
@@ -97,20 +97,17 @@ export const EditProfile = () => {
                   <GraphQLErrors error={error} />
                 </Grid.Item>
               )}
-
-              <Grid.Item size={12}>
-                <Actions>
-                  <Button
-                    isLoading={loading}
-                    onPress={formik.handleSubmit}
-                    title="Save"
-                    fixedWidth
-                  />
-                </Actions>
-              </Grid.Item>
             </Grid>
           </Container>
         </ScrollView>
+        <Actions>
+          <Button
+            isLoading={loading}
+            onPress={formik.handleSubmit}
+            title="Save"
+            fixedWidth
+          />
+        </Actions>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

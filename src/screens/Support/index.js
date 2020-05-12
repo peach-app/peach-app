@@ -1,5 +1,4 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
 
 import {
   SafeAreaView,
@@ -7,9 +6,9 @@ import {
   Header,
   Text,
   Intro,
-  Card,
   SubTitle,
   Grid,
+  ScrollView,
 } from 'components';
 
 export const Support = () => (
@@ -25,11 +24,9 @@ export const Support = () => (
             </Text>
           </Grid.Item>
           <Grid.Item size={12}>
-            <Card>
-              <SubTitle isCenter selectable>
-                Peachapp.io@gmail.com
-              </SubTitle>
-            </Card>
+            <SubTitle isCenter selectable>
+              Peachapp.io@gmail.com
+            </SubTitle>
           </Grid.Item>
           <Grid.Item size={12}>
             <Text isCenter>We aim to respond within 24 hours ⏰</Text>

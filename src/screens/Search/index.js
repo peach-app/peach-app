@@ -1,10 +1,14 @@
 import React from 'react';
-import { KeyboardAvoidingView } from 'react-native';
-import { SafeAreaView, Header, SearchInfluencers } from 'components';
+import {
+  SafeAreaView,
+  Header,
+  SearchInfluencers,
+  KeyboardAvoidingView,
+} from 'components';
 
 export const Search = () => (
   <SafeAreaView>
-    <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+    <KeyboardAvoidingView>
       <Header title="Search" />
       <SearchInfluencers />
     </KeyboardAvoidingView>

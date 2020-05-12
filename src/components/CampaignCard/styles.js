@@ -4,6 +4,12 @@ import { Ionicons } from '@expo/vector-icons';
 import { Text } from '../Text';
 import { Title } from '../Title';
 
+export const TouchableCard = styled.TouchableOpacity`
+  border-top-width: 1px;
+  border-color: ${props => props.theme.greyLight};
+  padding-top: ${props => props.theme.spacing}px;
+`;
+
 export const MainTitle = styled(Text)`
   margin-bottom: ${props => props.theme.spacingXSmall}px;
 `;
@@ -23,4 +29,9 @@ export const ArrowIcon = styled(Ionicons).attrs(props => ({
   name: 'ios-arrow-forward',
 }))`
   margin-right: ${props => props.theme.spacingSmall}px;
+`;
+
+export const Pills = styled.View`
+  padding-top: ${props => props.theme.spacingSmall}px;
+  flex-direction: row;
 `;

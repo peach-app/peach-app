@@ -1,4 +1,4 @@
-const { ApolloServer } = require('apollo-server-lambda');
+const { ApolloServer, AuthenticationError } = require('apollo-server-lambda');
 const faunadb = require('faunadb');
 const q = faunadb.query;
 
@@ -7,6 +7,14 @@ const formatRefs = require('./helpers/formatRefs');
 
 const typeDefs = require('./types');
 const resolvers = require('./resolvers');
+
+const { FAUNADB_SECRET } = process.env;
+
+if (!FAUNADB_SECRET) {
+  console.error(
+    `No FAUNADB_SECRET found... \nrun: export FAUNADB_SECRET=SecretKeyHere`
+  );
+}
 
 const server = new ApolloServer({
   typeDefs,
@@ -18,7 +26,11 @@ const server = new ApolloServer({
     const userClient = secret && new faunadb.Client({ secret });
     const activeUserRef = secret && (await userClient.query(q.Identity()));
 
-    const client = new faunadb.Client({ secret: process.env.FAUNADB_SECRET });
+    if (secret && !activeUserRef) {
+      throw new AuthenticationError('user must authenticate');
+    }
+
+    const client = new faunadb.Client({ secret: FAUNADB_SECRET });
 
     return {
       activeUserRef,

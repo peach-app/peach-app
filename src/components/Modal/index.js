@@ -1,7 +1,9 @@
 import React from 'react';
-import { Modal as ImportedModal, ScrollView } from 'react-native';
+import { Modal as ImportedModal } from 'react-native';
 
 import { Main, Content, Cover } from './styles';
+import { KeyboardAvoidingView } from '../KeyboardAvoidingView';
+import { ScrollView } from '../ScrollView';
 
 const DefaultWrapper = ({ children }) => (
   <Content>
@@ -19,10 +21,12 @@ export const Modal = ({ children, isOpen, customWrapper, onClose }) => {
       presentationStyle="overFullScreen"
       transparent
     >
-      <Main>
-        <Cover onPress={onClose} />
-        <Wrapper>{children}</Wrapper>
-      </Main>
+      <KeyboardAvoidingView>
+        <Main>
+          <Cover onPress={onClose} />
+          <Wrapper>{children}</Wrapper>
+        </Main>
+      </KeyboardAvoidingView>
     </ImportedModal>
   );
 };

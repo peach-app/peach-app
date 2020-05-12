@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { ScrollView, KeyboardAvoidingView } from 'react-native';
 import { useFormik } from 'formik';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -18,10 +17,18 @@ import {
   Tabs,
   MoneyInput,
   DatePicker,
+  KeyboardAvoidingView,
+  ScrollView,
 } from 'components';
-import { CAMPAIGN_TYPE, MODAL_TYPES } from 'consts';
-
+import {
+  CAMPAIGN_TYPE,
+  MODAL_TYPES,
+  PAYMENT_REASON,
+  CAMPAIGN_CREATION_COST,
+} from 'consts';
 import { useModal } from 'contexts/Modal';
+import { PushToTop, Graphic, Wrapper } from './styles';
+
 import { validationSchema, FORM_INITIAL_VALUES } from './consts';
 import GET_CAMPAIGN from './graphql/get-campaign';
 import CREATE_OR_UPDATE_CAMPAIGN_MUTATION from './graphql/create-or-update-campaign';
@@ -29,7 +36,7 @@ import CREATE_OR_UPDATE_CAMPAIGN_MUTATION from './graphql/create-or-update-campa
 export const CreateOrUpdateCampaign = () => {
   const navigation = useNavigation();
 
-  const { openModal, closeModal } = useModal();
+  const { openModal } = useModal();
 
   const [activeTab, setTab] = useState(0);
   const { params } = useRoute();
@@ -61,10 +68,13 @@ export const CreateOrUpdateCampaign = () => {
     }
   );
 
-  const submitCampaign = (
-    { name, description, budget, dueDate, paymentId },
-    { cardId, token } = {}
-  ) => {
+  const submitCampaign = ({
+    name,
+    description,
+    budget,
+    dueDate,
+    paymentId,
+  }) => {
     createOrUpdateCampaign({
       variables: {
         campaign: {
@@ -76,8 +86,6 @@ export const CreateOrUpdateCampaign = () => {
           private: activeTab === 1,
           paymentId,
         },
-        cardId,
-        token,
       },
     });
   };
@@ -95,10 +103,12 @@ export const CreateOrUpdateCampaign = () => {
       openModal({
         type: MODAL_TYPES.CONFIRM_PAYMENT,
         props: {
-          onClose: closeModal,
-          onConfirm: paymentMethod =>
-            submitCampaign(campaignDetails, paymentMethod),
-          cost: 500,
+          reason: PAYMENT_REASON.CREATE_CAMPAIGN,
+          onConfirm: paymentId =>
+            submitCampaign({ ...campaignDetails, paymentId }),
+          cost: CAMPAIGN_CREATION_COST,
+          description:
+            'You will he charged the following for the creation of this campaign. This charge is non-refundable.',
         },
       });
     },
@@ -108,78 +118,82 @@ export const CreateOrUpdateCampaign = () => {
     <SafeAreaView>
       <StatusBar />
       <Header title={campaignId ? 'Edit Campaign' : 'Create Campaign'} />
-      <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
-        <ScrollView>
-          <Container>
-            <Intro />
-            <Grid>
-              {!campaignId && (
+      <KeyboardAvoidingView>
+        <ScrollView contentContainerStyle={{ flex: 1 }}>
+          <Wrapper>
+            <Container>
+              <Intro />
+              <Graphic />
+              <Grid>
+                {!campaignId && (
+                  <Grid.Item size={12}>
+                    <Tabs
+                      activeTabIndex={activeTab}
+                      onTabPress={setTab}
+                      tabs={Object.values(CAMPAIGN_TYPE)}
+                    />
+                  </Grid.Item>
+                )}
                 <Grid.Item size={12}>
-                  <Tabs
-                    activeTabIndex={activeTab}
-                    onTabPress={setTab}
-                    tabs={Object.values(CAMPAIGN_TYPE)}
+                  <TextInput
+                    label="Campaign name"
+                    name="name"
+                    placeholder="e.g Soft Tea promoters"
+                    error={formik.errors.name}
+                    onChangeText={formik.handleChange('name')}
+                    value={formik.values.name}
                   />
                 </Grid.Item>
-              )}
-              <Grid.Item size={12}>
-                <TextInput
-                  label="Campaign name"
-                  name="name"
-                  placeholder="e.g Soft Tea promoters"
-                  error={formik.errors.name}
-                  onChangeText={formik.handleChange('name')}
-                  value={formik.values.name}
-                />
-              </Grid.Item>
-              <Grid.Item size={12}>
-                <TextInput
-                  label="Description"
-                  name="description"
-                  multiline
-                  placeholder="Picture at home drinking tea"
-                  error={formik.errors.description}
-                  onChangeText={formik.handleChange('description')}
-                  value={formik.values.description}
-                />
-              </Grid.Item>
-
-              {!campaignId && (
                 <Grid.Item size={12}>
-                  <DatePicker
-                    label="Due date"
-                    error={formik.errors.dueDate}
-                    onChange={selectedDate => {
-                      formik.setFieldValue('dueDate', selectedDate);
-                    }}
-                    value={formik.values.dueDate}
+                  <TextInput
+                    label="Description"
+                    name="description"
+                    multiline
+                    placeholder="Picture at home drinking tea"
+                    error={formik.errors.description}
+                    onChangeText={formik.handleChange('description')}
+                    value={formik.values.description}
                   />
                 </Grid.Item>
-              )}
-
-              <Grid.Item size={12}>
-                <MoneyInput
-                  label="Budget (GBP)"
-                  name="budget"
-                  error={formik.errors.budget}
-                  onChange={formik.handleChange('budget')}
-                  value={formik.values.budget}
-                />
-              </Grid.Item>
-
-              <Grid.Item size={12}>
-                <Actions>
-                  <Button
-                    isLoading={saving}
-                    onPress={formik.handleSubmit}
-                    title={campaignId ? 'Save' : 'Create'}
-                    fixedWidth
-                  />
-                </Actions>
-              </Grid.Item>
-            </Grid>
-          </Container>
+                <Grid.Item size={12}>
+                  <Grid noWrap>
+                    <Grid.Item size={6}>
+                      <MoneyInput
+                        label="Budget (GBP)"
+                        name="budget"
+                        error={formik.errors.budget}
+                        onChange={formik.handleChange('budget')}
+                        value={formik.values.budget}
+                      />
+                    </Grid.Item>
+                    {!campaignId && (
+                      <PushToTop>
+                        <Grid.Item size={6}>
+                          <DatePicker
+                            label="Due date"
+                            error={formik.errors.dueDate}
+                            onChange={selectedDate => {
+                              formik.setFieldValue('dueDate', selectedDate);
+                            }}
+                            value={formik.values.dueDate}
+                          />
+                        </Grid.Item>
+                      </PushToTop>
+                    )}
+                  </Grid>
+                </Grid.Item>
+              </Grid>
+            </Container>
+          </Wrapper>
         </ScrollView>
+        <Actions>
+          <Button
+            isLoading={saving}
+            onPress={formik.handleSubmit}
+            title={campaignId ? 'Save' : 'Create'}
+            fixedWidth
+          />
+        </Actions>
       </KeyboardAvoidingView>
     </SafeAreaView>
   );

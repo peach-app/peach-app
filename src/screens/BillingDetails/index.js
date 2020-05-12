@@ -1,5 +1,4 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import { useNavigation } from '@react-navigation/native';
 import getOr from 'lodash/fp/getOr';
@@ -12,6 +11,7 @@ import {
   Grid,
   BillingMethodCard,
   AddBankDetailsPlaceholder,
+  ScrollView,
 } from 'components';
 
 import GET_EXTERNAL_ACCOUNTS from './graphql/get-external-accounts';
