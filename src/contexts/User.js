@@ -14,7 +14,7 @@ export const Provider = ({ children }) => {
 
   const { client, data, loading } = useQuery(GET_USER, {
     onError: async err => {
-      if (err.networkError.statusCode === 400) {
+      if (err?.networkError?.statusCode === 400) {
         await setToken(null);
         client.resetStore();
       }
