@@ -11,13 +11,18 @@ export const Button = ({
   disabled,
   ...props
 }) => (
-  <Main {...props} isGhost={isGhost} isSmall={isSmall} disabled={disabled}>
+  <Main
+    {...props}
+    isGhost={isGhost}
+    isSmall={isSmall}
+    disabled={isLoading || disabled}
+  >
     <Title isGhost={isGhost} isLoading={isLoading}>
       {title}
     </Title>
     {isLoading && (
       <Loader>
-        <ActivityIndicator />
+        <ActivityIndicator isGhost={isGhost} />
       </Loader>
     )}
   </Main>

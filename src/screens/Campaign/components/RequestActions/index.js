@@ -22,19 +22,18 @@ export const RequestActions = ({ campaignId }) => {
       <Grid.Item size={12}>
         <Text isCenter>You've been requested onto this campaign.</Text>
       </Grid.Item>
-      <Grid.Item>
+      <Grid.Item size={4}>
         <Button
           title="Accept"
-          fixedWidth
           onPress={() => {
             navigation.navigate('Apply', { id: campaignId });
           }}
         />
       </Grid.Item>
-      <Grid.Item>
+      <Grid.Item size={4}>
         <Button
           title="Decline"
-          fixedWidth
+          isGhost
           isLoading={loading}
           onPress={() => {
             declineBooking();
