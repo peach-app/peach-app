@@ -9,6 +9,7 @@ export const DatePicker = ({ value, onChange, label, error }) => (
   <DatePickerBase
     selected={value}
     onChange={onChange}
+    showYearDropdown
     customInput={<TextInput label={label} error={error} />}
   />
 );
