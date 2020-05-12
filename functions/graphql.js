@@ -8,6 +8,14 @@ const formatRefs = require('./helpers/formatRefs');
 const typeDefs = require('./types');
 const resolvers = require('./resolvers');
 
+const { FAUNADB_SECRET } = process.env;
+
+if (!FAUNADB_SECRET) {
+  console.error(
+    `No FAUNADB_SECRET found... \nrun: export FAUNADB_SECRET=SecretKeyHere`
+  );
+}
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
@@ -22,7 +30,7 @@ const server = new ApolloServer({
       throw new AuthenticationError('user must authenticate');
     }
 
-    const client = new faunadb.Client({ secret: process.env.FAUNADB_SECRET });
+    const client = new faunadb.Client({ secret: FAUNADB_SECRET });
 
     return {
       activeUserRef,
