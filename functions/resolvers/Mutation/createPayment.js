@@ -1,5 +1,6 @@
 const stripe = require('../../helpers/stripe');
 const { PAYMENT_REASON, CAMPAIGN_CREATION_COST } = require('../../consts');
+const calculateBookingCost = require('../../helpers/calculateBookingCost');
 
 module.exports = async (
   root,
@@ -25,12 +26,14 @@ module.exports = async (
     }
 
     if (reason === PAYMENT_REASON.ACCEPT_BOOKING) {
-      return client.query(
+      const cost = await client.query(
         q.Select(
           ['data', 'cost'],
           q.Get(q.Ref(q.Collection('Booking'), bookingId))
         )
       );
+
+      return calculateBookingCost(cost);
     }
 
     throw new Error('Invalid payment reason');
