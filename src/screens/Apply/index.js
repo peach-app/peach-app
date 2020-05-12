@@ -34,7 +34,7 @@ export const Apply = () => {
   const navigation = useNavigation();
 
   const [applyToCampaign, { loading }] = useMutation(APPLY_TO_CAMPAIGN, {
-    refetchQueries: ['getCampaign', 'getCampaigns'],
+    refetchQueries: ['getCampaign', 'getCampaigns', 'getCurrentUser'],
     onCompleted: () => navigation.goBack(),
   });
 

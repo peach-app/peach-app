@@ -173,6 +173,8 @@ module.exports = gql`
     socialAccounts: SocialAccounts
 
     payouts: PayoutsPage
+
+    pendingBookingsToAction: Int
   }
 
   type PayoutsPage {
