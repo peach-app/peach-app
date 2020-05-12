@@ -2,7 +2,7 @@ const faunadb = require('faunadb');
 
 const DocumentDataWithId = require('../../functions/helpers/DocumentDataWithId');
 const { BOOKING_STATE } = require('../../functions/consts');
-const sendMail = require('../../functions/helpers/sendMail');
+// const sendMail = require('../../functions/helpers/sendMail');
 
 const processPayments = require('./procesPayments');
 
@@ -83,15 +83,15 @@ const q = faunadb.query;
         )
       );
       // for when we automate it
-      await sendMail({
-        to: 'rosendanew@gmail.com',
-        subject: 'Failed booking payments alert!',
-        text: `
-        Alert! Alert! Alert!
-        Problems with payments. 
-        Please resolve.
-        `,
-      });
+      // await sendMail({
+      //   to: 'rosendanew@gmail.com',
+      //   subject: 'Failed booking payments alert!',
+      //   text: `
+      //   Alert! Alert! Alert!
+      //   Problems with payments.
+      //   Please resolve.
+      //   `,
+      // });
     } catch (e) {
       console.log('Failed Booking Payments collection update failed', e);
     }
