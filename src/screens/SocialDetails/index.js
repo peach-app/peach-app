@@ -125,7 +125,7 @@ export const SocialDetails = ({
                 <TextInput
                   autoCapitalize="none"
                   value={formik.values.tikTok}
-                  label="TicTok (Username)"
+                  label="TikTok (Username)"
                   error={formik.errors.tikTok}
                   onChangeText={formik.handleChange('tikTok')}
                 />
