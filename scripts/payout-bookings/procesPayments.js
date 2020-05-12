@@ -7,6 +7,7 @@ const processPayments = async completedBookingDetails => {
   await Promise.all(
     completedBookingDetails.map(async details => {
       try {
+        console.log(details);
         const transfer = await stripe.transfers.create(
           {
             amount: details.booking.cost,

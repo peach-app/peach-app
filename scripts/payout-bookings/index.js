@@ -16,7 +16,12 @@ const q = faunadb.query;
   );
   const completedBookingDetails = await client.query(
     q.Map(
-      q.Paginate(q.Match(q.Index('booking_by_state'), BOOKING_STATE.COMPLETE)),
+      q.Paginate(
+        q.Intersection(
+          q.Match(q.Index('booking_by_approved'), true),
+          q.Match(q.Index('booking_by_state'), BOOKING_STATE.COMPLETE)
+        )
+      ),
       q.Lambda('ref', {
         user: q.Select(
           ['data'],
