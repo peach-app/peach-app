@@ -1,8 +1,10 @@
 const faunadb = require('faunadb');
-const DocumentDataWithId = require('../helpers/DocumentDataWithId');
-const { BOOKING_STATE } = require('../consts');
+
+const DocumentDataWithId = require('../../functions/helpers/DocumentDataWithId');
+const { BOOKING_STATE } = require('../../functions/consts');
+const sendMail = require('../../functions/helpers/sendMail');
+
 const processPayments = require('./procesPayments');
-const sendMail = require('../helpers/sendMail');
 
 const q = faunadb.query;
 
