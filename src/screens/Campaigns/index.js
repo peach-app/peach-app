@@ -29,7 +29,10 @@ export const Campaigns = () => {
   const navigation = useNavigation();
 
   const [activeTabIndex, setTabIndex] = useState(0);
-  const { isBrand } = useUser();
+  const {
+    isBrand,
+    user: { pendingBookingsToAction },
+  } = useUser();
 
   const activeTab = useMemo(
     () =>
@@ -59,6 +62,17 @@ export const Campaigns = () => {
     (networkStatus === NETWORK_STATUS.FETCHING ||
       networkStatus === NETWORK_STATUS.SET_VARIABLES);
   const campaigns = getOr([], 'campaigns.data', data);
+  const tabs = isBrand
+    ? [
+        { title: 'All' },
+        { title: 'Applications', count: pendingBookingsToAction },
+      ]
+    : [
+        { title: 'Open' },
+        { title: 'Applied' },
+        { title: 'Requested', count: pendingBookingsToAction },
+        { title: 'Complete' },
+      ];
 
   return (
     <>
@@ -120,11 +134,7 @@ export const Campaigns = () => {
                 <Tabs
                   activeTabIndex={activeTabIndex}
                   onTabPress={index => setTabIndex(index)}
-                  tabs={
-                    isBrand
-                      ? ['All', 'Applications']
-                      : ['Open', 'Applied', 'Requested', 'Complete']
-                  }
+                  tabs={tabs}
                 />
               </FlatList.Item>
 

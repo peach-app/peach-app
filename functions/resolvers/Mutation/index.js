@@ -18,4 +18,6 @@ module.exports = {
   requestPasswordReset: require('./requestPasswordReset'),
   resetPassword: require('./resetPassword'),
   createPayment: require('./createPayment'),
+  declineBooking: require('./declineBooking'),
+
 };

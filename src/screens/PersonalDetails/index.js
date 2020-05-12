@@ -29,15 +29,15 @@ import GET_USER from './graphql/get-user';
 import UPDATE_USER from './graphql/update-user';
 
 const validationSchema = Yup.object().shape({
-  firstName: Yup.string(),
-  lastName: Yup.string(),
+  firstName: Yup.string().nullable(),
+  lastName: Yup.string().nullable(),
   email: Yup.string()
     .email('Please enter a valid email address')
     .required('Please enter an email address'),
-  dob: Yup.string(),
-  addressLine1: Yup.string(),
-  city: Yup.string(),
-  postalCode: Yup.string(),
+  dob: Yup.string().nullable(),
+  addressLine1: Yup.string().nullable(),
+  city: Yup.string().nullable(),
+  postalCode: Yup.string().nullable(),
 });
 
 export const PersonalDetails = ({

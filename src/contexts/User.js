@@ -13,21 +13,23 @@ export const Provider = ({ children }) => {
   const { setToken } = useAuth();
 
   const { client, data, loading } = useQuery(GET_USER, {
-    onError: async () => {
-      await setToken(null);
-      client.resetStore();
+    onError: async err => {
+      if (err?.networkError?.statusCode === 400) {
+        await setToken(null);
+        client.resetStore();
+      }
     },
   });
 
   const userType = get('user.type', data);
   const isBrand = userType === USER_TYPE.BRAND;
   const isInfluencer = userType === USER_TYPE.INFLUENCER;
-
   const user = {
     ...data,
     isEmailVerified: get('user.emailVerification.isVerified', data),
     isStripeEnabled:
       get('user.stripeAccount.capabilities.transfers', data) === 'active',
+    pendingBookingsToAction: get('user.pendingBookingsToAction', data),
   };
 
   return (

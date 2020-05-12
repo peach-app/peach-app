@@ -71,22 +71,23 @@ module.exports = async (
         }
       );
     }
-
-    return stripe.accounts.create(
-      {
-        email,
-        type: 'custom',
-        requested_capabilities: ['transfers'],
-        business_type: 'individual',
-        tos_acceptance: {
-          date: Math.floor(Date.now() / 1000),
-          ip: clientIp,
+    if (type === USER_TYPE.INFLUENCER) {
+      return stripe.accounts.create(
+        {
+          email,
+          type: 'custom',
+          requested_capabilities: ['transfers'],
+          business_type: 'individual',
+          tos_acceptance: {
+            date: Math.floor(Date.now() / 1000),
+            ip: clientIp,
+          },
         },
-      },
-      {
-        idempotencyKey,
-      }
-    );
+        {
+          idempotencyKey,
+        }
+      );
+    }
   };
 
   const account = await createStripeAccount();

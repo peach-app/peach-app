@@ -65,6 +65,7 @@ module.exports = gql`
     requestPasswordReset(email: String!): Boolean
     resetPassword(userId: ID!, password: String!): Boolean
     createPayment(cost: Int!, token: String, selectedId: String): PaymentIntent
+    declineBooking(campaignId: ID): Boolean
   }
 
   # Fauna references #
@@ -163,6 +164,8 @@ module.exports = gql`
     socialAccounts: SocialAccounts
 
     payouts: PayoutsPage
+
+    pendingBookingsToAction: Int
   }
 
   type PayoutsPage {
