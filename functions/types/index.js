@@ -64,7 +64,12 @@ module.exports = gql`
     completeBooking(id: ID!, note: String): Boolean
     requestPasswordReset(email: String!): Boolean
     resetPassword(userId: ID!, password: String!): Boolean
-    createPayment(cost: Int!, token: String, selectedId: String): PaymentIntent
+    createPayment(
+      reason: PaymentReason!
+      bookingId: ID
+      token: String
+      selectedId: String
+    ): PaymentIntent
     declineBooking(campaignId: ID): Boolean
   }
 
@@ -104,6 +109,11 @@ module.exports = gql`
   enum UserType {
     BRAND
     INFLUENCER
+  }
+
+  enum PaymentReason {
+    CREATE_CAMPAIGN
+    ACCEPT_BOOKING
   }
 
   type UserPage {

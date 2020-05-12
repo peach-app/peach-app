@@ -10,9 +10,9 @@ const Count = styled.Text`
 `;
 
 const Circle = styled.View`
-  width: 14;
-  height: 14;
-  border-radius: 7;
+  width: 14px;
+  height: 14px;
+  border-radius: 100px;
   background-color: ${props => props.theme.brand};
   display: flex;
   align-items: center;

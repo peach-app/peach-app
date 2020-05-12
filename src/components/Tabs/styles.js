@@ -19,7 +19,6 @@ export const Item = styled.View`
   padding-vertical: ${props => props.theme.spacingSmall}px;
   margin-right: ${props => props.theme.spacing}px;
   border-color: ${props => (props.active ? props.theme.brand : 'transparent')};
-  ${({ hasBadge, theme }) => hasBadge && `padding-right: ${theme.spacingSmall}`}
 `;
 
 export const TabTitle = styled(Title)`
@@ -30,7 +29,7 @@ export const TabTitle = styled(Title)`
 
 export const BadgeWrapper = styled.View`
   position: absolute;
-  top: 2px;
-  right: -10px;
+  top: 0px;
+  right: -8px;
   z-index: 2;
 `;

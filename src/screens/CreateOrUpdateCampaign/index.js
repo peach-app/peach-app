@@ -20,7 +20,12 @@ import {
   KeyboardAvoidingView,
   ScrollView,
 } from 'components';
-import { CAMPAIGN_TYPE, MODAL_TYPES } from 'consts';
+import {
+  CAMPAIGN_TYPE,
+  MODAL_TYPES,
+  PAYMENT_REASON,
+  CAMPAIGN_CREATION_COST,
+} from 'consts';
 import { useModal } from 'contexts/Modal';
 import { PushToTop, Graphic, Wrapper } from './styles';
 
@@ -98,9 +103,10 @@ export const CreateOrUpdateCampaign = () => {
       openModal({
         type: MODAL_TYPES.CONFIRM_PAYMENT,
         props: {
+          reason: PAYMENT_REASON.CREATE_CAMPAIGN,
           onConfirm: paymentId =>
             submitCampaign({ ...campaignDetails, paymentId }),
-          cost: 500,
+          cost: CAMPAIGN_CREATION_COST,
           description:
             'You will he charged the following for the creation of this campaign. This charge is non-refundable.',
         },

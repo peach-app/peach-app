@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useMutation } from '@apollo/react-hooks';
 import startCase from 'lodash/startCase';
 
-import { BOOKING_STATE, MODAL_TYPES } from 'consts';
+import { BOOKING_STATE, MODAL_TYPES, PAYMENT_REASON } from 'consts';
 import { formatToMoneyFromPence } from 'helpers';
 import { useModal } from 'contexts/Modal';
 
@@ -86,6 +86,9 @@ export const Booking = ({ _id, cost, state, note, user, isLoading }) => {
                   openModal({
                     type: MODAL_TYPES.CONFIRM_PAYMENT,
                     props: {
+                      cost,
+                      bookingId: _id,
+                      reason: PAYMENT_REASON.ACCEPT_BOOKING,
                       description: `You will be charged the following to accept ${startCase(
                         get('name', user)
                       )} onto your campaign. This charge can be refunded should the work not be carried out by the completion date.`,
@@ -99,7 +102,6 @@ export const Booking = ({ _id, cost, state, note, user, isLoading }) => {
                           },
                         });
                       },
-                      cost,
                     },
                   });
                 }}

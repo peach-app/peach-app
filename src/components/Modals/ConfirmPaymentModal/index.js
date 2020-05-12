@@ -40,7 +40,14 @@ const validationSchema = Yup.object().shape({
     .required('CVC is required'),
 });
 
-const ConfirmPaymentModal = ({ cost, onConfirm, description, onClose }) => {
+const ConfirmPaymentModal = ({
+  cost,
+  reason,
+  bookingId,
+  onConfirm,
+  description,
+  onClose,
+}) => {
   const [showForm, setShowForm] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -63,7 +70,8 @@ const ConfirmPaymentModal = ({ cost, onConfirm, description, onClose }) => {
   const handlePayment = paymentParams => {
     createPayment({
       variables: {
-        cost,
+        reason,
+        bookingId,
         ...paymentParams,
       },
     });
@@ -197,11 +205,14 @@ const ConfirmPaymentModal = ({ cost, onConfirm, description, onClose }) => {
 
 ConfirmPaymentModal.defaultProps = {
   description: null,
+  bookingId: null,
 };
 
 ConfirmPaymentModal.propTypes = {
   cost: PropTypes.number.isRequired,
+  reason: PropTypes.string.isRequired,
   onConfirm: PropTypes.func.isRequired,
+  bookingId: PropTypes.string,
   description: PropTypes.string,
   onClose: PropTypes.func.isRequired,
 };

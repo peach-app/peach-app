@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes, { shape } from 'prop-types';
+import PropTypes from 'prop-types';
 import { TouchableWithoutFeedback } from 'react-native';
 import { Badge } from '../Badge';
 
@@ -9,7 +9,7 @@ export const Tabs = ({ activeTabIndex, onTabPress, tabs }) => (
   <Main>
     {tabs.map((tab, index) => (
       <TouchableWithoutFeedback key={index} onPress={() => onTabPress(index)}>
-        <Item hasBadge={tab.count} active={activeTabIndex === index}>
+        <Item active={activeTabIndex === index}>
           {tab.count > 0 && (
             <BadgeWrapper>
               <Badge count={tab.count} />

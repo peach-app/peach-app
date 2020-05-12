@@ -1,14 +1,11 @@
 const stripe = require('../../helpers/stripe');
+const { PAYMENT_REASON, CAMPAIGN_CREATION_COST } = require('../../consts');
 
 module.exports = async (
   root,
-  { token, selectedId, cost },
+  { reason, bookingId, token, selectedId },
   { client, q, activeUserRef }
 ) => {
-  const customerId = await client.query(
-    q.Select(['data', 'stripeID'], q.Get(activeUserRef))
-  );
-
   const getPaymentMethod = async () => {
     if (token) {
       return stripe.paymentMethods.create({
@@ -22,9 +19,28 @@ module.exports = async (
     return { id: selectedId };
   };
 
-  const { id: paymentId } = await getPaymentMethod();
+  const getPaymentCost = async () => {
+    if (reason === PAYMENT_REASON.CREATE_CAMPAIGN) {
+      return CAMPAIGN_CREATION_COST;
+    }
 
-  const amount = cost || 500; // or pence for campaign creation cost
+    if (reason === PAYMENT_REASON.ACCEPT_BOOKING) {
+      return client.query(
+        q.Select(
+          ['data', 'cost'],
+          q.Get(q.Ref(q.Collection('Booking'), bookingId))
+        )
+      );
+    }
+
+    throw new Error('Invalid payment reason');
+  };
+
+  const customerId = await client.query(
+    q.Select(['data', 'stripeID'], q.Get(activeUserRef))
+  );
+  const amount = await getPaymentCost();
+  const { id: paymentId } = await getPaymentMethod();
 
   const {
     id,

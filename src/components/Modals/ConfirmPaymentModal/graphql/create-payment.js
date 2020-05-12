@@ -1,8 +1,18 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  mutation($cost: Int!, $token: String, $selectedId: String) {
-    createPayment(cost: $cost, token: $token, selectedId: $selectedId) {
+  mutation(
+    $reason: PaymentReason!
+    $bookingId: ID
+    $token: String
+    $selectedId: String
+  ) {
+    createPayment(
+      reason: $reason
+      bookingId: $bookingId
+      token: $token
+      selectedId: $selectedId
+    ) {
       id
       redirectUrl
     }
