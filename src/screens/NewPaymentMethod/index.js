@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import { useMutation } from '@apollo/react-hooks';
@@ -39,7 +40,11 @@ const validationSchema = Yup.object().shape({
     .required('CVC is required'),
 });
 
-export const NewPaymentMethod = () => {
+export const NewPaymentMethod = ({
+  rightActionLabel,
+  onRightActionPressed,
+  onComplete,
+}) => {
   const navigation = useNavigation();
 
   const [createPaymentMethod, { loading, error }] = useMutation(
@@ -47,6 +52,7 @@ export const NewPaymentMethod = () => {
     {
       refetchQueries: ['getPaymentMethods'],
       onCompleted: () => {
+        if (onComplete) return onComplete();
         navigation.goBack();
       },
     }
@@ -87,12 +93,23 @@ export const NewPaymentMethod = () => {
   return (
     <SafeAreaView>
       <StatusBar />
-      <Header title="New Payment Method" />
+      <Header
+        title="New Payment Method"
+        rightActionLabel={rightActionLabel}
+        onRightActionPressed={onRightActionPressed}
+      />
       <KeyboardAvoidingView>
         <ScrollView>
           <Container>
             <Intro />
             <Grid>
+              <Grid.Item size={12}>
+                <Text>
+                  Add a new payment method to to fast track through campaign
+                  creations and influencer payouts.
+                </Text>
+              </Grid.Item>
+
               <PaymentMethodForm formik={formik} />
 
               {error && (
@@ -120,4 +137,16 @@ export const NewPaymentMethod = () => {
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
+};
+
+NewPaymentMethod.defaultProps = {
+  rightActionLabel: null,
+  onRightActionPressed: null,
+  onComplete: null,
+};
+
+NewPaymentMethod.propTypes = {
+  rightActionLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  onRightActionPressed: PropTypes.func,
+  onComplete: PropTypes.func,
 };

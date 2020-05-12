@@ -8,6 +8,7 @@ import {
   SocialDetails,
   PersonalDetails,
   NewBilling,
+  NewPaymentMethod,
 } from 'screens';
 
 import { createStackNavigator } from './components';
@@ -41,7 +42,7 @@ export const OnboardingNavigator = () => {
       <Stack.Screen
         name="Welcome"
         component={welcomeScreen({
-          goTo: isBrand ? 'CompleteOnboarding' : 'SocialDetails',
+          goTo: isBrand ? 'NewPaymentMethod' : 'SocialDetails',
         })}
       />
       <Stack.Screen
@@ -59,6 +60,12 @@ export const OnboardingNavigator = () => {
       <Stack.Screen
         name="NewBilling"
         component={withSkipOption(NewBilling, {
+          skipTo: 'CompleteOnboarding',
+        })}
+      />
+      <Stack.Screen
+        name="NewPaymentMethod"
+        component={withSkipOption(NewPaymentMethod, {
           skipTo: 'CompleteOnboarding',
         })}
       />
