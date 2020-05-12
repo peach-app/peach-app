@@ -1,4 +1,4 @@
-const { ApolloServer } = require('apollo-server-lambda');
+const { ApolloServer, AuthenticationError } = require('apollo-server-lambda');
 const faunadb = require('faunadb');
 const q = faunadb.query;
 
@@ -17,6 +17,10 @@ const server = new ApolloServer({
 
     const userClient = secret && new faunadb.Client({ secret });
     const activeUserRef = secret && (await userClient.query(q.Identity()));
+
+    if (secret && !activeUserRef) {
+      throw new AuthenticationError('user must authenticate');
+    }
 
     const client = new faunadb.Client({ secret: process.env.FAUNADB_SECRET });
 
