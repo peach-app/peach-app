@@ -20,7 +20,6 @@ export default gql`
       emailVerification {
         isVerified
       }
-      pendingBookingsToAction
     }
   }
 `;

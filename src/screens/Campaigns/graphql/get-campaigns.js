@@ -7,6 +7,7 @@ export default gql`
 
   query getCampaigns($state: BookingState, $after: [RefInput]) {
     campaigns(state: $state, size: 20, after: $after) {
+      pendingBookingsToAction
       data {
         _id
         ...CampaignCardFragment

@@ -29,7 +29,6 @@ export const Provider = ({ children }) => {
     isEmailVerified: get('user.emailVerification.isVerified', data),
     isStripeEnabled:
       get('user.stripeAccount.capabilities.transfers', data) === 'active',
-    pendingBookingsToAction: get('user.pendingBookingsToAction', data),
   };
 
   return (

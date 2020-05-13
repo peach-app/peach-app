@@ -29,10 +29,7 @@ export const Campaigns = () => {
   const navigation = useNavigation();
 
   const [activeTabIndex, setTabIndex] = useState(0);
-  const {
-    isBrand,
-    user: { pendingBookingsToAction },
-  } = useUser();
+  const { isBrand } = useUser();
 
   const activeTab = useMemo(
     () =>
@@ -65,12 +62,18 @@ export const Campaigns = () => {
   const tabs = isBrand
     ? [
         { title: 'All' },
-        { title: 'Applications', count: pendingBookingsToAction },
+        {
+          title: 'Applications',
+          count: get('campaigns.pendingBookingsToAction', data),
+        },
       ]
     : [
         { title: 'Open' },
         { title: 'Applied' },
-        { title: 'Requested', count: pendingBookingsToAction },
+        {
+          title: 'Requested',
+          count: get('campaigns.pendingBookingsToAction', data),
+        },
         { title: 'Complete' },
       ];
 

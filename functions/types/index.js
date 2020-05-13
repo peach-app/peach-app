@@ -174,8 +174,6 @@ module.exports = gql`
     socialAccounts: SocialAccounts
 
     payouts: PayoutsPage
-
-    pendingBookingsToAction: Int
   }
 
   type PayoutsPage {
@@ -260,6 +258,7 @@ module.exports = gql`
   }
 
   type CampaignPage {
+    pendingBookingsToAction: Int
     data: [Campaign]
     after: [Ref]
     before: [Ref]
