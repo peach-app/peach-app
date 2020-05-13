@@ -12,6 +12,7 @@ const processPayments = async completedBookingDetails => {
             amount: details.booking.cost,
             currency: 'gbp',
             destination: details.user.stripeID,
+            transfer_group: details.booking._id,
           },
           {
             idempotencyKey: details.booking._id,

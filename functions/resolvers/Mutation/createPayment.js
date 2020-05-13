@@ -56,6 +56,9 @@ module.exports = async (
     setup_future_usage: 'off_session',
     customer: customerId,
     confirmation_method: 'manual',
+    ...(reason === PAYMENT_REASON.ACCEPT_BOOKING && {
+      transfer_group: bookingId,
+    }),
   });
 
   const redirectUrl = nextAction && nextAction.use_stripe_sdk.stripe_js;
