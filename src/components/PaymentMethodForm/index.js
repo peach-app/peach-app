@@ -12,6 +12,7 @@ export const PaymentMethodForm = ({ formik }) => (
         value={formik.values.number}
         error={formik.errors.number}
         onChangeText={formik.handleChange('number')}
+        keyboardType="number-pad"
       />
     </Grid.Item>
 
@@ -22,6 +23,7 @@ export const PaymentMethodForm = ({ formik }) => (
         value={formik.values.expiry}
         error={formik.errors.expiry}
         onChangeText={formik.handleChange('expiry')}
+        keyboardType="number-pad"
       />
     </Grid.Item>
 
@@ -32,6 +34,7 @@ export const PaymentMethodForm = ({ formik }) => (
         value={formik.values.cvc}
         error={formik.errors.cvc}
         onChangeText={formik.handleChange('cvc')}
+        keyboardType="number-pad"
       />
     </Grid.Item>
   </>

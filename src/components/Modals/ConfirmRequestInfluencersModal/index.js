@@ -52,7 +52,7 @@ const ConfirmRequestedInfluencersModal = ({
         <Grid justify="center" align="center">
           {isSuccessScreenVisible ? (
             <FeedbackView
-              title="Influecers successfully requested!"
+              title="Influencers successfully requested!"
               subTitle="They will be notified about your interest"
               actionButtonLabel="Done"
               onActionButtonPressed={handleFeedbackActionButtonPressed}

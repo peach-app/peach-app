@@ -105,7 +105,7 @@ export const NewPaymentMethod = ({
             <Grid>
               <Grid.Item size={12}>
                 <Text>
-                  Add a new payment method to to fast track through campaign
+                  Add a new payment method to fast track through campaign
                   creations and influencer payouts.
                 </Text>
               </Grid.Item>

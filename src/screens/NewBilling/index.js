@@ -121,6 +121,7 @@ export const NewBilling = ({
                 <TextInput
                   label="Sort code"
                   placeholder="e.g 01-02-33"
+                  keyboardType="number-pad"
                   error={formik.errors.sort}
                   onChangeText={formik.handleChange('sort')}
                   onBlur={formik.handleBlur('sort')}
