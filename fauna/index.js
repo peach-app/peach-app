@@ -40,6 +40,7 @@ console.log({ FAUNADB_SECRET });
     await require('./indexes/user_name_by_type')();
     await require('./indexes/booking_campaign_by_user')();
     await require('./indexes/invite_by_code_email')();
+    await require('./indexes/user_by_campaign_booking')();
 
     // Roles
     await require('./roles/user')();
