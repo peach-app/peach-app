@@ -29,11 +29,15 @@ export const SearchInfluencers = ({
   onActionPressed,
   action,
   actionedItems,
+  campaignId,
 }) => {
   const [searchInfluencers, { data, loading, networkStatus }] = useLazyQuery(
     SEARCH_INFLUENCERS,
     {
       notifyOnNetworkStatusChange: true,
+      variables: {
+        campaignId,
+      },
     }
   );
 
@@ -114,10 +118,12 @@ SearchInfluencers.defaultProps = {
   onActionPressed: null,
   action: null,
   actionedItems: null,
+  campaignId: null,
 };
 
 SearchInfluencers.propTypes = {
   onActionPressed: PropTypes.func,
   action: PropTypes.string,
   actionedItems: PropTypes.array,
+  campaignId: PropTypes.string,
 };

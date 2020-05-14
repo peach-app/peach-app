@@ -6,8 +6,8 @@ import { UserCardFragment } from '../../UserCard';
 export default gql`
   ${UserCardFragment}
 
-  query ($query: String!){
-    searchUsers(type: ${USER_TYPE.INFLUENCER}, query: $query){
+  query ($query: String!, $campaignId: String){
+    searchUsers(type: ${USER_TYPE.INFLUENCER}, query: $query, campaignId: $campaignId){
       data {
         _id
         ...UserCardFragment

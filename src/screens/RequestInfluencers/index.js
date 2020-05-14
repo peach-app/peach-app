@@ -56,6 +56,7 @@ export const RequestInfluencers = () => {
           }
           action={ACTION_COMPONENTS.ADD_REMOVE}
           actionedItems={requestedInfluencers}
+          campaignId={campaignId}
         />
       </KeyboardAvoidingView>
     </SafeAreaView>
