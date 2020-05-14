@@ -54,6 +54,7 @@
     "react-native-web": "^0.11.7",
     "react-native-webview": "8.1.1",
     "react-router-dom": "^5.1.2",
+    "sentry-expo": "^2.0.4",
     "stripe": "^8.20.0",
     "stripe-client": "^1.1.5",
     "styled-components": "^4.4.1",

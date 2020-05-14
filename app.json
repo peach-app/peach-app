@@ -22,6 +22,18 @@
       "buildNumber": "1.0.0",
       "supportsTablet": true,
       "userInterfaceStyle": "automatic"
+    },
+    "hooks": {
+      "postPublish": [
+        {
+          "file": "sentry-expo/upload-sourcemaps",
+          "config": {
+            "organization": "peach",
+            "project": "peachapp",
+            "authToken": "9a9f94fefa494d8e8ef70a8a81d0024368935265cbfa4ffda7ada7737fec2de7"
+          }
+        }
+      ]
     }
   }
 }
