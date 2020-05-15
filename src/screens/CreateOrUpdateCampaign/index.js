@@ -168,7 +168,7 @@ export const CreateOrUpdateCampaign = () => {
                       <PushToTop>
                         <Grid.Item size={6}>
                           <DatePicker
-                            label="Due date"
+                            label="Completion Date"
                             error={formik.errors.dueDate}
                             onChange={selectedDate => {
                               formik.setFieldValue('dueDate', selectedDate);

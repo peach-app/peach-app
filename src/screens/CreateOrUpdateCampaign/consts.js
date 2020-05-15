@@ -9,7 +9,9 @@ export const validationSchema = Yup.object().shape({
   budget: Yup.number(FORM_ERROR_MESSAGES.INVALID_NUMBER)
     .required('Let the influencers know the budget')
     .min(500, FORM_ERROR_MESSAGES.MIN_BUDGET),
-  dueDate: Yup.string().required('What is the due date for the campaign?'),
+  dueDate: Yup.string().required(
+    'What is the completion date for the campaign?'
+  ),
 });
 
 export const FORM_INITIAL_VALUES = {
