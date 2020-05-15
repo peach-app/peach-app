@@ -8,14 +8,7 @@ import FormatDate from 'date-fns/format';
 import { useUser } from 'contexts/User';
 import { formatToMoneyFromPence } from 'helpers';
 
-import {
-  TouchableCard,
-  MainTitle,
-  Description,
-  User,
-  ArrowIcon,
-  Pills,
-} from './styles';
+import { MainTitle, Description, User, ArrowIcon, Pills } from './styles';
 import { Grid } from '../Grid';
 import { Avatar } from '../Avatar';
 import { SkeletonText } from '../Skeletons';
@@ -32,10 +25,9 @@ export const CampaignCard = ({
   ActionItem,
 }) => {
   const { isInfluencer, isBrand } = useUser();
-  const Touchable = isBrand ? TouchableCard : TouchableOpacity;
 
   return (
-    <Touchable onPress={() => !isLoading && onPress()}>
+    <TouchableOpacity onPress={() => !isLoading && onPress()}>
       <Grid noWrap align="center">
         {isInfluencer && (
           <Grid.Item>
@@ -87,7 +79,7 @@ export const CampaignCard = ({
           </Grid.Item>
         )}
       </Grid>
-    </Touchable>
+    </TouchableOpacity>
   );
 };
 

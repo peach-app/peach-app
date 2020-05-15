@@ -19,8 +19,8 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "bundleIdentifier": "io.peachapp.dashboard",
-      "buildNumber": "1.0.0",
-      "supportsTablet": true,
+      "buildNumber": "1.0.1",
+      "supportsTablet": false,
       "userInterfaceStyle": "automatic"
     }
   }

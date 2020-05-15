@@ -1,5 +1,9 @@
 import styled from 'styled-components/native';
-import { Dimensions, Platform } from 'react-native';
+import { Dimensions } from 'react-native';
+
+export const Main = styled.View`
+  padding-top: ${props => props.theme.spacingXLarge * 3}px;
+`;
 
 export const PushToTop = styled.View`
   position: relative;
@@ -15,15 +19,6 @@ export const Graphic = styled.View`
   background: ${props => props.theme.brand};
   border-radius: 1000px;
   position: absolute;
-  top: -${size * 2}px;
+  top: -${size * 1.5}px;
   right: -${size}px;
-`;
-
-export const Wrapper = styled.View`
-  ${Platform.select({
-    ios: 'margin-top: auto;',
-    android: 'margin-top: auto;',
-  })}
-  padding-bottom: ${props => props.theme.spacingXLarge}px;
-  padding-top: ${props => props.theme.spacing}px;
 `;
