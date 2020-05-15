@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 import { Dimensions } from 'react-native';
 
 export const Main = styled.View`
-  padding-top: ${props => props.theme.spacingXLarge * 2}px;
+  padding-top: ${props => props.theme.spacingXLarge * 3}px;
 `;
 
 export const PushToTop = styled.View`
