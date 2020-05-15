@@ -34,6 +34,7 @@ export const SearchInfluencers = ({
   const [searchInfluencers, { data, loading, networkStatus }] = useLazyQuery(
     SEARCH_INFLUENCERS,
     {
+      fetchPolicy: 'cache-and-network',
       notifyOnNetworkStatusChange: true,
       variables: {
         campaignId,
