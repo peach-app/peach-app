@@ -4,12 +4,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { Text } from '../Text';
 import { Title } from '../Title';
 
-export const TouchableCard = styled.TouchableOpacity`
-  border-top-width: 1px;
-  border-color: ${props => props.theme.greyLight};
-  padding-top: ${props => props.theme.spacing}px;
-`;
-
 export const MainTitle = styled(Text)`
   margin-bottom: ${props => props.theme.spacingXSmall}px;
 `;
