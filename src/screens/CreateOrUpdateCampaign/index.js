@@ -13,7 +13,6 @@ import {
   Actions,
   Button,
   Container,
-  Intro,
   Tabs,
   MoneyInput,
   DatePicker,
@@ -27,7 +26,7 @@ import {
   CAMPAIGN_CREATION_COST,
 } from 'consts';
 import { useModal } from 'contexts/Modal';
-import { PushToTop, Graphic, Wrapper } from './styles';
+import { Main, PushToTop, Graphic } from './styles';
 
 import { validationSchema, FORM_INITIAL_VALUES } from './consts';
 import GET_CAMPAIGN from './graphql/get-campaign';
@@ -119,10 +118,9 @@ export const CreateOrUpdateCampaign = () => {
       <StatusBar />
       <Header title={campaignId ? 'Edit Campaign' : 'Create Campaign'} />
       <KeyboardAvoidingView>
-        <ScrollView contentContainerStyle={{ flex: 1 }}>
-          <Wrapper>
-            <Container>
-              <Intro />
+        <ScrollView>
+          <Container>
+            <Main>
               <Graphic />
               <Grid>
                 {!campaignId && (
@@ -183,8 +181,8 @@ export const CreateOrUpdateCampaign = () => {
                   </Grid>
                 </Grid.Item>
               </Grid>
-            </Container>
-          </Wrapper>
+            </Main>
+          </Container>
         </ScrollView>
         <Actions>
           <Button
