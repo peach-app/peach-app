@@ -88,7 +88,7 @@ export const SearchInfluencers = ({
           </>
         }
         keyExtractor={item => item._id}
-        data={influencers}
+        data={!fetching && influencers}
         renderItem={({ item }) => (
           <FlatList.Item>
             <Grid noWrap align="center">
