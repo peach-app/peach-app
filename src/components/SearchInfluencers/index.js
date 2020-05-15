@@ -29,11 +29,16 @@ export const SearchInfluencers = ({
   onActionPressed,
   action,
   actionedItems,
+  campaignId,
 }) => {
   const [searchInfluencers, { data, loading, networkStatus }] = useLazyQuery(
     SEARCH_INFLUENCERS,
     {
+      fetchPolicy: 'cache-and-network',
       notifyOnNetworkStatusChange: true,
+      variables: {
+        campaignId,
+      },
     }
   );
 
@@ -83,7 +88,7 @@ export const SearchInfluencers = ({
           </>
         }
         keyExtractor={item => item._id}
-        data={influencers}
+        data={!fetching && influencers}
         renderItem={({ item }) => (
           <FlatList.Item>
             <Grid noWrap align="center">
@@ -114,10 +119,12 @@ SearchInfluencers.defaultProps = {
   onActionPressed: null,
   action: null,
   actionedItems: null,
+  campaignId: null,
 };
 
 SearchInfluencers.propTypes = {
   onActionPressed: PropTypes.func,
   action: PropTypes.string,
   actionedItems: PropTypes.array,
+  campaignId: PropTypes.string,
 };

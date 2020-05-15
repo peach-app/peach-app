@@ -32,7 +32,7 @@ module.exports = gql`
     findThreadById(id: ID!): Thread
     findUserByID(id: ID!): User
 
-    searchUsers(type: UserType!, query: String!): UserPage
+    searchUsers(type: UserType!, query: String!, campaignId: String): UserPage
     getPaymentConfirmationStatus(id: ID!): PaymentIntent
 
     payouts(size: Int, after: ID, before: ID): PayoutsPage
