@@ -19,13 +19,12 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "bundleIdentifier": "io.peachapp.dashboard",
-      "buildNumber": "1.0.1",
+      "buildNumber": "1.0.2",
       "supportsTablet": false,
       "userInterfaceStyle": "automatic",
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "Enable Peach to access your camera roll to upload photos."
       }
     }
-
   }
 }
