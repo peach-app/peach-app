@@ -23,7 +23,7 @@
       "supportsTablet": false,
       "userInterfaceStyle": "automatic",
       "infoPlist": {
-        "NSPhotoLibraryUsageDescription": "Allow Peach to access your camera roll to upload an avatar image”
+        "NSPhotoLibraryUsageDescription": "Allow Peach to access your camera roll to upload an avatar image"
       }
     }
   }
