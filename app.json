@@ -19,16 +19,22 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "bundleIdentifier": "io.peachapp.dashboard",
-      "buildNumber": "1.0.2",
+      "buildNumber": "1.0.3",
       "supportsTablet": false,
       "userInterfaceStyle": "automatic",
       "infoPlist": {
-        "NSPhotoLibraryUsageDescription": "Enable Peach to access your camera roll to upload your profile photo."
+        "NSPhotoLibraryUsageDescription": "Allow Peach to access your camera roll to upload an avatar image"
       }
     },
     "android": {
       "package": "io.peachapp.dashboard",
-      "versionCode": 1
+      "versionCode": 1,
+      "permissions": [
+        "CAMERA",
+        "RECORD_AUDIO",
+        "READ_PHONE_STATE",
+        "READ_CONTACTS"
+      ]
     }
   }
 }
