@@ -6,6 +6,7 @@ import { AppearanceProvider } from 'react-native-appearance';
 import { ApolloProvider } from '@apollo/react-hooks';
 import Modal from 'react-modal';
 
+import { Button } from 'react-native';
 import { VerifyEmail } from './screens/VerifyEmail';
 import { PasswordReset } from './screens/PasswordReset';
 import client from './apollo-client';
@@ -14,6 +15,15 @@ import { App } from './App';
 import ThemeProvider from './theme-provider';
 
 Modal.setAppElement(document.body);
+
+const DeepLinkTest = () => (
+  <Button
+    onPress={() => {
+      console.log('yes');
+      window.location.href = 'exp://exp.host/@community/peach';
+    }}
+  />
+);
 
 const ProvidersHOC = ({ children }) => (
   <ApolloProvider client={client}>
@@ -34,6 +44,11 @@ export default () => (
       <Route path="/reset-password/:userId">
         <ProvidersHOC>
           <PasswordReset />
+        </ProvidersHOC>
+      </Route>
+      <Route path="/test-deeplink">
+        <ProvidersHOC>
+          <DeepLinkTest />
         </ProvidersHOC>
       </Route>
       <Route path="/">
