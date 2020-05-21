@@ -22,7 +22,7 @@ const WebViewModal = ({ uri, onClose }) => {
   }
 
   return (
-    <Modal isOpen>
+    <Modal isOpen onClose={onClose}>
       <Container>
         <WebView source={uri} onClose={onClose} />
       </Container>
