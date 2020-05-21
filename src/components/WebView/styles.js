@@ -4,7 +4,8 @@ import { Ionicons } from '@expo/vector-icons';
 export const Header = styled.View`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: ${({ canGoBack }) =>
+    canGoBack ? 'space-between' : 'flex-end'};
   padding: ${props => props.theme.spacingSmall}px
     ${props => props.theme.spacing}px;
 `;

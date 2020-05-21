@@ -22,6 +22,7 @@ const theme = {
     regular: 'futura-book',
     bold: 'futura-bold',
   },
+  opacityBackground: 'rgba(0, 0, 0, 0.5)',
 };
 
 export const darkModeOverrides = {
@@ -30,6 +31,7 @@ export const darkModeOverrides = {
   greyDark: '#555',
   grey: '#333',
   greyLight: '#222',
+  opacityBackground: 'rgba(255, 255, 255, 0.3)',
 };
 
 export default theme;

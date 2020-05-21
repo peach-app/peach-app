@@ -2,7 +2,7 @@ import styled from 'styled-components/native';
 import * as Animatable from 'react-native-animatable';
 
 export const Main = styled.View`
-  background: rgba(0, 0, 0, 0.5);
+  background: ${props => props.theme.opacityBackground};
   flex: 1;
 `;
 

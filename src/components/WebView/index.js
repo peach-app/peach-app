@@ -23,10 +23,12 @@ const WebViewComponent = ({ source, onClose }) => {
 
   return (
     <>
-      <Header>
-        <Main onPress={handleBackButton}>
-          <Icon name="ios-arrow-back" size={30} />
-        </Main>
+      <Header canGoBack={canGoBack}>
+        {canGoBack && (
+          <Main onPress={handleBackButton}>
+            <Icon name="ios-arrow-back" size={30} />
+          </Main>
+        )}
 
         <Main onPress={onClose}>
           <Icon name="ios-close" size={40} />
