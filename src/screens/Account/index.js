@@ -11,6 +11,8 @@ import {
   ProfileHeader,
   AccountDetailsBanner,
   ScrollView,
+  AppVersion,
+  Actions,
 } from 'components';
 import { useAuth } from 'contexts/Auth';
 import { useUser } from 'contexts/User';
@@ -83,6 +85,9 @@ export const Account = () => {
             />
           </Container>
         </ScrollView>
+        <Actions>
+          <AppVersion />
+        </Actions>
       </SafeAreaView>
     </>
   );
