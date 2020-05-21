@@ -30,7 +30,7 @@ const server = new ApolloServer({
     const userExists =
       activeUserRef && (await client.query(q.Exists(activeUserRef)));
 
-    if (!userExists) {
+    if (secret && !userExists) {
       throw new AuthenticationError('user must authenticate');
     }
 
