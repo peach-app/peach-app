@@ -20,7 +20,7 @@ const DeepLinkTest = () => (
   <Button
     onPress={() => {
       console.log('yes');
-      window.location.href = 'exp://exp.host/@community/peach';
+      window.location.href = 'peach-app://';
     }}
   />
 );
