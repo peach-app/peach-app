@@ -85,6 +85,9 @@ module.exports = async (
             date: Math.floor(Date.now() / 1000),
             ip: clientIp,
           },
+          business_profile: {
+            url: 'https://peachapp.io/',
+          },
         },
         {
           idempotencyKey,
