@@ -55,10 +55,7 @@ module.exports = async (root, { email }, { client, q, DocumentDataWithId }) => {
     throw new UserInputError('☝️ The email is not registered with us');
   }
 
-  // based on DEV env:
-  // dashboard.peachapp.io
-  // OR
-  const base = '192.168.1.108:19006';
+  const base = 'dashboard.peachapp.io';
   const resetUrl = `http://${base}/reset-password/${existingUser._id}`;
 
   await sendMail({
