@@ -59,6 +59,8 @@ export const NewPaymentMethod = ({
   );
 
   const formik = useFormik({
+    validateOnBlur: false,
+    validateOnChange: false,
     validationSchema,
     initialValues: {
       number: '',

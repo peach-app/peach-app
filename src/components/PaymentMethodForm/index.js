@@ -23,7 +23,6 @@ export const PaymentMethodForm = ({ formik }) => (
         value={formik.values.expiry}
         error={formik.errors.expiry}
         onChangeText={formik.handleChange('expiry')}
-        keyboardType="number-pad"
       />
     </Grid.Item>
 
