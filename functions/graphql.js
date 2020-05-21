@@ -25,12 +25,14 @@ const server = new ApolloServer({
 
     const userClient = secret && new faunadb.Client({ secret });
     const activeUserRef = secret && (await userClient.query(q.Identity()));
+    const client = new faunadb.Client({ secret: FAUNADB_SECRET });
 
-    if (secret && !activeUserRef) {
+    const userExists =
+      activeUserRef && (await client.query(q.Exists(activeUserRef)));
+
+    if (!userExists) {
       throw new AuthenticationError('user must authenticate');
     }
-
-    const client = new faunadb.Client({ secret: FAUNADB_SECRET });
 
     return {
       activeUserRef,
