@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import Constants from 'expo-constants';
 import { Text } from '../Text';
 
