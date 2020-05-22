@@ -42,29 +42,31 @@ export const OnboardingNavigator = () => {
       <Stack.Screen
         name="Welcome"
         component={welcomeScreen({
-          goTo: isBrand ? 'NewPaymentMethod' : 'SocialDetails',
+          goTo: isBrand
+            ? 'OnboardingNewPaymentMethod'
+            : 'OnboardingSocialDetails',
         })}
       />
       <Stack.Screen
-        name="SocialDetails"
+        name="OnboardingSocialDetails"
         component={withSkipOption(SocialDetails, {
-          skipTo: 'PersonalDetails',
+          skipTo: 'OnboardingPersonalDetails',
         })}
       />
       <Stack.Screen
-        name="PersonalDetails"
+        name="OnboardingPersonalDetails"
         component={withSkipOption(PersonalDetails, {
-          skipTo: 'NewBilling',
+          skipTo: 'OnboardingNewBilling',
         })}
       />
       <Stack.Screen
-        name="NewBilling"
+        name="OnboardingNewBilling"
         component={withSkipOption(NewBilling, {
           skipTo: 'CompleteOnboarding',
         })}
       />
       <Stack.Screen
-        name="NewPaymentMethod"
+        name="OnboardingNewPaymentMethod"
         component={withSkipOption(NewPaymentMethod, {
           skipTo: 'CompleteOnboarding',
         })}
