@@ -9,7 +9,7 @@ export const GraphQLErrors = ({ error }) => {
   return (
     <>
       {getOr([], 'graphQLErrors', error).map(({ message }, i) => (
-        <Text isCenter key={i}>
+        <Text isCenter key={i} isError>
           {message}
         </Text>
       ))}

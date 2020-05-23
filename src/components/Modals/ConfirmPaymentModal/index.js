@@ -16,6 +16,8 @@ import {
   UserPaymentMethods,
   Container,
   Card,
+  TextInput,
+  GraphQLErrors,
 } from 'components';
 import { useMutation } from '@apollo/react-hooks';
 import { formatToMoneyFromPence } from 'helpers';
@@ -47,6 +49,7 @@ const ConfirmPaymentModal = ({
   onConfirm,
   description,
   onClose,
+  showPromoCode,
 }) => {
   const [showForm, setShowForm] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
@@ -54,18 +57,19 @@ const ConfirmPaymentModal = ({
   const [confirmingPayment, setIsConfirmingPayment] = useState(null);
   const [confirmingError, setConfirmingError] = useState('');
 
-  const [createPayment] = useMutation(CREATE_CAMPAIGN_PAYMENT, {
-    onCompleted: async ({ createPayment: { id, redirectUrl } }) => {
-      if (redirectUrl) {
-        setLoading(false);
+  const [createPayment, { loading: paymentLoading, error }] = useMutation(
+    CREATE_CAMPAIGN_PAYMENT,
+    {
+      onCompleted: async ({ createPayment: { id, redirectUrl } }) => {
+        if (redirectUrl) {
+          setIsConfirmingPayment({ id, redirectUrl });
 
-        setIsConfirmingPayment({ id, redirectUrl });
-
-        return;
-      }
-      onConfirm(id);
-    },
-  });
+          return;
+        }
+        onConfirm(id);
+      },
+    }
+  );
 
   const handlePayment = paymentParams => {
     createPayment({
@@ -83,15 +87,17 @@ const ConfirmPaymentModal = ({
       number: '',
       expiry: '',
       cvc: '',
+      promoCode: '',
     },
     validateOnChange: false,
     validateOnBlur: false,
-    onSubmit: async ({ number, expiry, cvc }) => {
-      setLoading(true);
+    onSubmit: async ({ number, expiry, cvc, promoCode }) => {
       if (selectedId) {
-        handlePayment({ selectedId });
+        handlePayment({ selectedId, promoCode });
         return;
       }
+
+      setLoading(true);
 
       const [expMonth, expYear] = expiry.split('/');
       const { id, error } = await stripe.createToken({
@@ -111,7 +117,7 @@ const ConfirmPaymentModal = ({
         return;
       }
 
-      handlePayment({ id });
+      handlePayment({ id, promoCode });
     },
   });
 
@@ -154,6 +160,18 @@ const ConfirmPaymentModal = ({
                 <Title>{formatToMoneyFromPence(cost)}</Title>
               </Grid.Item>
 
+              {showPromoCode && (
+                <Grid.Item size={12}>
+                  <TextInput
+                    autoCapitalize="none"
+                    label="Discount code"
+                    error={formik.errors.promoCode}
+                    onChangeText={formik.handleChange('promoCode')}
+                    onBlur={formik.handleBlur('promoCode')}
+                  />
+                </Grid.Item>
+              )}
+
               {!showForm && (
                 <UserPaymentMethods
                   selectedId={selectedId}
@@ -184,6 +202,12 @@ const ConfirmPaymentModal = ({
                 </Grid.Item>
               )}
 
+              {error && (
+                <Grid.Item size={12}>
+                  <GraphQLErrors error={error} />
+                </Grid.Item>
+              )}
+
               <Grid.Item size={12}>
                 <Actions>
                   <Button
@@ -191,7 +215,7 @@ const ConfirmPaymentModal = ({
                     title="Confirm"
                     disabled={showForm ? false : !selectedId}
                     onPress={formik.handleSubmit}
-                    isLoading={loading}
+                    isLoading={loading || paymentLoading}
                   />
                 </Actions>
               </Grid.Item>
@@ -206,6 +230,7 @@ const ConfirmPaymentModal = ({
 ConfirmPaymentModal.defaultProps = {
   description: null,
   bookingId: null,
+  showPromoCode: false,
 };
 
 ConfirmPaymentModal.propTypes = {
@@ -215,6 +240,7 @@ ConfirmPaymentModal.propTypes = {
   bookingId: PropTypes.string,
   description: PropTypes.string,
   onClose: PropTypes.func.isRequired,
+  showPromoCode: PropTypes.bool,
 };
 
 export default ConfirmPaymentModal;
