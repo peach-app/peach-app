@@ -30,6 +30,6 @@ export const TabTitle = styled(Title)`
 export const BadgeWrapper = styled.View`
   position: absolute;
   top: 0px;
-  right: -8px;
+  right: -15px;
   z-index: 2;
 `;
