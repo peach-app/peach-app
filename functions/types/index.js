@@ -69,6 +69,7 @@ module.exports = gql`
       bookingId: ID
       token: String
       selectedId: String
+      promoCode: String
     ): PaymentIntent
     declineBooking(campaignId: ID): Boolean
   }

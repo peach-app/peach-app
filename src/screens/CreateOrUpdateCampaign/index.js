@@ -106,6 +106,7 @@ export const CreateOrUpdateCampaign = () => {
           onConfirm: paymentId =>
             submitCampaign({ ...campaignDetails, paymentId }),
           cost: CAMPAIGN_CREATION_COST,
+          showPromoCode: true,
           description:
             'You will he charged the following for the creation of this campaign. This charge is non-refundable.',
         },
