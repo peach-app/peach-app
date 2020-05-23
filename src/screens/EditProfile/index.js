@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -32,10 +33,16 @@ const validationSchema = Yup.object().shape({
     .nullable(),
 });
 
-export const EditProfile = () => {
+export const EditProfile = ({
+  rightActionLabel,
+  onRightActionPressed,
+  onComplete,
+}) => {
   const navigation = useNavigation();
   const [save, { loading, error }] = useMutation(SAVE_USER, {
     onCompleted: () => {
+      if (onComplete) return onComplete();
+
       navigation.goBack();
     },
   });
@@ -67,7 +74,11 @@ export const EditProfile = () => {
 
   return (
     <SafeAreaView>
-      <Header title="Edit Profile" />
+      <Header
+        title="Edit Profile"
+        rightActionLabel={rightActionLabel}
+        onRightActionPressed={onRightActionPressed}
+      />
       <KeyboardAvoidingView>
         <ScrollView>
           <Container>
@@ -114,4 +125,16 @@ export const EditProfile = () => {
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
+};
+
+EditProfile.defaultProps = {
+  rightActionLabel: null,
+  onRightActionPressed: null,
+  onComplete: null,
+};
+
+EditProfile.propTypes = {
+  rightActionLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  onRightActionPressed: PropTypes.func,
+  onComplete: PropTypes.func,
 };
