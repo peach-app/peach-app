@@ -12,14 +12,18 @@ const UserContext = React.createContext();
 export const Provider = ({ children }) => {
   const { setToken } = useAuth();
 
-  const { client, data, loading } = useQuery(GET_USER, {
-    onError: async err => {
-      if (err?.networkError?.statusCode === 400) {
-        await setToken(null);
-        client.resetStore();
-      }
-    },
-  });
+  const { client, data, loading, networkStatus, error, refetch } = useQuery(
+    GET_USER,
+    {
+      notifyOnNetworkStatusChange: true,
+      onError: async err => {
+        if (err?.networkError?.statusCode === 400) {
+          await setToken(null);
+          client.resetStore();
+        }
+      },
+    }
+  );
 
   const userType = get('user.type', data);
   const isBrand = userType === USER_TYPE.BRAND;
@@ -32,7 +36,17 @@ export const Provider = ({ children }) => {
   };
 
   return (
-    <UserContext.Provider value={{ user, isBrand, isInfluencer, loading }}>
+    <UserContext.Provider
+      value={{
+        user,
+        isBrand,
+        isInfluencer,
+        loading,
+        networkStatus,
+        error,
+        refetch,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );
