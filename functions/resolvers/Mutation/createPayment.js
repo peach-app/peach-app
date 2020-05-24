@@ -56,7 +56,9 @@ module.exports = async (
 
   const getPaymentCost = async () => {
     if (reason === PAYMENT_REASON.CREATE_CAMPAIGN) {
-      return CAMPAIGN_CREATION_COST - CAMPAIGN_CREATION_COST * discount;
+      return parseInt(
+        CAMPAIGN_CREATION_COST - CAMPAIGN_CREATION_COST * discount
+      );
     }
 
     if (reason === PAYMENT_REASON.ACCEPT_BOOKING) {
