@@ -13,6 +13,7 @@ import {
   FeedbackView,
   Container,
   Intro,
+  GraphQLErrors,
 } from 'components';
 import REQUEST_INFLUENCERS from './graphql';
 
@@ -24,10 +25,13 @@ const ConfirmRequestedInfluencersModal = ({
 }) => {
   const [isSuccessScreenVisible, setSuccessScreen] = useState(false);
 
-  const [requestInfluencers, { loading }] = useMutation(REQUEST_INFLUENCERS, {
-    refetchQueries: ['getCampaign'],
-    onCompleted: () => setSuccessScreen(true),
-  });
+  const [requestInfluencers, { loading, error }] = useMutation(
+    REQUEST_INFLUENCERS,
+    {
+      refetchQueries: ['getCampaign'],
+      onCompleted: () => setSuccessScreen(true),
+    }
+  );
 
   const onSubmitRequest = () => {
     requestInfluencers({
@@ -46,7 +50,7 @@ const ConfirmRequestedInfluencersModal = ({
   }, []);
 
   return (
-    <Modal isOpen>
+    <Modal isOpen onClose={onClose}>
       <Container>
         <Intro />
         <Grid justify="center" align="center">
@@ -79,6 +83,11 @@ const ConfirmRequestedInfluencersModal = ({
                   ))}
                 </Avatar.List>
               </Grid.Item>
+              {error && (
+                <Grid.Item size={12}>
+                  <GraphQLErrors error={error} />
+                </Grid.Item>
+              )}
               <Grid.Item size={12}>
                 <Actions>
                   <Button
