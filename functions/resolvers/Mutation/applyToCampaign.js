@@ -18,10 +18,6 @@ module.exports = async (
     throw new Error('User is not an influencer');
   }
 
-  if (!cost) {
-    throw new UserInputError('No pay rate supplied for application');
-  }
-
   const existingBooking = await client.query(
     q.Let(
       {
