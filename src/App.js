@@ -6,7 +6,8 @@ import { AppearanceProvider } from 'react-native-appearance';
 import { ApolloProvider } from '@apollo/react-hooks';
 import styled from 'styled-components/native';
 
-import { Splash } from 'components';
+import { NETWORK_STATUS } from 'consts';
+import { Splash, NetworkError } from 'components';
 import { useAuth, Provider as AuthProvider } from 'contexts/Auth';
 import { Provider as UserProvider, useUser } from 'contexts/User';
 
@@ -22,17 +23,26 @@ import ThemeProvider from './theme-provider';
 import client from './apollo-client';
 
 const AuthedApp = () => {
-  const { user, loading } = useUser();
+  const { user, loading, networkStatus, refetch } = useUser();
 
-  if (loading) {
+  if (loading && networkStatus === NETWORK_STATUS.FETCHING) {
     return <Splash />;
   }
 
-  if (!get('user.onboarded', user)) {
+  if (Boolean(get('user', user)) && !get('user.onboarded', user)) {
     return <OnboardingNavigator />;
   }
 
-  return <AuthedNavigator />;
+  if (get('user', user)) {
+    return <AuthedNavigator />;
+  }
+
+  return (
+    <NetworkError
+      refetch={refetch}
+      loading={loading && networkStatus === NETWORK_STATUS.REFETCHING}
+    />
+  );
 };
 
 const AppMain = () => {

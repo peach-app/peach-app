@@ -54,3 +54,4 @@ export * from './KeyboardAvoidingView';
 export * from './Pill';
 export * from './ScrollView';
 export * from './AppVersion';
+export * from './NetworkError';
