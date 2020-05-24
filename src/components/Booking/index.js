@@ -33,6 +33,8 @@ export const Booking = ({ _id, cost, state, note, user, isLoading }) => {
     },
   });
 
+  const isPaidBooking = cost > 0;
+
   return (
     <>
       <Grid align="center">
@@ -58,14 +60,16 @@ export const Booking = ({ _id, cost, state, note, user, isLoading }) => {
                   {startCase(get('name', user))}
                 </SkeletonText>
               </Text>
-              {!isLoading && state !== BOOKING_STATE.REQUESTED && (
-                <PayRate>
-                  <Pill
-                    icon="ios-wallet"
-                    value={formatToMoneyFromPence(cost)}
-                  />
-                </PayRate>
-              )}
+              {!isLoading &&
+                state !== BOOKING_STATE.REQUESTED &&
+                isPaidBooking && (
+                  <PayRate>
+                    <Pill
+                      icon="ios-wallet"
+                      value={formatToMoneyFromPence(cost)}
+                    />
+                  </PayRate>
+                )}
             </Grid.Item>
           </Grid>
         </Grid.Item>
@@ -83,25 +87,32 @@ export const Booking = ({ _id, cost, state, note, user, isLoading }) => {
                 name="ios-checkmark-circle-outline"
                 size={32}
                 onPress={() => {
-                  openModal({
-                    type: MODAL_TYPES.CONFIRM_PAYMENT,
-                    props: {
-                      cost,
-                      bookingId: _id,
-                      reason: PAYMENT_REASON.ACCEPT_BOOKING,
-                      description: `You will be charged the following to accept ${startCase(
-                        get('name', user)
-                      )} onto your campaign. This charge can be refunded should the work not be carried out by the completion date.`,
-                      onClose: closeModal,
-                      onConfirm: ({ cardId, token }) => {
-                        updateBooking({
-                          variables: {
-                            state: BOOKING_STATE.ACCEPTED,
-                            cardId,
-                            token,
-                          },
-                        });
+                  if (isPaidBooking) {
+                    openModal({
+                      type: MODAL_TYPES.CONFIRM_PAYMENT,
+                      props: {
+                        cost,
+                        bookingId: _id,
+                        reason: PAYMENT_REASON.ACCEPT_BOOKING,
+                        description: `You will be charged the following to accept ${startCase(
+                          get('name', user)
+                        )} onto your campaign. This charge can be refunded should the work not be carried out by the completion date.`,
+                        onClose: closeModal,
+                        onConfirm: ({ cardId, token }) => {
+                          updateBooking({
+                            variables: {
+                              state: BOOKING_STATE.ACCEPTED,
+                              cardId,
+                              token,
+                            },
+                          });
+                        },
                       },
+                    });
+                  }
+                  updateBooking({
+                    variables: {
+                      state: BOOKING_STATE.ACCEPTED,
                     },
                   });
                 }}
