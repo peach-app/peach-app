@@ -56,7 +56,7 @@ module.exports = async (
 
   const getPaymentCost = async () => {
     if (reason === PAYMENT_REASON.CREATE_CAMPAIGN) {
-      return parseInt(
+      return Math.ceil(
         CAMPAIGN_CREATION_COST - CAMPAIGN_CREATION_COST * discount
       );
     }
