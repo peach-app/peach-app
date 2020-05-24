@@ -27,7 +27,7 @@ import {
 } from 'components';
 import { useUser } from 'contexts/User';
 import { NETWORK_STATUS, BOOKING_STATE } from 'consts';
-import { formatToMoneyFromPence } from 'helpers';
+import { formatCampaignBudget } from 'helpers';
 
 import { RequestActions, AcceptedActions } from './components';
 import GET_CAMPAIGN from './graphql/get-campaign';
@@ -143,7 +143,7 @@ export const Campaign = () => {
                       <Label>Budget</Label>
                       <Pill
                         icon="ios-wallet"
-                        value={formatToMoneyFromPence(
+                        value={formatCampaignBudget(
                           get('findCampaignById.budget', campaign)
                         )}
                       />

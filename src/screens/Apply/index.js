@@ -22,9 +22,7 @@ import {
 import APPLY_TO_CAMPAIGN from './graphql/apply-to-campaign';
 
 const validationSchema = Yup.object().shape({
-  cost: Yup.number()
-    .min(500, 'Pay rate must be more than £5.00')
-    .required('Please enter your pay rate for this campaign'),
+  cost: Yup.number().min(500, 'Pay rate must be more than £5.00'),
 });
 
 export const Apply = () => {
