@@ -6,7 +6,7 @@ import get from 'lodash/fp/get';
 import FormatDate from 'date-fns/format';
 
 import { useUser } from 'contexts/User';
-import { formatToMoneyFromPence } from 'helpers';
+import { formatCampaignBudget } from 'helpers';
 
 import { MainTitle, Description, User, ArrowIcon, Pills } from './styles';
 import { Grid } from '../Grid';
@@ -65,7 +65,7 @@ export const CampaignCard = ({
           )}
           {!isLoading && isBrand && (
             <Pills>
-              <Pill icon="ios-wallet" value={formatToMoneyFromPence(budget)} />
+              <Pill icon="ios-wallet" value={formatCampaignBudget(budget)} />
               <Pill
                 icon="ios-calendar"
                 value={FormatDate(new Date(dueDate), 'do MMM')}
