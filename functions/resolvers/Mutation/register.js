@@ -46,7 +46,7 @@ module.exports = async (
 
   const inviteCode = await client.query(
     q.Let(
-      { invite: q.Match(q.Index('invite_by_code'), code) },
+      { invite: q.Match(q.Index('invite_by_code'), code.toLowerCase()) },
       q.If(q.Exists(q.Var('invite')), q.Get(q.Var('invite')), false)
     )
   );
