@@ -20,6 +20,7 @@ export const CampaignCard = ({
   name,
   description,
   budget,
+  unpaid,
   dueDate,
   onPress,
   ActionItem,
@@ -65,7 +66,10 @@ export const CampaignCard = ({
           )}
           {!isLoading && isBrand && (
             <Pills>
-              <Pill icon="ios-wallet" value={formatToMoneyFromPence(budget)} />
+              <Pill
+                icon="ios-wallet"
+                value={unpaid ? 'Unpaid' : formatToMoneyFromPence(budget)}
+              />
               <Pill
                 icon="ios-calendar"
                 value={FormatDate(new Date(dueDate), 'do MMM')}
@@ -90,6 +94,7 @@ CampaignCard.defaultProps = {
   name: '',
   description: '',
   budget: null,
+  unpaid: false,
   dueDate: null,
   user: null,
   onPress: null,
@@ -103,6 +108,7 @@ CampaignCard.propTypes = {
   name: PropTypes.string,
   description: PropTypes.string,
   budget: PropTypes.number,
+  unpaid: PropTypes.bool,
   dueDate: PropTypes.string,
   user: PropTypes.shape({
     name: PropTypes.string,
@@ -118,6 +124,7 @@ export const CampaignCardFragment = gql`
     name
     description
     budget
+    unpaid
     dueDate
     user {
       name

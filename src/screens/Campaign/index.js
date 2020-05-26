@@ -143,9 +143,13 @@ export const Campaign = () => {
                       <Label>Budget</Label>
                       <Pill
                         icon="ios-wallet"
-                        value={formatToMoneyFromPence(
-                          get('findCampaignById.budget', campaign)
-                        )}
+                        value={
+                          get('findCampaignById.unpaid', campaign)
+                            ? 'Unpaid'
+                            : formatToMoneyFromPence(
+                                get('findCampaignById.budget', campaign)
+                              )
+                        }
                       />
                     </Grid.Item>
                   )}

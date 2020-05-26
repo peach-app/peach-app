@@ -16,6 +16,7 @@ export default gql`
       description
       dueDate
       budget
+      unpaid
       user {
         _id
         name
