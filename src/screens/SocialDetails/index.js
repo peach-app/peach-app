@@ -107,7 +107,7 @@ export const SocialDetails = ({
                 <TextInput
                   autoCapitalize="none"
                   value={formik.values.facebook}
-                  label="Facebook (Page URL)"
+                  label="Facebook (Username)"
                   error={formik.errors.facebook}
                   onChangeText={formik.handleChange('facebook')}
                 />
