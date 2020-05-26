@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { RefreshControl } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import getOr from 'lodash/fp/getOr';
@@ -13,24 +13,38 @@ import {
   Intro,
   CampaignCard,
   NoResultText,
+  Tabs,
 } from 'components';
 import { formatRefs } from 'helpers';
 
-import { NETWORK_STATUS } from 'consts';
+import { NETWORK_STATUS, BUDGET_TYPE } from 'consts';
 import GET_DISCOVER_CAMPAIGNS from './graphql/get-discover-campaigns';
 
 export const DiscoverCampaigns = () => {
+  const [activeTabIndex, setTabIndex] = useState(0);
   const navigation = useNavigation();
+  const budgetType = [undefined, BUDGET_TYPE.PAID, BUDGET_TYPE.UNPAID][
+    activeTabIndex
+  ];
   const { data, loading, networkStatus, refetch, fetchMore } = useQuery(
     GET_DISCOVER_CAMPAIGNS,
     {
       notifyOnNetworkStatusChange: true,
+      fetchPolicy: 'cache-and-network',
+      variables: {
+        type: budgetType,
+      },
     }
   );
 
   const campaigns = getOr([], 'discover.campaigns.data', data);
 
-  const fetching = loading && networkStatus === NETWORK_STATUS.FETCHING;
+  const tabs = ['All', 'Paid', 'Unpaid'];
+
+  const fetching =
+    loading &&
+    (networkStatus === NETWORK_STATUS.FETCHING ||
+      networkStatus === NETWORK_STATUS.SET_VARIABLES);
 
   return (
     <SafeAreaView>
@@ -50,6 +64,7 @@ export const DiscoverCampaigns = () => {
           fetchMore({
             variables: {
               after,
+              type: budgetType,
             },
             updateQuery: (cache, { fetchMoreResult }) => ({
               discover: {
@@ -71,6 +86,14 @@ export const DiscoverCampaigns = () => {
               <Intro>
                 <Title>Discover</Title>
               </Intro>
+            </FlatList.Item>
+
+            <FlatList.Item>
+              <Tabs
+                activeTabIndex={activeTabIndex}
+                onTabPress={index => setTabIndex(index)}
+                tabs={tabs}
+              />
             </FlatList.Item>
 
             {!fetching && campaigns.length <= 0 && (

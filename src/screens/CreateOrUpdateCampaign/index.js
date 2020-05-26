@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useFormik } from 'formik';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import get from 'lodash/fp/get';
+import getOr from 'lodash/fp/getOr';
+import * as Yup from 'yup';
 
 import {
   SafeAreaView,
@@ -22,22 +24,36 @@ import {
 import {
   CAMPAIGN_TYPE,
   MODAL_TYPES,
-  PAYMENT_REASON,
-  CAMPAIGN_CREATION_COST,
+  FORM_ERROR_MESSAGES,
+  BUDGET_TYPE,
 } from 'consts';
 import { useModal } from 'contexts/Modal';
 import { Main, PushToTop, Graphic } from './styles';
 
-import { validationSchema, FORM_INITIAL_VALUES } from './consts';
 import GET_CAMPAIGN from './graphql/get-campaign';
 import CREATE_OR_UPDATE_CAMPAIGN_MUTATION from './graphql/create-or-update-campaign';
+
+export const validationSchema = Yup.object().shape({
+  name: Yup.string()
+    .max(45)
+    .required('Your campaign needs a name.'),
+  description: Yup.string().required('Please describe your campaign'),
+  budget: Yup.number(FORM_ERROR_MESSAGES.INVALID_NUMBER).min(
+    500,
+    FORM_ERROR_MESSAGES.MIN_BUDGET
+  ),
+  dueDate: Yup.string().required(
+    'What is the completion date for the campaign?'
+  ),
+  isPrivate: Yup.bool().nullable(),
+  isUnpaid: Yup.bool().nullable(),
+});
 
 export const CreateOrUpdateCampaign = () => {
   const navigation = useNavigation();
 
   const { openModal } = useModal();
 
-  const [activeTab, setTab] = useState(0);
   const { params } = useRoute();
 
   const campaignId = get('campaignId', params);
@@ -48,9 +64,7 @@ export const CreateOrUpdateCampaign = () => {
     },
   });
 
-  const campaign = get('findCampaignById', data);
-
-  const [createOrUpdateCampaign, { loading: saving }] = useMutation(
+  const [createOrUpdateCampaign, { loading: saving, error }] = useMutation(
     CREATE_OR_UPDATE_CAMPAIGN_MUTATION,
     {
       refetchQueries: ['getCampaigns', 'getCampaign'],
@@ -67,49 +81,33 @@ export const CreateOrUpdateCampaign = () => {
     }
   );
 
-  const submitCampaign = ({
-    name,
-    description,
-    budget,
-    dueDate,
-    paymentId,
-  }) => {
-    createOrUpdateCampaign({
-      variables: {
-        campaign: {
-          ...(Boolean(campaignId) && { _id: campaignId }),
-          name,
-          description,
-          budget: budget.toString(),
-          ...(!campaignId && { dueDate }),
-          private: activeTab === 1,
-          paymentId,
-        },
-      },
-    });
-  };
-
   const formik = useFormik({
     validateOnChange: false,
     validateOnBlur: false,
-    initialValues: campaign || FORM_INITIAL_VALUES,
+    enableReinitialize: true,
+    initialValues: {
+      name: getOr('', 'findCampaignById.name', data),
+      description: getOr('', 'findCampaignById.description', data),
+      budget: getOr('0000', 'findCampaignById.budget', data),
+      dueDate: getOr('', 'findCampaignById.dueDate', data),
+      isPrivate: getOr(false, 'findCampaignById.private', data),
+      isUnpaid: getOr(false, 'findCampaignById.unpaid', data),
+    },
     validationSchema,
-    onSubmit: campaignDetails => {
-      if (campaignId) {
-        submitCampaign(campaignDetails);
-        return;
-      }
-
-      openModal({
-        type: MODAL_TYPES.CONFIRM_PAYMENT,
-        props: {
-          reason: PAYMENT_REASON.CREATE_CAMPAIGN,
-          onConfirm: paymentId =>
-            submitCampaign({ ...campaignDetails, paymentId }),
-          cost: CAMPAIGN_CREATION_COST,
-          showPromoCode: true,
-          description:
-            'You will he charged the following for the creation of this campaign. This charge is non-refundable.',
+    onSubmit: ({ name, description, budget, dueDate, isPrivate, isUnpaid }) => {
+      createOrUpdateCampaign({
+        variables: {
+          campaign: {
+            name,
+            description,
+            budget: budget.toString(),
+            ...(Boolean(campaignId) && { _id: campaignId }),
+            ...(!campaignId && {
+              dueDate,
+              private: isPrivate,
+              unpaid: isUnpaid,
+            }),
+          },
         },
       });
     },
@@ -128,8 +126,10 @@ export const CreateOrUpdateCampaign = () => {
                 {!campaignId && (
                   <Grid.Item size={12}>
                     <Tabs
-                      activeTabIndex={activeTab}
-                      onTabPress={setTab}
+                      activeTabIndex={formik.values.isPrivate ? 1 : 0}
+                      onTabPress={tabIndex =>
+                        formik.setFieldValue('isPrivate', tabIndex === 1)
+                      }
                       tabs={Object.values(CAMPAIGN_TYPE)}
                     />
                   </Grid.Item>
@@ -155,33 +155,42 @@ export const CreateOrUpdateCampaign = () => {
                     value={formik.values.description}
                   />
                 </Grid.Item>
-                <Grid.Item size={12}>
-                  <Grid noWrap>
+                {!campaignId && (
+                  <Grid.Item size={12}>
+                    <Tabs
+                      activeTabIndex={formik.values.isUnpaid ? 1 : 0}
+                      onTabPress={tabIndex =>
+                        formik.setFieldValue('isUnpaid', tabIndex === 1)
+                      }
+                      tabs={Object.values(BUDGET_TYPE)}
+                    />
+                  </Grid.Item>
+                )}
+                {!formik.values.isUnpaid && (
+                  <Grid.Item size={6}>
+                    <MoneyInput
+                      label="Budget (GBP)"
+                      name="budget"
+                      error={formik.errors.budget}
+                      onChange={formik.handleChange('budget')}
+                      value={formik.values.budget}
+                    />
+                  </Grid.Item>
+                )}
+                {!campaignId && (
+                  <PushToTop>
                     <Grid.Item size={6}>
-                      <MoneyInput
-                        label="Budget (GBP)"
-                        name="budget"
-                        error={formik.errors.budget}
-                        onChange={formik.handleChange('budget')}
-                        value={formik.values.budget}
+                      <DatePicker
+                        label="Completion Date"
+                        error={formik.errors.dueDate}
+                        onChange={selectedDate => {
+                          formik.setFieldValue('dueDate', selectedDate);
+                        }}
+                        value={formik.values.dueDate}
                       />
                     </Grid.Item>
-                    {!campaignId && (
-                      <PushToTop>
-                        <Grid.Item size={6}>
-                          <DatePicker
-                            label="Completion Date"
-                            error={formik.errors.dueDate}
-                            onChange={selectedDate => {
-                              formik.setFieldValue('dueDate', selectedDate);
-                            }}
-                            value={formik.values.dueDate}
-                          />
-                        </Grid.Item>
-                      </PushToTop>
-                    )}
-                  </Grid>
-                </Grid.Item>
+                  </PushToTop>
+                )}
               </Grid>
             </Main>
           </Container>

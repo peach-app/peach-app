@@ -28,6 +28,11 @@ export const CAMPAIGN_TYPE = {
   PRIVATE: 'PRIVATE',
 };
 
+export const BUDGET_TYPE = {
+  PAID: 'PAID',
+  UNPAID: 'UNPAID',
+};
+
 export const BOOKING_STATE = {
   ACCEPTED: 'ACCEPTED',
   DECLINED: 'DECLINED',

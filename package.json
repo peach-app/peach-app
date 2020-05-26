@@ -1,9 +1,6 @@
 {
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start:netlify": "netlify dev",
-    "start:expo": "expo start",
-    "start": "run-p start:**",
     "deploy:db": "node fauna",
     "deploy:build:web": "expo build:web",
     "deploy:web": "netlify deploy --prod",

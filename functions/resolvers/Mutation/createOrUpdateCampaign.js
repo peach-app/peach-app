@@ -1,6 +1,5 @@
 const omit = require('lodash/omit');
 const { USER_TYPE } = require('../../consts');
-const stripe = require('../../helpers/stripe');
 
 module.exports = async (
   _,
@@ -31,7 +30,7 @@ module.exports = async (
           DocumentDataWithId(
             q.Update(q.Ref(q.Collection('Campaign'), campaign._id), {
               data: {
-                ...omit(campaign, ['_id', 'private']),
+                ...omit(campaign, ['_id', 'private', 'unpaid']),
               },
             })
           ),
@@ -40,12 +39,6 @@ module.exports = async (
         )
       )
     );
-  }
-
-  const { status } = await stripe.paymentIntents.retrieve(campaign.paymentId);
-
-  if (status !== 'succeeded') {
-    throw new Error('The campaign fee has not been paid');
   }
 
   return client.query(

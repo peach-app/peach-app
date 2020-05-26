@@ -95,7 +95,12 @@ module.exports = gql`
   # //////////////// #
 
   type Discover {
-    campaigns(size: Int, after: [RefInput], before: [RefInput]): CampaignPage
+    campaigns(
+      size: Int
+      after: [RefInput]
+      before: [RefInput]
+      type: BudgetType
+    ): CampaignPage
     popularUsers(type: UserType!): UserPage
   }
 
@@ -105,6 +110,11 @@ module.exports = gql`
 
   type Media {
     url: String!
+  }
+
+  enum BudgetType {
+    PAID
+    UNPAID
   }
 
   enum UserType {
@@ -273,6 +283,7 @@ module.exports = gql`
     name: String
     description: String
     private: Boolean
+    unpaid: Boolean
     budget: Float
     bookings(state: BookingState): BookingPage
     userBooking: Booking
@@ -336,8 +347,8 @@ module.exports = gql`
     name: String!
     description: String!
     dueDate: String
-    private: Boolean!
-    budget: String!
-    paymentId: String
+    private: Boolean
+    unpaid: Boolean
+    budget: String
   }
 `;

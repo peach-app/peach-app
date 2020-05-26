@@ -27,6 +27,7 @@ console.log({ FAUNADB_SECRET });
     // Indexes
     await require('./indexes/all_campaign')();
     await require('./indexes/all_campaign_by_private')();
+    await require('./indexes/all_campaign_by_unpaid')();
     await require('./indexes/message_by_thread')();
     await require('./indexes/booking_by_campaign')();
     await require('./indexes/booking_by_state')();

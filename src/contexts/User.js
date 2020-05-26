@@ -17,7 +17,7 @@ export const Provider = ({ children }) => {
     {
       notifyOnNetworkStatusChange: true,
       onError: async err => {
-        if (err?.networkError?.statusCode === 400) {
+        if (get('networkError.statusCode', err) === 400) {
           await setToken(null);
           client.resetStore();
         }
