@@ -132,6 +132,8 @@ module.exports = gql`
     addressLine2: String
     city: String
     postalCode: String
+    notificationsToken: String
+    hasEnabledPushNotifications: Boolean
   }
 
   input SocialAccountsInput {
@@ -175,6 +177,9 @@ module.exports = gql`
     socialAccounts: SocialAccounts
 
     payouts: PayoutsPage
+
+    notificationsToken: String
+    hasEnabledPushNotifications: Boolean
   }
 
   type PayoutsPage {

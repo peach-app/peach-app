@@ -10,6 +10,7 @@ import {
   NewBilling,
   NewPaymentMethod,
   EditProfile,
+  Notifications,
 } from 'screens';
 
 import { createStackNavigator } from './components';
@@ -75,6 +76,12 @@ export const OnboardingNavigator = () => {
       <Stack.Screen
         name="OnboardingEditProfile"
         component={withSkipOption(EditProfile, {
+          skipTo: 'OnboardingNotifications',
+        })}
+      />
+      <Stack.Screen
+        name="OnboardingNotifications"
+        component={withSkipOption(Notifications, {
           skipTo: 'CompleteOnboarding',
         })}
       />

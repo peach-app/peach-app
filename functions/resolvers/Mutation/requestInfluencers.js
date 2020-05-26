@@ -1,9 +1,10 @@
 const { BOOKING_STATE } = require('../../consts');
+const notifyRequestedInfluencers = require('../../notifications/notifyRequestedInfluencers');
 
 module.exports = async (
   root,
   { requestedInfluencers, campaignId },
-  { client, q, activeUserRef }
+  { client, q, activeUserRef, DocumentDataWithId }
 ) => {
   await client.query(
     q.Let(
@@ -50,6 +51,29 @@ module.exports = async (
       )
     )
   );
+
+  let influencersToNotify;
+  try {
+    influencersToNotify = await client.query(
+      q.Map(
+        requestedInfluencers,
+        q.Lambda(
+          '_id',
+          DocumentDataWithId(q.Get(q.Ref(q.Collection('User'), q.Var('_id'))))
+        )
+      )
+    );
+  } catch (e) {
+    console.log('There was a problem getting the influencer profiles', e);
+  }
+
+  if (influencersToNotify.length > 0) {
+    const {
+      data: { name },
+    } = await client.query(q.Get(activeUserRef));
+
+    notifyRequestedInfluencers(influencersToNotify, name);
+  }
 
   return true;
 };

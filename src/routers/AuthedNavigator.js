@@ -24,6 +24,8 @@ import {
   PaymentMethods,
   Support,
   Payouts,
+  Notifications,
+  NotificationsSettings,
 } from 'screens';
 
 import { createStackNavigator, createBottomTabNavigator } from './components';
@@ -93,5 +95,10 @@ export const AuthedNavigator = () => (
     <Stack.Screen name="NewPaymentMethod" component={NewPaymentMethod} />
     <Stack.Screen name="Support" component={Support} />
     <Stack.Screen name="Payouts" component={Payouts} />
+    <Stack.Screen name="Notifications" component={Notifications} />
+    <Stack.Screen
+      name="NotificationsSettings"
+      component={NotificationsSettings}
+    />
   </Stack.Navigator>
 );

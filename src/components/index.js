@@ -55,3 +55,4 @@ export * from './Pill';
 export * from './ScrollView';
 export * from './AppVersion';
 export * from './NetworkError';
+export * from './Switch';
