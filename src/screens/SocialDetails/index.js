@@ -59,7 +59,7 @@ export const SocialDetails = ({
       createOrUpdateSocialAccounts({
         variables: {
           socialAccounts: {
-            instagram,
+            instagram: instagram.replace('@', ''),
             twitter,
             facebook,
             youTube,

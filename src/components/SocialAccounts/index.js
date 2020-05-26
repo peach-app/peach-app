@@ -52,11 +52,6 @@ export const SocialAccounts = ({ socialAccounts, onSocialAccountPressed }) => (
           <IconWrapper
             key={account}
             onPress={() =>
-              console.log(
-                'HEYYYY',
-                value,
-                ICON_PROPS[account].url.replace('{account}', value)
-              ) ||
               onSocialAccountPressed(
                 ICON_PROPS[account].url.replace('{account}', value)
               )
