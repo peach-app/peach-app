@@ -47,6 +47,7 @@ export const PasswordResetEmail = () => {
   );
 
   const formik = useFormik({
+    validateOnChange: false,
     validateOnBlur: false,
     initialValues: {
       email: '',

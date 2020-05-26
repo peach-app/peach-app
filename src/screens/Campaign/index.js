@@ -238,13 +238,15 @@ export const Campaign = () => {
             />
           )}
           {userBookingState === BOOKING_STATE.APPLIED && (
-            <Text>Your application is pending for this campaign.</Text>
+            <Text isCenter>Your application is pending for this campaign.</Text>
           )}
           {userBookingState === BOOKING_STATE.REQUESTED && (
             <RequestActions campaignId={id} />
           )}
           {userBookingState === BOOKING_STATE.DECLINED && (
-            <Text>Your application for this campaign was unsuccessful.</Text>
+            <Text isCenter>
+              Your application for this campaign was unsuccessful.
+            </Text>
           )}
           {userBookingState === BOOKING_STATE.COMPLETE && (
             <Text

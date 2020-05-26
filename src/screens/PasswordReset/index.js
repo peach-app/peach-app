@@ -39,6 +39,7 @@ export const PasswordReset = () => {
     onCompleted: () => setResetDone(true),
   });
   const formik = useFormik({
+    validateOnChange: false,
     validateOnBlur: false,
     initialValues: {
       password: '',

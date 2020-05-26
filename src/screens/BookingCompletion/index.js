@@ -34,6 +34,8 @@ export const BookingCompletion = () => {
   });
 
   const formik = useFormik({
+    validateOnChange: false,
+    validateOnBlur: false,
     initialValues: {
       note: '',
     },

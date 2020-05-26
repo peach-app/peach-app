@@ -90,6 +90,7 @@ export const CreateOrUpdateCampaign = () => {
   };
 
   const formik = useFormik({
+    validateOnChange: false,
     validateOnBlur: false,
     initialValues: campaign || FORM_INITIAL_VALUES,
     validationSchema,

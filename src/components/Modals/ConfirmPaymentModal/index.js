@@ -82,6 +82,8 @@ const ConfirmPaymentModal = ({
   };
 
   const formik = useFormik({
+    validateOnChange: false,
+    validateOnBlur: false,
     validationSchema: showForm && validationSchema,
     initialValues: {
       number: '',
@@ -89,8 +91,6 @@ const ConfirmPaymentModal = ({
       cvc: '',
       promoCode: '',
     },
-    validateOnChange: false,
-    validateOnBlur: false,
     onSubmit: async ({ number, expiry, cvc, promoCode }) => {
       if (selectedId) {
         handlePayment({ selectedId, promoCode });

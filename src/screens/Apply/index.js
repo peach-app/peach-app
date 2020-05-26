@@ -39,6 +39,8 @@ export const Apply = () => {
   });
 
   const formik = useFormik({
+    validateOnChange: false,
+    validateOnBlur: false,
     validationSchema,
     initialValues: {
       cost: '',

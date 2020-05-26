@@ -47,6 +47,8 @@ export const NewBilling = ({
   );
 
   const formik = useFormik({
+    validateOnChange: false,
+    validateOnBlur: false,
     initialValues: {
       name: '',
       number: '',
