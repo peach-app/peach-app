@@ -1,4 +1,5 @@
 const omit = require('lodash/omit');
+const { UserInputError } = require('apollo-server-lambda');
 const { USER_TYPE } = require('../../consts');
 
 module.exports = async (
@@ -12,6 +13,14 @@ module.exports = async (
 
   if (!isBrand) {
     throw new Error('User is not a brand');
+  }
+
+  if (!campaign.unpaid && campaign.budget < 500) {
+    throw new UserInputError('Budget must be over £5.00 for paid campaigns');
+  }
+
+  if (campaign.unpaid && campaign.budget > 0) {
+    throw new UserInputError('Unpaid campaigns must have a budget of 0');
   }
 
   if (campaign._id) {

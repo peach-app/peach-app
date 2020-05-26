@@ -14,6 +14,7 @@ export const MoneyInput = ({ value, onChange, label, error, ...props }) => (
       keyboardType="decimal-pad"
       value={formatToMoneyFromPence(value)}
       onChangeText={v => {
+        console.log(formatToPenceFromMoney(v));
         onChange(formatToPenceFromMoney(v));
       }}
       {...props}
@@ -21,12 +22,12 @@ export const MoneyInput = ({ value, onChange, label, error, ...props }) => (
   </Main>
 );
 
-TextInput.defaultProps = {
+MoneyInput.defaultProps = {
   label: null,
   error: null,
 };
 
-TextInput.propTypes = {
+MoneyInput.propTypes = {
   label: PropTypes.string,
   error: PropTypes.string,
 };

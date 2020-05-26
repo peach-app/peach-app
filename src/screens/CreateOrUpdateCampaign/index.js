@@ -20,13 +20,9 @@ import {
   DatePicker,
   KeyboardAvoidingView,
   ScrollView,
+  GraphQLErrors,
 } from 'components';
-import {
-  CAMPAIGN_TYPE,
-  MODAL_TYPES,
-  FORM_ERROR_MESSAGES,
-  BUDGET_TYPE,
-} from 'consts';
+import { CAMPAIGN_TYPE, MODAL_TYPES, BUDGET_TYPE } from 'consts';
 import { useModal } from 'contexts/Modal';
 import { Main, PushToTop, Graphic } from './styles';
 
@@ -38,10 +34,6 @@ export const validationSchema = Yup.object().shape({
     .max(45)
     .required('Your campaign needs a name.'),
   description: Yup.string().required('Please describe your campaign'),
-  budget: Yup.number(FORM_ERROR_MESSAGES.INVALID_NUMBER).min(
-    500,
-    FORM_ERROR_MESSAGES.MIN_BUDGET
-  ),
   dueDate: Yup.string().required(
     'What is the completion date for the campaign?'
   ),
@@ -88,19 +80,27 @@ export const CreateOrUpdateCampaign = () => {
     initialValues: {
       name: getOr('', 'findCampaignById.name', data),
       description: getOr('', 'findCampaignById.description', data),
-      budget: getOr('0000', 'findCampaignById.budget', data),
+      budget: getOr('0', 'findCampaignById.budget', data),
       dueDate: getOr('', 'findCampaignById.dueDate', data),
       isPrivate: getOr(false, 'findCampaignById.private', data),
       isUnpaid: getOr(false, 'findCampaignById.unpaid', data),
     },
     validationSchema,
-    onSubmit: ({ name, description, budget, dueDate, isPrivate, isUnpaid }) => {
+    onSubmit: (
+      { name, description, budget, dueDate, isPrivate, isUnpaid },
+      { setFieldError }
+    ) => {
+      if (!isUnpaid && parseInt(budget, 10) < 500) {
+        setFieldError('budget', 'Budget must be over £5.00 for paid campaigns');
+        return;
+      }
+
       createOrUpdateCampaign({
         variables: {
           campaign: {
             name,
             description,
-            budget: budget.toString(),
+            budget: isUnpaid ? 0 : parseInt(budget, 10),
             ...(Boolean(campaignId) && { _id: campaignId }),
             ...(!campaignId && {
               dueDate,
@@ -190,6 +190,12 @@ export const CreateOrUpdateCampaign = () => {
                       />
                     </Grid.Item>
                   </PushToTop>
+                )}
+
+                {error && (
+                  <Grid.Item size={12}>
+                    <GraphQLErrors error={error} />
+                  </Grid.Item>
                 )}
               </Grid>
             </Main>

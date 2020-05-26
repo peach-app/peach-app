@@ -69,7 +69,6 @@ module.exports = gql`
       bookingId: ID
       token: String
       selectedId: String
-      promoCode: String
     ): PaymentIntent
     declineBooking(campaignId: ID): Boolean
   }
@@ -284,7 +283,7 @@ module.exports = gql`
     description: String
     private: Boolean
     unpaid: Boolean
-    budget: Float
+    budget: Int
     bookings(state: BookingState): BookingPage
     userBooking: Booking
     dueDate: String
@@ -349,6 +348,6 @@ module.exports = gql`
     dueDate: String
     private: Boolean
     unpaid: Boolean
-    budget: String
+    budget: Int
   }
 `;

@@ -1,5 +1,3 @@
-export const CAMPAIGN_CREATION_COST = 348;
-
 export const NETWORK_STATUS = {
   FETCHING: 1,
   SET_VARIABLES: 2,
@@ -8,14 +6,6 @@ export const NETWORK_STATUS = {
   POLL: 6,
   READY: 7,
   ERROR: 8,
-};
-
-export const FORM_ERROR_MESSAGES = {
-  INVALID_EMAIL: 'Please enter a valid email',
-  REQUIRED_PASSWORD: 'We need you to set a password',
-  REQUIRED_EMAIL: 'We need your email',
-  INVALID_NUMBER: 'Please enter a valid budget amount',
-  MIN_BUDGET: 'Budget must be more than £5.00',
 };
 
 export const USER_TYPE = {
@@ -42,7 +32,6 @@ export const BOOKING_STATE = {
 };
 
 export const PAYMENT_REASON = {
-  CREATE_CAMPAIGN: 'CREATE_CAMPAIGN',
   ACCEPT_BOOKING: 'ACCEPT_BOOKING',
 };
 

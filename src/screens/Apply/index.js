@@ -49,7 +49,7 @@ export const Apply = () => {
       applyToCampaign({
         variables: {
           id,
-          cost: parseFloat(cost),
+          cost: parseInt(cost, 10),
         },
       });
     },
