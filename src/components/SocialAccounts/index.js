@@ -35,7 +35,7 @@ const ICON_PROPS = {
   },
   youTube: {
     icon: 'logo-youtube',
-    url: 'https://www.youtube.com/user/{account}/',
+    url: '{account}',
   },
   tikTok: {
     icon: 'md-musical-note',
@@ -52,6 +52,11 @@ export const SocialAccounts = ({ socialAccounts, onSocialAccountPressed }) => (
           <IconWrapper
             key={account}
             onPress={() =>
+              console.log(
+                'HEYYYY',
+                value,
+                ICON_PROPS[account].url.replace('{account}', value)
+              ) ||
               onSocialAccountPressed(
                 ICON_PROPS[account].url.replace('{account}', value)
               )
