@@ -26,7 +26,8 @@ import {
   Pill,
 } from 'components';
 import { useUser } from 'contexts/User';
-import { NETWORK_STATUS, BOOKING_STATE } from 'consts';
+import { useModal } from 'contexts/Modal';
+import { NETWORK_STATUS, BOOKING_STATE, MODAL_TYPES } from 'consts';
 import { formatToMoneyFromPence } from 'helpers';
 
 import { RequestActions, AcceptedActions } from './components';
@@ -47,6 +48,7 @@ export const Campaign = () => {
     params: { id },
   } = useRoute();
   const { isBrand, isInfluencer } = useUser();
+  const { openModal } = useModal();
 
   const tabBookingState = TAB_INDEX_BOOKING_STATE[activeTab];
 
@@ -63,6 +65,16 @@ export const Campaign = () => {
       },
     }
   );
+
+  const openApplyModal = () => {
+    openModal({
+      type: MODAL_TYPES.CAMPAIGN_APPLY,
+      props: {
+        campaignId: id,
+        isUnpaid: get('findCampaignById.unpaid', campaign),
+      },
+    });
+  };
 
   const fetching = loading && networkStatus === NETWORK_STATUS.FETCHING;
   const fetchingBookings =
@@ -235,17 +247,13 @@ export const Campaign = () => {
       {isInfluencer && !loading && (
         <Foot>
           {!userBookingState && (
-            <Button
-              title="Apply"
-              fixedWidth
-              onPress={() => navigation.navigate('Apply', { id })}
-            />
+            <Button title="Apply" fixedWidth onPress={openApplyModal} />
           )}
           {userBookingState === BOOKING_STATE.APPLIED && (
             <Text isCenter>Your application is pending for this campaign.</Text>
           )}
           {userBookingState === BOOKING_STATE.REQUESTED && (
-            <RequestActions campaignId={id} />
+            <RequestActions campaignId={id} onAccept={openApplyModal} />
           )}
           {userBookingState === BOOKING_STATE.DECLINED && (
             <Text isCenter>
