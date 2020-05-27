@@ -10,6 +10,9 @@ const Main = styled.View`
   flex-direction: row;
 `;
 
+const Label = styled(Text)`
+  font-size: 16px;
+`;
 const StyledSwitch = styled.Switch.attrs(props => ({
   trackColor: { false: props.theme.white, true: props.theme.brand },
   ios_backgroundColor: props.theme.grey,
@@ -21,7 +24,7 @@ export const Switch = ({ isEnabled, onToggle }) => (
 
 export const LabeledSwitch = ({ label, isEnabled, onToggle }) => (
   <Main>
-    <Text>{label}</Text>
+    <Label>{label}</Label>
     <StyledSwitch onValueChange={onToggle} value={isEnabled} />
   </Main>
 );
