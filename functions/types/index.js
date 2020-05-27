@@ -51,7 +51,11 @@ module.exports = gql`
     sendMessage(threadId: ID!, text: String!): Message
     createOrUpdateCampaign(campaign: CampaignInput): Campaign
     applyToCampaign(id: ID!, cost: Int): Booking
-    updateBookingState(id: ID!, state: BookingState!): Boolean
+    updateBookingState(
+      id: ID!
+      state: BookingState!
+      paymentId: String
+    ): Boolean
     updateUser(user: UserInput): Boolean
     completeOnboarding: Boolean
     requestInfluencers(requestedInfluencers: [ID!], campaignId: ID!): Boolean

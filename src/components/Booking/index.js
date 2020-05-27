@@ -41,6 +41,46 @@ export const Booking = ({
     },
   });
 
+  const acceptBooking = () => {
+    if (unpaid) {
+      updateBooking({
+        variables: {
+          state: BOOKING_STATE.ACCEPTED,
+        },
+      });
+      return;
+    }
+
+    openModal({
+      type: MODAL_TYPES.CONFIRM_PAYMENT,
+      props: {
+        cost,
+        bookingId: _id,
+        reason: PAYMENT_REASON.ACCEPT_BOOKING,
+        description: `You will be charged the following to accept ${startCase(
+          get('name', user)
+        )} onto your campaign. This charge can be refunded should the work not be carried out by the completion date.`,
+        onClose: closeModal,
+        onConfirm: paymentId => {
+          updateBooking({
+            variables: {
+              state: BOOKING_STATE.ACCEPTED,
+              paymentId,
+            },
+          });
+        },
+      },
+    });
+  };
+
+  const declineBooking = () => {
+    updateBooking({
+      variables: {
+        state: BOOKING_STATE.DECLINED,
+      },
+    });
+  };
+
   return (
     <>
       <Grid align="center">
@@ -90,42 +130,14 @@ export const Booking = ({
               <IconButton
                 name="ios-checkmark-circle-outline"
                 size={32}
-                onPress={() => {
-                  openModal({
-                    type: MODAL_TYPES.CONFIRM_PAYMENT,
-                    props: {
-                      cost,
-                      bookingId: _id,
-                      reason: PAYMENT_REASON.ACCEPT_BOOKING,
-                      description: `You will be charged the following to accept ${startCase(
-                        get('name', user)
-                      )} onto your campaign. This charge can be refunded should the work not be carried out by the completion date.`,
-                      onClose: closeModal,
-                      onConfirm: ({ cardId, token }) => {
-                        updateBooking({
-                          variables: {
-                            state: BOOKING_STATE.ACCEPTED,
-                            cardId,
-                            token,
-                          },
-                        });
-                      },
-                    },
-                  });
-                }}
+                onPress={acceptBooking}
               />
             </Grid.Item>
             <Grid.Item width={48}>
               <IconButton
                 name="ios-close-circle-outline"
                 size={32}
-                onPress={() =>
-                  updateBooking({
-                    variables: {
-                      state: BOOKING_STATE.DECLINED,
-                    },
-                  })
-                }
+                onPress={declineBooking}
               />
             </Grid.Item>
           </>

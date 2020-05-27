@@ -61,9 +61,9 @@ const ConfirmPaymentModal = ({
       onCompleted: async ({ createPayment: { id, redirectUrl } }) => {
         if (redirectUrl) {
           setIsConfirmingPayment({ id, redirectUrl });
-
           return;
         }
+
         onConfirm(id);
       },
     }
