@@ -20,7 +20,15 @@ import { Text } from '../Text';
 import { Pill } from '../Pill';
 import UPDATE_BOOKING_STATE from './graphql/update-booking-state';
 
-export const Booking = ({ _id, cost, state, note, user, isLoading }) => {
+export const Booking = ({
+  _id,
+  cost,
+  unpaid,
+  state,
+  note,
+  user,
+  isLoading,
+}) => {
   const navigation = useNavigation();
   const { openModal, closeModal } = useModal();
   const [updateBooking, { loading }] = useMutation(UPDATE_BOOKING_STATE, {
@@ -32,6 +40,46 @@ export const Booking = ({ _id, cost, state, note, user, isLoading }) => {
       closeModal();
     },
   });
+
+  const acceptBooking = () => {
+    if (unpaid) {
+      updateBooking({
+        variables: {
+          state: BOOKING_STATE.ACCEPTED,
+        },
+      });
+      return;
+    }
+
+    openModal({
+      type: MODAL_TYPES.CONFIRM_PAYMENT,
+      props: {
+        cost,
+        bookingId: _id,
+        reason: PAYMENT_REASON.ACCEPT_BOOKING,
+        description: `You will be charged the following to accept ${startCase(
+          get('name', user)
+        )} onto your campaign. This charge can be refunded should the work not be carried out by the completion date.`,
+        onClose: closeModal,
+        onConfirm: paymentId => {
+          updateBooking({
+            variables: {
+              state: BOOKING_STATE.ACCEPTED,
+              paymentId,
+            },
+          });
+        },
+      },
+    });
+  };
+
+  const declineBooking = () => {
+    updateBooking({
+      variables: {
+        state: BOOKING_STATE.DECLINED,
+      },
+    });
+  };
 
   return (
     <>
@@ -62,7 +110,7 @@ export const Booking = ({ _id, cost, state, note, user, isLoading }) => {
                 <PayRate>
                   <Pill
                     icon="ios-wallet"
-                    value={formatToMoneyFromPence(cost)}
+                    value={unpaid ? 'Unpaid' : formatToMoneyFromPence(cost)}
                   />
                 </PayRate>
               )}
@@ -82,42 +130,14 @@ export const Booking = ({ _id, cost, state, note, user, isLoading }) => {
               <IconButton
                 name="ios-checkmark-circle-outline"
                 size={32}
-                onPress={() => {
-                  openModal({
-                    type: MODAL_TYPES.CONFIRM_PAYMENT,
-                    props: {
-                      cost,
-                      bookingId: _id,
-                      reason: PAYMENT_REASON.ACCEPT_BOOKING,
-                      description: `You will be charged the following to accept ${startCase(
-                        get('name', user)
-                      )} onto your campaign. This charge can be refunded should the work not be carried out by the completion date.`,
-                      onClose: closeModal,
-                      onConfirm: ({ cardId, token }) => {
-                        updateBooking({
-                          variables: {
-                            state: BOOKING_STATE.ACCEPTED,
-                            cardId,
-                            token,
-                          },
-                        });
-                      },
-                    },
-                  });
-                }}
+                onPress={acceptBooking}
               />
             </Grid.Item>
             <Grid.Item width={48}>
               <IconButton
                 name="ios-close-circle-outline"
                 size={32}
-                onPress={() =>
-                  updateBooking({
-                    variables: {
-                      state: BOOKING_STATE.DECLINED,
-                    },
-                  })
-                }
+                onPress={declineBooking}
               />
             </Grid.Item>
           </>
@@ -137,6 +157,7 @@ Booking.defaultProps = {
   isLoading: false,
   _id: null,
   cost: 0,
+  unpaid: true,
   user: null,
   state: '',
   note: null,
@@ -146,6 +167,7 @@ Booking.propTypes = {
   isLoading: PropTypes.bool,
   _id: PropTypes.string,
   cost: PropTypes.number,
+  unpaid: PropTypes.bool,
   state: PropTypes.string,
   note: PropTypes.string,
   user: PropTypes.shape({
@@ -157,6 +179,7 @@ export const BookingFragment = gql`
   fragment BookingFragment on Booking {
     _id
     cost
+    unpaid
     state
     note
     user {

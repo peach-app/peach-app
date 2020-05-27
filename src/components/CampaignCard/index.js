@@ -8,7 +8,7 @@ import FormatDate from 'date-fns/format';
 import { useUser } from 'contexts/User';
 import { formatToMoneyFromPence } from 'helpers';
 
-import { MainTitle, Description, User, ArrowIcon, Pills } from './styles';
+import { MainTitle, Description, ArrowIcon, Pills } from './styles';
 import { Grid } from '../Grid';
 import { Avatar } from '../Avatar';
 import { SkeletonText } from '../Skeletons';
@@ -20,11 +20,12 @@ export const CampaignCard = ({
   name,
   description,
   budget,
+  unpaid,
   dueDate,
   onPress,
   ActionItem,
 }) => {
-  const { isInfluencer, isBrand } = useUser();
+  const { isInfluencer } = useUser();
 
   return (
     <TouchableOpacity onPress={() => !isLoading && onPress()}>
@@ -56,16 +57,12 @@ export const CampaignCard = ({
               {description}
             </SkeletonText>
           </Description>
-          {isInfluencer && (
-            <User>
-              <SkeletonText isLoading={isLoading} loadingText="Campaign user">
-                {get('name', user)}
-              </SkeletonText>
-            </User>
-          )}
-          {!isLoading && isBrand && (
+          {!isLoading && (
             <Pills>
-              <Pill icon="ios-wallet" value={formatToMoneyFromPence(budget)} />
+              <Pill
+                icon="ios-wallet"
+                value={unpaid ? 'Unpaid' : formatToMoneyFromPence(budget)}
+              />
               <Pill
                 icon="ios-calendar"
                 value={FormatDate(new Date(dueDate), 'do MMM')}
@@ -90,6 +87,7 @@ CampaignCard.defaultProps = {
   name: '',
   description: '',
   budget: null,
+  unpaid: false,
   dueDate: null,
   user: null,
   onPress: null,
@@ -103,6 +101,7 @@ CampaignCard.propTypes = {
   name: PropTypes.string,
   description: PropTypes.string,
   budget: PropTypes.number,
+  unpaid: PropTypes.bool,
   dueDate: PropTypes.string,
   user: PropTypes.shape({
     name: PropTypes.string,
@@ -118,6 +117,7 @@ export const CampaignCardFragment = gql`
     name
     description
     budget
+    unpaid
     dueDate
     user {
       name

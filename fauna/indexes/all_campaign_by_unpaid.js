@@ -2,18 +2,21 @@ const { client, q } = require('../helpers/db');
 const { makeIndex } = require('../helpers/updateOrCreate');
 
 module.exports = async () => {
-  console.log('Creating "user_promoCode_by_user_promoCode" index');
+  console.log('Creating "all_campaign_by_unpaid" index');
 
   await client.query(
     makeIndex({
-      name: 'user_promoCode_by_user_promoCode',
-      source: q.Collection('User_PromoCode'),
+      name: 'all_campaign_by_unpaid',
+      source: q.Collection('Campaign'),
       terms: [
         {
-          field: ['data', 'user'],
+          field: ['data', 'unpaid'],
         },
+      ],
+      values: [
         {
-          field: ['data', 'promoCode'],
+          field: ['ref'],
+          reverse: true,
         },
       ],
     })

@@ -16,7 +16,6 @@ import {
   UserPaymentMethods,
   Container,
   Card,
-  TextInput,
   GraphQLErrors,
 } from 'components';
 import { useMutation } from '@apollo/react-hooks';
@@ -49,7 +48,6 @@ const ConfirmPaymentModal = ({
   onConfirm,
   description,
   onClose,
-  showPromoCode,
 }) => {
   const [showForm, setShowForm] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
@@ -63,9 +61,9 @@ const ConfirmPaymentModal = ({
       onCompleted: async ({ createPayment: { id, redirectUrl } }) => {
         if (redirectUrl) {
           setIsConfirmingPayment({ id, redirectUrl });
-
           return;
         }
+
         onConfirm(id);
       },
     }
@@ -89,11 +87,10 @@ const ConfirmPaymentModal = ({
       number: '',
       expiry: '',
       cvc: '',
-      promoCode: '',
     },
-    onSubmit: async ({ number, expiry, cvc, promoCode }) => {
+    onSubmit: async ({ number, expiry, cvc }) => {
       if (selectedId) {
-        handlePayment({ selectedId, promoCode });
+        handlePayment({ selectedId });
         return;
       }
 
@@ -117,7 +114,7 @@ const ConfirmPaymentModal = ({
         return;
       }
 
-      handlePayment({ id, promoCode });
+      handlePayment({ id });
     },
   });
 
@@ -159,18 +156,6 @@ const ConfirmPaymentModal = ({
                 <SubTitle>Total</SubTitle>
                 <Title>{formatToMoneyFromPence(cost)}</Title>
               </Grid.Item>
-
-              {showPromoCode && (
-                <Grid.Item size={12}>
-                  <TextInput
-                    autoCapitalize="none"
-                    label="Discount code"
-                    error={formik.errors.promoCode}
-                    onChangeText={formik.handleChange('promoCode')}
-                    onBlur={formik.handleBlur('promoCode')}
-                  />
-                </Grid.Item>
-              )}
 
               {!showForm && (
                 <UserPaymentMethods
@@ -230,7 +215,6 @@ const ConfirmPaymentModal = ({
 ConfirmPaymentModal.defaultProps = {
   description: null,
   bookingId: null,
-  showPromoCode: false,
 };
 
 ConfirmPaymentModal.propTypes = {
@@ -240,7 +224,6 @@ ConfirmPaymentModal.propTypes = {
   bookingId: PropTypes.string,
   description: PropTypes.string,
   onClose: PropTypes.func.isRequired,
-  showPromoCode: PropTypes.bool,
 };
 
 export default ConfirmPaymentModal;

@@ -18,7 +18,11 @@ module.exports = async (
     throw new Error('User is not an influencer');
   }
 
-  if (!cost) {
+  const isUnpaid = await client.query(
+    q.Select(['data', 'unpaid'], q.Get(q.Ref(q.Collection('Campaign'), id)))
+  );
+
+  if (!isUnpaid && !cost) {
     throw new UserInputError('No pay rate supplied for application');
   }
 

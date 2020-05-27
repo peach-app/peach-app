@@ -1,9 +1,7 @@
 {
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start:netlify": "netlify dev",
-    "start:expo": "expo start",
-    "start": "run-p start:**",
+    "start": "netlify dev",
     "deploy:db": "node fauna",
     "deploy:build:web": "expo build:web",
     "deploy:web": "netlify deploy --prod",
@@ -31,7 +29,7 @@
     "expo-device": "~2.1.0",
     "expo-font": "~8.1.0",
     "expo-image-picker": "~8.1.0",
-    "expo-web-browser": "~8.1.0",
+    "expo-web-browser": "~8.2.1",
     "faunadb": "^2.11.1",
     "formik": "^2.0.6",
     "graphql": "^14.5.8",

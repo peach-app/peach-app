@@ -21,12 +21,11 @@ console.log({ FAUNADB_SECRET });
     await require('./collections/EmailVerification')();
     await require('./collections/Invite')();
     await require('./collections/FailedBookingPayments')();
-    await require('./collections/PromoCode')();
-    await require('./collections/user_PromoCode')();
 
     // Indexes
     await require('./indexes/all_campaign')();
     await require('./indexes/all_campaign_by_private')();
+    await require('./indexes/all_campaign_by_unpaid')();
     await require('./indexes/message_by_thread')();
     await require('./indexes/booking_by_campaign')();
     await require('./indexes/booking_by_state')();
@@ -45,8 +44,6 @@ console.log({ FAUNADB_SECRET });
     await require('./indexes/booking_campaign_by_user')();
     await require('./indexes/invite_by_code')();
     await require('./indexes/user_by_campaign_booking')();
-    await require('./indexes/promoCode_by_code')();
-    await require('./indexes/user_promoCode_by_user_promoCode')();
 
     // Roles
     await require('./roles/user')();

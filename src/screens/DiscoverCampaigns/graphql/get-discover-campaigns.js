@@ -5,9 +5,9 @@ import { CampaignCardFragment } from 'components';
 export default gql`
   ${CampaignCardFragment}
 
-  query($after: [RefInput]) {
+  query($after: [RefInput], $type: BudgetType) {
     discover {
-      campaigns(size: 20, after: $after) {
+      campaigns(size: 20, after: $after, type: $type) {
         data {
           _id
           ...CampaignCardFragment
