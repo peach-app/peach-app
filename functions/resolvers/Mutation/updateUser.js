@@ -19,7 +19,6 @@ module.exports = async (root, args, { client, q, activeUserRef }) => {
     notificationsToken,
     hasEnabledPushNotifications,
   } = args.user;
-  console.log('SERVER', hasEnabledPushNotifications);
   const { stripeID, type } = await client.query(
     q.Select(['data'], q.Get(activeUserRef))
   );
@@ -88,7 +87,7 @@ module.exports = async (root, args, { client, q, activeUserRef }) => {
     email ||
     bio ||
     notificationsToken ||
-    hasEnabledPushNotifications
+    typeof hasEnabledPushNotifications !== 'undefined'
   ) {
     await client.query(
       q.Update(activeUserRef, {
