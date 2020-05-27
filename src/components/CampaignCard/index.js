@@ -8,7 +8,7 @@ import FormatDate from 'date-fns/format';
 import { useUser } from 'contexts/User';
 import { formatToMoneyFromPence } from 'helpers';
 
-import { MainTitle, Description, User, ArrowIcon, Pills } from './styles';
+import { MainTitle, Description, ArrowIcon, Pills } from './styles';
 import { Grid } from '../Grid';
 import { Avatar } from '../Avatar';
 import { SkeletonText } from '../Skeletons';
@@ -25,7 +25,7 @@ export const CampaignCard = ({
   onPress,
   ActionItem,
 }) => {
-  const { isInfluencer, isBrand } = useUser();
+  const { isInfluencer } = useUser();
 
   return (
     <TouchableOpacity onPress={() => !isLoading && onPress()}>
@@ -57,14 +57,7 @@ export const CampaignCard = ({
               {description}
             </SkeletonText>
           </Description>
-          {isInfluencer && (
-            <User>
-              <SkeletonText isLoading={isLoading} loadingText="Campaign user">
-                {get('name', user)}
-              </SkeletonText>
-            </User>
-          )}
-          {!isLoading && isBrand && (
+          {!isLoading && (
             <Pills>
               <Pill
                 icon="ios-wallet"

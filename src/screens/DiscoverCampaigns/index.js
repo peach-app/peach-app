@@ -97,7 +97,7 @@ export const DiscoverCampaigns = () => {
             </FlatList.Item>
 
             {!fetching && campaigns.length <= 0 && (
-              <NoResultText>No campaigns to discover.</NoResultText>
+              <NoResultText>No campaigns to discover here yet.</NoResultText>
             )}
 
             {fetching &&
