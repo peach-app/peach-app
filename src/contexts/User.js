@@ -33,7 +33,8 @@ export const Provider = ({ children }) => {
     isEmailVerified: get('user.emailVerification.isVerified', data),
     isStripeEnabled:
       get('user.stripeAccount.capabilities.transfers', data) === 'active',
-    hasEnabledPushNotifications: get('user.hasEnabledPushNotifications', data)
+    hasEnabledPushNotifications: get('user.hasEnabledPushNotifications', data),
+    notificationsToken:  get('user.notificationsToken', data)
   };
 
   return (

@@ -1,4 +1,4 @@
-import { Platform } from 'react-native';
+import { Platform, Alert, Linking } from 'react-native';
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
 import Constants from 'expo-constants';
@@ -14,7 +14,18 @@ export const registerForPushNotificationsAsync = async () => {
       finalStatus = status;
     }
     if (finalStatus !== 'granted') {
-      alert('Failed to get push token for push notification!');
+      Alert.alert(
+        `Enable notifications`,
+        'Please go to settings and turn on notification permission manually',
+        [
+          { text: 'Cancel', onPress: () => console.log('cancel') },
+          {
+            text: 'Take me',
+            onPress: () => Linking.openURL('app-settings:'),
+          },
+        ],
+        { cancelable: false }
+      );
       return;
     }
     const token = await Notifications.getExpoPushTokenAsync();

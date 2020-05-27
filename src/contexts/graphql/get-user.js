@@ -21,6 +21,7 @@ export default gql`
         isVerified
       }
       hasEnabledPushNotifications
+      notificationsToken
     }
   }
 `;

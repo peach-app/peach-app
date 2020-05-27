@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+
 import {
   SafeAreaView,
   Header,
@@ -10,7 +11,7 @@ import {
 } from 'components';
 import { useMutation } from '@apollo/react-hooks';
 import { useUser } from 'contexts/User';
-
+import { registerForPushNotificationsAsync } from 'helpers';
 import UPDATE_USER from '../Notifications/graphql/update-user';
 
 export const NotificationsSettings = () => {
@@ -21,16 +22,37 @@ export const NotificationsSettings = () => {
     setHasEnabledPushNotifications,
   ] = useState(user.hasEnabledPushNotifications);
 
-  const [updateUser] = useMutation(UPDATE_USER);
+  const [updateUser] = useMutation(UPDATE_USER, {
+    refetchQueries: ['getCurrentUser'],
+  });
 
-  const handleNotificationToggle = () => {
-    updateUser({
-      variables: {
-        user: { hasEnabledPushNotifications: !hasEnabledPushNotifications },
-      },
-    });
-    setHasEnabledPushNotifications(!hasEnabledPushNotifications);
+  const handleNotificationToggle = async () => {
+    if (!hasEnabledPushNotifications) {
+      const notificationsToken = await registerForPushNotificationsAsync();
+
+      if (notificationsToken) {
+        updateUser({
+          variables: {
+            user: {
+              ...(!user.notificationsToken && { notificationsToken }),
+              hasEnabledPushNotifications: true,
+            },
+          },
+        });
+
+        setHasEnabledPushNotifications(true);
+      }
+    } else {
+      updateUser({
+        variables: {
+          user: { hasEnabledPushNotifications: false },
+        },
+      });
+
+      setHasEnabledPushNotifications(false);
+    }
   };
+
   return (
     <SafeAreaView>
       <KeyboardAvoidingView>
