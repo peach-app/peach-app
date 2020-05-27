@@ -54,7 +54,7 @@ const CampaignApplyModal = ({ onClose, campaignId, isUnpaid }) => {
             {isUnpaid ? (
               <Text
                 isCenter
-              >{`You're applying to work on this UNPAID campaign.`}</Text>
+              >{`You're applying to work on an unpaid campaign.\nYou will not recieve any payout for your work.`}</Text>
             ) : (
               <Text>{`You're applying to work on this campaign.\nEnter how much you want to be paid below.`}</Text>
             )}

@@ -20,7 +20,15 @@ import { Text } from '../Text';
 import { Pill } from '../Pill';
 import UPDATE_BOOKING_STATE from './graphql/update-booking-state';
 
-export const Booking = ({ _id, cost, state, note, user, isLoading }) => {
+export const Booking = ({
+  _id,
+  cost,
+  unpaid,
+  state,
+  note,
+  user,
+  isLoading,
+}) => {
   const navigation = useNavigation();
   const { openModal, closeModal } = useModal();
   const [updateBooking, { loading }] = useMutation(UPDATE_BOOKING_STATE, {
@@ -62,7 +70,7 @@ export const Booking = ({ _id, cost, state, note, user, isLoading }) => {
                 <PayRate>
                   <Pill
                     icon="ios-wallet"
-                    value={formatToMoneyFromPence(cost)}
+                    value={unpaid ? 'Unpaid' : formatToMoneyFromPence(cost)}
                   />
                 </PayRate>
               )}
@@ -137,6 +145,7 @@ Booking.defaultProps = {
   isLoading: false,
   _id: null,
   cost: 0,
+  unpaid: true,
   user: null,
   state: '',
   note: null,
@@ -146,6 +155,7 @@ Booking.propTypes = {
   isLoading: PropTypes.bool,
   _id: PropTypes.string,
   cost: PropTypes.number,
+  unpaid: PropTypes.bool,
   state: PropTypes.string,
   note: PropTypes.string,
   user: PropTypes.shape({
@@ -157,6 +167,7 @@ export const BookingFragment = gql`
   fragment BookingFragment on Booking {
     _id
     cost
+    unpaid
     state
     note
     user {

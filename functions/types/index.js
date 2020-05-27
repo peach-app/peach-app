@@ -313,6 +313,7 @@ module.exports = gql`
     campaign: Campaign!
     user: User!
     cost: Int
+    unpaid: Boolean
     state: BookingState!
     note: String
   }
