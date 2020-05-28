@@ -1,3 +1,8 @@
+[dev]
+  framework = "#custom"
+  command = "expo start"
+  targetPort = 19000
+
 [build]
   command = "expo build:web"
   publish = "web-build"

@@ -21,12 +21,12 @@ export const MoneyInput = ({ value, onChange, label, error, ...props }) => (
   </Main>
 );
 
-TextInput.defaultProps = {
+MoneyInput.defaultProps = {
   label: null,
   error: null,
 };
 
-TextInput.propTypes = {
+MoneyInput.propTypes = {
   label: PropTypes.string,
   error: PropTypes.string,
 };

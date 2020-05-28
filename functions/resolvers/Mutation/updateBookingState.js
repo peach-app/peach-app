@@ -1,8 +1,26 @@
 const { BOOKING_STATE } = require('../../consts');
 const notifyAcceptedInfluencer = require('../../notifications/notifyAcceptedInfluencer');
+const stripe = require('../../helpers/stripe');
 
 module.exports = async (root, args, { client, q, activeUserRef }) => {
-  const { id, state } = args;
+  const { id, state, paymentId } = args;
+
+  const cost = await client.query(
+    q.Select(['data', 'cost'], q.Get(q.Ref(q.Collection('Booking'), id)))
+  );
+
+  const isUnpaid = cost <= 0;
+
+  const payment =
+    !isUnpaid && paymentId && (await stripe.paymentIntents.retrieve(paymentId));
+
+  if (
+    state === BOOKING_STATE.ACCEPTED &&
+    payment &&
+    payment.status !== 'succeeded'
+  ) {
+    throw new Error('The booking fee has not been paid');
+  }
 
   await client.query(
     q.Let(

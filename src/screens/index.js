@@ -1,6 +1,5 @@
 export * from './Account';
 export * from './EditProfile';
-export * from './Apply';
 export * from './Campaign';
 export * from './Campaigns';
 export * from './CreateOrUpdateCampaign';

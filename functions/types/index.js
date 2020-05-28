@@ -50,8 +50,12 @@ module.exports = gql`
     ): Auth
     sendMessage(threadId: ID!, text: String!): Message
     createOrUpdateCampaign(campaign: CampaignInput): Campaign
-    applyToCampaign(id: ID!, cost: Int!): Booking
-    updateBookingState(id: ID!, state: BookingState!): Boolean
+    applyToCampaign(id: ID!, cost: Int): Booking
+    updateBookingState(
+      id: ID!
+      state: BookingState!
+      paymentId: String
+    ): Boolean
     updateUser(user: UserInput): Boolean
     completeOnboarding: Boolean
     requestInfluencers(requestedInfluencers: [ID!], campaignId: ID!): Boolean
@@ -69,7 +73,6 @@ module.exports = gql`
       bookingId: ID
       token: String
       selectedId: String
-      promoCode: String
     ): PaymentIntent
     declineBooking(campaignId: ID): Boolean
   }
@@ -95,7 +98,12 @@ module.exports = gql`
   # //////////////// #
 
   type Discover {
-    campaigns(size: Int, after: [RefInput], before: [RefInput]): CampaignPage
+    campaigns(
+      size: Int
+      after: [RefInput]
+      before: [RefInput]
+      type: BudgetType
+    ): CampaignPage
     popularUsers(type: UserType!): UserPage
   }
 
@@ -105,6 +113,11 @@ module.exports = gql`
 
   type Media {
     url: String!
+  }
+
+  enum BudgetType {
+    PAID
+    UNPAID
   }
 
   enum UserType {
@@ -278,7 +291,8 @@ module.exports = gql`
     name: String
     description: String
     private: Boolean
-    budget: Float
+    unpaid: Boolean
+    budget: Int
     bookings(state: BookingState): BookingPage
     userBooking: Booking
     dueDate: String
@@ -308,6 +322,7 @@ module.exports = gql`
     campaign: Campaign!
     user: User!
     cost: Int
+    unpaid: Boolean
     state: BookingState!
     note: String
   }
@@ -341,8 +356,8 @@ module.exports = gql`
     name: String!
     description: String!
     dueDate: String
-    private: Boolean!
-    budget: String!
-    paymentId: String
+    private: Boolean
+    unpaid: Boolean
+    budget: Int
   }
 `;

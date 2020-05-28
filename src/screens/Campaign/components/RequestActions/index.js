@@ -5,7 +5,7 @@ import { useMutation } from '@apollo/react-hooks';
 import { Grid, Text, Button } from 'components';
 import DECLINE_BOOKING from './graphql/decline-booking';
 
-export const RequestActions = ({ campaignId }) => {
+export const RequestActions = ({ campaignId, onAccept }) => {
   const navigation = useNavigation();
   const [declineBooking, { loading }] = useMutation(DECLINE_BOOKING, {
     refetchQueries: ['getCampaigns', 'getCampaign'],
@@ -23,12 +23,7 @@ export const RequestActions = ({ campaignId }) => {
         <Text isCenter>You've been requested onto this campaign.</Text>
       </Grid.Item>
       <Grid.Item size={4}>
-        <Button
-          title="Accept"
-          onPress={() => {
-            navigation.navigate('Apply', { id: campaignId });
-          }}
-        />
+        <Button title="Accept" onPress={onAccept} />
       </Grid.Item>
       <Grid.Item size={4}>
         <Button
@@ -46,4 +41,5 @@ export const RequestActions = ({ campaignId }) => {
 
 RequestActions.propTypes = {
   campaignId: PropTypes.string.isRequired,
+  onAccept: PropTypes.func.isRequired,
 };

@@ -1,6 +1,6 @@
 const omit = require('lodash/omit');
+const { UserInputError } = require('apollo-server-lambda');
 const { USER_TYPE } = require('../../consts');
-const stripe = require('../../helpers/stripe');
 
 module.exports = async (
   _,
@@ -13,6 +13,14 @@ module.exports = async (
 
   if (!isBrand) {
     throw new Error('User is not a brand');
+  }
+
+  if (!campaign.unpaid && campaign.budget < 500) {
+    throw new UserInputError('Budget must be over £5.00 for paid campaigns');
+  }
+
+  if (campaign.unpaid && campaign.budget > 0) {
+    throw new UserInputError('Unpaid campaigns must have a budget of 0');
   }
 
   if (campaign._id) {
@@ -31,7 +39,7 @@ module.exports = async (
           DocumentDataWithId(
             q.Update(q.Ref(q.Collection('Campaign'), campaign._id), {
               data: {
-                ...omit(campaign, ['_id', 'private']),
+                ...omit(campaign, ['_id', 'private', 'unpaid']),
               },
             })
           ),
@@ -40,12 +48,6 @@ module.exports = async (
         )
       )
     );
-  }
-
-  const { status } = await stripe.paymentIntents.retrieve(campaign.paymentId);
-
-  if (status !== 'succeeded') {
-    throw new Error('The campaign fee has not been paid');
   }
 
   return client.query(

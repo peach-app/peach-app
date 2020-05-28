@@ -7,6 +7,8 @@ export default gql`
       description
       dueDate
       budget
+      private
+      unpaid
     }
   }
 `;

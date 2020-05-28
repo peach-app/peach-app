@@ -13,7 +13,6 @@ import {
   AccountDetails,
   CreateOrUpdateCampaign,
   Profile,
-  Apply,
   PersonalDetails,
   BillingDetails,
   NewBilling,
@@ -79,7 +78,6 @@ export const AuthedNavigator = () => (
     />
     <Stack.Screen name="RequestInfluencers" component={RequestInfluencers} />
     <Stack.Screen name="BookingCompletion" component={BookingCompletion} />
-    <Stack.Screen name="Apply" component={Apply} />
     <Stack.Screen name="Profile" component={Profile} />
     <Stack.Screen
       name="RequestInfluencerToCampaigns"
