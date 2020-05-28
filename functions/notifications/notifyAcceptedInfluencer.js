@@ -3,7 +3,6 @@ const sendMail = require('../helpers/sendMail');
 
 const expo = new Expo();
 const notifyAcceptedInfluencer = (influencer, brand) => {
-  console.log('AIDE DEEE??');
   if (
     influencer.hasEnabledPushNotifications &&
     Expo.isExpoPushToken(influencer.notificationsToken)
