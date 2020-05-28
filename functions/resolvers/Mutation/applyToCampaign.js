@@ -1,5 +1,6 @@
 const { UserInputError } = require('apollo-server-lambda');
 const { BOOKING_STATE, USER_TYPE } = require('../../consts');
+const notifyBrandForApplication = require('../../notifications/notifyBrandForApplication');
 
 module.exports = async (
   root,
@@ -37,11 +38,12 @@ module.exports = async (
     )
   );
 
+  let booking;
   if (
     existingBooking &&
     existingBooking.data.state === BOOKING_STATE.REQUESTED
   ) {
-    return client.query(
+    booking = await client.query(
       q.Let(
         {
           booking: q.Update(existingBooking.ref, {
@@ -56,7 +58,7 @@ module.exports = async (
     );
   }
 
-  return client.query(
+  booking = await client.query(
     q.If(
       Boolean(existingBooking),
       q.Abort('User already applied to campaign.'),
@@ -75,4 +77,24 @@ module.exports = async (
       )
     )
   );
+
+  const { brand, influencer } = await client.query(
+    q.Let(
+      {
+        campaign: q.Ref(q.Collection('Campaign'), id),
+        influencer: q.Get(activeUserRef),
+      },
+      {
+        brand: q.Select(
+          'data',
+          q.Get(q.Select(['data', 'user'], q.Get(q.Var('campaign'))))
+        ),
+        influencer: q.Select(['data', 'name'], q.Var('influencer')),
+      }
+    )
+  );
+
+  notifyBrandForApplication(brand, influencer);
+
+  return booking;
 };

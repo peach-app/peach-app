@@ -10,11 +10,15 @@ const notifyRequestedInfluencers = (influencers, brand) => {
   const emails = [];
   for (const influencer of influencers) {
     const token = influencer.notificationsToken;
-    if (token) {
+    if (token && influencer.hasEnabledPushNotifications) {
       if (!Expo.isExpoPushToken(token)) {
         // sentry one day
         console.error(`Push token ${token} is not a valid Expo push token`);
-        // SEND EMAIL ALTERNATIVELY
+
+        emails.push({
+          to: influencer.email,
+          name: influencer.name,
+        });
         continue;
       }
 
