@@ -1,4 +1,5 @@
 const { BOOKING_STATE } = require('../../consts');
+const notifyAcceptedInfluencer = require('../../notifications/notifyAcceptedInfluencer');
 
 module.exports = async (root, args, { client, q, activeUserRef }) => {
   const { id, state } = args;
@@ -25,10 +26,8 @@ module.exports = async (root, args, { client, q, activeUserRef }) => {
       )
     )
   );
-
   // Stop function here if not accepting booking
   if (state !== BOOKING_STATE.ACCEPTED) return true;
-
   const {
     data: [hasThread],
   } = await client.query(
@@ -78,6 +77,22 @@ module.exports = async (root, args, { client, q, activeUserRef }) => {
       )
     )
   );
+
+  const { influencer, brand } = await client.query(
+    q.Let(
+      {
+        booking: q.Ref(q.Collection('Booking'), id),
+      },
+      {
+        influencer: q.Select(
+          'data',
+          q.Get(q.Select(['data', 'user'], q.Get(q.Var('booking'))))
+        ),
+        brand: q.Select(['data', 'name'], q.Get(activeUserRef)),
+      }
+    )
+  );
+  notifyAcceptedInfluencer(influencer, brand);
 
   return true;
 };
