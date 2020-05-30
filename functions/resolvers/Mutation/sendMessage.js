@@ -1,14 +1,16 @@
-const sendMessageNotification = require('../../notifications/sendMessageNotification');
+const notifyMessageRecipients = require('../../notifications/notifyMessageRecipients');
 
 module.exports = async (
   root,
   args,
   { client, q, DocumentDataWithId, activeUserRef }
 ) => {
+  const { threadId, text } = args;
+
   const message = client.query(
     q.Let(
       {
-        thread: q.Ref(q.Collection('Thread'), args.threadId),
+        thread: q.Ref(q.Collection('Thread'), threadId),
       },
       q.If(
         q.Exists(
@@ -23,7 +25,7 @@ module.exports = async (
             data: {
               user: activeUserRef,
               thread: q.Var('thread'),
-              text: args.text,
+              text,
             },
           })
         ),
@@ -32,32 +34,23 @@ module.exports = async (
     )
   );
 
-  const {
-    recipient: { data: to },
-    from,
-  } = await client.query(
-    q.Let(
-      {
-        thread: q.Ref(q.Collection('Thread'), args.threadId),
-        sender: q.Get(activeUserRef),
-      },
-      {
-        recipient: q.Map(
-          q.Filter(
-            q.Paginate(
-              q.Match(q.Index('thread_users_by_thread'), q.Var('thread'))
-            ),
-            q.Lambda('ref', q.Not(q.Equals(q.Var('ref'), activeUserRef)))
-          ),
-          q.Lambda('ref', DocumentDataWithId(q.Get(q.Var('ref'))))
+  const { recipients, from } = await client.query({
+    recipients: q.Map(
+      q.Filter(
+        q.Paginate(
+          q.Match(
+            q.Index('thread_users_by_thread'),
+            q.Ref(q.Collection('Thread'), threadId)
+          )
         ),
+        q.Lambda('ref', q.Not(q.Equals(q.Var('ref'), activeUserRef)))
+      ),
+      q.Lambda('ref', q.Get(q.Var('ref')))
+    ),
+    from: q.Get(activeUserRef),
+  });
 
-        from: q.Select(['data', 'name'], q.Var('sender')),
-      }
-    )
-  );
-
-  sendMessageNotification(to[0], from, args.text);
+  notifyMessageRecipients(recipients.data, from, text);
 
   return message;
 };

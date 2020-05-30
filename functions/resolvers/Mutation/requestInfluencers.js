@@ -4,7 +4,7 @@ const notifyRequestedInfluencers = require('../../notifications/notifyRequestedI
 module.exports = async (
   root,
   { requestedInfluencers, campaignId },
-  { client, q, activeUserRef, DocumentDataWithId }
+  { client, q, activeUserRef }
 ) => {
   await client.query(
     q.Let(
@@ -52,28 +52,15 @@ module.exports = async (
     )
   );
 
-  let influencersToNotify;
-  try {
-    influencersToNotify = await client.query(
-      q.Map(
-        requestedInfluencers,
-        q.Lambda(
-          '_id',
-          DocumentDataWithId(q.Get(q.Ref(q.Collection('User'), q.Var('_id'))))
-        )
-      )
-    );
-  } catch (e) {
-    console.log('There was a problem getting the influencer profiles', e);
-  }
+  const { influencers, brand } = await client.query({
+    influencers: q.Map(
+      requestedInfluencers,
+      q.Lambda('_id', q.Get(q.Ref(q.Collection('User'), q.Var('_id'))))
+    ),
+    brand: q.Get(activeUserRef),
+  });
 
-  if (influencersToNotify.length > 0) {
-    const {
-      data: { name },
-    } = await client.query(q.Get(activeUserRef));
-
-    notifyRequestedInfluencers(influencersToNotify, name);
-  }
+  notifyRequestedInfluencers(influencers, brand);
 
   return true;
 };
