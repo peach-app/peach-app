@@ -16,8 +16,6 @@ module.exports = async (root, args, { client, q, activeUserRef }) => {
     addressLine2,
     city,
     postalCode,
-    notificationsToken,
-    hasEnabledPushNotifications,
   } = args.user;
   const { stripeID, type } = await client.query(
     q.Select(['data'], q.Get(activeUserRef))
@@ -82,13 +80,7 @@ module.exports = async (root, args, { client, q, activeUserRef }) => {
     });
   }
 
-  if (
-    name ||
-    email ||
-    bio ||
-    notificationsToken ||
-    typeof hasEnabledPushNotifications !== 'undefined'
-  ) {
+  if (name || email || bio) {
     await client.query(
       q.Update(activeUserRef, {
         data: omitBy(
@@ -96,8 +88,6 @@ module.exports = async (root, args, { client, q, activeUserRef }) => {
             name,
             email,
             bio,
-            notificationsToken,
-            hasEnabledPushNotifications,
           },
           isNil
         ),

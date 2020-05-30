@@ -1,30 +1,35 @@
 import React from 'react';
-import styled from 'styled-components/native';
+import PropTypes from 'prop-types';
+
+import { Grid } from '../Grid';
 import { Text } from '../Text';
 
-const Main = styled.View`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: row;
-`;
+import { StyledSwitch } from './styles';
 
-const Label = styled(Text)`
-  font-size: 16px;
-`;
-const StyledSwitch = styled.Switch.attrs(props => ({
-  trackColor: { false: props.theme.white, true: props.theme.brand },
-  ios_backgroundColor: props.theme.grey,
-}))``;
+export const Switch = ({ label, value, onValueChange }) => {
+  if (label) {
+    return (
+      <Grid align="center">
+        <Grid.Item flex={1}>
+          <Text>{label}</Text>
+        </Grid.Item>
+        <Grid.Item>
+          <StyledSwitch onValueChange={onValueChange} value={value} />
+        </Grid.Item>
+      </Grid>
+    );
+  }
 
-export const Switch = ({ isEnabled, onToggle }) => (
-  <StyledSwitch onValueChange={onToggle} value={isEnabled} />
-);
+  return <StyledSwitch onValueChange={onValueChange} value={value} />;
+};
 
-export const LabeledSwitch = ({ label, isEnabled, onToggle }) => (
-  <Main>
-    <Label>{label}</Label>
-    <StyledSwitch onValueChange={onToggle} value={isEnabled} />
-  </Main>
-);
+Switch.defaultProps = {
+  label: null,
+  value: null,
+};
+
+Switch.propTypes = {
+  label: PropTypes.string,
+  value: PropTypes.bool,
+  onValueChange: PropTypes.func.isRequired,
+};

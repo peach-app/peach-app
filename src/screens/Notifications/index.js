@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import { Platform, Alert, Linking } from 'react-native';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { useMutation } from '@apollo/react-hooks';
+
 import {
   SafeAreaView,
   StatusBar,
@@ -11,16 +13,11 @@ import {
   Title,
   Actions,
 } from 'components';
-import { Notifications as Notif } from 'expo';
-import * as Permissions from 'expo-permissions';
-import Constants from 'expo-constants';
-import { useMutation } from '@apollo/react-hooks';
 import { useUser } from 'contexts/User';
 import { registerForPushNotificationsAsync } from 'helpers';
 
-import UPDATE_USER from './graphql/update-user.js';
-
-import { Icon, IconWrapper, Main } from './styles';
+import { Icon, Main } from './styles';
+import UPDATE_USER_PREFERENCES from './graphql/update-user-preferences';
 
 export const Notifications = ({
   onComplete,
@@ -29,21 +26,21 @@ export const Notifications = ({
 }) => {
   const { isBrand } = useUser();
 
-  const [updateUser, { loading }] = useMutation(UPDATE_USER, {
+  const [updateUser, { loading }] = useMutation(UPDATE_USER_PREFERENCES, {
     onCompleted: () => {
       onComplete();
     },
   });
 
   const handleEnableNotifications = async () => {
-    const notificationsToken = await registerForPushNotificationsAsync();
+    const pushToken = await registerForPushNotificationsAsync();
 
-    if (notificationsToken) {
+    if (pushToken) {
       updateUser({
         variables: {
-          user: {
-            notificationsToken,
-            hasEnabledPushNotifications: true,
+          pushToken,
+          preferences: {
+            pushAlerts: true,
           },
         },
       });
@@ -62,9 +59,7 @@ export const Notifications = ({
         <Container>
           <Grid>
             <Grid.Item size={12}>
-              <IconWrapper>
-                <Icon />
-              </IconWrapper>
+              <Icon />
             </Grid.Item>
             <Grid.Item size={12}>
               <Title isCentered>Enable Notifications</Title>
@@ -76,18 +71,31 @@ export const Notifications = ({
                   : 'Get notifications when you receive a message, request or payment from brands.'}
               </Text>
             </Grid.Item>
+            <Grid.Item size={12}>
+              <Actions>
+                <Button
+                  title="Enable"
+                  onPress={handleEnableNotifications}
+                  isLoading={loading}
+                  fixedWidth
+                />
+              </Actions>
+            </Grid.Item>
           </Grid>
         </Container>
       </Main>
-
-      <Actions>
-        <Button
-          title="Enable"
-          onPress={handleEnableNotifications}
-          isLoading={loading}
-          fixedWidth
-        />
-      </Actions>
     </SafeAreaView>
   );
+};
+
+Notifications.defaultProps = {
+  rightActionLabel: null,
+  onRightActionPressed: null,
+  onComplete: null,
+};
+
+Notifications.propTypes = {
+  rightActionLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+  onRightActionPressed: PropTypes.func,
+  onComplete: PropTypes.func,
 };

@@ -44,8 +44,21 @@ module.exports = async (root, args, { client, q, activeUserRef }) => {
       )
     )
   );
+
+  if (state === BOOKING_STATE.ACCEPTED) {
+    const { influencer, brand } = await client.query({
+      influencer: q.Get(
+        q.Select(['data', 'user'], q.Get(q.Ref(q.Collection('Booking'), id)))
+      ),
+      brand: q.Get(activeUserRef),
+    });
+
+    notifyAcceptedInfluencer(influencer, brand);
+  }
+
   // Stop function here if not accepting booking
   if (state !== BOOKING_STATE.ACCEPTED) return true;
+
   const {
     data: [hasThread],
   } = await client.query(
@@ -69,6 +82,7 @@ module.exports = async (root, args, { client, q, activeUserRef }) => {
     )
   );
 
+  // Stop here if message thread exists
   if (hasThread) return true;
 
   await client.query(
@@ -95,22 +109,6 @@ module.exports = async (root, args, { client, q, activeUserRef }) => {
       )
     )
   );
-
-  const { influencer, brand } = await client.query(
-    q.Let(
-      {
-        booking: q.Ref(q.Collection('Booking'), id),
-      },
-      {
-        influencer: q.Select(
-          'data',
-          q.Get(q.Select(['data', 'user'], q.Get(q.Var('booking'))))
-        ),
-        brand: q.Select(['data', 'name'], q.Get(activeUserRef)),
-      }
-    )
-  );
-  notifyAcceptedInfluencer(influencer, brand);
 
   return true;
 };

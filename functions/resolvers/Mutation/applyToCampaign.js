@@ -42,12 +42,20 @@ module.exports = async (
     )
   );
 
-  let booking;
+  const { brand, influencer } = await client.query({
+    brand: q.Get(
+      q.Select(['data', 'user'], q.Get(q.Ref(q.Collection('Campaign'), id)))
+    ),
+    influencer: q.Get(activeUserRef),
+  });
+
+  notifyBrandForApplication(brand, influencer);
+
   if (
     existingBooking &&
     existingBooking.data.state === BOOKING_STATE.REQUESTED
   ) {
-    booking = await client.query(
+    return client.query(
       q.Let(
         {
           booking: q.Update(existingBooking.ref, {
@@ -62,7 +70,7 @@ module.exports = async (
     );
   }
 
-  booking = await client.query(
+  return client.query(
     q.If(
       Boolean(existingBooking),
       q.Abort('User already applied to campaign.'),
@@ -81,24 +89,4 @@ module.exports = async (
       )
     )
   );
-
-  const { brand, influencer } = await client.query(
-    q.Let(
-      {
-        campaign: q.Ref(q.Collection('Campaign'), id),
-        influencer: q.Get(activeUserRef),
-      },
-      {
-        brand: q.Select(
-          'data',
-          q.Get(q.Select(['data', 'user'], q.Get(q.Var('campaign'))))
-        ),
-        influencer: q.Select(['data', 'name'], q.Var('influencer')),
-      }
-    )
-  );
-
-  notifyBrandForApplication(brand, influencer);
-
-  return booking;
 };

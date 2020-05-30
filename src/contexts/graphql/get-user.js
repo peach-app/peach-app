@@ -20,8 +20,6 @@ export default gql`
       emailVerification {
         isVerified
       }
-      hasEnabledPushNotifications
-      notificationsToken
     }
   }
 `;
