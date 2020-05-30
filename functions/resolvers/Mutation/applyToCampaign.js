@@ -1,5 +1,6 @@
 const { UserInputError } = require('apollo-server-lambda');
 const { BOOKING_STATE, USER_TYPE } = require('../../consts');
+const notifyBrandForApplication = require('../../notifications/notifyBrandForApplication');
 
 module.exports = async (
   root,
@@ -40,6 +41,15 @@ module.exports = async (
       q.If(q.Exists(q.Var('booking')), q.Get(q.Var('booking')), null)
     )
   );
+
+  const { brand, influencer } = await client.query({
+    brand: q.Get(
+      q.Select(['data', 'user'], q.Get(q.Ref(q.Collection('Campaign'), id)))
+    ),
+    influencer: q.Get(activeUserRef),
+  });
+
+  notifyBrandForApplication(brand, influencer);
 
   if (
     existingBooking &&

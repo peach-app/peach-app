@@ -57,6 +57,10 @@ module.exports = gql`
       paymentId: String
     ): Boolean
     updateUser(user: UserInput): Boolean
+    updateUserPreferences(
+      pushToken: String
+      preferences: PreferencesInput!
+    ): Boolean
     completeOnboarding: Boolean
     requestInfluencers(requestedInfluencers: [ID!], campaignId: ID!): Boolean
     createBillingMethod(token: String!): Boolean
@@ -134,6 +138,11 @@ module.exports = gql`
     data: [User]
   }
 
+  input PreferencesInput {
+    pushAlerts: Boolean
+    emailAlerts: Boolean
+  }
+
   input UserInput {
     name: String
     bio: String
@@ -172,6 +181,8 @@ module.exports = gql`
     onboarded: Boolean
     emailVerification: UserEmailVerification
     type: UserType!
+    pushToken: String
+    preferences: Preferences
 
     # User created Campaigns
     campaigns: CampaignPage
@@ -188,6 +199,11 @@ module.exports = gql`
     socialAccounts: SocialAccounts
 
     payouts: PayoutsPage
+  }
+
+  type Preferences {
+    pushAlerts: Boolean
+    emailAlerts: Boolean
   }
 
   type PayoutsPage {

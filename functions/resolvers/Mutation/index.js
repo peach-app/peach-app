@@ -6,6 +6,7 @@ module.exports = {
   applyToCampaign: require('./applyToCampaign'),
   updateBookingState: require('./updateBookingState'),
   updateUser: require('./updateUser'),
+  updateUserPreferences: require('./updateUserPreferences'),
   completeOnboarding: require('./completeOnboarding'),
   requestInfluencers: require('./requestInfluencers'),
   createBillingMethod: require('./createBillingMethod'),
@@ -19,5 +20,4 @@ module.exports = {
   resetPassword: require('./resetPassword'),
   createPayment: require('./createPayment'),
   declineBooking: require('./declineBooking'),
-
 };

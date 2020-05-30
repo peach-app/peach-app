@@ -9,6 +9,8 @@ import {
   SubTitle,
   Grid,
   ScrollView,
+  AppVersion,
+  Actions,
 } from 'components';
 
 export const Support = () => (
@@ -34,5 +36,8 @@ export const Support = () => (
         </Grid>
       </Container>
     </ScrollView>
+    <Actions>
+      <AppVersion />
+    </Actions>
   </SafeAreaView>
 );

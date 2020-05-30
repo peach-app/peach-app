@@ -29,3 +29,5 @@ export * from './PasswordResetEmail';
 export * from './PaymentMethods';
 export * from './Support';
 export * from './Payouts';
+export * from './Notifications';
+export * from './Preferences';

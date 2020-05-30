@@ -1,4 +1,5 @@
 const { BOOKING_STATE } = require('../../consts');
+const notifyRequestedInfluencers = require('../../notifications/notifyRequestedInfluencers');
 
 module.exports = async (
   root,
@@ -50,6 +51,16 @@ module.exports = async (
       )
     )
   );
+
+  const { influencers, brand } = await client.query({
+    influencers: q.Map(
+      requestedInfluencers,
+      q.Lambda('_id', q.Get(q.Ref(q.Collection('User'), q.Var('_id'))))
+    ),
+    brand: q.Get(activeUserRef),
+  });
+
+  notifyRequestedInfluencers(influencers, brand);
 
   return true;
 };

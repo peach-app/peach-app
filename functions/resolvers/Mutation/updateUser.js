@@ -17,7 +17,6 @@ module.exports = async (root, args, { client, q, activeUserRef }) => {
     city,
     postalCode,
   } = args.user;
-
   const { stripeID, type } = await client.query(
     q.Select(['data'], q.Get(activeUserRef))
   );

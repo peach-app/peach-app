@@ -17,6 +17,7 @@ import COMPLETE_ONBOARDING from './graphql/complete-onboarding';
 export const CompleteOnboarding = () => {
   const [completeOnboarding, { loading }] = useMutation(COMPLETE_ONBOARDING, {
     refetchQueries: ['getCurrentUser'],
+    awaitRefetchQueries: true,
   });
 
   return (
