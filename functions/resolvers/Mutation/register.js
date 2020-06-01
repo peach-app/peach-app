@@ -40,20 +40,9 @@ module.exports = async (
   args,
   { client, q, clientIp, DocumentDataWithId }
 ) => {
-  const { code, name, password, type, idempotencyKey } = args;
+  const { name, password, type, idempotencyKey } = args;
 
   const email = args.email.toLowerCase();
-
-  const inviteCode = await client.query(
-    q.Let(
-      { invite: q.Match(q.Index('invite_by_code'), code.toLowerCase()) },
-      q.If(q.Exists(q.Var('invite')), q.Get(q.Var('invite')), false)
-    )
-  );
-
-  if (!inviteCode || inviteCode.data.used) {
-    throw new UserInputError('Invalid invite code');
-  }
 
   const existingUser = await client.query(
     q.Exists(q.Match(q.Index('user_by_email'), email))
@@ -112,23 +101,16 @@ module.exports = async (
   );
 
   await client.query(
-    q.Do(
-      q.Create(q.Collection('User'), {
-        data: {
-          name,
-          email,
-          type,
-          stripeID: account.id,
-          emailVerificationToken: emailVerification._id,
-        },
-        credentials: { password },
-      }),
-      q.Update(inviteCode.ref, {
-        data: {
-          used: true,
-        },
-      })
-    )
+    q.Create(q.Collection('User'), {
+      data: {
+        name,
+        email,
+        type,
+        stripeID: account.id,
+        emailVerificationToken: emailVerification._id,
+      },
+      credentials: { password },
+    })
   );
 
   const verificationUrl = `https://dashboard.peachapp.io/verify-email/${emailVerification._id}`;
