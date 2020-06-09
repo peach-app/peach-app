@@ -1,4 +1,5 @@
 const { Expo } = require('expo-server-sdk');
+const get = require('lodash/fp/get');
 const sendMail = require('../helpers/sendMail');
 const sendChunkNotifications = require('./sendChunkNotifications');
 
@@ -6,7 +7,7 @@ const notifyRequestedInfluencers = async (influencers, brand) => {
   const notifications = influencers
     .map(influencer => {
       if (
-        influencer.data.preferences.pushAlerts &&
+        get('data.preferences.pushAlerts', influencer) &&
         Expo.isExpoPushToken(influencer.data.pushToken)
       ) {
         return {
@@ -25,7 +26,7 @@ const notifyRequestedInfluencers = async (influencers, brand) => {
 
   return Promise.all(
     influencers.map(influencer => {
-      if (!influencer.data.preferences.emailAlerts) return null;
+      if (!get('data.preferences.emailAlerts', influencer)) return null;
 
       return sendMail({
         to: influencer.data.email,

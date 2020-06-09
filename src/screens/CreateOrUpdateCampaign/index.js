@@ -60,6 +60,7 @@ export const CreateOrUpdateCampaign = () => {
     CREATE_OR_UPDATE_CAMPAIGN_MUTATION,
     {
       refetchQueries: ['getCampaigns', 'getCampaign'],
+      awaitRefetchQueries: true,
       onCompleted: ({ createOrUpdateCampaign: { _id } }) =>
         openModal({
           type: MODAL_TYPES.CAMPAIGN_CREATION,

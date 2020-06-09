@@ -1,11 +1,12 @@
 const { Expo } = require('expo-server-sdk');
+const get = require('lodash/fp/get');
 const sendMail = require('../helpers/sendMail');
 
 const expo = new Expo();
 
 const notifyAcceptedInfluencer = (influencer, brand) => {
   if (
-    influencer.data.preferences.pushAlerts &&
+    get('data.preferences.pushAlerts', influencer) &&
     Expo.isExpoPushToken(influencer.data.pushToken)
   ) {
     expo.sendPushNotificationsAsync([
@@ -18,7 +19,7 @@ const notifyAcceptedInfluencer = (influencer, brand) => {
     ]);
   }
 
-  if (influencer.data.preferences.emailAlerts) {
+  if (get('data.preferences.emailAlerts', influencer)) {
     sendMail({
       to: influencer.data.email,
       subject: 'You have been accepted!',

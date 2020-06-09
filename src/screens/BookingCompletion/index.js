@@ -28,6 +28,7 @@ export const BookingCompletion = () => {
 
   const [completeBooking, { loading }] = useMutation(COMPLETE_BOOKING, {
     refetchQueries: ['getCampaign', 'getCampaigns'],
+    awaitRefetchQueries: true,
     onCompleted: () => {
       navigation.goBack();
     },

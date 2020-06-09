@@ -1,4 +1,5 @@
 const { Expo } = require('expo-server-sdk');
+const get = require('lodash/fp/get');
 const sendMail = require('../helpers/sendMail');
 const sendChunkNotifications = require('./sendChunkNotifications');
 
@@ -6,7 +7,7 @@ const notifyMessageRecipients = async (recipients, sender, message) => {
   const notifications = recipients
     .map(recipient => {
       if (
-        recipient.data.preferences.pushAlerts &&
+        get('data.preferences.pushAlerts', recipient) &&
         Expo.isExpoPushToken(recipient.data.pushToken)
       ) {
         return {
@@ -25,7 +26,7 @@ const notifyMessageRecipients = async (recipients, sender, message) => {
 
   return Promise.all(
     recipients.map(recipient => {
-      if (!recipient.data.preferences.emailAlerts) return null;
+      if (!get('data.preferences.emailAlerts', recipient)) return null;
 
       return sendMail({
         to: recipient.data.email,

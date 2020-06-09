@@ -9,6 +9,7 @@ export const RequestActions = ({ campaignId, onAccept }) => {
   const navigation = useNavigation();
   const [declineBooking, { loading }] = useMutation(DECLINE_BOOKING, {
     refetchQueries: ['getCampaigns', 'getCampaign'],
+    awaitRefetchQueries: true,
     variables: {
       campaignId,
     },

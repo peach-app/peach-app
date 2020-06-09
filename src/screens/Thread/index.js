@@ -34,6 +34,7 @@ export const Thread = () => {
   const [sendMessage, { loading }] = useMutation(SEND_MESSAGE, {
     onCompleted: () => setText(''),
     refetchQueries: ['getThread'],
+    awaitRefetchQueries: true,
   });
 
   const onSubmit = () => {

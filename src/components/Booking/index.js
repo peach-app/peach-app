@@ -33,6 +33,7 @@ export const Booking = ({
   const { openModal, closeModal } = useModal();
   const [updateBooking, { loading }] = useMutation(UPDATE_BOOKING_STATE, {
     refetchQueries: ['getCampaigns', 'getCampaign'],
+    awaitRefetchQueries: true,
     variables: {
       id: _id,
     },

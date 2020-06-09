@@ -1,6 +1,5 @@
 import React from 'react';
 import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import PropTypes from 'prop-types';
 import { useMutation } from '@apollo/react-hooks';
 
@@ -21,6 +20,7 @@ import APPLY_TO_CAMPAIGN from './graphql/apply-to-campaign';
 const CampaignApplyModal = ({ onClose, campaignId, isUnpaid }) => {
   const [applyToCampaign, { loading, error }] = useMutation(APPLY_TO_CAMPAIGN, {
     refetchQueries: ['getCampaign', 'getCampaigns', 'getCurrentUser'],
+    awaitRefetchQueries: true,
     onCompleted: () => onClose(),
   });
 

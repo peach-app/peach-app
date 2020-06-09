@@ -1,11 +1,12 @@
 const { Expo } = require('expo-server-sdk');
+const get = require('lodash/fp/get');
 const sendMail = require('../helpers/sendMail');
 
 const expo = new Expo();
 
 const notifyBrandForApplication = (brand, influencer) => {
   if (
-    brand.data.preferences.pushAlerts &&
+    get('data.preferences.pushAlerts', brand) &&
     Expo.isExpoPushToken(brand.data.pushToken)
   ) {
     (async () => {
@@ -20,7 +21,7 @@ const notifyBrandForApplication = (brand, influencer) => {
     })();
   }
 
-  if (brand.data.preferences.emailAlerts) {
+  if (get('data.preferences.emailAlerts', brand)) {
     (async () => {
       await sendMail({
         to: brand.data.email,
