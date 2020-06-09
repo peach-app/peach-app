@@ -8,7 +8,20 @@ export const registerForPushNotificationsAsync = async () => {
     throw new Error('Physical device must be used for Push Notifications');
   }
 
-  const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+  const { status: existingStatus } = await Permissions.getAsync(
+    Permissions.NOTIFICATIONS
+  );
+
+  let finalStatus = existingStatus;
+
+  if (existingStatus !== 'granted') {
+    const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+    finalStatus = status;
+  }
+
+  if (finalStatus !== 'granted') {
+    return null;
+  }
 
   if (Platform.OS === 'android') {
     Notifications.createChannelAndroidAsync('default', {
@@ -17,10 +30,6 @@ export const registerForPushNotificationsAsync = async () => {
       priority: 'max',
       vibrate: [0, 250, 250, 250],
     });
-  }
-
-  if (status !== 'granted') {
-    return;
   }
 
   return Notifications.getExpoPushTokenAsync();

@@ -5,7 +5,7 @@
     "scheme": "peach-app",
     "privacy": "public",
     "platforms": ["ios", "android", "web"],
-    "version": "1.0.4",
+    "version": "1.0.5",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
     "splash": {
@@ -19,7 +19,7 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "bundleIdentifier": "io.peachapp.dashboard",
-      "buildNumber": "1.0.4",
+      "buildNumber": "1.0.5",
       "supportsTablet": false,
       "userInterfaceStyle": "automatic",
       "infoPlist": {
