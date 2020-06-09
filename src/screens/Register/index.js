@@ -33,7 +33,6 @@ import { USER_TYPE_TABS, FORM_ERROR_MESSAGES } from './consts';
 import REGISTER from './graphql/register';
 
 const validationSchema = Yup.object().shape({
-  code: Yup.string().required(FORM_ERROR_MESSAGES.REQUIRED_CODE),
   name: Yup.string()
     .max(25)
     .required(FORM_ERROR_MESSAGES.REQUIRED_NAME),
@@ -69,12 +68,11 @@ export const Register = () => {
     validateOnChange: false,
     validationSchema,
     initialValues: {
-      code: '',
       name: '',
       email: '',
       password: '',
     },
-    onSubmit: ({ code, name, email, password, confirmPassword }) => {
+    onSubmit: ({ name, email, password, confirmPassword }) => {
       if (password !== confirmPassword) {
         formik.setErrors({
           confirmPassword: "Passwords don't correctly match",
@@ -84,7 +82,6 @@ export const Register = () => {
 
       register({
         variables: {
-          code,
           name,
           email,
           password,
@@ -120,16 +117,6 @@ export const Register = () => {
                   activeTabIndex={activeTab}
                   onTabPress={setTab}
                   tabs={USER_TYPE_TABS}
-                />
-              </Grid.Item>
-
-              <Grid.Item size={12}>
-                <TextInput
-                  label="Invite code"
-                  autoCapitalize="none"
-                  error={formik.errors.code}
-                  onChangeText={formik.handleChange('code')}
-                  onBlur={formik.handleBlur('code')}
                 />
               </Grid.Item>
 
