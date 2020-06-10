@@ -1,6 +1,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
+import getOr from 'lodash/fp/getOr';
 import omit from 'lodash/omit';
 import { useRoute, useNavigation } from '@react-navigation/native';
 
@@ -22,7 +23,7 @@ import {
 import { useModal } from 'contexts/Modal';
 import { USER_TYPE, MODAL_TYPES } from 'consts';
 
-import { Head, Section, Categories } from './styles';
+import { Head, Section, Categories, WorkSamples, Media } from './styles';
 import GET_USER from './graphql/get-user';
 
 export const Profile = () => {
@@ -42,6 +43,7 @@ export const Profile = () => {
   const name = get('findUserByID.name', data);
   const bio = get('findUserByID.bio', data);
   const uri = get('findUserByID.avatar.url', data);
+  const workSamples = getOr([], 'findUserByID.workSamples', data);
   const { openModal } = useModal();
 
   return (
@@ -100,6 +102,16 @@ export const Profile = () => {
             </Section>
           )}
         </Head>
+
+        {!isBrand && workSamples.length > 0 && (
+          <Container>
+            <WorkSamples>
+              {workSamples.map(sample => (
+                <Media key={sample._id} source={{ uri: sample.media.url }} />
+              ))}
+            </WorkSamples>
+          </Container>
+        )}
 
         {isBrand && <CampaignsByBrand id={id} />}
       </ScrollView>

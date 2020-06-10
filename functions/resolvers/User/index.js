@@ -4,4 +4,5 @@ module.exports = {
   stripeAccount: require('./stripeAccount'),
   emailVerification: require('./emailVerification'),
   hasSocialAccounts: require('./hasSocialAccounts'),
+  workSamples: require('./workSamples'),
 };

@@ -18,6 +18,12 @@ export default gql`
         youTube
         tikTok
       }
+      workSamples {
+        _id
+        media {
+          url
+        }
+      }
     }
   }
 `;

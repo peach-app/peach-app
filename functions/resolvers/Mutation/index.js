@@ -20,4 +20,6 @@ module.exports = {
   resetPassword: require('./resetPassword'),
   createPayment: require('./createPayment'),
   declineBooking: require('./declineBooking'),
+  addWorkSample: require('./addWorkSample'),
+  deleteWorkSample: require('./deleteWorkSample'),
 };

@@ -78,6 +78,8 @@ module.exports = gql`
       selectedId: String
     ): PaymentIntent
     declineBooking(campaignId: ID): Boolean
+    addWorkSample(url: String!): Boolean
+    deleteWorkSample(id: ID!): Boolean
   }
 
   # Fauna references #
@@ -199,6 +201,13 @@ module.exports = gql`
     socialAccounts: SocialAccounts
 
     payouts: PayoutsPage
+
+    workSamples: [WorkSample]
+  }
+
+  type WorkSample {
+    _id: ID!
+    media: Media
   }
 
   type Preferences {

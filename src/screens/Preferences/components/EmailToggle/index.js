@@ -31,7 +31,7 @@ export const EmailToggle = ({ value }) => {
 
   return (
     <Switch
-      label="Email Notifications"
+      label="Enable Email notifications"
       value={internalValue}
       onValueChange={handleChange}
     />
