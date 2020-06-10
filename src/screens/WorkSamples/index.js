@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
-import * as ImagePicker from 'expo-image-picker';
-import { Alert } from 'react-native';
-import { useMutation } from '@apollo/react-hooks';
+import React from 'react';
+import getOr from 'lodash/fp/getOr';
+import { useQuery } from '@apollo/react-hooks';
 
 import {
   SafeAreaView,
@@ -9,75 +8,21 @@ import {
   Intro,
   Text,
   Container,
-  AddNewAction,
   ScrollView,
   Grid,
-  Loading,
 } from 'components';
-import { CLOUDINARY_UPLOAD_URL, CLOUDINARY_PRESET } from 'consts';
+import { NETWORK_STATUS } from 'consts';
 
-import ADD_WORK_SAMPLE from './graphql/add-work-sample';
+import { AddNewWorkSample, WorkSampleMedia } from './components';
+import GET_WORK_SAMPLES from './graphql/get-work-samples';
 
 export const WorkSamples = () => {
-  const [uploading, setUploading] = useState(false);
-  const [addWorkSample, { loading }] = useMutation(ADD_WORK_SAMPLE);
+  const { data, loading, networkStatus } = useQuery(GET_WORK_SAMPLES, {
+    fetchPolicy: 'cache-and-network',
+    notifyOnNetworkStatusChange: true,
+  });
 
-  const handleImageUpload = async () => {
-    const permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
-
-    if (!permissionResult.granted) {
-      Alert.alert(
-        'Permission required',
-        'In order to upload a work sample, we need permission to access your photo library.',
-        [
-          {
-            text: 'Cancel',
-            onPress: () => {},
-          },
-          {
-            text: 'Try again',
-            onPress: () => handleImageUpload(),
-          },
-        ],
-        { cancelable: false }
-      );
-    }
-
-    const { cancelled, base64 } = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true,
-      aspect: [4, 3],
-      base64: true,
-    });
-
-    if (cancelled) return;
-
-    const file = `data:image/jpg;base64,${base64}`;
-
-    setUploading(true);
-
-    const res = await fetch(CLOUDINARY_UPLOAD_URL, {
-      body: JSON.stringify({
-        file,
-        upload_preset: CLOUDINARY_PRESET,
-      }),
-      headers: {
-        'content-type': 'application/json',
-      },
-      method: 'POST',
-    });
-
-    setUploading(false);
-
-    const { secure_url } = await res.json();
-
-    if (secure_url) {
-      addWorkSample({
-        variables: {
-          url: secure_url,
-        },
-      });
-    }
-  };
+  const fetching = loading && networkStatus === NETWORK_STATUS.FETCHING;
 
   return (
     <SafeAreaView>
@@ -93,15 +38,22 @@ export const WorkSamples = () => {
               </Intro>
             </Grid.Item>
 
+            {fetching &&
+              Array.from(Array(3)).map((_, i) => (
+                <Grid.Item size={4} key={i}>
+                  <WorkSampleMedia isLoading />
+                </Grid.Item>
+              ))}
+
+            {!fetching &&
+              getOr([], 'user.workSamples', data).map(sample => (
+                <Grid.Item size={4} key={sample._id}>
+                  <WorkSampleMedia {...sample} />
+                </Grid.Item>
+              ))}
+
             <Grid.Item size={12}>
-              {uploading || loading ? (
-                <Loading />
-              ) : (
-                <AddNewAction
-                  text="Add new sample"
-                  onPress={handleImageUpload}
-                />
-              )}
+              <AddNewWorkSample />
             </Grid.Item>
           </Grid>
         </Container>

@@ -34,3 +34,11 @@ export const SkeletonCircle = LoadingHOC(styled(Animatable.View).attrs(
   background: ${props => props.theme.grey};
   border-radius: 400px;
 `);
+
+export const SkeletonRect = LoadingHOC(styled(Animatable.View).attrs(
+  fadingAnimation
+)`
+  height: ${props => props.height}px;
+  background: ${props => props.theme.grey};
+  border-radius: ${props => props.theme.radius}px;
+`);

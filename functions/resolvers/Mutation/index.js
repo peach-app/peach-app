@@ -21,4 +21,5 @@ module.exports = {
   createPayment: require('./createPayment'),
   declineBooking: require('./declineBooking'),
   addWorkSample: require('./addWorkSample'),
+  deleteWorkSample: require('./deleteWorkSample'),
 };
