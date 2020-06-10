@@ -39,6 +39,11 @@ export const Account = () => {
             {isInfluencer && (
               <>
                 <NavLink
+                  title="Work Samples"
+                  iconProps={{ name: 'ios-arrow-forward' }}
+                  onPress={() => navigation.navigate('WorkSamples')}
+                />
+                <NavLink
                   title="Social Accounts"
                   iconProps={{ name: 'ios-arrow-forward' }}
                   onPress={() => navigation.navigate('SocialDetails')}

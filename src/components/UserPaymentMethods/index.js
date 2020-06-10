@@ -6,7 +6,7 @@ import getOr from 'lodash/fp/getOr';
 
 import { Grid } from '../Grid';
 import { BillingMethodCard } from '../BillingMethodCard';
-import { AddBankDetailsPlaceholder } from '../AddBankDetailsPlaceholder';
+import { AddNewAction } from '../AddNewAction';
 import GET_PAYMENT_METHODS from './graphql/get-payment-methods';
 
 export const UserPaymentMethods = ({
@@ -47,10 +47,7 @@ export const UserPaymentMethods = ({
 
       {Boolean(onAddNewPress) && (
         <Grid.Item size={12}>
-          <AddBankDetailsPlaceholder
-            text="Add new payment method"
-            onPress={onAddNewPress}
-          />
+          <AddNewAction text="Add new payment method" onPress={onAddNewPress} />
         </Grid.Item>
       )}
     </>

@@ -10,7 +10,7 @@ import {
   Intro,
   Grid,
   BillingMethodCard,
-  AddBankDetailsPlaceholder,
+  AddNewAction,
   ScrollView,
 } from 'components';
 
@@ -38,7 +38,7 @@ export const BillingDetails = () => {
               </Grid.Item>
             ))}
             <Grid.Item size={12}>
-              <AddBankDetailsPlaceholder
+              <AddNewAction
                 onPress={() => navigation.navigate('NewBilling')}
                 text={'Add new billing method'}
               />

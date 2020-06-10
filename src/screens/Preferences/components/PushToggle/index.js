@@ -36,7 +36,7 @@ export const PushToggle = ({ value }) => {
 
   return (
     <Switch
-      label="Push Notifications"
+      label="Enable Push notifications"
       value={internalValue}
       onValueChange={handleChange}
     />

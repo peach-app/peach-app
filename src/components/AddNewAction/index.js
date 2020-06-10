@@ -13,13 +13,14 @@ export const AddIcon = styled(Ionicons).attrs(props => ({
   align-self: center;
 `;
 
-export const AddBankDetailsPlaceholder = ({ onPress, text }) => (
+export const AddNewAction = ({ onPress, text }) => (
   <TouchableOpacity onPress={onPress}>
     <AddIcon />
     <Text isCenter>{text}</Text>
   </TouchableOpacity>
 );
-AddBankDetailsPlaceholder.propTypes = {
+
+AddNewAction.propTypes = {
   onPress: PropTypes.func.isRequired,
   text: PropTypes.string.isRequired,
 };

@@ -1,3 +1,8 @@
+export const CLOUDINARY_UPLOAD_URL =
+  'https://api.cloudinary.com/v1_1/peach-app/image/upload';
+
+export const CLOUDINARY_PRESET = 'u4mzj2ke';
+
 export const NETWORK_STATUS = {
   FETCHING: 1,
   SET_VARIABLES: 2,

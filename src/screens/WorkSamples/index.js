@@ -1,18 +1,26 @@
 import React, { useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
+import { Alert } from 'react-native';
 import { useMutation } from '@apollo/react-hooks';
-import { Alert, ActivityIndicator } from 'react-native';
 
-import { CLOUDINARY_PRESET, CLOUDINARY_UPLOAD_URL } from 'consts';
+import {
+  SafeAreaView,
+  Header,
+  Intro,
+  Text,
+  Container,
+  AddNewAction,
+  ScrollView,
+  Grid,
+  Loading,
+} from 'components';
+import { CLOUDINARY_UPLOAD_URL, CLOUDINARY_PRESET } from 'consts';
 
-import { Main, Icon } from './styles';
-import UPDATE_USER_AVATAR from './graphql/update-avatar';
+import ADD_WORK_SAMPLE from './graphql/add-work-sample';
 
-export const AvatarUpload = () => {
+export const WorkSamples = () => {
   const [uploading, setUploading] = useState(false);
-  const [updateUserAvatar, { loading }] = useMutation(UPDATE_USER_AVATAR, {
-    refetchQueries: ['getUser'],
-  });
+  const [addWorkSample, { loading }] = useMutation(ADD_WORK_SAMPLE);
 
   const handleImageUpload = async () => {
     const permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
@@ -20,7 +28,7 @@ export const AvatarUpload = () => {
     if (!permissionResult.granted) {
       Alert.alert(
         'Permission required',
-        'In order to upload your avatar, we need permission to access your photo library.',
+        'In order to upload a work sample, we need permission to access your photo library.',
         [
           {
             text: 'Cancel',
@@ -63,7 +71,7 @@ export const AvatarUpload = () => {
     const { secure_url } = await res.json();
 
     if (secure_url) {
-      updateUserAvatar({
+      addWorkSample({
         variables: {
           url: secure_url,
         },
@@ -71,17 +79,33 @@ export const AvatarUpload = () => {
     }
   };
 
-  if (uploading || loading) {
-    return (
-      <Main>
-        <ActivityIndicator color="white" />
-      </Main>
-    );
-  }
-
   return (
-    <Main onPress={handleImageUpload}>
-      <Icon />
-    </Main>
+    <SafeAreaView>
+      <Header title="Work Samples" />
+      <ScrollView>
+        <Container>
+          <Grid>
+            <Grid.Item size={12}>
+              <Intro>
+                <Text isCenter>
+                  Upload samples of your work to show on your public profile.
+                </Text>
+              </Intro>
+            </Grid.Item>
+
+            <Grid.Item size={12}>
+              {uploading || loading ? (
+                <Loading />
+              ) : (
+                <AddNewAction
+                  text="Add new sample"
+                  onPress={handleImageUpload}
+                />
+              )}
+            </Grid.Item>
+          </Grid>
+        </Container>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
