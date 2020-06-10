@@ -2,7 +2,6 @@ import styled from 'styled-components/native';
 import { Ionicons } from '@expo/vector-icons';
 
 export const Header = styled.View`
-  display: flex;
   flex-direction: row;
   justify-content: ${({ canGoBack }) =>
     canGoBack ? 'space-between' : 'flex-end'};

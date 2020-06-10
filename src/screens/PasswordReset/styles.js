@@ -2,7 +2,6 @@ import styled from 'styled-components/native';
 import LogoAsset from '../../assets/logo.png';
 
 export const Content = styled.View`
-  display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;

@@ -10,6 +10,7 @@ export default gql`
       ...ProfileHeaderFragment
       bio
       type
+      hasSocialAccounts
       socialAccounts {
         instagram
         twitter

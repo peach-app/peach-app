@@ -1,29 +1,28 @@
 import React from 'react';
-import { SafeAreaView } from 'react-native';
 import { useQuery } from '@apollo/react-hooks';
 import get from 'lodash/fp/get';
 import omit from 'lodash/omit';
 import { useRoute, useNavigation } from '@react-navigation/native';
 
 import {
+  SafeAreaView,
+  Header,
   Text,
-  Grid,
+  Avatar,
   Button,
   Foot,
   SocialAccounts,
-  Title,
-  ProgressiveImage,
   CampaignsByBrand,
-  Intro,
   Container,
-  BackButton,
   SkeletonText,
   ScrollView,
+  Pill,
+  Grid,
 } from 'components';
 import { useModal } from 'contexts/Modal';
 import { USER_TYPE, MODAL_TYPES } from 'consts';
 
-import { Main, Top } from './styles';
+import { Head, Section, Categories } from './styles';
 import GET_USER from './graphql/get-user';
 
 export const Profile = () => {
@@ -42,93 +41,82 @@ export const Profile = () => {
   const isBrand = get('findUserByID.type', data) === USER_TYPE.BRAND;
   const name = get('findUserByID.name', data);
   const bio = get('findUserByID.bio', data);
-  const socialAccounts = get('findUserByID.socialAccounts', data);
   const uri = get('findUserByID.avatar.url', data);
   const { openModal } = useModal();
 
   return (
-    <Main>
-      <Top>
-        <Container>
-          <Intro />
-          <BackButton hasCircle />
-        </Container>
-      </Top>
+    <SafeAreaView>
+      <Header title={name} />
+
       <ScrollView>
-        <Grid>
-          <Grid.Item size={12}>
-            <ProgressiveImage
-              source={{
-                uri,
-              }}
-              isLoading={loading}
-              fallback={name}
-              isBrand={isBrand}
-            />
-          </Grid.Item>
+        <Head>
+          <Container>
+            <Grid>
+              <Grid.Item>
+                <Avatar
+                  size={80}
+                  source={{
+                    uri,
+                  }}
+                  isLoading={loading}
+                  fallback={name}
+                />
+              </Grid.Item>
 
-          <Grid.Item size={12}>
-            <Container>
-              <Grid>
-                {socialAccounts && (
-                  <Grid.Item size={12}>
-                    <SocialAccounts
-                      socialAccounts={omit(socialAccounts, ['__typename'])}
-                      onSocialAccountPressed={uri =>
-                        openModal({
-                          type: MODAL_TYPES.WEB_VIEW_MODAL,
-                          props: {
-                            uri,
-                          },
-                        })
-                      }
-                    />
-                  </Grid.Item>
+              <Grid.Item flex={1} alignSelf="center">
+                <Text>
+                  <SkeletonText
+                    isLoading={loading}
+                    loadingText="Biography is loading here..."
+                  >
+                    {bio || 'Missing biography...'}
+                  </SkeletonText>
+                </Text>
+
+                {!loading && (
+                  <Categories>
+                    <Pill value={isBrand ? 'Brand' : 'Influencer'} />
+                  </Categories>
                 )}
+              </Grid.Item>
+            </Grid>
+          </Container>
 
-                <Grid.Item size={12}>
-                  <Title isCenter>
-                    <SkeletonText isLoading={loading}>{name}</SkeletonText>
-                  </Title>
-                </Grid.Item>
+          {get('findUserByID.hasSocialAccounts', data) && (
+            <Section>
+              <SocialAccounts
+                socialAccounts={omit(get('findUserByID.socialAccounts', data), [
+                  '__typename',
+                ])}
+                onSocialAccountPressed={uri =>
+                  openModal({
+                    type: MODAL_TYPES.WEB_VIEW_MODAL,
+                    props: {
+                      uri,
+                    },
+                  })
+                }
+              />
+            </Section>
+          )}
+        </Head>
 
-                <Grid.Item size={12}>
-                  <Text isCenter>
-                    <SkeletonText
-                      isLoading={loading}
-                      loadingText="Bio is loading here..."
-                    >
-                      {bio || `This user doesn't have a bio yet.`}
-                    </SkeletonText>
-                  </Text>
-                </Grid.Item>
-
-                {isBrand && (
-                  <Grid.Item size={12}>
-                    <CampaignsByBrand id={id} />
-                  </Grid.Item>
-                )}
-              </Grid>
-            </Container>
-          </Grid.Item>
-        </Grid>
+        {isBrand && <CampaignsByBrand id={id} />}
       </ScrollView>
 
       {!isBrand && (
-        <SafeAreaView>
-          <Foot>
-            <Button
-              title="Request work"
-              fixedWidth
-              onPress={() => {
-                navigation.navigate('RequestInfluencerToCampaigns', {
-                  influencerId: id,
-                });
-              }}
-            />
-          </Foot>
-        </SafeAreaView>
+        <Foot>
+          <Button
+            title="Request work"
+            fixedWidth
+            onPress={() => {
+              navigation.navigate('RequestInfluencerToCampaigns', {
+                influencerId: id,
+              });
+            }}
+          />
+        </Foot>
       )}
-    </Main>
+    </SafeAreaView>
   );
 };

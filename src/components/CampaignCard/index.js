@@ -24,13 +24,14 @@ export const CampaignCard = ({
   dueDate,
   onPress,
   ActionItem,
+  hideAvatar,
 }) => {
   const { isInfluencer } = useUser();
 
   return (
     <TouchableOpacity onPress={() => !isLoading && onPress()}>
       <Grid noWrap align="center">
-        {isInfluencer && (
+        {!hideAvatar && isInfluencer && (
           <Grid.Item>
             <Avatar
               isLoading={isLoading}
@@ -84,6 +85,7 @@ CampaignCard.Arrow = ArrowIcon;
 
 CampaignCard.defaultProps = {
   isLoading: false,
+  hideAvatar: false,
   name: '',
   description: '',
   budget: null,
@@ -97,6 +99,7 @@ CampaignCard.defaultProps = {
 CampaignCard.propTypes = {
   ActionItem: PropTypes.any,
   isLoading: PropTypes.bool,
+  hideAvatar: PropTypes.bool,
   onPress: PropTypes.func,
   name: PropTypes.string,
   description: PropTypes.string,

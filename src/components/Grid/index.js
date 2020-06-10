@@ -40,19 +40,22 @@ const GridItem = styled.View`
   }}
   ${Platform.select({ web: 'position: static;' })}
   padding: ${props => `${props.theme.spacing}px ${props.theme.spacing}px 0 0`};
-  ${props => props.content && `justify-content: ${props.content}`}
+  ${props => props.content && `justify-content: ${props.content};`}
+  ${props => props.alignSelf && `align-self: ${props.alignSelf};`}
 `;
 
 GridItem.defaultProps = {
   width: null,
   flex: null,
   size: null,
+  alignSelf: null,
 };
 
 GridItem.propTypes = {
   width: PropTypes.number,
   flex: PropTypes.number,
   size: PropTypes.number,
+  alignSelf: PropTypes.string,
 };
 
 Grid.Item = GridItem;

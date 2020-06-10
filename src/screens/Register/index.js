@@ -48,7 +48,6 @@ const validationSchema = Yup.object().shape({
 });
 
 const Touchable = styled.TouchableOpacity`
-  display: flex;
   align-items: center;
   justify-content: center;
 `;

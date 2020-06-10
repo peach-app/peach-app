@@ -14,7 +14,6 @@ const Circle = styled.View`
   height: 14px;
   border-radius: 100px;
   background-color: ${props => props.theme.brand};
-  display: flex;
   align-items: center;
   justify-content: center;
 `;

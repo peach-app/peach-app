@@ -5,15 +5,15 @@ import { Ionicons } from '@expo/vector-icons';
 
 const Icon = styled(Ionicons).attrs(props => ({
   color: props.theme.foreground,
-  size: 32,
+  size: 28,
 }))``;
 
-const Container = styled.View`
-  display: flex;
+const Main = styled.View`
   flex-direction: row;
   justify-content: center;
   padding-horizontal: ${props => props.theme.spacingLarge};
   margin-horizontal: -6%;
+  padding-top: ${props => props.theme.spacing}px;
 `;
 
 const IconWrapper = styled.TouchableOpacity`
@@ -44,7 +44,7 @@ const ICON_PROPS = {
 };
 
 export const SocialAccounts = ({ socialAccounts, onSocialAccountPressed }) => (
-  <Container>
+  <Main>
     {Object.entries(socialAccounts).map(
       ([account, value]) =>
         ICON_PROPS[account] &&
@@ -61,7 +61,7 @@ export const SocialAccounts = ({ socialAccounts, onSocialAccountPressed }) => (
           </IconWrapper>
         )
     )}
-  </Container>
+  </Main>
 );
 
 SocialAccounts.propTypes = {

@@ -9,7 +9,6 @@ export const Status = styled(Text)`
   ${({ isAmount }) => isAmount && `font-size: 18px;`}
 `;
 export const StatusWrapper = styled.View`
-  display: flex;
   align-items: center;
   justify-content: center;
 `;
