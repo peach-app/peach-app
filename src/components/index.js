@@ -43,7 +43,6 @@ export * from './SearchInfluencers';
 export * from './AvatarUpload';
 export * from './MoneyInput';
 export * from './SocialAccounts';
-export * from './ProgressiveImage';
 export * from './CampaignsByBrand';
 export * from './AddBankDetailsPlaceholder';
 export * from './PaymentMethodForm';

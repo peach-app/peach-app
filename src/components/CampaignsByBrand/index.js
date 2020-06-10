@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { NETWORK_STATUS } from 'consts';
 import { useNavigation } from '@react-navigation/native';
 
+import { Container } from '../Container';
 import { CampaignCard } from '../CampaignCard';
 import { Grid } from '../Grid';
 
@@ -24,11 +25,11 @@ export const CampaignsByBrand = ({ id }) => {
   const fetching = loading && networkStatus === NETWORK_STATUS.FETCHING;
 
   return (
-    <>
+    <Container>
       {fetching &&
         Array.from(Array(3)).map((_, key) => (
           <Grid.Item key={key} size={12}>
-            <CampaignCard isLoading />
+            <CampaignCard isLoading hideAvatar />
           </Grid.Item>
         ))}
 
@@ -36,11 +37,12 @@ export const CampaignsByBrand = ({ id }) => {
         <Grid.Item key={campaign._id} size={12}>
           <CampaignCard
             {...campaign}
+            hideAvatar
             onPress={() => navigation.push('Campaign', { id: campaign._id })}
           />
         </Grid.Item>
       ))}
-    </>
+    </Container>
   );
 };
 

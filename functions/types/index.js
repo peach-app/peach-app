@@ -195,6 +195,7 @@ module.exports = gql`
 
     stripeAccount: StripeAccount
 
+    hasSocialAccounts: Boolean
     socialAccounts: SocialAccounts
 
     payouts: PayoutsPage

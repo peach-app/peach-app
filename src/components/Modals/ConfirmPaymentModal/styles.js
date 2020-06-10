@@ -3,7 +3,6 @@ import { Ionicons } from '@expo/vector-icons';
 
 export const Main = styled.TouchableOpacity`
   flex: 1;
-  display: flex;
   flex-direction: row;
   padding: ${props => props.theme.spacingSmall}px;
   justify-content: flex-start;

@@ -10,7 +10,6 @@ import * as WebBrowser from 'expo-web-browser';
 import GET_PAYMENT_CONFIRMATION_STATUS from './graphql/get-payment-status';
 
 const IconWrapper = styled.View`
-  display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -64,7 +63,7 @@ export const ConfirmPayment = ({
       } else {
         const isAppActive = Platform.OS === 'web' ? isAppFocused : true;
         // eslint-disable-next-line
-      if (appHasBeenInactive && isAppActive && !timer) {
+        if (appHasBeenInactive && isAppActive && !timer) {
           const startTimer = () =>
             setTimeout(() => {
               if (status !== 'succeeded') {

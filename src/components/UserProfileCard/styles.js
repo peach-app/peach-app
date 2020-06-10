@@ -7,6 +7,7 @@ export const Touchable = styled.TouchableOpacity`
   align-items: center;
   padding: ${props => props.theme.spacing}px;
   border-width: 1px;
+  border-bottom-width: 2px;
   border-color: ${props => props.theme.greyLight};
   flex-grow: 1;
   justify-content: center;
