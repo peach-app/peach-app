@@ -2,13 +2,14 @@ import styled from 'styled-components/native';
 import { Text } from '../Text';
 
 export const Touchable = styled.TouchableOpacity`
-  overflow: hidden;
+  background: ${props => props.theme.background};
   border-radius: ${props => props.theme.radius}px;
   align-items: center;
   padding: ${props => props.theme.spacing}px;
-  border-width: 1px;
-  border-bottom-width: 2px;
-  border-color: ${props => props.theme.greyLight};
+  shadow-opacity: 0.1;
+  shadow-radius: 5px;
+  shadow-color: ${props => props.theme.foreground};
+  shadow-offset: 0px 2px;
   flex-grow: 1;
   justify-content: center;
 `;

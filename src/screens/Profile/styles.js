@@ -1,15 +1,20 @@
 import styled from 'styled-components/native';
 
 export const Head = styled.View`
-  padding-vertical: ${props => props.theme.spacing}px;
-  border-bottom-width: 2px;
-  border-color: ${props => props.theme.greyLight};
+  background: ${props => props.theme.background};
+  padding-vertical: ${props => props.theme.spacingLarge}px;
+  shadow-opacity: 0.1;
+  shadow-radius: 5px;
+  shadow-color: ${props => props.theme.foreground};
+  shadow-offset: 0px 2px;
+  margin-bottom: ${props => props.theme.spacingLarge};
 `;
 
 export const Section = styled.View`
   border-top-width: 1px;
   border-color: ${props => props.theme.greyLight};
-  margin-top: ${props => props.theme.spacing}px;
+  margin-top: ${props => props.theme.spacingLarge}px;
+  padding-top: ${props => props.theme.spacingLarge}px;
 `;
 
 export const Categories = styled.View`

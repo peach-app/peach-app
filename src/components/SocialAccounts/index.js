@@ -13,7 +13,6 @@ const Main = styled.View`
   justify-content: center;
   padding-horizontal: ${props => props.theme.spacingLarge};
   margin-horizontal: -6%;
-  padding-top: ${props => props.theme.spacing}px;
 `;
 
 const IconWrapper = styled.TouchableOpacity`
