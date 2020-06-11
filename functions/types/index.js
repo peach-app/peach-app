@@ -65,7 +65,7 @@ module.exports = gql`
     createBillingMethod(token: String!): Boolean
     createPaymentMethod(token: String!): Boolean
     verifyEmail(emailVerificationToken: String!): Boolean
-    updateUserAvatar(url: String!): Boolean
+    updateUserAvatar(media: MediaInput!): Boolean
     requestInfluencerToCampaigns(influencerId: ID!, campaigns: [ID!]): Boolean
     createOrUpdateSocialAccounts(socialAccounts: SocialAccountsInput): Boolean
     completeBooking(id: ID!, note: String): Boolean
@@ -78,7 +78,7 @@ module.exports = gql`
       selectedId: String
     ): PaymentIntent
     declineBooking(campaignId: ID): Boolean
-    addWorkSample(url: String!): Boolean
+    addWorkSample(media: MediaInput!): Boolean
     deleteWorkSample(id: ID!): Boolean
   }
 
@@ -117,7 +117,7 @@ module.exports = gql`
   }
 
   type Media {
-    url: String!
+    url(options: String): String!
   }
 
   enum BudgetType {
@@ -137,6 +137,11 @@ module.exports = gql`
 
   type UserPage {
     data: [User]
+  }
+
+  input MediaInput {
+    id: ID!
+    format: String!
   }
 
   input PreferencesInput {

@@ -21,7 +21,7 @@ export default gql`
       workSamples {
         _id
         media {
-          url
+          url(options: "w_480,h_480,c_fill")
         }
       }
     }

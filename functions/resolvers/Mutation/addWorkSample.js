@@ -1,10 +1,13 @@
-module.exports = async (root, { url }, { client, q, activeUserRef }) => {
+module.exports = async (root, { media }, { client, q, activeUserRef }) => {
+  const { id, format } = media;
+
   await client.query(
     q.Create(q.Collection('WorkSample'), {
       data: {
         user: activeUserRef,
         media: {
-          url,
+          id,
+          format,
         },
       },
     })

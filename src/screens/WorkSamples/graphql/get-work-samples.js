@@ -7,7 +7,7 @@ export default gql`
       workSamples {
         _id
         media {
-          url
+          url(options: "w_100,h_100,c_fill")
         }
       }
     }

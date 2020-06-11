@@ -1,8 +1,10 @@
-module.exports = async (root, { url }, { client, q, activeUserRef }) => {
+module.exports = async (root, { media }, { client, q, activeUserRef }) => {
+  const { id, format } = media;
+
   await client.query(
     q.Update(activeUserRef, {
       data: {
-        avatar: { url },
+        avatar: { id, format },
       },
     })
   );

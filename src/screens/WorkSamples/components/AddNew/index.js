@@ -61,12 +61,15 @@ export const AddNewWorkSample = () => {
 
     setUploading(false);
 
-    const { secure_url } = await res.json();
+    const { public_id, format } = await res.json();
 
-    if (secure_url) {
+    if (public_id) {
       addWorkSample({
         variables: {
-          url: secure_url,
+          media: {
+            id: public_id,
+            format,
+          },
         },
       });
     }
