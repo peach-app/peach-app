@@ -5,7 +5,7 @@ import get from 'lodash/fp/get';
 import startCase from 'lodash/startCase';
 import PropTypes from 'prop-types';
 
-import { Touchable, Head, Name, Bio, Mask } from './styles';
+import { Touchable, Head, Main, Name, Bio } from './styles';
 import { Avatar } from '../Avatar';
 import { SkeletonText } from '../Skeletons';
 
@@ -16,7 +16,6 @@ export const UserProfileCard = ({ isLoading, _id, name, bio, avatar }) => {
     <Touchable
       onPress={() => !isLoading && navigation.navigate('Profile', { id: _id })}
     >
-      <Mask />
       <Head>
         <Avatar
           size={70}
@@ -26,12 +25,14 @@ export const UserProfileCard = ({ isLoading, _id, name, bio, avatar }) => {
         />
       </Head>
 
-      <Name numberOfLines={1}>
-        <SkeletonText loadingText="Loading User" isLoading={isLoading}>
-          {startCase(name)}
-        </SkeletonText>
-      </Name>
-      {bio && <Bio numberOfLines={1}>{bio}</Bio>}
+      <Main>
+        <Name numberOfLines={1}>
+          <SkeletonText loadingText="Loading User" isLoading={isLoading}>
+            {startCase(name)}
+          </SkeletonText>
+        </Name>
+        {bio && <Bio numberOfLines={1}>{bio}</Bio>}
+      </Main>
     </Touchable>
   );
 };

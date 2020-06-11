@@ -16,14 +16,20 @@ import {
   CampaignsByBrand,
   Container,
   SkeletonText,
-  ScrollView,
   Pill,
   Grid,
 } from 'components';
 import { useModal } from 'contexts/Modal';
 import { USER_TYPE, MODAL_TYPES } from 'consts';
 
-import { Head, Section, Categories, WorkSamples, Media } from './styles';
+import {
+  Head,
+  Section,
+  Categories,
+  WorkSamples,
+  Media,
+  ScrollView,
+} from './styles';
 import GET_USER from './graphql/get-user';
 
 export const Profile = () => {

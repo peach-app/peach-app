@@ -10,14 +10,11 @@ const Icon = styled(Ionicons).attrs(props => ({
 
 const Main = styled.View`
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-around;
   padding-horizontal: ${props => props.theme.spacingLarge};
-  margin-horizontal: -6%;
 `;
 
-const IconWrapper = styled.TouchableOpacity`
-  margin-horizontal: 6%;
-`;
+const IconWrapper = styled.TouchableOpacity``;
 
 const ICON_PROPS = {
   instagram: {

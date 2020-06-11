@@ -12,4 +12,5 @@ export const Foot = styled(Animatable.View).attrs({
   border-color: ${props => props.theme.greyLight};
   border-top-width: 1px;
   align-items: center;
+  background: ${props => props.theme.background};
 `;

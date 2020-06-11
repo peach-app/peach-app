@@ -8,7 +8,7 @@ import { Container } from '../Container';
 import { useTheme } from '../../theme-provider';
 
 const iconNames = {
-  Campaigns: 'ios-list',
+  Campaigns: 'ios-home',
   Discover: 'ios-search',
   Inbox: 'ios-paper-plane',
   Account: 'ios-contact',

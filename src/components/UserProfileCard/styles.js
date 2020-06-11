@@ -4,25 +4,22 @@ import { Text } from '../Text';
 export const Touchable = styled.TouchableOpacity`
   background: ${props => props.theme.background};
   border-radius: ${props => props.theme.radius}px;
-  align-items: center;
-  padding: ${props => props.theme.spacing}px;
-  border-width: 1px;
-  border-color: ${props => props.theme.greyLight};
   flex-grow: 1;
-  justify-content: center;
-`;
-
-export const Mask = styled.View`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 70px;
-  background: ${props => props.theme.greyLight};
 `;
 
 export const Head = styled.View`
   padding-bottom: ${props => props.theme.spacingSmall}px;
+  border-bottom-width: 1px;
+  border-color: ${props => props.theme.greyLight};
+  padding: ${props => props.theme.spacing}px;
+  align-items: center;
+`;
+
+export const Main = styled.View`
+  align-items: center;
+  justify-content: center;
+  padding: ${props => props.theme.spacing}px;
+  flex-grow: 1;
 `;
 
 export const Name = styled(Text)`
@@ -31,4 +28,5 @@ export const Name = styled(Text)`
 
 export const Bio = styled(Text)`
   color: ${props => props.theme.greyDark};
+  margin-top: ${props => props.theme.spacingXSmall}px;
 `;
