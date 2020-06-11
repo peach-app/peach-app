@@ -36,8 +36,6 @@ export const AvatarUpload = () => {
     }
 
     const { cancelled, base64 } = await ImagePicker.launchImageLibraryAsync({
-      allowsEditing: true,
-      aspect: [4, 3],
       base64: true,
     });
 
@@ -60,12 +58,15 @@ export const AvatarUpload = () => {
 
     setUploading(false);
 
-    const { secure_url } = await res.json();
+    const { public_id, format } = await res.json();
 
-    if (secure_url) {
+    if (public_id) {
       updateUserAvatar({
         variables: {
-          url: secure_url,
+          media: {
+            id: public_id,
+            format,
+          },
         },
       });
     }

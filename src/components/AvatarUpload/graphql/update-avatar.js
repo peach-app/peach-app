@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export default gql`
-  mutation($url: String!) {
-    updateUserAvatar(url: $url)
+  mutation($media: MediaInput!) {
+    updateUserAvatar(media: $media)
   }
 `;

@@ -8,4 +8,5 @@ module.exports = {
   Message: require('./Message'),
   Booking: require('./Booking'),
   Discover: require('./Discover'),
+  Media: require('./Media'),
 };
