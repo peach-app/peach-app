@@ -34,7 +34,6 @@ export const Payouts = () => {
       <Header title="Payouts" />
 
       <FlatList
-        contrast
         refreshControl={
           <RefreshControl
             refreshing={loading && networkStatus === NETWORK_STATUS.REFETCHING}
