@@ -1,6 +1,5 @@
 const theme = {
   background: '#fff',
-  backgroundContrast: '#f6f6f6',
   foreground: '#000',
   brand: '#fc516a',
   black: '#000',
@@ -11,7 +10,7 @@ const theme = {
   green: '#04b876',
   orange: '#ffa500',
   error: '#f00',
-  radius: 6,
+  radius: 8,
   spacingXSmall: 4,
   spacingSmall: 8,
   spacing: 16,
@@ -28,7 +27,6 @@ const theme = {
 
 export const darkModeOverrides = {
   background: '#000',
-  backgroundContrast: '#111',
   foreground: '#fff',
   greyDark: '#555',
   grey: '#333',

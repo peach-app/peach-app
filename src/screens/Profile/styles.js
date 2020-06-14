@@ -3,10 +3,6 @@ import styled from 'styled-components/native';
 export const Head = styled.View`
   background: ${props => props.theme.background};
   padding-vertical: ${props => props.theme.spacingLarge}px;
-  shadow-opacity: 0.05;
-  shadow-radius: 5px;
-  shadow-color: ${props => props.theme.foreground};
-  shadow-offset: 0px 2px;
   margin-bottom: ${props => props.theme.spacing};
   border-bottom-width: 1px;
   border-color: ${props => props.theme.greyLight};
@@ -37,8 +33,4 @@ export const Media = styled.Image`
   width: 240px;
   border-radius: ${props => props.theme.radius}px;
   margin-right: ${props => props.theme.spacingSmall}px;
-`;
-
-export const ScrollView = styled.ScrollView`
-  background: ${props => props.theme.backgroundContrast};
 `;

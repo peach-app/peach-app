@@ -4,6 +4,8 @@ import { Text } from '../Text';
 export const Touchable = styled.TouchableOpacity`
   background: ${props => props.theme.background};
   border-radius: ${props => props.theme.radius}px;
+  border-width: 1px;
+  border-color: ${props => props.theme.greyLight};
   flex-grow: 1;
 `;
 

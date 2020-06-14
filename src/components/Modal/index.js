@@ -1,9 +1,8 @@
 import React from 'react';
-import { Modal as ImportedModal } from 'react-native';
+import { Modal as ImportedModal, ScrollView } from 'react-native';
 
 import { Main, Content, Cover } from './styles';
 import { KeyboardAvoidingView } from '../KeyboardAvoidingView';
-import { ScrollView } from '../ScrollView';
 
 const DefaultWrapper = ({ children }) => (
   <Content>

@@ -26,7 +26,7 @@ export const DiscoverInfluencers = () => {
   const fetching = loading && networkStatus === NETWORK_STATUS.FETCHING;
 
   return (
-    <SafeAreaView contrast>
+    <SafeAreaView>
       <Main>
         <FlatList
           numColumns={2}
