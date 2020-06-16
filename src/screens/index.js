@@ -32,3 +32,4 @@ export * from './Payouts';
 export * from './Notifications';
 export * from './Preferences';
 export * from './WorkSamples';
+export * from './ThreadInfo';

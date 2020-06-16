@@ -14,7 +14,7 @@ export const Main = styled.ScrollView.attrs(props => ({
 `;
 
 export const Item = styled.View`
-  border-bottom-width: 4px;
+  border-bottom-width: 2px;
   position: relative;
   padding-vertical: ${props => props.theme.spacingSmall}px;
   margin-right: ${props => props.theme.spacing}px;

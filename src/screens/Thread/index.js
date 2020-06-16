@@ -4,7 +4,7 @@ import debounce from 'lodash/debounce';
 import getOr from 'lodash/fp/getOr';
 import get from 'lodash/fp/get';
 import startCase from 'lodash/startCase';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 
 import { Composer, Wrapper, TextInput, Send, Icon, Spacer } from './styles';
 import {
@@ -24,6 +24,7 @@ export const Thread = () => {
   const {
     params: { id },
   } = useRoute();
+  const navigation = useNavigation();
   const { data, fetchMore, startPolling, stopPolling } = useQuery(GET_THREAD, {
     variables: {
       id,
@@ -69,7 +70,11 @@ export const Thread = () => {
   return (
     <SafeAreaView>
       <KeyboardAvoidingView>
-        <Header title={startCase(title)} />
+        <Header
+          title={startCase(title)}
+          rightActionIcon="ios-information-circle-outline"
+          onRightActionPressed={() => navigation.navigate('ThreadInfo', { id })}
+        />
         <FlatList
           ListFooterComponent={<Spacer />}
           onScroll={onScroll}

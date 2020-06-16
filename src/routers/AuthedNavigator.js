@@ -26,6 +26,7 @@ import {
   Notifications,
   Preferences,
   WorkSamples,
+  ThreadInfo,
 } from 'screens';
 
 import { createStackNavigator, createBottomTabNavigator } from './components';
@@ -97,5 +98,6 @@ export const AuthedNavigator = () => (
     <Stack.Screen name="Notifications" component={Notifications} />
     <Stack.Screen name="Preferences" component={Preferences} />
     <Stack.Screen name="WorkSamples" component={WorkSamples} />
+    <Stack.Screen name="ThreadInfo" component={ThreadInfo} />
   </Stack.Navigator>
 );

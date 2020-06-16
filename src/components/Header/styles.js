@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import { Ionicons } from '@expo/vector-icons';
 
 import { Text } from '../Text';
 import { Container } from '../Container';
@@ -34,3 +35,8 @@ export const RightAction = styled(Text)`
   color: ${props => props.theme.brand};
   font-size: 16px;
 `;
+
+export const RightIcon = styled(Ionicons).attrs(props => ({
+  size: 30,
+  color: props.theme.brand,
+}))``;
