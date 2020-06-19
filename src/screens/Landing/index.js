@@ -27,7 +27,7 @@ export const Landing = () => {
                   <Grid.Item size={12}>
                     <Button
                       title="Login"
-                      isGhost
+                      isDark
                       onPress={() => navigation.navigate('Login')}
                     />
                   </Grid.Item>
