@@ -5,10 +5,12 @@ import get from 'lodash/fp/get';
 import { useNavigation } from '@react-navigation/native';
 import { useMutation } from '@apollo/react-hooks';
 import startCase from 'lodash/startCase';
+import Hyperlink from 'react-native-hyperlink';
 
 import { BOOKING_STATE, MODAL_TYPES, PAYMENT_REASON } from 'consts';
 import { formatToMoneyFromPence } from 'helpers';
 import { useModal } from 'contexts/Modal';
+import { useTheme } from '../../theme-provider';
 
 import { Note, PayRate } from './styles';
 import { Grid } from '../Grid';
@@ -30,6 +32,7 @@ export const Booking = ({
   isLoading,
 }) => {
   const navigation = useNavigation();
+  const theme = useTheme();
   const { openModal, closeModal } = useModal();
   const [updateBooking, { loading }] = useMutation(UPDATE_BOOKING_STATE, {
     refetchQueries: ['getCampaigns', 'getCampaign'],
@@ -147,7 +150,9 @@ export const Booking = ({
 
       {Boolean(note) && (
         <Note>
-          <Text>{note}</Text>
+          <Hyperlink linkDefault linkStyle={{ color: theme.brand }}>
+            <Text>{note}</Text>
+          </Hyperlink>
         </Note>
       )}
     </>

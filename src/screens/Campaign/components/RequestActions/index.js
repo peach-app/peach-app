@@ -23,10 +23,7 @@ export const RequestActions = ({ campaignId, onAccept }) => {
       <Grid.Item size={12}>
         <Text isCenter>You've been requested onto this campaign.</Text>
       </Grid.Item>
-      <Grid.Item size={4}>
-        <Button title="Accept" onPress={onAccept} />
-      </Grid.Item>
-      <Grid.Item size={4}>
+      <Grid.Item size={3}>
         <Button
           title="Decline"
           isGhost
@@ -35,6 +32,9 @@ export const RequestActions = ({ campaignId, onAccept }) => {
             declineBooking();
           }}
         />
+      </Grid.Item>
+      <Grid.Item size={5}>
+        <Button title="Accept" onPress={onAccept} />
       </Grid.Item>
     </Grid>
   );

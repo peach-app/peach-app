@@ -5,6 +5,7 @@ import get from 'lodash/fp/get';
 import getOr from 'lodash/fp/getOr';
 import FormatDate from 'date-fns/format';
 import { useRoute, useNavigation } from '@react-navigation/native';
+import Hyperlink from 'react-native-hyperlink';
 
 import {
   Text,
@@ -30,6 +31,7 @@ import { useModal } from 'contexts/Modal';
 import { NETWORK_STATUS, BOOKING_STATE, MODAL_TYPES } from 'consts';
 import { formatToMoneyFromPence } from 'helpers';
 
+import { useTheme } from '../../theme-provider';
 import { RequestActions, AcceptedActions } from './components';
 import GET_CAMPAIGN from './graphql/get-campaign';
 
@@ -44,6 +46,7 @@ const TAB_INDEX_BOOKING_STATE = [
 export const Campaign = () => {
   const [activeTab, setTab] = useState(0);
   const navigation = useNavigation();
+  const theme = useTheme();
   const {
     params: { id },
   } = useRoute();
@@ -140,14 +143,16 @@ export const Campaign = () => {
                   </Grid.Item>
 
                   <Grid.Item size={12}>
-                    <Text isPara>
-                      <SkeletonText
-                        loadingText={`Campaign description loading.\nLorem ipsum dolor sit amet...`}
-                        isLoading={fetching}
-                      >
-                        {getOr('', 'findCampaignById.description', campaign)}
-                      </SkeletonText>
-                    </Text>
+                    <Hyperlink linkDefault linkStyle={{ color: theme.brand }}>
+                      <Text isPara>
+                        <SkeletonText
+                          loadingText={`Campaign description loading.\nLorem ipsum dolor sit amet...`}
+                          isLoading={fetching}
+                        >
+                          {getOr('', 'findCampaignById.description', campaign)}
+                        </SkeletonText>
+                      </Text>
+                    </Hyperlink>
                   </Grid.Item>
 
                   {!fetching && (

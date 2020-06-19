@@ -30,12 +30,10 @@ export const Content = styled(Animatable.View).attrs({
   duration: 300,
   delay: 300,
 })`
-  background: ${props => props.theme.brand};
   margin-top: auto;
   ${props =>
     Platform.select({
       web: `
-        border-radius: ${props.theme.radius * 3}px;
         margin-bottom: ${props.theme.spacingXLarge}px;
       `,
     })}

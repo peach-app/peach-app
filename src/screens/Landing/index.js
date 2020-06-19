@@ -20,16 +20,15 @@ export const Landing = () => {
                 <Grid>
                   <Grid.Item size={12}>
                     <Button
-                      isDark
-                      title="Login"
-                      onPress={() => navigation.navigate('Login')}
+                      title="Create an account"
+                      onPress={() => navigation.navigate('Register')}
                     />
                   </Grid.Item>
                   <Grid.Item size={12}>
                     <Button
-                      isDark
-                      title="Create an account"
-                      onPress={() => navigation.navigate('Register')}
+                      title="Login"
+                      isGhost
+                      onPress={() => navigation.navigate('Login')}
                     />
                   </Grid.Item>
                 </Grid>
