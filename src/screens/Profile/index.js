@@ -36,6 +36,7 @@ export const Profile = () => {
   } = useRoute();
 
   const { data, loading } = useQuery(GET_USER, {
+    fetchPolicy: 'cache-and-network',
     variables: {
       id,
     },
@@ -46,6 +47,7 @@ export const Profile = () => {
   const bio = get('findUserByID.bio', data);
   const uri = get('findUserByID.avatar.url', data);
   const workSamples = getOr([], 'findUserByID.workSamples', data);
+  const categories = getOr([], 'findUserByID.categories', data);
   const { openModal } = useModal();
 
   return (
@@ -79,10 +81,19 @@ export const Profile = () => {
 
                 {!loading && (
                   <Categories>
-                    <Pill
-                      isSmall
-                      value={isViewingBrand ? 'Brand' : 'Influencer'}
-                    />
+                    <Pill.List>
+                      <Pill
+                        isSmall
+                        value={isViewingBrand ? 'Brand' : 'Influencer'}
+                      />
+                      {categories.map(category => (
+                        <Pill
+                          key={category._id}
+                          isSmall
+                          value={category.name}
+                        />
+                      ))}
+                    </Pill.List>
                   </Categories>
                 )}
               </Grid.Item>

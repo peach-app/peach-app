@@ -212,7 +212,7 @@ module.exports = gql`
 
     workSamples: [WorkSample]
 
-    categories: [ID]
+    categories: [Category]
   }
 
   type WorkSample {

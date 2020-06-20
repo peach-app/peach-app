@@ -9,7 +9,9 @@ export default gql`
       avatar {
         url
       }
-      categories
+      categories {
+        _id
+      }
     }
   }
 `;

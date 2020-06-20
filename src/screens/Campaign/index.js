@@ -158,33 +158,41 @@ export const Campaign = () => {
                   {!fetching && (
                     <Grid.Item size={6}>
                       <Label>Budget</Label>
-                      <Pill
-                        isSmall
-                        icon="ios-wallet"
-                        value={
-                          get('findCampaignById.unpaid', campaign)
-                            ? 'Unpaid'
-                            : formatToMoneyFromPence(
-                                get('findCampaignById.budget', campaign)
-                              )
-                        }
-                      />
+                      <Pill.List>
+                        <Pill
+                          isSmall
+                          icon="ios-wallet"
+                          value={
+                            get('findCampaignById.unpaid', campaign)
+                              ? 'Unpaid'
+                              : formatToMoneyFromPence(
+                                  get('findCampaignById.budget', campaign)
+                                )
+                          }
+                        />
+                      </Pill.List>
                     </Grid.Item>
                   )}
 
                   {!fetching && (
                     <Grid.Item size={6}>
                       <Label>Completion Date</Label>
-                      <Pill
-                        isSmall
-                        icon="ios-calendar"
-                        value={FormatDate(
-                          new Date(
-                            getOr('2020', 'findCampaignById.dueDate', campaign)
-                          ),
-                          'do MMM yyyy'
-                        )}
-                      />
+                      <Pill.List>
+                        <Pill
+                          isSmall
+                          icon="ios-calendar"
+                          value={FormatDate(
+                            new Date(
+                              getOr(
+                                '2020',
+                                'findCampaignById.dueDate',
+                                campaign
+                              )
+                            ),
+                            'do MMM yyyy'
+                          )}
+                        />
+                      </Pill.List>
                     </Grid.Item>
                   )}
                 </Grid>

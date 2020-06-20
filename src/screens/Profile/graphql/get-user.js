@@ -24,6 +24,10 @@ export default gql`
           url(options: "w_480,h_480,c_fill")
         }
       }
+      categories {
+        _id
+        name
+      }
     }
   }
 `;

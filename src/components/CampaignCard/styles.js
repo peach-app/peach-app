@@ -21,5 +21,4 @@ export const ArrowIcon = styled(Ionicons).attrs(props => ({
 
 export const Pills = styled.View`
   padding-top: ${props => props.theme.spacingSmall}px;
-  flex-direction: row;
 `;

@@ -62,7 +62,7 @@ export const EditProfile = ({
     initialValues: {
       name: startCase(get('user.name', data)),
       bio: get('user.bio', data),
-      categories: getOr([], 'user.categories', data),
+      categories: getOr([], 'user.categories', data).map(({ _id }) => _id),
     },
     onSubmit: ({ name, bio, categories }) => {
       save({

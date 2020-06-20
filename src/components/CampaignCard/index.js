@@ -60,16 +60,18 @@ export const CampaignCard = ({
           </Description>
           {!isLoading && (
             <Pills>
-              <Pill
-                isSmall
-                icon="ios-wallet"
-                value={unpaid ? 'Unpaid' : formatToMoneyFromPence(budget)}
-              />
-              <Pill
-                isSmall
-                icon="ios-calendar"
-                value={FormatDate(new Date(dueDate), 'do MMM')}
-              />
+              <Pill.List>
+                <Pill
+                  isSmall
+                  icon="ios-wallet"
+                  value={unpaid ? 'Unpaid' : formatToMoneyFromPence(budget)}
+                />
+                <Pill
+                  isSmall
+                  icon="ios-calendar"
+                  value={FormatDate(new Date(dueDate), 'do MMM')}
+                />
+              </Pill.List>
             </Pills>
           )}
         </Grid.Item>

@@ -15,7 +15,7 @@ export const EditProfileCategories = ({ selectedIds, onChange }) => {
   return (
     <Grid>
       {getOr([], 'categories', data).map(category => (
-        <Grid.Item key={category._id}>
+        <Grid.Item key={category._id} size={4}>
           <TouchableOpacity
             onPress={() => {
               const others = pull(category._id)(selectedIds);

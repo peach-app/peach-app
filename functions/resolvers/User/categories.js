@@ -1,8 +1,8 @@
-module.exports = async (root, args, { client, q }) => {
+module.exports = async (root, args, { client, q, DocumentDataWithId }) => {
   return client.query(
     q.Map(
       root.categories || [],
-      q.Lambda('ref', q.Select(['id'], q.Var('ref')))
+      q.Lambda('ref', DocumentDataWithId(q.Get(q.Var('ref'))))
     )
   );
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Main, Text, Icon } from './styles';
+import { Main, Text, Icon, List } from './styles';
 
 export const Pill = ({ value, icon, isSmall, isSelected }) => (
   <Main isSmall={isSmall} isSelected={isSelected}>
@@ -24,3 +24,5 @@ Pill.propTypes = {
   isSmall: PropTypes.bool,
   isSelected: PropTypes.bool,
 };
+
+Pill.List = List;
