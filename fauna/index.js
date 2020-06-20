@@ -21,6 +21,7 @@ console.log({ FAUNADB_SECRET });
     await require('./collections/EmailVerification')();
     await require('./collections/FailedBookingPayments')();
     await require('./collections/WorkSample')();
+    await require('./collections/Category')();
 
     // Indexes
     await require('./indexes/all_campaign')();

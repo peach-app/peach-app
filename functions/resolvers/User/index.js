@@ -5,4 +5,5 @@ module.exports = {
   emailVerification: require('./emailVerification'),
   hasSocialAccounts: require('./hasSocialAccounts'),
   workSamples: require('./workSamples'),
+  categories: require('./categories'),
 };

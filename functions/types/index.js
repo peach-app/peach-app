@@ -36,6 +36,8 @@ module.exports = gql`
     getPaymentConfirmationStatus(id: ID!): PaymentIntent
 
     payouts(size: Int, after: ID, before: ID): PayoutsPage
+
+    categories: [Category]
   }
 
   type Mutation {
@@ -160,6 +162,7 @@ module.exports = gql`
     addressLine2: String
     city: String
     postalCode: String
+    categories: [ID]
   }
 
   input SocialAccountsInput {
@@ -208,11 +211,18 @@ module.exports = gql`
     payouts: PayoutsPage
 
     workSamples: [WorkSample]
+
+    categories: [Category]
   }
 
   type WorkSample {
     _id: ID!
     media: Media
+  }
+
+  type Category {
+    _id: ID!
+    name: String
   }
 
   type Preferences {

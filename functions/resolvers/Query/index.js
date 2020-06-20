@@ -10,4 +10,5 @@ module.exports = {
   findCampaignsByBrand: require('./findCampaignsByBrand'),
   getPaymentConfirmationStatus: require('./getPaymentConfirmationStatus'),
   payouts: require('./payouts'),
+  categories: require('./categories'),
 };

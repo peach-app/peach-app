@@ -32,6 +32,13 @@ export const Account = () => {
             <StatusBar />
             <ProfileHeader isLoading={loading} {...get('user', data)} />
             <NavLink
+              title="View Profile"
+              iconProps={{ name: 'ios-arrow-forward' }}
+              onPress={() =>
+                navigation.navigate('Profile', { id: get('user._id', data) })
+              }
+            />
+            <NavLink
               title="Edit Profile"
               iconProps={{ name: 'ios-arrow-forward' }}
               onPress={() => navigation.navigate('EditProfile')}

@@ -4,6 +4,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import get from 'lodash/fp/get';
+import getOr from 'lodash/fp/getOr';
 import startCase from 'lodash/startCase';
 import { useNavigation } from '@react-navigation/native';
 
@@ -19,8 +20,11 @@ import {
   ProfileHeader,
   KeyboardAvoidingView,
   ScrollView,
+  Label,
 } from 'components';
+import { useUser } from 'contexts/User';
 
+import { EditProfileCategories } from './components';
 import GET_USER from './graphql/get-user';
 import SAVE_USER from './graphql/save-user';
 
@@ -38,6 +42,7 @@ export const EditProfile = ({
   onRightActionPressed,
   onComplete,
 }) => {
+  const { isInfluencer } = useUser();
   const navigation = useNavigation();
   const [save, { loading, error }] = useMutation(SAVE_USER, {
     onCompleted: () => {
@@ -59,13 +64,15 @@ export const EditProfile = ({
     initialValues: {
       name: startCase(get('user.name', data)),
       bio: get('user.bio', data),
+      categories: getOr([], 'user.categories', data).map(({ _id }) => _id),
     },
-    onSubmit: ({ name, bio }) => {
+    onSubmit: ({ name, bio, categories }) => {
       save({
         variables: {
           user: {
             name,
             bio,
+            categories,
           },
         },
       });
@@ -105,6 +112,18 @@ export const EditProfile = ({
                   onBlur={formik.handleBlur('bio')}
                 />
               </Grid.Item>
+
+              {isInfluencer && (
+                <Grid.Item size={12}>
+                  <Label>Categories</Label>
+                  <EditProfileCategories
+                    selectedIds={formik.values.categories}
+                    onChange={selectedIds =>
+                      formik.setFieldValue('categories', selectedIds)
+                    }
+                  />
+                </Grid.Item>
+              )}
 
               {error && (
                 <Grid.Item size={12}>

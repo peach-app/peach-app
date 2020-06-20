@@ -112,10 +112,13 @@ export const Booking = ({
               </Text>
               {!isLoading && state !== BOOKING_STATE.REQUESTED && (
                 <PayRate>
-                  <Pill
-                    icon="ios-wallet"
-                    value={unpaid ? 'Unpaid' : formatToMoneyFromPence(cost)}
-                  />
+                  <Pill.List>
+                    <Pill
+                      isSmall
+                      icon="ios-wallet"
+                      value={unpaid ? 'Unpaid' : formatToMoneyFromPence(cost)}
+                    />
+                  </Pill.List>
                 </PayRate>
               )}
             </Grid.Item>
