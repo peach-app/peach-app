@@ -22,6 +22,7 @@ import {
   ScrollView,
   Label,
 } from 'components';
+import { useUser } from 'contexts/User';
 
 import { EditProfileCategories } from './components';
 import GET_USER from './graphql/get-user';
@@ -41,6 +42,7 @@ export const EditProfile = ({
   onRightActionPressed,
   onComplete,
 }) => {
+  const { isInfluencer } = useUser();
   const navigation = useNavigation();
   const [save, { loading, error }] = useMutation(SAVE_USER, {
     onCompleted: () => {
@@ -111,15 +113,17 @@ export const EditProfile = ({
                 />
               </Grid.Item>
 
-              <Grid.Item size={12}>
-                <Label>Categories</Label>
-                <EditProfileCategories
-                  selectedIds={formik.values.categories}
-                  onChange={selectedIds =>
-                    formik.setFieldValue('categories', selectedIds)
-                  }
-                />
-              </Grid.Item>
+              {isInfluencer && (
+                <Grid.Item size={12}>
+                  <Label>Categories</Label>
+                  <EditProfileCategories
+                    selectedIds={formik.values.categories}
+                    onChange={selectedIds =>
+                      formik.setFieldValue('categories', selectedIds)
+                    }
+                  />
+                </Grid.Item>
+              )}
 
               {error && (
                 <Grid.Item size={12}>
