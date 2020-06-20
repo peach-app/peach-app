@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import PropTypes from 'prop-types';
 
 export const Card = styled.View`
   border-radius: ${props => props.theme.radius};
@@ -9,3 +10,11 @@ export const Card = styled.View`
   padding: ${props => props.theme.spacing}px;
   flex-grow: 1;
 `;
+
+Card.defaultProps = {
+  isSelected: false,
+};
+
+Card.propTypes = {
+  isSelected: PropTypes.bool,
+};

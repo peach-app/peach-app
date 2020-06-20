@@ -113,6 +113,7 @@ export const Booking = ({
               {!isLoading && state !== BOOKING_STATE.REQUESTED && (
                 <PayRate>
                   <Pill
+                    isSmall
                     icon="ios-wallet"
                     value={unpaid ? 'Unpaid' : formatToMoneyFromPence(cost)}
                   />

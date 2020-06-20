@@ -21,6 +21,7 @@ import {
   ScrollView,
 } from 'components';
 import { useModal } from 'contexts/Modal';
+import { useUser } from 'contexts/User';
 import { USER_TYPE, MODAL_TYPES } from 'consts';
 
 import { Head, Section, Categories, WorkSamples, Media } from './styles';
@@ -28,6 +29,7 @@ import GET_USER from './graphql/get-user';
 
 export const Profile = () => {
   const navigation = useNavigation();
+  const { isBrand } = useUser();
 
   const {
     params: { id },
@@ -39,7 +41,7 @@ export const Profile = () => {
     },
   });
 
-  const isBrand = get('findUserByID.type', data) === USER_TYPE.BRAND;
+  const isViewingBrand = get('findUserByID.type', data) === USER_TYPE.BRAND;
   const name = get('findUserByID.name', data);
   const bio = get('findUserByID.bio', data);
   const uri = get('findUserByID.avatar.url', data);
@@ -77,7 +79,10 @@ export const Profile = () => {
 
                 {!loading && (
                   <Categories>
-                    <Pill value={isBrand ? 'Brand' : 'Influencer'} />
+                    <Pill
+                      isSmall
+                      value={isViewingBrand ? 'Brand' : 'Influencer'}
+                    />
                   </Categories>
                 )}
               </Grid.Item>
@@ -103,7 +108,7 @@ export const Profile = () => {
           )}
         </Head>
 
-        {!isBrand && workSamples.length > 0 && (
+        {!isViewingBrand && workSamples.length > 0 && (
           <Container>
             <WorkSamples>
               {workSamples.map(sample => (
@@ -113,10 +118,10 @@ export const Profile = () => {
           </Container>
         )}
 
-        {isBrand && <CampaignsByBrand id={id} />}
+        {isViewingBrand && <CampaignsByBrand id={id} />}
       </ScrollView>
 
-      {!isBrand && (
+      {!isViewingBrand && isBrand && (
         <Foot>
           <Button
             title="Request work"

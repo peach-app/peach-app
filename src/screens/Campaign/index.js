@@ -159,6 +159,7 @@ export const Campaign = () => {
                     <Grid.Item size={6}>
                       <Label>Budget</Label>
                       <Pill
+                        isSmall
                         icon="ios-wallet"
                         value={
                           get('findCampaignById.unpaid', campaign)
@@ -175,6 +176,7 @@ export const Campaign = () => {
                     <Grid.Item size={6}>
                       <Label>Completion Date</Label>
                       <Pill
+                        isSmall
                         icon="ios-calendar"
                         value={FormatDate(
                           new Date(

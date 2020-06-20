@@ -9,6 +9,7 @@ export default gql`
       avatar {
         url
       }
+      categories
     }
   }
 `;

@@ -4,6 +4,7 @@ import { useQuery, useMutation } from '@apollo/react-hooks';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import get from 'lodash/fp/get';
+import getOr from 'lodash/fp/getOr';
 import startCase from 'lodash/startCase';
 import { useNavigation } from '@react-navigation/native';
 
@@ -19,8 +20,10 @@ import {
   ProfileHeader,
   KeyboardAvoidingView,
   ScrollView,
+  Label,
 } from 'components';
 
+import { EditProfileCategories } from './components';
 import GET_USER from './graphql/get-user';
 import SAVE_USER from './graphql/save-user';
 
@@ -59,13 +62,15 @@ export const EditProfile = ({
     initialValues: {
       name: startCase(get('user.name', data)),
       bio: get('user.bio', data),
+      categories: getOr([], 'user.categories', data),
     },
-    onSubmit: ({ name, bio }) => {
+    onSubmit: ({ name, bio, categories }) => {
       save({
         variables: {
           user: {
             name,
             bio,
+            categories,
           },
         },
       });
@@ -103,6 +108,16 @@ export const EditProfile = ({
                   error={formik.errors.bio}
                   onChangeText={formik.handleChange('bio')}
                   onBlur={formik.handleBlur('bio')}
+                />
+              </Grid.Item>
+
+              <Grid.Item size={12}>
+                <Label>Categories</Label>
+                <EditProfileCategories
+                  selectedIds={formik.values.categories}
+                  onChange={selectedIds =>
+                    formik.setFieldValue('categories', selectedIds)
+                  }
                 />
               </Grid.Item>
 
