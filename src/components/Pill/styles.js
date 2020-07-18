@@ -33,4 +33,5 @@ export const List = styled.View`
   margin-right: -2px;
   flex-direction: row;
   flex-wrap: wrap;
+  ${props => props.justify && `justify-content: ${props.justify};`}
 `;

@@ -57,10 +57,10 @@ export const Profile = () => {
       <ScrollView>
         <Head>
           <Container>
-            <Grid>
+            <Grid justify="center">
               <Grid.Item>
                 <Avatar
-                  size={80}
+                  size={125}
                   source={{
                     uri,
                   }}
@@ -69,8 +69,8 @@ export const Profile = () => {
                 />
               </Grid.Item>
 
-              <Grid.Item flex={1} alignSelf="center">
-                <Text>
+              <Grid.Item size={12}>
+                <Text isCenter>
                   <SkeletonText
                     isLoading={loading}
                     loadingText="Biography is loading here..."
@@ -81,7 +81,7 @@ export const Profile = () => {
 
                 {!loading && (
                   <Categories>
-                    <Pill.List>
+                    <Pill.List justify="center">
                       <Pill
                         isSmall
                         value={isViewingBrand ? 'Brand' : 'Influencer'}
@@ -102,19 +102,22 @@ export const Profile = () => {
 
           {get('findUserByID.hasSocialAccounts', data) && (
             <Section>
-              <SocialAccounts
-                socialAccounts={omit(get('findUserByID.socialAccounts', data), [
-                  '__typename',
-                ])}
-                onSocialAccountPressed={uri =>
-                  openModal({
-                    type: MODAL_TYPES.WEB_VIEW_MODAL,
-                    props: {
-                      uri,
-                    },
-                  })
-                }
-              />
+              <Container>
+                <SocialAccounts
+                  socialAccounts={omit(
+                    get('findUserByID.socialAccounts', data),
+                    ['__typename']
+                  )}
+                  onSocialAccountPressed={uri =>
+                    openModal({
+                      type: MODAL_TYPES.WEB_VIEW_MODAL,
+                      props: {
+                        uri,
+                      },
+                    })
+                  }
+                />
+              </Container>
             </Section>
           )}
         </Head>
